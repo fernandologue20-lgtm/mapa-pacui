@@ -8,18 +8,26 @@
 <body>
     <div id="mapa"></div>
     <script>
-        var mapa = L.map('mapa').setView([0.8, -50.7], 9);
+        // Cria o mapa
+        var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
         
-        // COLE SUA URL ABAIXO:
-        var link = "https://https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
+        var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
 
         fetch(link)
             .then(res => res.json())
             .then(dados => {
+                console.log("Dados carregados:", dados); // Veja no Console (F12) se os dados chegaram
+                
                 dados.forEach(c => {
-                    L.marker([c.lat, c.lng]).addTo(mapa)
-                     .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                    // Verifica se o lat e lng são números válidos
+                    var lat = parseFloat(c.lat);
+                    var lng = parseFloat(c.lng);
+                    
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        L.marker([lat, lng]).addTo(mapa)
+                         .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                    }
                 });
             });
     </script>
