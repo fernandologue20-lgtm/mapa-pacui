@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style> #mapa { height: 600px; } </style>
+</head>
+<body>
+    <div id="mapa"></div>
+    <script>
+        var mapa = L.map('mapa').setView([0.8, -50.7], 9);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+        
+        // COLE SUA URL ABAIXO:
+        var link = "https://https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
+
+        fetch(link)
+            .then(res => res.json())
+            .then(dados => {
+                dados.forEach(c => {
+                    L.marker([c.lat, c.lng]).addTo(mapa)
+                     .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                });
+            });
+    </script>
+</body>
+</html>
