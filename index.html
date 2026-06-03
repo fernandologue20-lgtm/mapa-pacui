@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
-    
     <style> 
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
         #mapa { height: 100vh; width: 100vw; }
@@ -30,55 +28,14 @@
         fetch(link)
             .then(res => res.json())
             .then(dados => {
-                let pontos = []; 
-                
                 dados.forEach(c => {
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
                     
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        // 1. Criamos o marcador
                         var marcador = L.marker([lat, lng]).addTo(mapa)
                             .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
                         
-                        marcador.bindTooltip(c.nome, {
-                            permanent: true,
-                            direction: 'top',
-                            className: 'label-estilo',
-                            offset: [0, -10]
-                        });
-                        
-                        // 2. Adiciona o ponto na lista para calcular o polígono automático
-                        pontos.push(turf.point([lng, lat])); 
-                    }
-                });
-
-                // 3. Calcula o polígono automaticamente (Convex Hull)
-                if (pontos.length > 2) {
-                    var featureCollection = turf.featureCollection(pontos);
-                    var areaAutomatica = turf.convex(featureCollection);
-
-                    // 4. Desenha o polígono no mapa
-                    L.geoJSON(areaAutomatica, {
-                        style: { color: "#ff0000", weight: 3, fillOpacity: 0.15 }
-                    }).addTo(mapa);
-                }
-            });
-    </script>
-</body>
-</html>        fetch(link)
-            .then(res => res.json())
-            .then(dados => {
-                dados.forEach(c => {
-                    var lat = parseFloat(c.lat);
-                    var lng = parseFloat(c.lng);
-                    
-                    if (!isNaN(lat) && !isNaN(lng)) {
-                        // Criamos o marcador
-                        var marcador = L.marker([lat, lng]).addTo(mapa)
-                            .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
-                        
-                        // Adicionamos o nome fixo acima do pino
                         marcador.bindTooltip(c.nome, {
                             permanent: true,
                             direction: 'top',
@@ -89,39 +46,52 @@
                 });
             });
 
-        // Polígono do Pacuí
+        // Polígono fixo atualizado
         var geojsonPacui = {
             "type": "Feature",
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [ [
                     [-50.84209299999999, 0.7915582, 0],
-                    [-50.82464719999999, 0.7522673, 0],
-                    [-50.79658200000001, 0.7193900000000001, 0],
-                    [-50.7350131, 0.6910378, 0],
+                    [-50.8525129, 0.7515233],
+                    [-50.822976, 0.7186914],
+                    [-50.8009344, 0.7079257],
+                    [-50.7652708, 0.6450409],
+                    [-50.7211913, 0.6304898],
+                    [-50.7000734, 0.601871],
                     [-50.67448559999999, 0.6303857, 0],
-                    [-50.6606113, 0.6176842, 0],
-                    [-50.6557332, 0.6212951, 0],
-                    [-50.6266959, 0.6462189, 0],
-                    [-50.4446678, 0.666728, 0],
-                    [-50.39219600000001, 0.7138748, 0],
+                    [-50.6738082, 0.6056131],
+                    [-50.6526904, 0.5873121],
+                    [-50.6306341, 0.6103057],
+                    [-50.6212484, 0.6436228],
+                    [-50.533941, 0.6473969],
+                    [-50.4438466, 0.6591092],
+                    [-50.3917859, 0.6975711],
+                    [-50.3669188, 0.7130598],
                     [-50.34629580000001, 0.7311321999999999, 0],
                     [-50.34615280000001, 0.7389283, 0],
                     [-50.31677460000001, 0.7582812999999999, 0],
-                    [-50.2867296, 0.7584554999999998, 0],
+                    [-50.2876045, 0.7524731],
                     [-50.2717942, 0.7494761, 0],
-                    [-50.2858427, 0.8726370999999999, 0],
+                    [-50.2801135, 0.8716529],
+                    [-50.2805971, 0.8814998],
                     [-50.286888, 0.8937786, 0],
-                    [-50.3421632, 0.9244849000000002, 0],
-                    [-50.4689794, 0.8758201999999999, 0],
-                    [-50.48060460000001, 0.835279, 0],
-                    [-50.5904265, 0.8519707, 0],
-                    [-50.6290399, 0.8266323, 0],
-                    [-50.656636, 0.8361382, 0],
-                    [-50.6614508, 0.8475087, 0],
-                    [-50.66515689999999, 0.8228197, 0],
-                    [-50.71932339999999, 0.8147272, 0],
-                    [-50.75682030000001, 0.8094219000000001, 0],
+                    [-50.3007714, 0.9438987],
+                    [-50.3359523, 0.9518852],
+                    [-50.3622214, 0.9687884],
+                    [-50.4312061, 0.9617501],
+                    [-50.4673409, 0.9547118],
+                    [-50.5081685, 0.9411045],
+                    [-50.6118802, 0.8955899],
+                    [-50.6531691, 0.879632],
+                    [-50.664408, 0.8735218],
+                    [-50.6784839, 0.8561902],
+                    [-50.694441, 0.840239],
+                    [-50.7206781, 0.8233326],
+                    [-50.7399123, 0.8252086],
+                    [-50.7502426, 0.8247424],
+                    [-50.7596172, 0.8200486],
+                    [-50.7661878, 0.8130127],
                     [-50.8280287, 0.7869339, 0],
                     [-50.83838680000001, 0.7939337, 0],
                     [-50.84209299999999, 0.7915582, 0]
@@ -130,11 +100,7 @@
         };
 
         L.geoJSON(geojsonPacui, {
-            style: {
-                color: "#ff0000",
-                weight: 3,
-                fillOpacity: 0.15
-            }
+            style: { color: "#ff0000", weight: 3, fillOpacity: 0.15 }
         }).addTo(mapa);
     </script>
 </body>
