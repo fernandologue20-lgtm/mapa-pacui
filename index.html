@@ -24,7 +24,10 @@
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', {
             attribution: 'Tiles &copy; Esri'
         });
-
+// Linhas para remover os controles e permitir um print limpo
+        mapa.removeControl(mapa.zoomControl);
+        // Descomente a linha abaixo se quiser remover também o seletor de camadas (o ícone no canto superior direito)
+        // mapa.removeControl(mapa.layersControl);
         var mapa = L.map('mapa', {
             center: [0.8, -50.7],
             zoom: 9,
