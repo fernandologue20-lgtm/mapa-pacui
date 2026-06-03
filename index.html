@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IG Farinha do Pacuí - Amapá</title>
     
+    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
+    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -19,9 +21,74 @@
         
         /* Menu de Navegação */
         nav { background-color: #1b5e20; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; align-items: center; }
+        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; padding: 5px; }
         nav a:hover { color: #ffeb3b; }
+
+        /* ======== NOVO: ESTILOS DO MENU DROPDOWN ======== */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        /* O botão principal do dropdown */
+        .dropbtn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .dropdown:hover .dropbtn { color: #ffeb3b; }
+
+        /* A caixa que guarda os links (escondida por padrão) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 320px;
+            max-height: 400px; /* Limita a altura */
+            overflow-y: auto;  /* Cria barra de rolagem se a lista for grande */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1001;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* Estilo dos links dentro do dropdown */
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-transform: none; /* Letras normais para leitura fácil */
+            font-size: 13px;
+            font-weight: normal;
+            border-bottom: 1px solid #ddd;
+            line-height: 1.4;
+        }
+
+        .dropdown-content a:hover { background-color: #e8f5e9; color: #2e7d32; }
+
+        /* Estilo dos títulos das categorias dentro da lista */
+        .dropdown-category {
+            padding: 10px 16px 5px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #1b5e20;
+            background-color: #e0e0e0;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0; /* Faz o título grudar no topo ao rolar */
+        }
+
+        /* Faz a lista aparecer quando o rato passa por cima da caixa .dropdown */
+        .dropdown:hover .dropdown-content { display: block; }
+        /* ================================================ */
 
         /* Contêiner Principal */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -61,6 +128,7 @@
 </head>
 <body>
 
+    <!-- Menu de Navegação -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
@@ -68,11 +136,60 @@
             <a href="#ig">Por que a IG?</a>
             <a href="#mapa-secao">Mapa das Comunidades</a>
             <a href="#ciencia">Ciência e Acervo</a>
+
+            <!-- NOVO: MENU DROPDOWN DE NOTORIEDADE -->
+            <div class="dropdown">
+                <span class="dropbtn">Notoriedade ▾</span>
+                <div class="dropdown-content">
+                    
+                    <div class="dropdown-category">Institucionais e Oficiais</div>
+                    <a href="https://ap.agenciasebrae.com.br/arquivo/sebrae-anuncia-vencedores-da-1a-competicao-da-melhor-farinha-de-mandioca-do-amapa/" target="_blank">Competição valoriza produtores locais e destaca excelência (Sebrae)</a>
+                    <a href="https://agenciaamapa.com.br/noticia/32149/governo-do-amapa-entrega-segunda-certificacao-de-farinha-produzida-no-estado-durante-a-54-expofeira" target="_blank">Segunda certificação de farinha Região do Pacuí</a>
+                    <a href="https://agenciaamapa.com.br/noticia/20389/governo-do-amapa-certifica-primeira-casa-de-farinha-artesanal-no-estado" target="_blank">Primeira casa de farinha do Estado com CIE/DIAGRO</a>
+                    <a href="https://ap.agenciasebrae.com.br/cultura-empreendedora/sebrae-inicia-diagnosticos-em-pequenos-negocios-do-amapa-com-potencial-para-indicacoes-geograficas-ig/" target="_blank">Diagnóstico para IG da farinha do Pacuí</a>
+                    <a href="https://agenciaamapa.com.br/noticia/24066/32-festival-da-mandioca-governo-do-amapa-emite-documentacoes-e-realiza-palestras-sobre-programas-para-produtores-rurais" target="_blank">Festival da Mandioca</a>
+
+                    <div class="dropdown-category">Econômicas e Mercadológicas</div>
+                    <a href="https://selesnafes.com/2020/02/farinha-de-mandioca-movimenta-r-24-milhoes-em-2-anos-no-amapa/" target="_blank">Reportagem econômica: Região do Pacuí como maior produtor</a>
+                    <a href="https://globoplay.globo.com/v/8315604/" target="_blank">Farinha movimentou R$ 12 milhões na economia do Amapá (2019)</a>
+
+                    <div class="dropdown-category">Jornalísticas e Midiáticas</div>
+                    <a href="https://www.instagram.com/reel/DUHSUOsgKbV/" target="_blank">Comercialização em estabelecimento gastronômico urbano</a>
+                    <a href="https://globoplay.globo.com/v/12119142/" target="_blank">Produção de farinha com selo de inspeção em Tracajatuba</a>
+                    <a href="https://www.youtube.com/watch?v=xvH4jMYRN-s" target="_blank">Tradição e qualidade marcam a produção</a>
+                    <a href="https://www.instagram.com/p/CUfvYJIpMG3/" target="_blank">Registro antigo da "Farinha de São Joaquim do Pacuí"</a>
+                    <a href="https://www.embrapa.br/busca-de-noticias/-/noticia/18008123/livro-ensina-boas-praticas-de-fabricacao-de-farinha" target="_blank">Livro ensina boas práticas de fabricação (Embrapa)</a>
+
+                    <div class="dropdown-category">Técnico-Científicas</div>
+                    <a href="https://www2.unifap.br/ppgdas/files/2024/03/Jadson-2023-e-book-Oitenta-anos-de-novas-acionalidades-e-dinamicas-.pdf" target="_blank">Centralidade da mandioca no Pacuí</a>
+                    <a href="https://www2.unifap.br/ppgdas/files/2023/08/DISSERTACAO_PATRICIA2107.pdf" target="_blank">A Farinha do Pacuí nas Políticas Públicas de Desenvolvimento</a>
+                    <a href="https://www.infoteca.cnptia.embrapa.br/bitstream/doc/120197/1/00079010.pdf" target="_blank">Livro Farinhas de Mandioca Seca e Mista</a>
+                    <a href="https://periodicos.ufpa.br/index.php/revistamargens/article/view/2780/2911" target="_blank">Resgate da Memória Social e Identidade Territorial</a>
+                    <a href="https://agritrop.cirad.fr/513220/1/ID513220.pdf" target="_blank">Relatório técnico internacional (CIRAD)</a>
+
+                    <div class="dropdown-category">Histórico-Documentais</div>
+                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1064938" target="_blank">Diagnóstico da Cadeia Produtiva da Mandioca no Amapá</a>
+                    <a href="https://biblioteca.ibge.gov.br/biblioteca-catalogo.html?id=379&view=detalhes" target="_blank">Histórico territorial Pacuí (IBGE)</a>
+                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/347224/1/CPAFAP2001Rendimentofarinha.pdf" target="_blank">Registro técnico da produção em São Joaquim do Pacuí</a>
+                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/347223/1/CPAFAP2001Plantiomandioca.pdf" target="_blank">Recomendações ao Plantio da Mandioca Jurará</a>
+                    <a href="https://www.youtube.com/watch?v=QqV-LRNJL2M" target="_blank">Inauguração da Fábrica de farinha no Pacuí</a>
+                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/344975/1/CPAFAP1999Caracterizacaosolo.pdf" target="_blank">Caracterização do Solo sob Influência da Agricultura Familiar</a>
+
+                    <div class="dropdown-category">Culturais</div>
+                    <a href="https://www.ifap.edu.br/index.php/publicacoes/item/4657-1-tucuju-literario-do-ifap-contos-e-poemas" target="_blank">Referência em produção literária escolar (Poema)</a>
+                    <a href="https://share.google/AaDygKeqTxl2b4OfO" target="_blank">Referência cultural em obra poética (2021)</a>
+                    <a href="https://www.diariodoamapa.com.br/blogs/heraldo-almeida/vem-ca-conhecer-macapa/" target="_blank">Reconhecimento como símbolo identitário de Macapá (Música)</a>
+
+                </div>
+            </div>
+            <!-- FIM DO DROPDOWN -->
+
         </div>
     </nav>
 
     <div class="container">
         
+        <!-- Seção Hero -->
         <header id="inicio" class="hero">
             <div class="hero-content">
                 <h1>Farinha do Pacuí: O Sabor da Identidade Amapaense</h1>
@@ -80,6 +197,7 @@
             </div>
         </header>
 
+        <!-- Seção: Sobre -->
         <section id="sobre">
             <h2>O que é a Farinha do Pacuí?</h2>
             <p>A Farinha do Pacuí, produzida nas comunidades rurais do distrito de São Joaquim do Pacuí, em Macapá, é um dos pilares da agricultura familiar no Amapá. Ela não é apenas um alimento; é a expressão de um modo de vida transmitido entre gerações, com atributos sensoriais únicos, como a crocância, coloração e granulometria, que conquistaram o reconhecimento de todo o estado.</p>
@@ -104,6 +222,7 @@
             </div>
         </section>
 
+        <!-- Seção: IG -->
         <section id="ig">
             <h2>Por que a Indicação Geográfica (IG)?</h2>
             <p>Estamos em um processo fundamental de formalização técnica para o reconhecimento oficial de nossa Indicação de Procedência (IP) junto ao INPI. Esse registro é estratégico por quatro motivos principais:</p>
@@ -127,6 +246,7 @@
                 </div>
             </div>
 
+            <!-- Bloco INPI -->
             <div class="card card-inpi" style="margin-top: 30px;">
                 <h3>⚖️ Base Legal e Normas do INPI</h3>
                 <p>O processo de Indicação Geográfica é pautado por normativas federais rigorosas que protegem o patrimônio nacional. Acesse abaixo os manuais e a legislação aplicável:</p>
@@ -136,12 +256,14 @@
             </div>
         </section>
 
+        <!-- Seção: Mapa -->
         <section id="mapa-secao">
             <h2>Mapa Cartográfico das Comunidades Produtoras</h2>
             <p>Navegue pelo nosso território e conheça a delimitação oficial da área da Indicação Geográfica, a rota de acesso via rodovia AP-70 e as comunidades que mantêm viva a tradição da Farinha do Pacuí.</p>
             <div id="mapa"></div>
         </section>
 
+        <!-- Seção: Ciência e Compromisso -->
         <section id="ciencia">
             <h2>Ciência e Compromisso: Pesquisa e Inovação</h2>
             <p>Este projeto é conduzido no âmbito do <strong>PROFNIT/UNIFAP</strong>, unindo o conhecimento empírico dos nossos produtores com o rigor técnico da academia.</p>
@@ -150,7 +272,6 @@
             <div style="margin-top: 20px;">
                 <a href="#" class="btn">Caderno de Especificações (Em breve)</a>
                 <a href="#" class="btn">Dossiê de Notoriedade (Em breve)</a>
-                <a href="#" class="btn">Acessar Comprovações de Notoriedade</a>
             </div>
 
             <h3 style="margin-top: 40px; text-align: center;">Conexão Institucional</h3>
@@ -166,6 +287,7 @@
 
     </div>
 
+    <!-- Rodapé -->
     <footer>
         <h2>Farinha do Pacuí – Patrimônio do Amapá</h2>
         <p>Apoie a agricultura familiar e valorize as nossas raízes.</p>
@@ -176,6 +298,7 @@
         <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">&copy; 2026 Projeto IG Farinha do Pacuí. Desenvolvido no âmbito do Mestrado PROFNIT.</p>
     </footer>
 
+    <!-- SCRIPT DO MAPA -->
     <script>
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles &copy; Esri' });
@@ -361,6 +484,7 @@
         L.control.layers(baseMaps, overlayMaps).addTo(mapa);
     </script>
 
+    <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
     <script>
         document.addEventListener('contextmenu', function(evento) {
             evento.preventDefault(); 
