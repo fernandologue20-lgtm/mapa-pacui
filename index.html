@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style> #mapa { height: 600px; } </style>
+    <style> 
+        #mapa { height: 600px; } 
+        .label-estilo {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            font-size: 11px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
     <div id="mapa"></div>
     <script>
-        // Cria o mapa
         var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
         
@@ -17,67 +27,73 @@
         fetch(link)
             .then(res => res.json())
             .then(dados => {
-                console.log("Dados carregados:", dados); // Veja no Console (F12) se os dados chegaram
-                
                 dados.forEach(c => {
-                    // Verifica se o lat e lng são números válidos
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
                     
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        L.marker([lat, lng]).addTo(mapa)
-                         .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                        // Criamos o marcador
+                        var marcador = L.marker([lat, lng]).addTo(mapa)
+                            .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                        
+                        // Adicionamos o nome fixo acima do pino
+                        marcador.bindTooltip(c.nome, {
+                            permanent: true,
+                            direction: 'top',
+                            className: 'label-estilo',
+                            offset: [0, -10]
+                        });
                     }
                 });
             });
-        // 1. O polígono que você desenhou
-var geojsonPacui = {
-  "type": "Feature",
-  "geometry": {
-    "type": "Polygon",
-    "coordinates": [ [
-        [-50.84209299999999, 0.7915582, 0],
-        [-50.82464719999999, 0.7522673, 0],
-        [-50.79658200000001, 0.7193900000000001, 0],
-        [-50.7350131, 0.6910378, 0],
-        [-50.67448559999999, 0.6303857, 0],
-        [-50.6606113, 0.6176842, 0],
-        [-50.6557332, 0.6212951, 0],
-        [-50.6266959, 0.6462189, 0],
-        [-50.4446678, 0.666728, 0],
-        [-50.39219600000001, 0.7138748, 0],
-        [-50.34629580000001, 0.7311321999999999, 0],
-        [-50.34615280000001, 0.7389283, 0],
-        [-50.31677460000001, 0.7582812999999999, 0],
-        [-50.2867296, 0.7584554999999998, 0],
-        [-50.2717942, 0.7494761, 0],
-        [-50.2858427, 0.8726370999999999, 0],
-        [-50.286888, 0.8937786, 0],
-        [-50.3421632, 0.9244849000000002, 0],
-        [-50.4689794, 0.8758201999999999, 0],
-        [-50.48060460000001, 0.835279, 0],
-        [-50.5904265, 0.8519707, 0],
-        [-50.6290399, 0.8266323, 0],
-        [-50.656636, 0.8361382, 0],
-        [-50.6614508, 0.8475087, 0],
-        [-50.66515689999999, 0.8228197, 0],
-        [-50.71932339999999, 0.8147272, 0],
-        [-50.75682030000001, 0.8094219000000001, 0],
-        [-50.8280287, 0.7869339, 0],
-        [-50.83838680000001, 0.7939337, 0],
-        [-50.84209299999999, 0.7915582, 0]
-    ] ]
-  }
-};
 
-// 2. Adicionando ao mapa com o estilo que você definiu no GeoJSON
-L.geoJSON(geojsonPacui, {
-    style: {
-        color: "#ff0000",       // Vermelho (como definido no seu JSON)
-        weight: 4,              // Espessura da linha
-        fillOpacity: 0.25       // Transparência
-    }
-}).addTo(mapa);
+        // Polígono do Pacuí
+        var geojsonPacui = {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [ [
+                    [-50.84209299999999, 0.7915582, 0],
+                    [-50.82464719999999, 0.7522673, 0],
+                    [-50.79658200000001, 0.7193900000000001, 0],
+                    [-50.7350131, 0.6910378, 0],
+                    [-50.67448559999999, 0.6303857, 0],
+                    [-50.6606113, 0.6176842, 0],
+                    [-50.6557332, 0.6212951, 0],
+                    [-50.6266959, 0.6462189, 0],
+                    [-50.4446678, 0.666728, 0],
+                    [-50.39219600000001, 0.7138748, 0],
+                    [-50.34629580000001, 0.7311321999999999, 0],
+                    [-50.34615280000001, 0.7389283, 0],
+                    [-50.31677460000001, 0.7582812999999999, 0],
+                    [-50.2867296, 0.7584554999999998, 0],
+                    [-50.2717942, 0.7494761, 0],
+                    [-50.2858427, 0.8726370999999999, 0],
+                    [-50.286888, 0.8937786, 0],
+                    [-50.3421632, 0.9244849000000002, 0],
+                    [-50.4689794, 0.8758201999999999, 0],
+                    [-50.48060460000001, 0.835279, 0],
+                    [-50.5904265, 0.8519707, 0],
+                    [-50.6290399, 0.8266323, 0],
+                    [-50.656636, 0.8361382, 0],
+                    [-50.6614508, 0.8475087, 0],
+                    [-50.66515689999999, 0.8228197, 0],
+                    [-50.71932339999999, 0.8147272, 0],
+                    [-50.75682030000001, 0.8094219000000001, 0],
+                    [-50.8280287, 0.7869339, 0],
+                    [-50.83838680000001, 0.7939337, 0],
+                    [-50.84209299999999, 0.7915582, 0]
+                ] ]
+            }
+        };
+
+        L.geoJSON(geojsonPacui, {
+            style: {
+                color: "#ff0000",
+                weight: 3,
+                fillOpacity: 0.15
+            }
+        }).addTo(mapa);
     </script>
 </body>
 </html>
