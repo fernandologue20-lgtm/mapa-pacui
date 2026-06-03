@@ -5,7 +5,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> 
-        #mapa { height: 600px; } 
+        /* Remove margens e garante que o mapa ocupe a tela toda */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #mapa { 
+            height: 100vh; 
+            width: 100vw;
+        }
         .label-estilo {
             background: transparent;
             border: none;
