@@ -24,16 +24,24 @@
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', {
             attribution: 'Tiles &copy; Esri'
         });
-// Linhas para remover os controles e permitir um print limpo
-        mapa.removeControl(mapa.zoomControl);
-        // Descomente a linha abaixo se quiser remover também o seletor de camadas (o ícone no canto superior direito)
-        // mapa.removeControl(mapa.layersControl);
+// 1. Configuração das camadas base
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', {
+            attribution: 'Tiles &copy; Esri'
+        });
+
+        // CRIAÇÃO DO MAPA
         var mapa = L.map('mapa', {
             center: [0.8, -50.7],
             zoom: 9,
             layers: [osm]
         });
 
+        // AGORA QUE O MAPA EXISTE, podemos remover os controles
+        mapa.removeControl(mapa.zoomControl); 
+        L.control.scale({imperial: false, metric: true}).addTo(mapa);
+        // Descomente a linha abaixo se quiser remover também o seletor de camadas (o ícone no canto superior direito)
+        // mapa.removeControl(mapa.layersControl);
         // 2. Grupo para agrupar marcadores (Cluster)
         var markers = L.markerClusterGroup();
 
