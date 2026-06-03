@@ -1,9 +1,15 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+    <title>Mapa do Pacuí</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
     <style> 
         body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
         #mapa { height: 100vh; width: 100vw; }
@@ -13,11 +19,22 @@
 <body>
     <div id="mapa"></div>
     <script>
-        var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-        
+        // 1. Configuração das camadas base
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', {
+            attribution: 'Tiles &copy; Esri'
+        });
+
+        var mapa = L.map('mapa', {
+            center: [0.8, -50.7],
+            zoom: 9,
+            layers: [osm]
+        });
+
+        // 2. Grupo para agrupar marcadores (Cluster)
+        var markers = L.markerClusterGroup();
+
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
-        
         fetch(link)
             .then(res => res.json())
             .then(dados => {
@@ -25,14 +42,16 @@
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        L.marker([lat, lng]).addTo(mapa)
+                        var marker = L.marker([lat, lng])
                             .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha)
                             .bindTooltip(c.nome, { permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -10] });
+                        markers.addLayer(marker);
                     }
                 });
+                mapa.addLayer(markers);
             });
 
-        // Cole aqui sua lista de coordenadas no formato [[lng, lat], [lng, lat]]
+        // 3. Coordenadas e Polígono
         var coordenadas = [
   [-50.8875106, 0.7741841], [-50.8873946, 0.7742603], [-50.8499791, 0.7558767], [-50.8488836, 0.7553734], [-50.847958, 0.7545191],
   [-50.8477444, 0.7541988], [-50.8466765, 0.7548751], [-50.8458934, 0.7546259], [-50.8455018, 0.75427], [-50.845217, 0.7543412],
@@ -131,11 +150,14 @@
   [-50.8617621, 0.8095844], [-50.8765671, 0.8010027], [-50.8857935, 0.7975699], [-50.88751, 0.7741844]
 ];
 
-        L.polyline(coordenadas.map(c => [c[1], c[0]]), {
-            color: "#ff0000",
-            weight: 3,
-            opacity: 1
+        var poligono = L.polygon(coordenadas.map(c => [c[1], c[0]]), {
+            color: "#d32f2f", weight: 2, fillColor: "#f44336", fillOpacity: 0.1
         }).addTo(mapa);
+
+        // 4. Controle de Camadas
+        var baseMaps = { "Mapa Padrão": osm, "Satélite": satelite };
+        var overlayMaps = { "Território Pacuí": poligono, "Comunidades": markers };
+        L.control.layers(baseMaps, overlayMaps).addTo(mapa);
     </script>
 </body>
 </html>
