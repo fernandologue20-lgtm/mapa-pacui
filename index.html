@@ -20,20 +20,9 @@
 <body>
     <div id="mapa"></div>
     <script>
-        // 1. Inicializa o mapa
+        // Inicializa o mapa centralizado no Pacuí
         var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
-        
-        // 2. Camadas base
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-        
-        // 3. Camada de Imagem Sobreposta (Certifique-se que o arquivo existe no repositório)
-        var imageBounds = [[0.98, -50.86], [0.57, -50.25]]; // Ajuste estes números se necessário
-        var overlayMapa = L.imageOverlay('mapa-sobreposto.png', imageBounds, { opacity: 0.6 });
-
-        // 4. Controle de Camadas
-        var baseMaps = { "Mapa Padrão": osm };
-        var overlayMaps = { "Mapa do Pacuí (Imagem)": overlayMapa };
-        L.control.layers(baseMaps, overlayMaps).addTo(mapa);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
         
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
 
@@ -43,17 +32,22 @@
                 dados.forEach(c => {
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
+                    
                     if (!isNaN(lat) && !isNaN(lng)) {
                         var marcador = L.marker([lat, lng]).addTo(mapa)
                             .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                        
                         marcador.bindTooltip(c.nome, {
-                            permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -10]
+                            permanent: true,
+                            direction: 'top',
+                            className: 'label-estilo',
+                            offset: [0, -10]
                         });
                     }
                 });
             });
 
-        // Polígono fixo
+        // Polígono fixo do território
         var geojsonPacui = {
             "type": "Feature",
             "geometry": {
