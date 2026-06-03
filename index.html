@@ -25,70 +25,15 @@
         nav a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; padding: 5px; }
         nav a:hover { color: #ffeb3b; }
 
-        /* ======== NOVO: ESTILOS DO MENU DROPDOWN ======== */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        
-        /* O botão principal do dropdown */
-        .dropbtn {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
+        /* Menu Dropdown de Notoriedade */
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; padding: 5px; }
         .dropdown:hover .dropbtn { color: #ffeb3b; }
-
-        /* A caixa que guarda os links (escondida por padrão) */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 320px;
-            max-height: 400px; /* Limita a altura */
-            overflow-y: auto;  /* Cria barra de rolagem se a lista for grande */
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1001;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        /* Estilo dos links dentro do dropdown */
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-transform: none; /* Letras normais para leitura fácil */
-            font-size: 13px;
-            font-weight: normal;
-            border-bottom: 1px solid #ddd;
-            line-height: 1.4;
-        }
-
+        .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 320px; max-height: 400px; overflow-y: auto; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1001; border-radius: 5px; margin-top: 10px; }
+        .dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; text-transform: none; font-size: 13px; font-weight: normal; border-bottom: 1px solid #ddd; line-height: 1.4; }
         .dropdown-content a:hover { background-color: #e8f5e9; color: #2e7d32; }
-
-        /* Estilo dos títulos das categorias dentro da lista */
-        .dropdown-category {
-            padding: 10px 16px 5px;
-            font-size: 11px;
-            font-weight: bold;
-            color: #1b5e20;
-            background-color: #e0e0e0;
-            text-transform: uppercase;
-            position: sticky;
-            top: 0; /* Faz o título grudar no topo ao rolar */
-        }
-
-        /* Faz a lista aparecer quando o rato passa por cima da caixa .dropdown */
+        .dropdown-category { padding: 10px 16px 5px; font-size: 11px; font-weight: bold; color: #1b5e20; background-color: #e0e0e0; text-transform: uppercase; position: sticky; top: 0; }
         .dropdown:hover .dropdown-content { display: block; }
-        /* ================================================ */
 
         /* Contêiner Principal */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -104,6 +49,10 @@
         /* Mapa */
         #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; }
         .label-estilo { background: transparent; border: none; box-shadow: none; font-size: 11px; font-weight: bold; color: #2c3e50; text-shadow: 1px 1px 2px white; }
+
+        /* Vídeo Responsivo */
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
 
         /* Cards e Listas */
         .card { background: #f9f9f9; padding: 20px; border-left: 5px solid #2e7d32; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
@@ -133,15 +82,14 @@
         <div class="nav-container">
             <a href="#inicio">Início</a>
             <a href="#sobre">A Farinha</a>
+            <a href="#video-educativo">O que é IG?</a>
             <a href="#ig">Por que a IG?</a>
             <a href="#mapa-secao">Mapa das Comunidades</a>
             <a href="#ciencia">Ciência e Acervo</a>
 
-            <!-- NOVO: MENU DROPDOWN DE NOTORIEDADE -->
             <div class="dropdown">
                 <span class="dropbtn">Notoriedade ▾</span>
                 <div class="dropdown-content">
-                    
                     <div class="dropdown-category">Institucionais e Oficiais</div>
                     <a href="https://ap.agenciasebrae.com.br/arquivo/sebrae-anuncia-vencedores-da-1a-competicao-da-melhor-farinha-de-mandioca-do-amapa/" target="_blank">Competição valoriza produtores locais e destaca excelência (Sebrae)</a>
                     <a href="https://agenciaamapa.com.br/noticia/32149/governo-do-amapa-entrega-segunda-certificacao-de-farinha-produzida-no-estado-durante-a-54-expofeira" target="_blank">Segunda certificação de farinha Região do Pacuí</a>
@@ -179,11 +127,8 @@
                     <a href="https://www.ifap.edu.br/index.php/publicacoes/item/4657-1-tucuju-literario-do-ifap-contos-e-poemas" target="_blank">Referência em produção literária escolar (Poema)</a>
                     <a href="https://share.google/AaDygKeqTxl2b4OfO" target="_blank">Referência cultural em obra poética (2021)</a>
                     <a href="https://www.diariodoamapa.com.br/blogs/heraldo-almeida/vem-ca-conhecer-macapa/" target="_blank">Reconhecimento como símbolo identitário de Macapá (Música)</a>
-
                 </div>
             </div>
-            <!-- FIM DO DROPDOWN -->
-
         </div>
     </nav>
 
@@ -217,28 +162,38 @@
             </div>
             <div class="card">
                 <h3>🤝 ASMOPAP</h3>
-                <p>A Associação dos Moradores e Produtores Agropecuários da Comunidade de Salamito do Pacuí é a entidade que representa nossa organização coletiva, fortalecendo a economia local e lutando pela valorização contínua do nosso produto.</p>
+                <p>A Associação dos Moradores e Produtores Agropecuários da Comunidade de Salamito do Pacuí é a entidade que representa a organização coletiva, fortalecendo a economia local e lutando pela valorização contínua do produto regional.</p>
                 <a href="#" class="btn">Saiba mais sobre a Associação</a>
+            </div>
+        </section>
+
+        <!-- Seção do Vídeo Educativo -->
+        <section id="video-educativo">
+            <h2>Entendendo a Propriedade Intelectual</h2>
+            <p>A Indicação Geográfica é um instrumento poderoso de Propriedade Intelectual. Assista à animação abaixo para compreender como ela protege a história, a qualidade e os métodos de produção de produtos únicos no mundo inteiro, servindo como um escudo jurídico e comercial para as comunidades produtoras.</p>
+            
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/EXEMPLO_LINK_AQUI" title="Animação Educativa sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
         <!-- Seção: IG -->
         <section id="ig">
             <h2>Por que a Indicação Geográfica (IG)?</h2>
-            <p>Estamos em um processo fundamental de formalização técnica para o reconhecimento oficial de nossa Indicação de Procedência (IP) junto ao INPI. Esse registro é estratégico por quatro motivos principais:</p>
+            <p>Este portal integra o processo de formalização técnica para o reconhecimento oficial da Indicação de Procedência (IP) junto ao INPI. Esse registro é estratégico por quatro motivos principais:</p>
             
             <div class="grid-motivos">
                 <div class="motivo-item">
                     <h4>🛡️ Proteção do saber-fazer</h4>
-                    <p>Blindamos nossos métodos tradicionais contra a concorrência desleal e a descaracterização.</p>
+                    <p>Blindamos métodos tradicionais contra a concorrência desleal e a descaracterização.</p>
                 </div>
                 <div class="motivo-item">
                     <h4>📈 Valorização econômica</h4>
-                    <p>Garantimos que a nossa farinha seja reconhecida pelo seu valor real, gerando mais renda para as famílias produtoras.</p>
+                    <p>Garantimos que a farinha seja reconhecida pelo seu valor real, gerando mais renda para as famílias produtoras.</p>
                 </div>
                 <div class="motivo-item">
                     <h4>🌱 Desenvolvimento sustentável</h4>
-                    <p>Promovemos o crescimento do nosso território respeitando o meio ambiente e as práticas tradicionais.</p>
+                    <p>Promovemos o crescimento do território respeitando o meio ambiente e as práticas tradicionais.</p>
                 </div>
                 <div class="motivo-item">
                     <h4>⭐ Qualidade garantida</h4>
@@ -259,15 +214,23 @@
         <!-- Seção: Mapa -->
         <section id="mapa-secao">
             <h2>Mapa Cartográfico das Comunidades Produtoras</h2>
-            <p>Navegue pelo nosso território e conheça a delimitação oficial da área da Indicação Geográfica, a rota de acesso via rodovia AP-70 e as comunidades que mantêm viva a tradição da Farinha do Pacuí.</p>
+            <p>Navegue pelo território e conheça a delimitação oficial da área da Indicação Geográfica, a rota de acesso via rodovia AP-70 e as comunidades que mantêm viva a tradição da Farinha do Pacuí.</p>
+            
+            <!-- Botão de GPS Externo (Opção 2) -->
+            <div style="margin-bottom: 15px;">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=0.7523259,-50.60416" target="_blank" class="btn btn-blue" style="background-color: #4285F4;">
+                    🚗 Abrir Rota no Google Maps
+                </a>
+            </div>
+
             <div id="mapa"></div>
         </section>
 
         <!-- Seção: Ciência e Compromisso -->
         <section id="ciencia">
             <h2>Ciência e Compromisso: Pesquisa e Inovação</h2>
-            <p>Este projeto é conduzido no âmbito do <strong>PROFNIT/UNIFAP</strong>, unindo o conhecimento empírico dos nossos produtores com o rigor técnico da academia.</p>
-            <p>Estamos estruturando o Caderno de Especificações Técnicas (CET) e o Dossiê de Notoriedade, além da delimitação oficial da área da Indicação Geográfica, garantindo que a Farinha do Pacuí receba o reconhecimento jurídico que ela já possui na memória e na preferência do consumidor amapaense.</p>
+            <p>Este projeto é conduzido interligando o conhecimento empírico dos produtores com o rigor técnico e acadêmico para o desenvolvimento regional.</p>
+            <p>Estão a ser estruturados o Caderno de Especificações Técnicas (CET) e o Dossiê de Notoriedade, além da delimitação oficial da área da Indicação Geográfica, garantindo que a Farinha do Pacuí receba o reconhecimento jurídico que já possui na memória e na preferência do consumidor amapaense.</p>
             
             <div style="margin-top: 20px;">
                 <a href="#" class="btn">Caderno de Especificações (Em breve)</a>
@@ -290,12 +253,12 @@
     <!-- Rodapé -->
     <footer>
         <h2>Farinha do Pacuí – Patrimônio do Amapá</h2>
-        <p>Apoie a agricultura familiar e valorize as nossas raízes.</p>
+        <p>Apoie a agricultura familiar e valorize as tradições locais.</p>
         <div style="margin-top: 20px;">
-            <a href="#sobre" class="btn btn-outline">Conheça nossa História</a>
-            <a href="#mapa-secao" class="btn btn-outline">Apoie nossos Produtores</a>
+            <a href="#sobre" class="btn btn-outline">Conhecer a História</a>
+            <a href="#mapa-secao" class="btn btn-outline">Apoiar os Produtores</a>
         </div>
-        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">&copy; 2026 Projeto IG Farinha do Pacuí. Desenvolvido no âmbito do Mestrado PROFNIT.</p>
+        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">&copy; 2026 Projeto IG Farinha do Pacuí.</p>
     </footer>
 
     <!-- SCRIPT DO MAPA -->
@@ -433,7 +396,7 @@
             color: "#d32f2f", weight: 2, fillColor: "#f44336", fillOpacity: 0.1
         }).addTo(mapa);
 
-        // Nova Rota (Rodovia AP-70)
+        // Rota (Rodovia AP-70)
         var coordenadasRota = [
             [-51.0549692, 0.1019977], [-51.0542918, 0.115438], [-51.057635, 0.1281077], [-51.0576207, 0.1293704],
             [-51.0572333, 0.1306761], [-51.0563867, 0.1319961], [-51.0551384, 0.1330866], [-51.0470171, 0.1367024],
@@ -482,6 +445,36 @@
         var baseMaps = { "Mapa Padrão": osm, "Satélite": satelite };
         var overlayMaps = { "Território Pacuí": poligono, "Rodovia AP-70": rota, "Comunidades": markers };
         L.control.layers(baseMaps, overlayMaps).addTo(mapa);
+
+        // === NOVO: LOCALIZAÇÃO DO USUÁRIO (GPS EM TEMPO REAL) ===
+        var pinoUsuario = null;
+
+        // Pede permissão e fica rastreando o GPS continuamente
+        mapa.locate({setView: false, watch: true, enableHighAccuracy: true});
+
+        // Quando o celular envia a localização
+        mapa.on('locationfound', function(e) {
+            if (!pinoUsuario) {
+                // Se é a primeira vez, cria um círculo azul
+                pinoUsuario = L.circleMarker(e.latlng, {
+                    radius: 8,
+                    fillColor: "#2196F3",
+                    color: "#ffffff",
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 1
+                }).addTo(mapa);
+                pinoUsuario.bindPopup("<b>Você está aqui!</b>").openPopup();
+            } else {
+                // Atualiza a posição
+                pinoUsuario.setLatLng(e.latlng);
+            }
+        });
+
+        // Se a pessoa não der permissão de GPS
+        mapa.on('locationerror', function(e) {
+            console.log("Não foi possível acessar o GPS: " + e.message);
+        });
     </script>
 
     <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
