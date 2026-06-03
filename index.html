@@ -4,18 +4,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+    
     <style> 
-        /* Remove margens e garante que o mapa ocupe a tela toda */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-        }
-        #mapa { 
-            height: 100vh; 
-            width: 100vw;
-        }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
+        #mapa { height: 100vh; width: 100vw; }
         .label-estilo {
             background: transparent;
             border: none;
@@ -35,6 +28,45 @@
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
 
         fetch(link)
+            .then(res => res.json())
+            .then(dados => {
+                let pontos = []; 
+                
+                dados.forEach(c => {
+                    var lat = parseFloat(c.lat);
+                    var lng = parseFloat(c.lng);
+                    
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        // 1. Criamos o marcador
+                        var marcador = L.marker([lat, lng]).addTo(mapa)
+                            .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
+                        
+                        marcador.bindTooltip(c.nome, {
+                            permanent: true,
+                            direction: 'top',
+                            className: 'label-estilo',
+                            offset: [0, -10]
+                        });
+                        
+                        // 2. Adiciona o ponto na lista para calcular o polígono automático
+                        pontos.push(turf.point([lng, lat])); 
+                    }
+                });
+
+                // 3. Calcula o polígono automaticamente (Convex Hull)
+                if (pontos.length > 2) {
+                    var featureCollection = turf.featureCollection(pontos);
+                    var areaAutomatica = turf.convex(featureCollection);
+
+                    // 4. Desenha o polígono no mapa
+                    L.geoJSON(areaAutomatica, {
+                        style: { color: "#ff0000", weight: 3, fillOpacity: 0.15 }
+                    }).addTo(mapa);
+                }
+            });
+    </script>
+</body>
+</html>        fetch(link)
             .then(res => res.json())
             .then(dados => {
                 dados.forEach(c => {
