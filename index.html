@@ -20,8 +20,20 @@
 <body>
     <div id="mapa"></div>
     <script>
+        // 1. Inicializa o mapa
         var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+        
+        // 2. Camadas base
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+        
+        // 3. Camada de Imagem Sobreposta (Certifique-se que o arquivo existe no repositório)
+        var imageBounds = [[0.98, -50.86], [0.57, -50.25]]; // Ajuste estes números se necessário
+        var overlayMapa = L.imageOverlay('mapa-sobreposto.png', imageBounds, { opacity: 0.6 });
+
+        // 4. Controle de Camadas
+        var baseMaps = { "Mapa Padrão": osm };
+        var overlayMaps = { "Mapa do Pacuí (Imagem)": overlayMapa };
+        L.control.layers(baseMaps, overlayMaps).addTo(mapa);
         
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
 
@@ -31,39 +43,26 @@
                 dados.forEach(c => {
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
-                    
                     if (!isNaN(lat) && !isNaN(lng)) {
                         var marcador = L.marker([lat, lng]).addTo(mapa)
                             .bindPopup("<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha);
-                        
                         marcador.bindTooltip(c.nome, {
-                            permanent: true,
-                            direction: 'top',
-                            className: 'label-estilo',
-                            offset: [0, -10]
+                            permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -10]
                         });
                     }
                 });
             });
 
-        // Polígono atualizado
+        // Polígono fixo
         var geojsonPacui = {
             "type": "Feature",
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [ [
-                    [-50.851278, 0.8081065],
-                    [-50.5534, 0.9196998],
-                    [-50.4913093, 0.9417037],
-                    [-50.4237169, 0.9652792],
-                    [-50.347479, 0.9668509],
-                    [-50.2893181, 0.9637075],
-                    [-50.2696692, 0.8536872],
-                    [-50.2570938, 0.7444497],
-                    [-50.4724463, 0.6493559],
-                    [-50.6485009, 0.5911984],
-                    [-50.701946, 0.5825533],
-                    [-50.8347729, 0.7248024],
+                    [-50.851278, 0.8081065], [-50.5534, 0.9196998], [-50.4913093, 0.9417037],
+                    [-50.4237169, 0.9652792], [-50.347479, 0.9668509], [-50.2893181, 0.9637075],
+                    [-50.2696692, 0.8536872], [-50.2570938, 0.7444497], [-50.4724463, 0.6493559],
+                    [-50.6485009, 0.5911984], [-50.701946, 0.5825533], [-50.8347729, 0.7248024],
                     [-50.851278, 0.8081065]
                 ] ]
             }
