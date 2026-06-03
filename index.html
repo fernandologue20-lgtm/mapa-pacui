@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IG Farinha do Pacuí - Amapá</title>
     
+    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
+    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -50,6 +52,7 @@
 </head>
 <body>
 
+    <!-- Menu de Navegação Fixado no Topo -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
@@ -57,20 +60,22 @@
             <a href="#linha-tempo">Linha do Tempo</a>
             <a href="#mapa-secao">Mapa Interativo</a>
             <a href="#premiacoes">Premiações</a>
+            <a href="#notoriedade">Notoriedade</a>
             <a href="#documentos">Acervo e IG</a>
         </div>
     </nav>
 
     <div class="container">
         
+        <!-- Seção Hero -->
         <header id="inicio" class="hero">
             <div class="hero-content">
                 <h1>Indicação Geográfica: Farinha do Pacuí</h1>
                 <p>O reconhecimento do saber fazer e da notoriedade da farinha de mandioca do Estado do Amapá.</p>
-                <p><em>Projeto de Dissertação de Mestrado</em></p>
             </div>
         </header>
 
+        <!-- Seção: História e ASMOPAP -->
         <section id="historia">
             <h2>A Origem e a Cultura da Produção</h2>
             <p>A região do Pacuí, localizada no estado do Amapá, possui uma tradição histórica profunda ligada à terra e à agricultura familiar. Desde o seu surgimento, a comunidade formou uma cultura identitária muito forte ao redor do cultivo da mandioca e da produção de farinha.</p>
@@ -81,6 +86,7 @@
             </div>
         </section>
 
+        <!-- Seção: Linha do Tempo -->
         <section id="linha-tempo">
             <h2>Linha do Tempo: Reconhecimento e Evolução</h2>
             
@@ -98,12 +104,15 @@
             </div>
         </section>
 
+        <!-- Seção: Mapa Interativo -->
         <section id="mapa-secao">
             <h2>Mapa Cartográfico das Comunidades Produtoras</h2>
             <p>O mapa abaixo localiza a extensão do distrito do Pacuí e as casas de farinha catalogadas. Utilize o menu no canto superior direito do mapa para alterar a visualização entre o mapa padrão e a imagem de satélite.</p>
+            <!-- O MAPA ENTRA AQUI -->
             <div id="mapa"></div>
         </section>
 
+        <!-- Seção: Premiações -->
         <section id="premiacoes">
             <h2>A Melhor Farinha do Estado do Amapá (2025)</h2>
             <p>A excelência da Farinha do Pacuí foi atestada publicamente durante a edição comemorativa de 10 Anos da Feira de Produtos do Campo. O concurso, realizado pelo Sebrae, avaliou critérios rigorosos como higiene, manipulação correta, qualidade do atendimento e crocância.</p>
@@ -126,17 +135,49 @@
             <a href="https://ap.agenciasebrae.com.br/arquivo/sebrae-anuncia-vencedores-da-1a-competicao-da-melhor-farinha-de-mandioca-do-amapa/" target="_blank" class="btn">Ler a matéria oficial no Sebrae</a>
         </section>
 
+        <!-- Seção: Dossiê de Notoriedade -->
+        <section id="notoriedade">
+            <h2>Acervo Probatório de Notoriedade</h2>
+            <p>A reputação da Farinha do Pacuí não é apenas reconhecida popularmente, mas atestada por um robusto conjunto de evidências documentais que comprovam a sua continuidade histórica e importância regional.</p>
+            
+            <div class="card">
+                <h3>🏛️ Reconhecimento Institucional e Oficial</h3>
+                <p>A excelência da produção reflete-se em certificações sanitárias oficiais, como a obtenção do Certificado de Inspeção Estadual (CIE/DIAGRO) pelas casas de farinha locais, além de contínuos prêmios de qualidade técnica concedidos pelo SEBRAE em competições estaduais.</p>
+            </div>
+
+            <div class="card">
+                <h3>💰 Impacto Econômico e Mercadológico</h3>
+                <p>A cadeia produtiva do Pacuí atua como eixo estruturante da economia rural local. Registros e reportagens indicam movimentações financeiras expressivas (entre R$ 12 a R$ 24 milhões) geradas pela farinha de mandioca na economia do Amapá, refletindo a sua elevada procura e valorização no mercado.</p>
+            </div>
+
+            <div class="card">
+                <h3>📰 Visibilidade Midiática</h3>
+                <p>O produto possui ampla difusão em jornais e reportagens televisivas, que documentam não só a tradição do modo de fazer, mas também o forte apelo comercial e a sua presença constante em estabelecimentos gastronômicos dos centros urbanos.</p>
+            </div>
+
+            <div class="card">
+                <h3>🔬 Base Técnico-Científica e Histórica</h3>
+                <p>A consolidação territorial do Pacuí é documentada cientificamente há décadas. Estudos técnicos (incluindo pesquisas da Embrapa) e relatórios de desenvolvimento rural datados desde os anos 2000 atestam as práticas tradicionais, a estrutura agrícola e a identidade única associada ao território.</p>
+            </div>
+
+            <div class="card">
+                <h3>🎭 Referência Cultural Amapaense</h3>
+                <p>Muito além da economia, o nome "Farinha do Pacuí" está enraizado no imaginário popular, sendo referenciado em poemas e obras musicais como um verdadeiro símbolo identitário da região de Macapá e do estado do Amapá.</p>
+            </div>
+        </section>
+
+        <!-- Seção: Documentos IG -->
         <section id="documentos">
             <h2>Acervo Técnico e Indicação Geográfica</h2>
             <p>Acesse os documentos que fundamentam o processo de reconhecimento da Indicação Geográfica (IG) da Farinha do Pacuí.</p>
             <br>
             <a href="#" class="btn">Caderno de Especificações Técnicas (PDF)</a>
             <a href="#" class="btn">Dossiê de Notoriedade (PDF)</a>
-            <a href="#" class="btn">Dissertação de Mestrado (Em Breve)</a>
         </section>
 
     </div>
 
+    <!-- SCRIPT DO MAPA -->
     <script>
         // 1. Configuração das camadas base
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
