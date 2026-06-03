@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Mapa do Pacuí</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style> 
@@ -14,12 +13,11 @@
 <body>
     <div id="mapa"></div>
     <script>
-        // 1. Inicializa o mapa
         var mapa = L.map('mapa').setView([0.8, -50.7], 9); 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
         
-        // 2. Carrega comunidades da planilha
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
+        
         fetch(link)
             .then(res => res.json())
             .then(dados => {
@@ -34,14 +32,11 @@
                 });
             });
 
-        // 3. Contorno detalhado do Pacuí (Substitua esta lista pela sua lista completa)
+        // Cole aqui sua lista de coordenadas no formato [[lng, lat], [lng, lat]]
         var coordenadas = [
-            [-50.8873946, 0.7742603], [-50.8499791, 0.7558767], [-50.8488836, 0.7553734], 
-            /* ... cole aqui a sua lista completa de coordenadas ... */
-            [-50.88751, 0.7741844]
+             [-50.8873946, 0.7742603], [-50.8499791, 0.7558767] // ... cole todas aqui
         ];
 
-        // 4. Renderiza a linha no mapa
         L.polyline(coordenadas.map(c => [c[1], c[0]]), {
             color: "#ff0000",
             weight: 3,
