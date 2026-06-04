@@ -68,7 +68,7 @@
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
         
-        /* NOVO: Estilos do Menu Flutuante (Janela Modal) */
+        /* Estilos do Menu Flutuante (Janela Modal) */
         .modal-bg { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
         .modal-janela { background-color: #fff; margin: 5vh auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .modal-fechar { position: absolute; right: 20px; top: 15px; font-size: 28px; font-weight: bold; color: #aaa; cursor: pointer; transition: 0.3s; }
@@ -105,9 +105,10 @@
             </div>
         </header>
 
-        <!-- SECÇÃO: PANORAMA BRASIL -->
+        <!-- SECÇÃO: PANORAMA BRASIL ATUALIZADA (2025) -->
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
+            
             <p>O panorama de Indicações Geográficas (IGs) do INPI em 2025 consolidou uma expansão histórica, registrando um marco de <strong>161 IGs reconhecidas</strong> no país. Esse crescimento, fortemente impulsionado pela parceria com o Sebrae, consolida as IGs como um motor de desenvolvimento regional, valorização cultural e expansão do turismo.</p>
             <p style="font-size: 0.9em;"><em>Fonte Oficial: <a href="https://www.gov.br/inpi/pt-br/central-de-conteudo/noticias/inpi-reconhece-duas-novas-igs-e-alcanca-150-registros-brasileiros" target="_blank" style="color: #1565c0; text-decoration: none;">INPI - Registros Brasileiros</a></em></p>
             
@@ -246,7 +247,7 @@
 
     </div>
 
-    <!-- NOVO: ESTRUTURA DO MENU FLUTUANTE (MODAL) -->
+    <!-- ESTRUTURA DO MENU FLUTUANTE (MODAL) COM SUPORTE A FOTO -->
     <div id="menuFlutuante" class="modal-bg">
         <div class="modal-janela">
             <span class="modal-fechar" onclick="fecharModal()">&times;</span>
@@ -270,6 +271,11 @@
             <div class="modal-seccao" style="border-left-color: #1565c0;">
                 <h4>🔬 Dados Físico-Químicos (EMBRAPA)</h4>
                 <p id="modalEmbrapa">Carregando...</p>
+                
+                <!-- NOVO: Espaço preparado para receber a foto da amostra de farinha -->
+                <div id="containerFotoFarinha" style="display: none; text-align: center; margin-top: 15px;">
+                    <img id="modalFotoFarinha" src="" alt="Amostra da Farinha" style="max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                </div>
             </div>
 
             <div class="modal-seccao" style="border-left-color: #2e7d32; background-color: #e8f5e9;">
@@ -298,10 +304,9 @@
         }
 
         function abrirModal(index, linkRota) {
-            // Vai buscar os dados ao armazém temporário usando o index
             var dados = window.armazemComunidades[index];
             
-            // Preenche a janela com os dados reais ou com uma mensagem de que ainda está a ser levantado
+            // Preenche os textos básicos
             document.getElementById('modalNome').innerText = dados.nome || "Comunidade Produtora";
             document.getElementById('modalHistoria').innerText = dados.historia || "Informação em levantamento junto à comunidade local.";
             document.getElementById('modalInfra').innerText = dados.infraestrutura || "Informação sobre quantidade de casas de farinha (manuais/mecanizadas) em atualização.";
@@ -309,9 +314,20 @@
             document.getElementById('modalEmbrapa').innerText = dados.embrapa || "Aguardando compilação dos dados de análise laboratorial.";
             document.getElementById('modalEconomia').innerText = dados.economia || "Levantamento de indicadores económicos em processamento.";
             
-            document.getElementById('modalBotaoRota').href = linkRota;
+            // NOVO: Lógica inteligente para carregar a fotografia da Farinha
+            var imgFarinha = document.getElementById('modalFotoFarinha');
+            var containerFoto = document.getElementById('containerFotoFarinha');
             
-            // Mostra a janela no ecrã
+            // Se existir uma coluna "foto" na planilha e ela tiver algum link preenchido
+            if (dados.foto && dados.foto.trim() !== "") {
+                imgFarinha.src = dados.foto;          // Atribui o link da planilha à imagem
+                containerFoto.style.display = 'block';// Torna a caixa da imagem visível
+            } else {
+                imgFarinha.src = "";                  // Limpa a imagem
+                containerFoto.style.display = 'none'; // Esconde a caixa para não ocupar espaço
+            }
+
+            document.getElementById('modalBotaoRota').href = linkRota;
             document.getElementById('menuFlutuante').style.display = 'block';
         }
 
@@ -341,14 +357,10 @@
                     var lng = parseFloat(c.lng);
                     
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        // Guarda o produtor no armazém temporário
                         window.armazemComunidades.push(c);
-                        // Descobre o "número da gaveta" (index) onde ele foi guardado
                         var index = window.armazemComunidades.length - 1;
-                        
                         var linkRota = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
                         
-                        // O novo balão agora tem um botão que chama a função abrirModal
                         var conteudoBalao = "<div style='text-align:center;'><b>" + c.nome + "</b><br><span style='color:#555;'>Farinha: " + c.tipoFarinha + "</span><br><br>" +
                                             "<button onclick='abrirModal(" + index + ", \"" + linkRota + "\")' style='background:#2e7d32; color:white; padding:8px 10px; border:none; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-bottom:5px; font-size:13px;'>📖 Ver Detalhes Completos</button>" +
                                             "</div>";
