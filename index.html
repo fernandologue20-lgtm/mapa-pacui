@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal das Indicações Geográficas do Amapá</title>
+    <title>Inventário Digital de Indicações Geográficas - Amapá</title>
     
+    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
+    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -76,44 +78,26 @@
         .modal-seccao h4 { margin-top: 0; color: #333; margin-bottom: 8px; }
         .modal-seccao p { margin: 0; font-size: 0.95em; color: #555; }
 
+        /* Rodapé e Caixa de Disclaimer */
         footer { background: #1b5e20; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
+        .disclaimer-box { background-color: rgba(0, 0, 0, 0.2); color: #fff; padding: 15px; border-radius: 5px; margin: 20px auto; max-width: 800px; font-size: 0.85em; text-align: justify; }
 
         /* ==========================================
-           NOVO: MODO DE IMPRESSÃO (EXPORTAÇÃO PARA RELATÓRIO)
+           MODO DE IMPRESSÃO (EXPORTAÇÃO PARA RELATÓRIO)
            ========================================== */
         @media print {
-            /* 1. Esconde tudo o que não interessa para o documento final */
             nav, .hero, #panorama, #reconhecidas, #estruturacao, #potencialidades, footer, .btn, .video-wrapper, .modal-bg {
                 display: none !important;
             }
-
-            /* 2. Remove margens, sombras e fundos da página */
-            body, html {
-                background-color: white;
-                margin: 0;
-                padding: 0;
-            }
-
-            /* 3. Prepara a secção do mapa para ocupar a folha inteira */
-            #mapa-secao {
-                padding: 0;
-                margin: 0;
-                box-shadow: none;
-                border: none;
-            }
-
-            /* 4. Força o mapa a ter uma proporção limpa para exportação (Formato Retangular) */
-            #mapa {
-                height: 800px !important; 
-                width: 100% !important;
-                border: 2px solid #000;
-                page-break-inside: avoid;
-            }
+            body, html { background-color: white; margin: 0; padding: 0; }
+            #mapa-secao { padding: 0; margin: 0; box-shadow: none; border: none; }
+            #mapa { height: 800px !important; width: 100% !important; border: 2px solid #000; page-break-inside: avoid; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Menu de Navegação -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
@@ -127,13 +111,15 @@
 
     <div class="container">
         
+        <!-- SECÇÃO: HERO (ATUALIZADA) -->
         <header id="inicio" class="hero">
             <div class="hero-content">
-                <h1>Observatório das Indicações Geográficas do Amapá</h1>
-                <p>O primeiro grande inventário digital e interativo do Estado. Conheça as nossas IG's reconhecidas, os produtos em estruturação e as nossas grandes potencialidades de bioeconomia.</p>
+                <h1>Inventário Digital das Indicações Geográficas do Amapá</h1>
+                <p>O primeiro grande mapeamento interativo do Estado. Conheça as nossas IG's reconhecidas, os produtos em estruturação e as grandes potencialidades da nossa bioeconomia.</p>
             </div>
         </header>
 
+        <!-- SECÇÃO: PANORAMA BRASIL -->
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
             
@@ -162,11 +148,13 @@
             </div>
         </section>
 
+        <!-- SECÇÃO: IGS RECONHECIDAS NO AMAPÁ -->
         <section id="reconhecidas" style="background-color: #f0f4f8;">
             <h2>Indicações Geográficas Reconhecidas no Amapá</h2>
             <p>O Estado do Amapá já conquistou o seu espaço no mapa nacional das IGs, possuindo dois produtos de excelência devidamente certificados pelo INPI, que fortalecem a nossa identidade e bioeconomia.</p>
             
             <div class="grid-inventario">
+                <!-- Abacaxi -->
                 <div class="card-ig abacaxi">
                     <div class="card-ig-img-container">
                         <img src="image_684caa.png" alt="Selo IP Abacaxi de Porto Grande">
@@ -178,6 +166,7 @@
                     <p><strong>Histórico e Qualidade:</strong> Variedade pérola, com sabor adocicado, perfume marcante e coloração amarela clara. Declarada Patrimônio Cultural de Natureza Imaterial do estado em 2024.</p>
                 </div>
 
+                <!-- Açaí -->
                 <div class="card-ig acai">
                     <div class="card-ig-img-container">
                         <img src="image_684c0e.png" alt="Selo IG Açaí do Bailique">
@@ -191,6 +180,7 @@
             </div>
         </section>
 
+        <!-- SECÇÃO: EM ESTRUTURAÇÃO (Farinha do Pacuí) -->
         <section id="estruturacao">
             <h2>Em Processo de Estruturação: Farinha do Pacuí</h2>
             <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. O projeto de estruturação para a Indicação Geográfica está consolidado no <strong>Relatório Técnico Conclusivo</strong>, que integra o Caderno de Especificações Técnicas (CET), o Dossiê de Notoriedade e o Instrumento Oficial de Delimitação.</p>
@@ -215,36 +205,43 @@
             </div>
         </section>
 
+        <!-- SECÇÃO: POTENCIALIDADES DO AMAPÁ -->
         <section id="potencialidades" style="background-color: #fafafa;">
             <h2>Potencialidades de IGs no Estado do Amapá</h2>
             <p>O Amapá possui uma riqueza ímpar de produtos agroextrativistas e artesanais. O mapeamento abaixo apresenta os produtos e serviços que se encontram em fase de diagnóstico de potencialidade para futuras solicitações de Indicação Geográfica.</p>
 
             <div class="grid-inventario">
+                <!-- Potencial 1 -->
                 <div class="card-ig potencial">
                     <h3>🏺 Louças de Barro</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>Mapeamento das técnicas ancestrais e do valor cultural na produção da cerâmica tradicional, reconhecendo o artesanato local.</p>
                 </div>
+                <!-- Potencial 2 -->
                 <div class="card-ig potencial">
                     <h3>🍯 Mel do Carmo do Maruanum</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>Apuramento das características florais e da organização produtiva do Quilombo do Carmo do Maruanum para a produção de mel silvestre.</p>
                 </div>
+                <!-- Potencial 3 -->
                 <div class="card-ig potencial">
                     <h3>🌰 Castanha do Laranjal do Jari</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>O extrativismo sustentável da castanha-da-amazônia, fundamental para a bioeconomia da calha do Rio Jari.</p>
                 </div>
+                <!-- Potencial 4 -->
                 <div class="card-ig potencial">
                     <h3>🧀 Queijo da Região dos Lagos</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>O saber-fazer leiteiro e a identidade do queijo artesanal produzido no município do Amapá, na famosa Região dos Lagos.</p>
                 </div>
+                <!-- Potencial 5 -->
                 <div class="card-ig potencial">
                     <h3>🍫 Cacau do Cassiporé</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>No município de Oiapoque, o cultivo do cacau nativo na bacia do rio Cassiporé destaca-se pelo seu perfil genético e sabor único.</p>
                 </div>
+                <!-- Potencial 6 -->
                 <div class="card-ig potencial">
                     <h3>🐝 Mel do Quilombo da Pedreira</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
@@ -253,6 +250,7 @@
             </div>
         </section>
 
+        <!-- SECÇÃO: MAPA -->
         <section id="mapa-secao">
             <h2>Mapa Integrado de Rotas e Produtores</h2>
             <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para descobrir as especificações de cada comunidade ou traçar a rota via GPS.</p>
@@ -267,6 +265,7 @@
 
     </div>
 
+    <!-- ESTRUTURA DO MENU FLUTUANTE (MODAL) COM SUPORTE A FOTO -->
     <div id="menuFlutuante" class="modal-bg">
         <div class="modal-janela">
             <span class="modal-fechar" onclick="fecharModal()">×</span>
@@ -307,12 +306,19 @@
         </div>
     </div>
 
+    <!-- SECÇÃO: RODAPÉ COM AVISO LEGAL -->
     <footer>
-        <h2>Observatório das IGs – Patrimônio do Amapá</h2>
+        <h2>Inventário das IGs – Patrimônio do Amapá</h2>
         <p>Apoie a agricultura familiar, preserve a floresta e valorize as tradições locais.</p>
-        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">Pesquisa independente. Desenvolvido no âmbito do Mestrado PROFNIT.</p>
+        
+        <div class="disclaimer-box">
+            <strong>Aviso de Transparência:</strong> Este portal é uma iniciativa de pesquisa independente dedicada a apoiar, divulgar e valorizar os saberes e as comunidades produtoras do Estado do Amapá. Não possui vínculo administrativo ou operacional com o Observatório de Dados do Estado do Amapá ou plataformas governamentais.
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">© 2026 Projeto de Inventário Digital Interativo.</p>
     </footer>
 
+    <!-- SCRIPT DO MAPA E DO MODAL -->
     <script>
         // Funções para controlar a Janela Modal Flutuante
         function fecharModal() {
@@ -549,6 +555,7 @@
         });
     </script>
 
+    <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
