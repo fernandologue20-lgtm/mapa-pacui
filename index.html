@@ -67,6 +67,17 @@
         #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
+        
+        /* NOVO: Estilos do Menu Flutuante (Janela Modal) */
+        .modal-bg { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
+        .modal-janela { background-color: #fff; margin: 5vh auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-fechar { position: absolute; right: 20px; top: 15px; font-size: 28px; font-weight: bold; color: #aaa; cursor: pointer; transition: 0.3s; }
+        .modal-fechar:hover { color: #d32f2f; }
+        .modal-titulo { color: #1b5e20; margin-top: 0; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
+        .modal-seccao { margin-bottom: 15px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #fbc02d; border-radius: 4px; }
+        .modal-seccao h4 { margin-top: 0; color: #333; margin-bottom: 8px; }
+        .modal-seccao p { margin: 0; font-size: 0.95em; color: #555; }
+
         footer { background: #1b5e20; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
     </style>
 </head>
@@ -94,22 +105,16 @@
             </div>
         </header>
 
-        <!-- SECÇÃO: PANORAMA BRASIL ATUALIZADA (2025) -->
+        <!-- SECÇÃO: PANORAMA BRASIL -->
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
-            
-            <!-- Novos dados integrados ao HTML -->
             <p>O panorama de Indicações Geográficas (IGs) do INPI em 2025 consolidou uma expansão histórica, registrando um marco de <strong>161 IGs reconhecidas</strong> no país. Esse crescimento, fortemente impulsionado pela parceria com o Sebrae, consolida as IGs como um motor de desenvolvimento regional, valorização cultural e expansão do turismo.</p>
-            
-            <!-- Link da Fonte Oficial -->
             <p style="font-size: 0.9em;"><em>Fonte Oficial: <a href="https://www.gov.br/inpi/pt-br/central-de-conteudo/noticias/inpi-reconhece-duas-novas-igs-e-alcanca-150-registros-brasileiros" target="_blank" style="color: #1565c0; text-decoration: none;">INPI - Registros Brasileiros</a></em></p>
             
-            <!-- Janela Embutida (Iframe) do YouTube -->
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/dlfELuH1Wuo" title="Material Educativo sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
-            <!-- Caixas Estatísticas Atualizadas -->
             <div class="grid-estatisticas">
                 <div class="estatistica-box">
                     <span class="estatistica-numero">161</span>
@@ -118,13 +123,11 @@
                 <div class="estatistica-box">
                     <span class="estatistica-numero">120</span>
                     <span>Indicações de Procedência (IP)</span>
-                    <!-- Detalhamento adicionado usando tag small -->
                     <small>(119 nacionais, 1 estrangeira)</small>
                 </div>
                 <div class="estatistica-box">
                     <span class="estatistica-numero">41</span>
                     <span>Denominações de Origem (DO)</span>
-                    <!-- Detalhamento adicionado usando tag small -->
                     <small>(31 nacionais, 10 estrangeiras)</small>
                 </div>
             </div>
@@ -231,7 +234,7 @@
         <!-- SECÇÃO: MAPA -->
         <section id="mapa-secao">
             <h2>Mapa Integrado de Rotas e Produtores</h2>
-            <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para traçar a rota exata via GPS.</p>
+            <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para descobrir as especificações de cada comunidade ou traçar a rota via GPS.</p>
             
             <div style="margin-bottom: 15px;">
                 <a href="https://www.google.com/maps/dir/?api=1&destination=0.7523259,-50.60416" target="_blank" class="btn btn-blue" style="background-color: #4285F4;">
@@ -243,6 +246,43 @@
 
     </div>
 
+    <!-- NOVO: ESTRUTURA DO MENU FLUTUANTE (MODAL) -->
+    <div id="menuFlutuante" class="modal-bg">
+        <div class="modal-janela">
+            <span class="modal-fechar" onclick="fecharModal()">&times;</span>
+            <h2 id="modalNome" class="modal-titulo">Nome da Comunidade</h2>
+            
+            <div class="modal-seccao">
+                <h4>📜 História e Organização</h4>
+                <p id="modalHistoria">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao">
+                <h4>🏭 Infraestrutura de Produção</h4>
+                <p id="modalInfra">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao">
+                <h4>⚙️ Processo Produtivo</h4>
+                <p id="modalProcesso">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao" style="border-left-color: #1565c0;">
+                <h4>🔬 Dados Físico-Químicos (EMBRAPA)</h4>
+                <p id="modalEmbrapa">Carregando...</p>
+            </div>
+
+            <div class="modal-seccao" style="border-left-color: #2e7d32; background-color: #e8f5e9;">
+                <h4>📊 Dados Económicos</h4>
+                <p id="modalEconomia">Carregando...</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <a id="modalBotaoRota" href="#" target="_blank" class="btn btn-blue" style="width: 100%; box-sizing: border-box;">🚗 Navegar até à Comunidade (GPS)</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Rodapé -->
     <footer>
         <h2>Observatório das IGs – Patrimônio do Amapá</h2>
@@ -250,8 +290,32 @@
         <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">Pesquisa independente. Desenvolvido no âmbito do Mestrado PROFNIT.</p>
     </footer>
 
-    <!-- SCRIPT DO MAPA -->
+    <!-- SCRIPT DO MAPA E DO MODAL -->
     <script>
+        // Funções para controlar a Janela Modal Flutuante
+        function fecharModal() {
+            document.getElementById('menuFlutuante').style.display = 'none';
+        }
+
+        function abrirModal(index, linkRota) {
+            // Vai buscar os dados ao armazém temporário usando o index
+            var dados = window.armazemComunidades[index];
+            
+            // Preenche a janela com os dados reais ou com uma mensagem de que ainda está a ser levantado
+            document.getElementById('modalNome').innerText = dados.nome || "Comunidade Produtora";
+            document.getElementById('modalHistoria').innerText = dados.historia || "Informação em levantamento junto à comunidade local.";
+            document.getElementById('modalInfra').innerText = dados.infraestrutura || "Informação sobre quantidade de casas de farinha (manuais/mecanizadas) em atualização.";
+            document.getElementById('modalProcesso').innerText = dados.processo || "Mapeamento das etapas de produção em estruturação.";
+            document.getElementById('modalEmbrapa').innerText = dados.embrapa || "Aguardando compilação dos dados de análise laboratorial.";
+            document.getElementById('modalEconomia').innerText = dados.economia || "Levantamento de indicadores económicos em processamento.";
+            
+            document.getElementById('modalBotaoRota').href = linkRota;
+            
+            // Mostra a janela no ecrã
+            document.getElementById('menuFlutuante').style.display = 'block';
+        }
+
+        // Configuração Padrão do Mapa
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
 
@@ -262,8 +326,10 @@
         });
 
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
-
         var markers = L.markerClusterGroup();
+
+        // O Armazém Temporário global para guardar os dados da planilha
+        window.armazemComunidades = [];
 
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
         
@@ -273,10 +339,19 @@
                 dados.forEach(c => {
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
+                    
                     if (!isNaN(lat) && !isNaN(lng)) {
+                        // Guarda o produtor no armazém temporário
+                        window.armazemComunidades.push(c);
+                        // Descobre o "número da gaveta" (index) onde ele foi guardado
+                        var index = window.armazemComunidades.length - 1;
+                        
                         var linkRota = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
-                        var conteudoBalao = "<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha + 
-                                            "<br><br><a href='" + linkRota + "' target='_blank' style='background:#1565c0; color:white; padding:5px 10px; text-decoration:none; border-radius:4px; display:inline-block; font-weight:bold; font-size:12px;'>🚗 Rota até aqui</a>";
+                        
+                        // O novo balão agora tem um botão que chama a função abrirModal
+                        var conteudoBalao = "<div style='text-align:center;'><b>" + c.nome + "</b><br><span style='color:#555;'>Farinha: " + c.tipoFarinha + "</span><br><br>" +
+                                            "<button onclick='abrirModal(" + index + ", \"" + linkRota + "\")' style='background:#2e7d32; color:white; padding:8px 10px; border:none; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-bottom:5px; font-size:13px;'>📖 Ver Detalhes Completos</button>" +
+                                            "</div>";
 
                         var marker = L.marker([lat, lng])
                             .bindPopup(conteudoBalao)
