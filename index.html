@@ -105,7 +105,7 @@
             </div>
         </header>
 
-        <!-- SECÇÃO: PANORAMA BRASIL ATUALIZADA (2025) -->
+        <!-- SECÇÃO: PANORAMA BRASIL -->
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
             
@@ -166,11 +166,15 @@
             </div>
         </section>
 
-        <!-- SECÇÃO: EM ESTRUTURAÇÃO (Farinha do Pacuí) -->
+        <!-- SECÇÃO: EM ESTRUTURAÇÃO (Farinha do Pacuí) - ATUALIZADA -->
         <section id="estruturacao">
             <h2>Em Processo de Estruturação: Farinha do Pacuí</h2>
-            <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. Ela não é apenas um alimento; é a expressão de um modo de vida transmitido entre gerações. Atualmente, encontra-se na fase de inventariação e compilação do Caderno de Especificações Técnicas (CET) e do Dossiê de Notoriedade para o depósito no INPI.</p>
+            <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. O projeto de estruturação para a Indicação Geográfica está consolidado no <strong>Relatório Técnico Conclusivo</strong>, que integra o Caderno de Especificações Técnicas (CET), o Dossiê de Notoriedade e o Instrumento Oficial de Delimitação.</p>
             
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="#" class="btn btn-blue" style="font-size: 1.1em; padding: 15px 30px;">📄 Acessar Relatório Técnico Conclusivo (Em breve)</a>
+            </div>
+
             <div class="grid-inventario">
                 <div class="card">
                     <h3>📍 O Território</h3>
@@ -272,7 +276,6 @@
                 <h4>🔬 Dados Físico-Químicos (EMBRAPA)</h4>
                 <p id="modalEmbrapa">Carregando...</p>
                 
-                <!-- NOVO: Espaço preparado para receber a foto da amostra de farinha -->
                 <div id="containerFotoFarinha" style="display: none; text-align: center; margin-top: 15px;">
                     <img id="modalFotoFarinha" src="" alt="Amostra da Farinha" style="max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 </div>
@@ -306,7 +309,6 @@
         function abrirModal(index, linkRota) {
             var dados = window.armazemComunidades[index];
             
-            // Preenche os textos básicos
             document.getElementById('modalNome').innerText = dados.nome || "Comunidade Produtora";
             document.getElementById('modalHistoria').innerText = dados.historia || "Informação em levantamento junto à comunidade local.";
             document.getElementById('modalInfra').innerText = dados.infraestrutura || "Informação sobre quantidade de casas de farinha (manuais/mecanizadas) em atualização.";
@@ -314,17 +316,15 @@
             document.getElementById('modalEmbrapa').innerText = dados.embrapa || "Aguardando compilação dos dados de análise laboratorial.";
             document.getElementById('modalEconomia').innerText = dados.economia || "Levantamento de indicadores económicos em processamento.";
             
-            // NOVO: Lógica inteligente para carregar a fotografia da Farinha
             var imgFarinha = document.getElementById('modalFotoFarinha');
             var containerFoto = document.getElementById('containerFotoFarinha');
             
-            // Se existir uma coluna "foto" na planilha e ela tiver algum link preenchido
             if (dados.foto && dados.foto.trim() !== "") {
-                imgFarinha.src = dados.foto;          // Atribui o link da planilha à imagem
-                containerFoto.style.display = 'block';// Torna a caixa da imagem visível
+                imgFarinha.src = dados.foto;          
+                containerFoto.style.display = 'block';
             } else {
-                imgFarinha.src = "";                  // Limpa a imagem
-                containerFoto.style.display = 'none'; // Esconde a caixa para não ocupar espaço
+                imgFarinha.src = "";                  
+                containerFoto.style.display = 'none'; 
             }
 
             document.getElementById('modalBotaoRota').href = linkRota;
@@ -344,7 +344,7 @@
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
         var markers = L.markerClusterGroup();
 
-        // O Armazém Temporário global para guardar os dados da planilha
+        // Armazém Temporário
         window.armazemComunidades = [];
 
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
