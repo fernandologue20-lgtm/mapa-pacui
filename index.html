@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IG Farinha do Pacuí - Amapá</title>
     
+    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
+    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -75,6 +77,7 @@
 </head>
 <body>
 
+    <!-- Menu de Navegação -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
@@ -131,6 +134,7 @@
 
     <div class="container">
         
+        <!-- Seção Hero -->
         <header id="inicio" class="hero">
             <div class="hero-content">
                 <h1>Farinha do Pacuí: O Sabor da Identidade Amapaense</h1>
@@ -138,6 +142,7 @@
             </div>
         </header>
 
+        <!-- Seção: Sobre -->
         <section id="sobre">
             <h2>O que é a Farinha do Pacuí?</h2>
             <p>A Farinha do Pacuí, produzida nas comunidades rurais do distrito de São Joaquim do Pacuí, em Macapá, é um dos pilares da agricultura familiar no Amapá. Ela não é apenas um alimento; é a expressão de um modo de vida transmitido entre gerações, com atributos sensoriais únicos, como a crocância, coloração e granulometria, que conquistaram o reconhecimento de todo o estado.</p>
@@ -162,15 +167,26 @@
             </div>
         </section>
 
+        <!-- ATUALIZADO: Seção do Vídeo Educativo com o link do NotebookLM -->
         <section id="video-educativo">
             <h2>Entendendo a Propriedade Intelectual</h2>
             <p>A Indicação Geográfica é um instrumento poderoso de Propriedade Intelectual. Assista à animação abaixo para compreender como ela protege a história, a qualidade e os métodos de produção de produtos únicos no mundo inteiro, servindo como um escudo jurídico e comercial para as comunidades produtoras.</p>
             
+            <!-- Janela Embutida (Iframe) -->
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/EXEMPLO_LINK_AQUI" title="Animação Educativa sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://notebooklm.google.com/notebook/cbd733d5-16ae-4a2d-b47c-192c38c9b27b/artifact/4b393c49-6baf-41ce-938d-cdda83d06f58?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" title="Material Educativo sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <!-- Botão de Acesso Direto (Garantia contra bloqueios) -->
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://notebooklm.google.com/notebook/cbd733d5-16ae-4a2d-b47c-192c38c9b27b/artifact/4b393c49-6baf-41ce-938d-cdda83d06f58?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" class="btn btn-blue" style="width: 100%; max-width: 400px; display: inline-block;">
+                    🎧 Abrir Material Educativo (NotebookLM)
+                </a>
+                <p style="font-size: 12px; color: #666; margin-top: 5px;">Se a reprodução acima não carregar, clique no botão para aceder ao conteúdo diretamente.</p>
             </div>
         </section>
 
+        <!-- Seção: IG -->
         <section id="ig">
             <h2>Por que a Indicação Geográfica (IG)?</h2>
             <p>Este portal integra o processo de formalização técnica para o reconhecimento oficial da Indicação de Procedência (IP) junto ao INPI. Esse registro é estratégico por quatro motivos principais:</p>
@@ -194,6 +210,7 @@
                 </div>
             </div>
 
+            <!-- Bloco INPI -->
             <div class="card card-inpi" style="margin-top: 30px;">
                 <h3>⚖️ Base Legal e Normas do INPI</h3>
                 <p>O processo de Indicação Geográfica é pautado por normativas federais rigorosas que protegem o patrimônio nacional. Acesse abaixo os manuais e a legislação aplicável:</p>
@@ -203,10 +220,12 @@
             </div>
         </section>
 
+        <!-- Seção: Mapa -->
         <section id="mapa-secao">
             <h2>Mapa Cartográfico das Comunidades Produtoras</h2>
             <p>Navegue pelo território e conheça a delimitação oficial da área da Indicação Geográfica, a rota principal de acesso via rodovia AP-70 e clique nos produtores para traçar a rota exata via GPS até às comunidades.</p>
             
+            <!-- Botão de GPS Geral -->
             <div style="margin-bottom: 15px;">
                 <a href="https://www.google.com/maps/dir/?api=1&destination=0.7523259,-50.60416" target="_blank" class="btn btn-blue" style="background-color: #4285F4;">
                     🚗 Abrir Rota Central no Google Maps
@@ -216,6 +235,7 @@
             <div id="mapa"></div>
         </section>
 
+        <!-- Seção: Ciência e Compromisso -->
         <section id="ciencia">
             <h2>Ciência e Compromisso: Pesquisa e Inovação</h2>
             <p>Este projeto é conduzido interligando o conhecimento empírico dos produtores com o rigor técnico e acadêmico para o desenvolvimento regional.</p>
@@ -239,6 +259,7 @@
 
     </div>
 
+    <!-- Rodapé -->
     <footer>
         <h2>Farinha do Pacuí – Patrimônio do Amapá</h2>
         <p>Apoie a agricultura familiar e valorize as tradições locais.</p>
@@ -249,6 +270,7 @@
         <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">© 2026 Projeto IG Farinha do Pacuí.</p>
     </footer>
 
+    <!-- SCRIPT DO MAPA -->
     <script>
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
@@ -469,6 +491,7 @@
         });
     </script>
 
+    <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
     <script>
         document.addEventListener('contextmenu', function(evento) {
             evento.preventDefault(); 
