@@ -3,12 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal das Indicações Geográficas do Amapá - IG Farinha do Pacuí</title>
+    <title>Portal das Indicações Geográficas do Amapá</title>
     
+    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
+    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -16,284 +18,228 @@
         /* Estilos Gerais da Página */
         body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; scroll-behavior: smooth; }
         h1, h2, h3 { color: #2e7d32; }
+        p { line-height: 1.6; }
         
         /* Menu de Navegação */
         nav { background-color: #1b5e20; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; align-items: center; }
-        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; padding: 5px; }
+        nav .nav-container { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; align-items: center; }
+        nav a { color: white; text-decoration: none; font-weight: bold; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; padding: 5px; }
         nav a:hover { color: #ffeb3b; }
 
-        /* Menu Dropdown de Notoriedade */
-        .dropdown { position: relative; display: inline-block; }
-        .dropbtn { color: white; text-decoration: none; font-weight: bold; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; padding: 5px; }
-        .dropdown:hover .dropbtn { color: #ffeb3b; }
-        .dropdown-content { display: none; position: absolute; background-color: #f9f9f9; min-width: 320px; max-height: 400px; overflow-y: auto; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1001; border-radius: 5px; margin-top: 10px; }
-        .dropdown-content a { color: #333; padding: 12px 16px; text-decoration: none; display: block; text-transform: none; font-size: 13px; font-weight: normal; border-bottom: 1px solid #ddd; line-height: 1.4; }
-        .dropdown-content a:hover { background-color: #e8f5e9; color: #2e7d32; }
-        .dropdown-category { padding: 10px 16px 5px; font-size: 11px; font-weight: bold; color: #1b5e20; background-color: #e0e0e0; text-transform: uppercase; position: sticky; top: 0; }
-        .dropdown:hover .dropdown-content { display: block; }
-
-        /* Contêiner Principal */
+        /* Contêiner Principal e Seções */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        
-        /* Seções */
         section { background: white; padding: 40px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .hero { text-align: center; background: url('https://images.unsplash.com/photo-1590682680695-43b964a3ae17?auto=format&fit=crop&w=1200&q=80') center/cover; color: white; padding: 80px 20px; border-radius: 8px; margin-bottom: 30px; position: relative; }
         .hero::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); border-radius: 8px; }
         .hero-content { position: relative; z-index: 1; }
         .hero h1 { color: #ffeb3b; font-size: 2.8em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .hero p { font-size: 1.2em; max-width: 800px; margin: 0 auto; line-height: 1.5; }
+
+        /* NOVO: Panorama Brasil (Estatísticas) */
+        .grid-estatisticas { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; text-align: center; }
+        .estatistica-box { background: #e8f5e9; padding: 30px; border-radius: 8px; border: 1px solid #c8e6c9; }
+        .estatistica-numero { font-size: 2.5em; font-weight: bold; color: #1b5e20; display: block; margin-bottom: 5px; }
         
-        /* Mapa */
-        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; }
-        .label-estilo { background: transparent; border: none; box-shadow: none; font-size: 11px; font-weight: bold; color: #2c3e50; text-shadow: 1px 1px 2px white; }
-
-        /* Vídeo Responsivo */
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
-
-        /* Cards e Listas */
-        .card { background: #f9f9f9; padding: 20px; border-left: 5px solid #2e7d32; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
-        .card-inpi { border-left-color: #1565c0; background-color: #e3f2fd; }
-        
-        /* Grelhas */
-        .grid-motivos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
-        .motivo-item { background: #fffde7; padding: 20px; border-radius: 8px; border: 1px solid #fbc02d; }
-        .motivo-item h4 { color: #f57f17; margin-top: 0; }
-
-        /* Inventário IGs */
+        /* Grelhas IGs e Potencialidades */
         .grid-inventario { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px; }
-        .card-ig { background: #ffffff; border: 1px solid #ddd; border-top: 5px solid #6a1b9a; border-radius: 8px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .card-ig { background: #ffffff; border: 1px solid #ddd; border-top: 5px solid #2e7d32; border-radius: 8px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
         .card-ig:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0,0,0,0.1); }
         .card-ig.abacaxi { border-top-color: #fbc02d; }
+        .card-ig.acai { border-top-color: #6a1b9a; }
+        .card-ig.potencial { border-top-color: #0288d1; background-color: #f1f8e9; } /* Estilo distinto para as potencialidades */
         .card-ig h3 { margin-top: 0; display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; }
-        .tag-status { display: block; text-align: center; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 15px; background: #e8f5e9; color: #2e7d32; }
-        
-        /* Estilos para as imagens dos selos */
+        .tag-status { display: block; text-align: center; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 15px; background: #e0f2f1; color: #2e7d32; }
+        .tag-potencial { background: #e1f5fe; color: #00695c; }
         .card-ig-img-container { text-align: center; margin-bottom: 15px; }
         .card-ig-img-container img { max-width: 140px; height: auto; display: inline-block; }
 
-        /* Logos Parceiros */
+        /* Outros Componentes */
+        .card { background: #f9f9f9; padding: 20px; border-left: 5px solid #2e7d32; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
         .logos { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
         .logo-box { background: #e0e0e0; padding: 15px 25px; border-radius: 5px; font-weight: bold; color: #555; text-align: center; }
-        
-        /* Botões e Rodapé */
         .btn { display: inline-block; background: #2e7d32; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px 5px 0 0; transition: 0.3s; }
         .btn:hover { background: #1b5e20; transform: translateY(-2px); }
         .btn-blue { background: #1565c0; }
         .btn-blue:hover { background: #0d47a1; }
-        .btn-outline { background: transparent; border: 2px solid white; color: white; }
-        .btn-outline:hover { background: white; color: #1b5e20; }
+        
+        /* Mapa e Vídeo */
+        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
         footer { background: #1b5e20; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
     </style>
 </head>
 <body>
 
+    <!-- Menu de Navegação -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
-            <a href="#sobre">Farinha do Pacuí</a>
-            <a href="#inventario">Inventário de IGs</a>
-            <a href="#video-educativo">O que é IG?</a>
-            <a href="#mapa-secao">Mapa Interativo</a>
-            <a href="#ciencia">Acervo</a>
-
-            <div class="dropdown">
-                <span class="dropbtn">Notoriedade ▾</span>
-                <div class="dropdown-content">
-                    <div class="dropdown-category">Institucionais e Oficiais</div>
-                    <a href="https://ap.agenciasebrae.com.br/arquivo/sebrae-anuncia-vencedores-da-1a-competicao-da-melhor-farinha-de-mandioca-do-amapa/" target="_blank">Competição valoriza produtores locais e destaca excelência (Sebrae)</a>
-                    <a href="https://agenciaamapa.com.br/noticia/32149/governo-do-amapa-entrega-segunda-certificacao-de-farinha-produzida-no-estado-durante-a-54-expofeira" target="_blank">Segunda certificação de farinha Região do Pacuí</a>
-                    <a href="https://agenciaamapa.com.br/noticia/20389/governo-do-amapa-certifica-primeira-casa-de-farinha-artesanal-no-estado" target="_blank">Primeira casa de farinha do Estado com CIE/DIAGRO</a>
-                    <a href="https://ap.agenciasebrae.com.br/cultura-empreendedora/sebrae-inicia-diagnosticos-em-pequenos-negocios-do-amapa-com-potencial-para-indicacoes-geograficas-ig/" target="_blank">Diagnóstico para IG da farinha do Pacuí</a>
-                    <a href="https://agenciaamapa.com.br/noticia/24066/32-festival-da-mandioca-governo-do-amapa-emite-documentacoes-e-realiza-palestras-sobre-programas-para-produtores-rurais" target="_blank">Festival da Mandioca</a>
-
-                    <div class="dropdown-category">Econômicas e Mercadológicas</div>
-                    <a href="https://selesnafes.com/2020/02/farinha-de-mandioca-movimenta-r-24-milhoes-em-2-anos-no-amapa/" target="_blank">Reportagem econômica: Região do Pacuí como maior produtor</a>
-                    <a href="https://globoplay.globo.com/v/8315604/" target="_blank">Farinha movimentou R$ 12 milhões na economia do Amapá (2019)</a>
-
-                    <div class="dropdown-category">Jornalísticas e Midiáticas</div>
-                    <a href="https://www.instagram.com/reel/DUHSUOsgKbV/" target="_blank">Comercialização em estabelecimento gastronômico urbano</a>
-                    <a href="https://globoplay.globo.com/v/12119142/" target="_blank">Produção de farinha com selo de inspeção em Tracajatuba</a>
-                    <a href="https://www.youtube.com/watch?v=xvH4jMYRN-s" target="_blank">Tradição e qualidade marcam a produção</a>
-                    <a href="https://www.instagram.com/p/CUfvYJIpMG3/" target="_blank">Registro antigo da "Farinha de São Joaquim do Pacuí"</a>
-                    <a href="https://www.embrapa.br/busca-de-noticias/-/noticia/18008123/livro-ensina-boas-praticas-de-fabricacao-de-farinha" target="_blank">Livro ensina boas práticas de fabricação (Embrapa)</a>
-
-                    <div class="dropdown-category">Técnico-Científicas</div>
-                    <a href="https://www2.unifap.br/ppgdas/files/2024/03/Jadson-2023-e-book-Oitenta-anos-de-novas-acionalidades-e-dinamicas-.pdf" target="_blank">Centralidade da mandioca no Pacuí</a>
-                    <a href="https://www2.unifap.br/ppgdas/files/2023/08/DISSERTACAO_PATRICIA2107.pdf" target="_blank">A Farinha do Pacuí nas Políticas Públicas de Desenvolvimento</a>
-                    <a href="https://www.infoteca.cnptia.embrapa.br/bitstream/doc/120197/1/00079010.pdf" target="_blank">Livro Farinhas de Mandioca Seca e Mista</a>
-                    <a href="https://periodicos.ufpa.br/index.php/revistamargens/article/view/2780/2911" target="_blank">Resgate da Memória Social e Identidade Territorial</a>
-                    <a href="https://agritrop.cirad.fr/513220/1/ID513220.pdf" target="_blank">Relatório técnico internacional (CIRAD)</a>
-
-                    <div class="dropdown-category">Histórico-Documentais</div>
-                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/handle/doc/1064938" target="_blank">Diagnóstico da Cadeia Produtiva da Mandioca no Amapá</a>
-                    <a href="https://biblioteca.ibge.gov.br/biblioteca-catalogo.html?id=379&view=detalhes" target="_blank">Histórico territorial Pacuí (IBGE)</a>
-                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/347224/1/CPAFAP2001Rendimentofarinha.pdf" target="_blank">Registro técnico da produção em São Joaquim do Pacuí</a>
-                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/347223/1/CPAFAP2001Plantiomandioca.pdf" target="_blank">Recomendações ao Plantio da Mandioca Jurará</a>
-                    <a href="https://www.youtube.com/watch?v=QqV-LRNJL2M" target="_blank">Inauguração da Fábrica de farinha no Pacuí</a>
-                    <a href="https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/344975/1/CPAFAP1999Caracterizacaosolo.pdf" target="_blank">Caracterização do Solo sob Influência da Agricultura Familiar</a>
-
-                    <div class="dropdown-category">Culturais</div>
-                    <a href="https://www.ifap.edu.br/index.php/publicacoes/item/4657-1-tucuju-literario-do-ifap-contos-e-poemas" target="_blank">Referência em produção literária escolar (Poema)</a>
-                    <a href="https://share.google/AaDygKeqTxl2b4OfO" target="_blank">Referência cultural em obra poética (2021)</a>
-                    <a href="https://www.diariodoamapa.com.br/blogs/heraldo-almeida/vem-ca-conhecer-macapa/" target="_blank">Reconhecimento como símbolo identitário de Macapá (Música)</a>
-                </div>
-            </div>
+            <a href="#panorama">Panorama Brasil</a>
+            <a href="#reconhecidas">IGs no Amapá</a>
+            <a href="#estruturacao">Em Estruturação</a>
+            <a href="#potencialidades">Potencialidades</a>
+            <a href="#mapa-secao">Mapa de Rotas</a>
         </div>
     </nav>
 
     <div class="container">
         
+        <!-- SECÇÃO: HERO -->
         <header id="inicio" class="hero">
             <div class="hero-content">
-                <h1>Portal das Indicações Geográficas do Amapá</h1>
-                <p>O primeiro grande inventário digital e interativo do Estado. Conheça a história, o saber-fazer e a proteção aos produtos que são patrimônios da nossa terra.</p>
+                <h1>Observatório das Indicações Geográficas do Amapá</h1>
+                <p>O primeiro grande inventário digital e interativo do Estado. Conheça as nossas IG's reconhecidas, os produtos em estruturação e as nossas grandes potencialidades de bioeconomia.</p>
             </div>
         </header>
 
-        <section id="sobre">
-            <h2>Farinha do Pacuí: O Sabor da Identidade Amapaense</h2>
-            <p>A Farinha do Pacuí, produzida nas comunidades rurais do distrito de São Joaquim do Pacuí, em Macapá, é um dos pilares da agricultura familiar no Amapá. Ela não é apenas um alimento; é a expressão de um modo de vida transmitido entre gerações, com atributos sensoriais únicos, como a crocância, coloração e granulometria, que conquistaram o reconhecimento de todo o estado.</p>
+        <!-- SECÇÃO: PANORAMA BRASIL -->
+        <section id="panorama">
+            <h2>Panorama das Indicações Geográficas no Brasil</h2>
+            <p>A Indicação Geográfica (IG) é um instrumento de Propriedade Intelectual que reconhece a notoriedade e o saber-fazer de uma região. Segundo os dados oficiais do Instituto Nacional da Propriedade Industrial (INPI), o Brasil tem avançado significativamente no mapeamento e proteção dos seus produtos tradicionais.</p>
             
-            <h2 style="margin-top: 40px;">Um Território com História</h2>
-            <div class="card">
-                <h3>📍 Onde nascemos</h3>
-                <p>Nossa produção está enraizada no Distrito de São Joaquim do Pacuí, reconhecido historicamente como um centro produtor de excelência.</p>
+            <!-- Janela Embutida (Iframe) do YouTube -->
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/dlfELuH1Wuo" title="Material Educativo sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
-            <div class="card">
-                <h3>🤲 Saber-Fazer</h3>
-                <p>O segredo da nossa farinha reside nas técnicas artesanais de beneficiamento da mandioca, um conhecimento coletivo que preserva as tradições amazônicas e garante a qualidade que você conhece.</p>
-            </div>
-            <div class="card">
-                <h3>🐟 Identidade</h3>
-                <p>O nome "Pacuí" é sinônimo de tradição. Associado a hábitos alimentares regionais, como o costume de consumir farinha com pacu assado na brasa, ele carrega a memória social de todo um povo.</p>
-            </div>
-            <div class="card">
-                <h3>🤝 ASMOPAP</h3>
-                <p>A Associação dos Moradores e Produtores Agropecuários da Comunidade de Salamito do Pacuí é a entidade que representa a organização coletiva, fortalecendo a economia local e lutando pela valorização contínua do produto regional.</p>
-                <a href="#" class="btn">Saiba mais sobre a Associação</a>
+
+            <div class="grid-estatisticas">
+                <div class="estatistica-box">
+                    <span class="estatistica-numero">141</span>
+                    <span>IGs Reconhecidas no Brasil</span>
+                </div>
+                <div class="estatistica-box">
+                    <span class="estatistica-numero">102</span>
+                    <span>Indicações de Procedência (IP)</span>
+                </div>
+                <div class="estatistica-box">
+                    <span class="estatistica-numero">39</span>
+                    <span>Denominações de Origem (DO)</span>
+                </div>
             </div>
         </section>
 
-        <section id="inventario" style="background-color: #f0f4f8;">
-            <h2>Inventário Digital: Outras IGs do Amapá</h2>
-            <p>O Estado do Amapá é rico em biodiversidade e cultura agrícola. Conheça os produtos de excelência que já conquistaram o reconhecimento nacional, fortalecendo o mapa das Indicações Geográficas e valorizando as comunidades locais.</p>
+        <!-- SECÇÃO: IGS RECONHECIDAS NO AMAPÁ -->
+        <section id="reconhecidas" style="background-color: #f0f4f8;">
+            <h2>Indicações Geográficas Reconhecidas no Amapá</h2>
+            <p>O Estado do Amapá já conquistou o seu espaço no mapa nacional das IGs, possuindo dois produtos de excelência devidamente certificados pelo INPI, que fortalecem a nossa identidade e bioeconomia.</p>
             
             <div class="grid-inventario">
-                
+                <!-- Abacaxi -->
                 <div class="card-ig abacaxi">
                     <div class="card-ig-img-container">
                         <img src="image_684caa.png" alt="Selo IP Abacaxi de Porto Grande">
                     </div>
                     <h3 style="color: #f57f17;">Abacaxi de Porto Grande</h3>
                     <span class="tag-status">Indicação de Procedência (IP)</span>
-                    <p><strong>A Primeira IG do Amapá:</strong> Reconhecida pelo INPI em 26 de novembro de 2024, fez história ao tornar-se a primeira Indicação Geográfica do estado.</p>
-                    <p><strong>O Território:</strong> O município de Porto Grande é o maior produtor de abacaxi do Amapá. A produção impulsiona fortemente a economia local e reflete uma rica tradição agrícola, possuindo até uma praça com a escultura da fruta na cidade.</p>
-                    <p><strong>Histórico e Qualidade:</strong> Comprovada pelas suas características sensoriais – variedade pérola, com sabor adocicado, perfume marcante e coloração amarela clara. A cultura da fruta é tão enraizada que deu origem ao tradicional Festival do Abacaxi na década de 1990 e foi declarada Patrimônio Cultural de Natureza Imaterial do estado em 2024.</p>
+                    <p><strong>A Primeira IG do Amapá:</strong> Reconhecida pelo INPI em 26 de novembro de 2024.</p>
+                    <p><strong>O Território:</strong> O município de Porto Grande é o maior produtor de abacaxi do Amapá. A produção impulsiona fortemente a economia local e reflete uma rica tradição agrícola.</p>
+                    <p><strong>Histórico e Qualidade:</strong> Variedade pérola, com sabor adocicado, perfume marcante e coloração amarela clara. Declarada Patrimônio Cultural de Natureza Imaterial do estado em 2024.</p>
                 </div>
 
-                <div class="card-ig">
+                <!-- Açaí -->
+                <div class="card-ig acai">
                     <div class="card-ig-img-container">
                         <img src="image_684c0e.png" alt="Selo IG Açaí do Bailique">
                     </div>
                     <h3 style="color: #6a1b9a;">Açaí do Bailique</h3>
                     <span class="tag-status">Indicação de Procedência (IP)</span>
                     <p><strong>A Segunda IG do Amapá:</strong> Reconhecida oficialmente pelo INPI em 08 de abril de 2025.</p>
-                    <p><strong>O Território:</strong> Extraído no Arquipélago do Bailique, na foz do rio Amazonas. O ambiente é composto por oito ilhas fluviais, igarapés e florestas de várzea, abrigando cerca de 51 comunidades ribeirinhas.</p>
-                    <p><strong>Histórico e Sustentabilidade:</strong> Reconhecido como o açaí mais sustentável do mundo. É nativo e manejado sem agrotóxicos ou fertilizantes pela Associação das Comunidades Tradicionais do Bailique. Possui selo vegano SVB e certificação internacional FSC, garantindo o respeito pela floresta e pelos trabalhadores. É um produto puro, integrante do Polo Tucuju da Rota do Açaí.</p>
+                    <p><strong>O Território:</strong> Extraído no Arquipélago do Bailique, na foz do rio Amazonas. O ambiente é composto por oito ilhas fluviais e abriga cerca de 51 comunidades ribeirinhas.</p>
+                    <p><strong>Histórico e Sustentabilidade:</strong> Reconhecido como o açaí mais sustentável do mundo. Possui selo vegano SVB e certificação internacional FSC, garantindo o respeito pela floresta e pelos trabalhadores.</p>
                 </div>
-
             </div>
         </section>
 
-        <section id="video-educativo">
-            <h2>Entendendo a Propriedade Intelectual</h2>
-            <p>A Indicação Geográfica é um instrumento poderoso de Propriedade Intelectual. Assista à animação abaixo para compreender como ela protege a história, a qualidade e os métodos de produção de produtos únicos no mundo inteiro, servindo como um escudo jurídico e comercial para as comunidades produtoras.</p>
+        <!-- SECÇÃO: EM ESTRUTURAÇÃO (Farinha do Pacuí) -->
+        <section id="estruturacao">
+            <h2>Em Processo de Estruturação: Farinha do Pacuí</h2>
+            <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. Ela não é apenas um alimento; é a expressão de um modo de vida transmitido entre gerações. Atualmente, encontra-se na fase de inventariação e compilação do Caderno de Especificações Técnicas (CET) e do Dossiê de Notoriedade para o depósito no INPI.</p>
             
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/dlfELuH1Wuo" title="Material Educativo sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="grid-inventario">
+                <div class="card">
+                    <h3>📍 O Território</h3>
+                    <p>Produzida no Distrito de São Joaquim do Pacuí, reconhecido historicamente como um centro produtor de excelência.</p>
+                </div>
+                <div class="card">
+                    <h3>🤲 Saber-Fazer</h3>
+                    <p>O segredo reside nas técnicas artesanais de beneficiamento da mandioca, um conhecimento coletivo que garante crocância, coloração e granulometria únicas.</p>
+                </div>
+                <div class="card">
+                    <h3>🤝 Organização</h3>
+                    <p>Representada pela Associação dos Moradores e Produtores Agropecuários da Comunidade de Salamito do Pacuí (ASMOPAP).</p>
+                </div>
             </div>
         </section>
 
-        <section id="ig">
-            <h2>Os Pilares de uma Indicação Geográfica</h2>
-            <p>Seja para a Farinha do Pacuí, para o Abacaxi de Porto Grande ou para o Açaí do Bailique, o registro junto ao INPI é estratégico por quatro motivos principais:</p>
-            
-            <div class="grid-motivos">
-                <div class="motivo-item">
-                    <h4>🛡️ Proteção do saber-fazer</h4>
-                    <p>Blindamos métodos tradicionais contra a concorrência desleal e a descaracterização.</p>
-                </div>
-                <div class="motivo-item">
-                    <h4>📈 Valorização econômica</h4>
-                    <p>Garantimos que o produto seja reconhecido pelo seu valor real, gerando mais renda local.</p>
-                </div>
-                <div class="motivo-item">
-                    <h4>🌱 Desenvolvimento sustentável</h4>
-                    <p>Promovemos o crescimento do território respeitando o meio ambiente e as práticas tradicionais.</p>
-                </div>
-                <div class="motivo-item">
-                    <h4>⭐ Qualidade garantida</h4>
-                    <p>A certificação oferece ao consumidor a segurança de um produto autêntico, com origem comprovada.</p>
-                </div>
-            </div>
+        <!-- SECÇÃO: POTENCIALIDADES DO AMAPÁ -->
+        <section id="potencialidades" style="background-color: #fafafa;">
+            <h2>Potencialidades de IGs no Estado do Amapá</h2>
+            <p>O Amapá possui uma riqueza ímpar de produtos agroextrativistas e artesanais. O mapeamento abaixo apresenta os produtos e serviços que se encontram em fase de diagnóstico de potencialidade para futuras solicitações de Indicação Geográfica.</p>
 
-            <div class="card card-inpi" style="margin-top: 30px;">
-                <h3>⚖️ Base Legal e Normas do INPI</h3>
-                <p>O processo de Indicação Geográfica é pautado por normativas federais rigorosas que protegem o patrimônio nacional. Acesse abaixo os manuais e a legislação aplicável:</p>
-                <a href="#" class="btn btn-blue" target="_blank">Manual do INPI para IG</a>
-                <a href="https://www.planalto.gov.br/ccivil_03/leis/l9279.htm" class="btn btn-blue" target="_blank">Lei de Propriedade Industrial (IG)</a>
-                <a href="#" class="btn btn-blue" target="_blank">Decreto 04/2022</a>
+            <div class="grid-inventario">
+                <!-- Potencial 1 -->
+                <div class="card-ig potencial">
+                    <h3>🏺 Louças de Barro</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>Mapeamento das técnicas ancestrais e do valor cultural na produção da cerâmica tradicional, reconhecendo o artesanato local.</p>
+                </div>
+                <!-- Potencial 2 -->
+                <div class="card-ig potencial">
+                    <h3>🍯 Mel do Carmo do Maruanum</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>Apuramento das características florais e da organização produtiva do Quilombo do Carmo do Maruanum para a produção de mel silvestre.</p>
+                </div>
+                <!-- Potencial 3 -->
+                <div class="card-ig potencial">
+                    <h3>🌰 Castanha do Laranjal do Jari</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>O extrativismo sustentável da castanha-da-amazônia, fundamental para a bioeconomia da calha do Rio Jari.</p>
+                </div>
+                <!-- Potencial 4 -->
+                <div class="card-ig potencial">
+                    <h3>🧀 Queijo da Região dos Lagos</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>O saber-fazer leiteiro e a identidade do queijo artesanal produzido no município do Amapá, na famosa Região dos Lagos.</p>
+                </div>
+                <!-- Potencial 5 -->
+                <div class="card-ig potencial">
+                    <h3>🍫 Cacau do Cassiporé</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>No município de Oiapoque, o cultivo do cacau nativo na bacia do rio Cassiporé destaca-se pelo seu perfil genético e sabor único.</p>
+                </div>
+                <!-- Potencial 6 -->
+                <div class="card-ig potencial">
+                    <h3>🐝 Mel do Quilombo da Pedreira</h3>
+                    <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>A organização comunitária quilombola focada na apicultura sustentável e na pureza do mel amazónico.</p>
+                </div>
             </div>
         </section>
 
+        <!-- SECÇÃO: MAPA -->
         <section id="mapa-secao">
-            <h2>Mapa Cartográfico: Produtores do Pacuí</h2>
-            <p>Navegue pelo território e conheça a delimitação oficial da área, a rota principal de acesso via rodovia AP-70 e clique nos produtores para traçar a rota exata via GPS até às comunidades.</p>
+            <h2>Mapa Integrado de Rotas e Produtores</h2>
+            <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para traçar a rota exata via GPS.</p>
             
             <div style="margin-bottom: 15px;">
                 <a href="https://www.google.com/maps/dir/?api=1&destination=0.7523259,-50.60416" target="_blank" class="btn btn-blue" style="background-color: #4285F4;">
                     🚗 Abrir Rota Central no Google Maps
                 </a>
             </div>
-
             <div id="mapa"></div>
-        </section>
-
-        <section id="ciencia">
-            <h2>Ciência e Compromisso: Pesquisa e Inovação</h2>
-            <p>Este projeto é conduzido interligando o conhecimento empírico dos produtores com o rigor técnico e acadêmico para o desenvolvimento regional do Amapá.</p>
-            <p>No âmbito da Farinha do Pacuí, estão a ser estruturados o Caderno de Especificações Técnicas (CET) e o Dossiê de Notoriedade, além da delimitação oficial da área da Indicação Geográfica.</p>
-            
-            <div style="margin-top: 20px;">
-                <a href="#" class="btn">Caderno de Especificações (Em breve)</a>
-                <a href="#" class="btn">Dossiê de Notoriedade (Em breve)</a>
-            </div>
-
-            <h3 style="margin-top: 40px; text-align: center;">Conexão Institucional</h3>
-            <div class="logos">
-                <div class="logo-box">PROFNIT - UNIFAP</div>
-                <div class="logo-box">ASMOPAP</div>
-                <div class="logo-box">SEBRAE</div>
-                <div class="logo-box">EMBRAPA</div>
-                <div class="logo-box">RURAP</div>
-                <div class="logo-box">DIAGRO / SDR</div>
-            </div>
         </section>
 
     </div>
 
+    <!-- Rodapé -->
     <footer>
-        <h2>Portal das IGs – Patrimônio do Amapá</h2>
+        <h2>Observatório das IGs – Patrimônio do Amapá</h2>
         <p>Apoie a agricultura familiar, preserve a floresta e valorize as tradições locais.</p>
-        <div style="margin-top: 20px;">
-            <a href="#sobre" class="btn btn-outline">Conhecer a História</a>
-            <a href="#mapa-secao" class="btn btn-outline">Apoiar os Produtores</a>
-        </div>
-        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">© 2026 Projeto de Inventário Digital - Mestrado PROFNIT.</p>
+        <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">Pesquisa independente. Desenvolvido no âmbito do Mestrado PROFNIT.</p>
     </footer>
 
+    <!-- SCRIPT DO MAPA -->
     <script>
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
@@ -310,7 +256,6 @@
 
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
         
-        // --- INTEGRAÇÃO COM PLANILHA E ROTAS DINÂMICAS ---
         fetch(link)
             .then(res => res.json())
             .then(dados => {
@@ -318,11 +263,7 @@
                     var lat = parseFloat(c.lat);
                     var lng = parseFloat(c.lng);
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        
-                        // Cria o link inteligente para o Google Maps
                         var linkRota = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
-                        
-                        // Cria o balão (popup) com botão de rota
                         var conteudoBalao = "<b>" + c.nome + "</b><br>Farinha: " + c.tipoFarinha + 
                                             "<br><br><a href='" + linkRota + "' target='_blank' style='background:#1565c0; color:white; padding:5px 10px; text-decoration:none; border-radius:4px; display:inline-block; font-weight:bold; font-size:12px;'>🚗 Rota até aqui</a>";
 
@@ -434,7 +375,6 @@
             [-50.8398763, 0.8215989], [-50.8617621, 0.8095844], [-50.8765671, 0.8010027], [-50.8857935, 0.7975699], [-50.88751, 0.7741844]
         ];
 
-        // ATUALIZAÇÃO MÁGICA DO POLÍGONO: Cores mais fortes e enquadramento automático
         var poligono = L.polygon(coordenadas.map(c => [c[1], c[0]]), {
             color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.15
         }).addTo(mapa);
@@ -479,54 +419,32 @@
         ];
 
         var rota = L.polyline(coordenadasRota.map(c => [c[1], c[0]]), {
-            color: '#ff9800', 
-            weight: 4,        
-            opacity: 0.8,
-            dashArray: '10, 10'
+            color: '#ff9800', weight: 4, opacity: 0.8, dashArray: '10, 10'
         }).addTo(mapa);
-
-        rota.bindPopup("<b>Rodovia AP-70</b><br>Acesso saindo de Macapá em direção ao Pacuí.");
 
         var baseMaps = { "Mapa Padrão": osm, "Satélite": satelite };
         var overlayMaps = { "Território Pacuí": poligono, "Rodovia AP-70": rota, "Comunidades": markers };
         L.control.layers(baseMaps, overlayMaps).addTo(mapa);
 
-        // GPS DO USUÁRIO NO MAPA DO SITE
+        // GPS DO USUÁRIO
         var pinoUsuario = null;
-
         mapa.locate({setView: false, watch: true, enableHighAccuracy: true});
-
         mapa.on('locationfound', function(e) {
             if (!pinoUsuario) {
-                pinoUsuario = L.circleMarker(e.latlng, {
-                    radius: 8,
-                    fillColor: "#2196F3",
-                    color: "#ffffff",
-                    weight: 3,
-                    opacity: 1,
-                    fillOpacity: 1
-                }).addTo(mapa);
-                pinoUsuario.bindPopup("<b>Você está aqui!</b>").openPopup();
+                pinoUsuario = L.circleMarker(e.latlng, { radius: 8, fillColor: "#2196F3", color: "#ffffff", weight: 3, opacity: 1, fillOpacity: 1 }).addTo(mapa);
             } else {
                 pinoUsuario.setLatLng(e.latlng);
             }
         });
-
-        mapa.on('locationerror', function(e) {
-            console.log("Não foi possível acessar o GPS: " + e.message);
-        });
     </script>
 
+    <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
     <script>
-        document.addEventListener('contextmenu', function(evento) {
-            evento.preventDefault(); 
-        });
-
-        document.addEventListener('keydown', function(evento) {
-            if (evento.key === 'F12' || evento.keyCode === 123) { evento.preventDefault(); }
-            if (evento.ctrlKey && evento.shiftKey && (evento.key === 'I' || evento.key === 'i' || evento.key === 'J' || evento.key === 'j')) { evento.preventDefault(); }
-            if (evento.ctrlKey && (evento.key === 'U' || evento.key === 'u')) { evento.preventDefault(); }
-            if (evento.ctrlKey && (evento.key === 'C' || evento.key === 'c')) { evento.preventDefault(); }
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) { e.preventDefault(); }
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'C' || e.key === 'c')) { e.preventDefault(); }
         });
     </script>
 </body>
