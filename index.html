@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventário Digital de Indicações Geográficas - Amapá</title>
     
-    <!-- Leaflet & MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     
-    <!-- Leaflet & MarkerCluster JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
@@ -78,6 +76,21 @@
         .modal-seccao h4 { margin-top: 0; color: #333; margin-bottom: 8px; }
         .modal-seccao p { margin: 0; font-size: 0.95em; color: #555; }
 
+        /* NOVO: ESTILOS DO CHATBOT DE INTELIGÊNCIA ARTIFICIAL */
+        .chatbot-btn { position: fixed; bottom: 20px; right: 20px; background-color: #1565c0; color: white; border: none; border-radius: 50px; padding: 15px 25px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 4000; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .chatbot-btn:hover { background-color: #0d47a1; transform: scale(1.05); }
+        .chatbot-window { display: none; position: fixed; bottom: 80px; right: 20px; width: 350px; max-width: 90vw; height: 500px; background-color: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 4000; flex-direction: column; overflow: hidden; border: 1px solid #ddd; }
+        .chat-header { background-color: #1565c0; color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .chat-close { cursor: pointer; font-size: 20px; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; background-color: #f4f7f6; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { padding: 10px 15px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; }
+        .msg-ai { background-color: #fff; border: 1px solid #e0e0e0; align-self: flex-start; border-bottom-left-radius: 0; }
+        .msg-user { background-color: #c8e6c9; color: #1b5e20; align-self: flex-end; border-bottom-right-radius: 0; }
+        .chat-footer { padding: 10px; background-color: #fff; border-top: 1px solid #ddd; display: flex; gap: 5px; }
+        .chat-input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
+        .chat-send { background-color: #1565c0; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
+        .chat-send:hover { background-color: #0d47a1; }
+
         /* Rodapé e Caixa de Disclaimer */
         footer { background: #1b5e20; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
         .disclaimer-box { background-color: rgba(0, 0, 0, 0.2); color: #fff; padding: 15px; border-radius: 5px; margin: 20px auto; max-width: 800px; font-size: 0.85em; text-align: justify; }
@@ -86,7 +99,7 @@
            MODO DE IMPRESSÃO (EXPORTAÇÃO PARA RELATÓRIO)
            ========================================== */
         @media print {
-            nav, .hero, #panorama, #reconhecidas, #estruturacao, #potencialidades, footer, .btn, .video-wrapper, .modal-bg {
+            nav, .hero, #panorama, #reconhecidas, #estruturacao, #potencialidades, footer, .btn, .video-wrapper, .modal-bg, .chatbot-btn, .chatbot-window {
                 display: none !important;
             }
             body, html { background-color: white; margin: 0; padding: 0; }
@@ -97,7 +110,6 @@
 </head>
 <body>
 
-    <!-- Menu de Navegação -->
     <nav>
         <div class="nav-container">
             <a href="#inicio">Início</a>
@@ -111,7 +123,6 @@
 
     <div class="container">
         
-        <!-- SECÇÃO: HERO (ATUALIZADA) -->
         <header id="inicio" class="hero">
             <div class="hero-content">
                 <h1>Inventário Digital das Indicações Geográficas do Amapá</h1>
@@ -119,7 +130,6 @@
             </div>
         </header>
 
-        <!-- SECÇÃO: PANORAMA BRASIL -->
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
             
@@ -148,13 +158,11 @@
             </div>
         </section>
 
-        <!-- SECÇÃO: IGS RECONHECIDAS NO AMAPÁ -->
         <section id="reconhecidas" style="background-color: #f0f4f8;">
             <h2>Indicações Geográficas Reconhecidas no Amapá</h2>
             <p>O Estado do Amapá já conquistou o seu espaço no mapa nacional das IGs, possuindo dois produtos de excelência devidamente certificados pelo INPI, que fortalecem a nossa identidade e bioeconomia.</p>
             
             <div class="grid-inventario">
-                <!-- Abacaxi -->
                 <div class="card-ig abacaxi">
                     <div class="card-ig-img-container">
                         <img src="image_684caa.png" alt="Selo IP Abacaxi de Porto Grande">
@@ -166,7 +174,6 @@
                     <p><strong>Histórico e Qualidade:</strong> Variedade pérola, com sabor adocicado, perfume marcante e coloração amarela clara. Declarada Patrimônio Cultural de Natureza Imaterial do estado em 2024.</p>
                 </div>
 
-                <!-- Açaí -->
                 <div class="card-ig acai">
                     <div class="card-ig-img-container">
                         <img src="image_684c0e.png" alt="Selo IG Açaí do Bailique">
@@ -180,7 +187,6 @@
             </div>
         </section>
 
-        <!-- SECÇÃO: EM ESTRUTURAÇÃO (Farinha do Pacuí) -->
         <section id="estruturacao">
             <h2>Em Processo de Estruturação: Farinha do Pacuí</h2>
             <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. O projeto de estruturação para a Indicação Geográfica está consolidado no <strong>Relatório Técnico Conclusivo</strong>, que integra o Caderno de Especificações Técnicas (CET), o Dossiê de Notoriedade e o Instrumento Oficial de Delimitação.</p>
@@ -205,43 +211,36 @@
             </div>
         </section>
 
-        <!-- SECÇÃO: POTENCIALIDADES DO AMAPÁ -->
         <section id="potencialidades" style="background-color: #fafafa;">
             <h2>Potencialidades de IGs no Estado do Amapá</h2>
             <p>O Amapá possui uma riqueza ímpar de produtos agroextrativistas e artesanais. O mapeamento abaixo apresenta os produtos e serviços que se encontram em fase de diagnóstico de potencialidade para futuras solicitações de Indicação Geográfica.</p>
 
             <div class="grid-inventario">
-                <!-- Potencial 1 -->
                 <div class="card-ig potencial">
                     <h3>🏺 Louças de Barro</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>Mapeamento das técnicas ancestrais e do valor cultural na produção da cerâmica tradicional, reconhecendo o artesanato local.</p>
                 </div>
-                <!-- Potencial 2 -->
                 <div class="card-ig potencial">
                     <h3>🍯 Mel do Carmo do Maruanum</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>Apuramento das características florais e da organização produtiva do Quilombo do Carmo do Maruanum para a produção de mel silvestre.</p>
                 </div>
-                <!-- Potencial 3 -->
                 <div class="card-ig potencial">
                     <h3>🌰 Castanha do Laranjal do Jari</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>O extrativismo sustentável da castanha-da-amazônia, fundamental para a bioeconomia da calha do Rio Jari.</p>
                 </div>
-                <!-- Potencial 4 -->
                 <div class="card-ig potencial">
                     <h3>🧀 Queijo da Região dos Lagos</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>O saber-fazer leiteiro e a identidade do queijo artesanal produzido no município do Amapá, na famosa Região dos Lagos.</p>
                 </div>
-                <!-- Potencial 5 -->
                 <div class="card-ig potencial">
                     <h3>🍫 Cacau do Cassiporé</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
                     <p>No município de Oiapoque, o cultivo do cacau nativo na bacia do rio Cassiporé destaca-se pelo seu perfil genético e sabor único.</p>
                 </div>
-                <!-- Potencial 6 -->
                 <div class="card-ig potencial">
                     <h3>🐝 Mel do Quilombo da Pedreira</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
@@ -250,7 +249,6 @@
             </div>
         </section>
 
-        <!-- SECÇÃO: MAPA -->
         <section id="mapa-secao">
             <h2>Mapa Integrado de Rotas e Produtores</h2>
             <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para descobrir as especificações de cada comunidade ou traçar a rota via GPS.</p>
@@ -265,7 +263,6 @@
 
     </div>
 
-    <!-- ESTRUTURA DO MENU FLUTUANTE (MODAL) COM SUPORTE A FOTO -->
     <div id="menuFlutuante" class="modal-bg">
         <div class="modal-janela">
             <span class="modal-fechar" onclick="fecharModal()">×</span>
@@ -306,7 +303,26 @@
         </div>
     </div>
 
-    <!-- SECÇÃO: RODAPÉ COM AVISO LEGAL -->
+    <button class="chatbot-btn" onclick="toggleChat()">
+        🤖 Assistente IG
+    </button>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Inteligência Artificial (IG)</span>
+            <span class="chat-close" onclick="toggleChat()">×</span>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-msg msg-ai">
+                Olá! Sou o Assistente Virtual especializado em Indicações Geográficas do Amapá. Estou a ser treinado no NITT/UNIFAP com os Cadernos de Especificações e Manuais do INPI. Como posso ajudar?
+            </div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Pergunte sobre IGs..." onkeypress="handleEnter(event)">
+            <button class="chat-send" onclick="enviarMensagem()">➤</button>
+        </div>
+    </div>
+
     <footer>
         <h2>Inventário das IGs – Patrimônio do Amapá</h2>
         <p>Apoie a agricultura familiar, preserve a floresta e valorize as tradições locais.</p>
@@ -318,9 +334,43 @@
         <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">© 2026 Projeto de Inventário Digital Interativo.</p>
     </footer>
 
-    <!-- SCRIPT DO MAPA E DO MODAL -->
     <script>
-        // Funções para controlar a Janela Modal Flutuante
+        // --- FUNÇÕES DA IA (CHATBOT) ---
+        function toggleChat() {
+            var chat = document.getElementById('chatbotWindow');
+            if(chat.style.display === 'flex') {
+                chat.style.display = 'none';
+            } else {
+                chat.style.display = 'flex';
+            }
+        }
+
+        function handleEnter(e) {
+            if(e.key === 'Enter') enviarMensagem();
+        }
+
+        function enviarMensagem() {
+            var input = document.getElementById('chatInput');
+            var msg = input.value.trim();
+            if(msg === '') return;
+
+            var chatBody = document.getElementById('chatBody');
+            
+            // Adiciona a mensagem do Utilizador
+            chatBody.innerHTML += '<div class="chat-msg msg-user">' + msg + '</div>';
+            input.value = '';
+            
+            // Rola para o fim
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Simula o tempo a "escrever" e responde
+            setTimeout(function() {
+                chatBody.innerHTML += '<div class="chat-msg msg-ai">Ainda estou em fase de prototipagem (treinamento de dados) para a minha Oficina Profissional no NITT da UNIFAP. Em breve, poderei analisar e responder detalhadamente a todas as questões técnicas sobre a Farinha do Pacuí, o Açaí do Bailique e o Abacaxi de Porto Grande!</div>';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        // --- FUNÇÕES DO MODAL DAS COMUNIDADES ---
         function fecharModal() {
             document.getElementById('menuFlutuante').style.display = 'none';
         }
@@ -350,7 +400,7 @@
             document.getElementById('menuFlutuante').style.display = 'block';
         }
 
-        // Configuração Padrão do Mapa
+        // --- CONFIGURAÇÃO DO MAPA ---
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
 
@@ -363,7 +413,6 @@
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
         var markers = L.markerClusterGroup();
 
-        // Armazém Temporário
         window.armazemComunidades = [];
 
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
@@ -555,7 +604,6 @@
         });
     </script>
 
-    <!-- SCRIPT DE PROTEÇÃO DE CÓDIGO -->
     <script>
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
@@ -565,4 +613,4 @@
         });
     </script>
 </body>
-</html>
+            </html>
