@@ -76,20 +76,21 @@
         .modal-seccao h4 { margin-top: 0; color: #333; margin-bottom: 8px; }
         .modal-seccao p { margin: 0; font-size: 0.95em; color: #555; }
 
-        /* NOVO: ESTILOS DO CHATBOT DE INTELIGÊNCIA ARTIFICIAL */
+        /* ESTILOS DO CHATBOT DE INTELIGÊNCIA ARTIFICIAL */
         .chatbot-btn { position: fixed; bottom: 20px; right: 20px; background-color: #1565c0; color: white; border: none; border-radius: 50px; padding: 15px 25px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 4000; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .chatbot-btn:hover { background-color: #0d47a1; transform: scale(1.05); }
         .chatbot-window { display: none; position: fixed; bottom: 80px; right: 20px; width: 350px; max-width: 90vw; height: 500px; background-color: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 4000; flex-direction: column; overflow: hidden; border: 1px solid #ddd; }
         .chat-header { background-color: #1565c0; color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
         .chat-close { cursor: pointer; font-size: 20px; }
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; background-color: #f4f7f6; display: flex; flex-direction: column; gap: 10px; }
-        .chat-msg { padding: 10px 15px; border-radius: 8px; max-width: 80%; font-size: 14px; line-height: 1.4; }
+        .chat-msg { padding: 10px 15px; border-radius: 8px; max-width: 85%; font-size: 14px; line-height: 1.4; word-wrap: break-word;}
         .msg-ai { background-color: #fff; border: 1px solid #e0e0e0; align-self: flex-start; border-bottom-left-radius: 0; }
         .msg-user { background-color: #c8e6c9; color: #1b5e20; align-self: flex-end; border-bottom-right-radius: 0; }
         .chat-footer { padding: 10px; background-color: #fff; border-top: 1px solid #ddd; display: flex; gap: 5px; }
         .chat-input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
         .chat-send { background-color: #1565c0; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold; }
         .chat-send:hover { background-color: #0d47a1; }
+        .typing-indicator { font-style: italic; color: #888; font-size: 12px; align-self: flex-start; margin-left: 5px; display: none; }
 
         /* Rodapé e Caixa de Disclaimer */
         footer { background: #1b5e20; color: white; text-align: center; padding: 40px 20px; margin-top: 40px; }
@@ -309,17 +310,18 @@
 
     <div class="chatbot-window" id="chatbotWindow">
         <div class="chat-header">
-            <span>Inteligência Artificial (IG)</span>
+            <span>Assistente IA (Gemini)</span>
             <span class="chat-close" onclick="toggleChat()">×</span>
         </div>
         <div class="chat-body" id="chatBody">
             <div class="chat-msg msg-ai">
-                Olá! Sou o Assistente Virtual especializado em Indicações Geográficas do Amapá. Estou a ser treinado no NITT/UNIFAP com os Cadernos de Especificações e Manuais do INPI. Como posso ajudar?
+                Olá! Sou o Assistente Virtual alimentado pela inteligência do Google Gemini, especializado no Inventário de Indicações Geográficas do Amapá. Como o posso ajudar com a pesquisa do NITT/UNIFAP hoje?
             </div>
+            <div id="typingIndicator" class="typing-indicator">A pensar...</div>
         </div>
         <div class="chat-footer">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Pergunte sobre IGs..." onkeypress="handleEnter(event)">
-            <button class="chat-send" onclick="enviarMensagem()">➤</button>
+            <input type="text" id="chatInput" class="chat-input" placeholder="Faça uma pergunta sobre as IGs..." onkeypress="handleEnter(event)">
+            <button class="chat-send" onclick="enviarMensagemGemini()">➤</button>
         </div>
     </div>
 
@@ -335,42 +337,106 @@
     </footer>
 
     <script>
-        // --- FUNÇÕES DA IA (CHATBOT) ---
+        // ==========================================
+        // CONFIGURAÇÃO DA API DO GOOGLE GEMINI
+        // ==========================================
+        
+        // CHAVE DA API INSERIDA
+        const GEMINI_API_KEY = "AQ.Ab8RN6KIbTjHd_90SAFm3kymTcUfUq3tewE4IT1IAH0JmPkqWQ"; 
+
+        // O Histórico da conversa para a IA ter memória do que foi falado
+        let chatHistory = [
+            {
+                "role": "user",
+                "parts": [{ "text": "Aja como um Assistente Oficial e Especialista em Indicações Geográficas (IG) focado exclusivamente no estado do Amapá, Brasil. O seu nome é 'Assistente NITT'. Foi treinado pelo NITT da UNIFAP. Você domina informações sobre a IP do Abacaxi de Porto Grande (1ª do estado), a IP do Açaí do Bailique (sustentável, selo FSC e vegano) e o projeto em estruturação da Farinha do Pacuí (focada no saber-fazer e crocância, com associação ASMOPAP). Tem também conhecimento sobre as potencialidades: Louças de barro, Mel do Maruanum, Castanha do Jari, Queijo da Região dos Lagos, Cacau do Cassiporé e Mel da Pedreira. Responda de forma profissional, educada, académica, mas acessível. Não invente dados fora do escopo do INPI e destas IGs." }]
+            },
+            {
+                "role": "model",
+                "parts": [{ "text": "Entendido. Atuarei como o Assistente NITT, especialista em IGs do Amapá. Estou pronto para ajudar o utilizador." }]
+            }
+        ];
+
         function toggleChat() {
             var chat = document.getElementById('chatbotWindow');
-            if(chat.style.display === 'flex') {
-                chat.style.display = 'none';
-            } else {
-                chat.style.display = 'flex';
-            }
+            chat.style.display = (chat.style.display === 'flex') ? 'none' : 'flex';
         }
 
         function handleEnter(e) {
-            if(e.key === 'Enter') enviarMensagem();
+            if(e.key === 'Enter') enviarMensagemGemini();
         }
 
-        function enviarMensagem() {
+        async function enviarMensagemGemini() {
             var input = document.getElementById('chatInput');
             var msg = input.value.trim();
             if(msg === '') return;
 
             var chatBody = document.getElementById('chatBody');
+            var indicator = document.getElementById('typingIndicator');
             
-            // Adiciona a mensagem do Utilizador
-            chatBody.innerHTML += '<div class="chat-msg msg-user">' + msg + '</div>';
+            // Mostrar a mensagem do utilizador no ecrã
+            var userMsgHtml = document.createElement('div');
+            userMsgHtml.className = 'chat-msg msg-user';
+            userMsgHtml.innerText = msg;
+            chatBody.insertBefore(userMsgHtml, indicator);
             input.value = '';
-            
-            // Rola para o fim
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Simula o tempo a "escrever" e responde
-            setTimeout(function() {
-                chatBody.innerHTML += '<div class="chat-msg msg-ai">Ainda estou em fase de prototipagem (treinamento de dados) para a minha Oficina Profissional no NITT da UNIFAP. Em breve, poderei analisar e responder detalhadamente a todas as questões técnicas sobre a Farinha do Pacuí, o Açaí do Bailique e o Abacaxi de Porto Grande!</div>';
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+            if(GEMINI_API_KEY === "COLE_AQUI_A_SUA_CHAVE_API_GEMINI" || GEMINI_API_KEY === "") {
+                mostrarRespostaIA("⚠️ Erro: Precisa de inserir a sua Chave de API do Gemini válida no código para que o meu cérebro funcione.");
+                return;
+            }
+
+            indicator.style.display = 'block';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            chatHistory.push({
+                "role": "user",
+                "parts": [{ "text": msg }]
+            });
+
+            // Faz o pedido à API do Google Gemini
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: chatHistory })
+                });
+
+                if (!response.ok) throw new Error("Erro de comunicação com o servidor Gemini.");
+
+                const data = await response.json();
+                const aiText = data.candidates[0].content.parts[0].text;
+
+                chatHistory.push({
+                    "role": "model",
+                    "parts": [{ "text": aiText }]
+                });
+
+                mostrarRespostaIA(aiText);
+
+            } catch (error) {
+                console.error(error);
+                mostrarRespostaIA("Desculpe, ocorreu um erro de ligação. Verifique se a sua chave de API é válida ou se a sua conexão está instável.");
+            } finally {
+                indicator.style.display = 'none';
+            }
         }
 
-        // --- FUNÇÕES DO MODAL DAS COMUNIDADES ---
+        function mostrarRespostaIA(texto) {
+            var chatBody = document.getElementById('chatBody');
+            var indicator = document.getElementById('typingIndicator');
+            
+            var aiMsgHtml = document.createElement('div');
+            aiMsgHtml.className = 'chat-msg msg-ai';
+            aiMsgHtml.innerHTML = texto.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
+            
+            chatBody.insertBefore(aiMsgHtml, indicator);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        // ==========================================
+        // FUNÇÕES DO MODAL DAS COMUNIDADES DO MAPA
+        // ==========================================
         function fecharModal() {
             document.getElementById('menuFlutuante').style.display = 'none';
         }
@@ -400,7 +466,9 @@
             document.getElementById('menuFlutuante').style.display = 'block';
         }
 
-        // --- CONFIGURAÇÃO DO MAPA ---
+        // ==========================================
+        // CONFIGURAÇÃO DO MAPA INTERATIVO (LEAFLET)
+        // ==========================================
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
 
@@ -412,7 +480,6 @@
 
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
         var markers = L.markerClusterGroup();
-
         window.armazemComunidades = [];
 
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
@@ -613,4 +680,4 @@
         });
     </script>
 </body>
-            </html>
+</html>
