@@ -375,10 +375,10 @@
             chatBody.scrollTop = chatBody.scrollHeight;
 
             if (!geminiApiKey || geminiApiKey.trim() === "") {
-                let chaveDigitada = prompt("🔒 Segurança NITT: Cole aqui a sua Chave API do Google Gemini para testar o assistente:");
+                let chaveDigitada = prompt("🔒 Segurança NITT: Cole aqui a sua Chave API do Google Gemini para ativar o assistente:");
                 
                 if (!chaveDigitada || chaveDigitada.trim() === "") {
-                    mostrarRespostaIA("⚠️ Operação cancelada. Sem a chave, o cérebro da IA não pode ser ativado.");
+                    mostrarRespostaIA("⚠️ Operação cancelada. Sem a chave, o sistema não pode ser ativado.");
                     return;
                 }
                 
@@ -389,6 +389,7 @@
             indicator.style.display = 'block';
             chatBody.scrollTop = chatBody.scrollHeight;
 
+            // Insere a nova mensagem no histórico
             chatHistory.push({
                 "role": "user",
                 "parts": [{ "text": msg }]
@@ -401,18 +402,32 @@
                     body: JSON.stringify({ contents: chatHistory })
                 });
 
-                if (response.status === 400 || response.status === 403) {
-                    localStorage.removeItem("GEMINI_API_KEY");
-                    geminiApiKey = null;
-                    throw new Error("Chave inválida ou revogada pela Google. Certifique-se de gerar a chave no AI Studio.");
-                }
+                if (!response.ok) {
+                    // Extrai a mensagem REAL de erro enviada pelos servidores da Google
+                    let errorMessage = `Erro HTTP ${response.status}`;
+                    try {
+                        const errJson = await response.json();
+                        if (errJson.error && errJson.error.message) {
+                            errorMessage = errJson.error.message;
+                        }
+                    } catch (e) {}
 
-                if (!response.ok) throw new Error("Erro de comunicação com o servidor Gemini.");
+                    // Tratamento detalhado
+                    if (response.status === 400 || response.status === 401 || response.status === 403) {
+                        localStorage.removeItem("GEMINI_API_KEY");
+                        geminiApiKey = null;
+                        throw new Error(`Acesso negado: ${errorMessage}. A sua chave de segurança pode ter sido excluída no AI Studio. Recarregue a página e cole uma chave nova.`);
+                    } else if (response.status === 429) {
+                        throw new Error(`Limite atingido (Quota excedida). A Google bloqueou o uso por excesso de tentativas. Tente novamente mais tarde.`);
+                    } else {
+                        throw new Error(`Falha interna na Google: ${errorMessage}`);
+                    }
+                }
 
                 const data = await response.json();
                 
                 if (!data.candidates || !data.candidates[0].content) {
-                     throw new Error("A resposta foi bloqueada pelos filtros de segurança da API.");
+                     throw new Error("A resposta foi bloqueada pelos filtros de segurança da Google.");
                 }
 
                 const aiText = data.candidates[0].content.parts[0].text;
@@ -426,7 +441,10 @@
 
             } catch (error) {
                 console.error(error);
-                mostrarRespostaIA("⚠️ Desculpe, ocorreu um erro de ligação: " + error.message + " Limpe os dados do navegador ou gere uma chave NOVA no AI Studio e recarregue a página.");
+                // IMPORTANTE: Removemos a última mensagem do usuário do histórico. 
+                // Se não fizermos isto, o próximo envio quebra a ordem da API e gera bloqueio permanente.
+                chatHistory.pop();
+                mostrarRespostaIA("⚠️ Erro de Ligação: " + error.message);
             } finally {
                 indicator.style.display = 'none';
                 chatBody.scrollTop = chatBody.scrollHeight;
