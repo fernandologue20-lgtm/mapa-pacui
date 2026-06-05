@@ -54,6 +54,8 @@
 
         /* Outros Componentes */
         .card { background: #f9f9f9; padding: 20px; border-left: 5px solid #2e7d32; margin-bottom: 15px; border-radius: 0 8px 8px 0; }
+        .logos { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .logo-box { background: #e0e0e0; padding: 15px 25px; border-radius: 5px; font-weight: bold; color: #555; text-align: center; }
         .btn { display: inline-block; background: #2e7d32; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px 5px 0 0; transition: 0.3s; }
         .btn:hover { background: #1b5e20; transform: translateY(-2px); }
         .btn-blue { background: #1565c0; }
@@ -131,10 +133,14 @@
 
         <section id="panorama">
             <h2>Panorama das Indicações Geográficas no Brasil</h2>
+            
             <p>O panorama de Indicações Geográficas (IGs) do INPI em 2025 consolidou uma expansão histórica, registrando um marco de <strong>161 IGs reconhecidas</strong> no país. Esse crescimento, fortemente impulsionado pela parceria com o Sebrae, consolida as IGs como um motor de desenvolvimento regional, valorização cultural e expansão do turismo.</p>
+            <p style="font-size: 0.9em;"><em>Fonte Oficial: <a href="https://www.gov.br/inpi/pt-br/central-de-conteudo/noticias/inpi-reconhece-duas-novas-igs-e-alcanca-150-registros-brasileiros" target="_blank" style="color: #1565c0; text-decoration: none;">INPI - Registros Brasileiros</a></em></p>
+            
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/dlfELuH1Wuo" title="Material Educativo sobre Indicação Geográfica e Propriedade Intelectual" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+
             <div class="grid-estatisticas">
                 <div class="estatistica-box">
                     <span class="estatistica-numero">161</span>
@@ -143,26 +149,41 @@
                 <div class="estatistica-box">
                     <span class="estatistica-numero">120</span>
                     <span>Indicações de Procedência (IP)</span>
+                    <small>(119 nacionais, 1 estrangeira)</small>
                 </div>
                 <div class="estatistica-box">
                     <span class="estatistica-numero">41</span>
                     <span>Denominações de Origem (DO)</span>
+                    <small>(31 nacionais, 10 estrangeiras)</small>
                 </div>
             </div>
         </section>
 
         <section id="reconhecidas" style="background-color: #f0f4f8;">
             <h2>Indicações Geográficas Reconhecidas no Amapá</h2>
+            <p>O Estado do Amapá já conquistou o seu espaço no mapa nacional das IGs, possuindo dois produtos de excelência devidamente certificados pelo INPI, que fortalecem a nossa identidade e bioeconomia.</p>
+            
             <div class="grid-inventario">
                 <div class="card-ig abacaxi">
+                    <div class="card-ig-img-container">
+                        <img src="image_684caa.png" alt="Selo IP Abacaxi de Porto Grande">
+                    </div>
                     <h3 style="color: #f57f17;">Abacaxi de Porto Grande</h3>
                     <span class="tag-status">Indicação de Procedência (IP)</span>
                     <p><strong>A Primeira IG do Amapá:</strong> Reconhecida pelo INPI em 26 de novembro de 2024.</p>
+                    <p><strong>O Território:</strong> O município de Porto Grande é o maior produtor de abacaxi do Amapá. A produção impulsiona fortemente a economia local e reflete uma rica tradição agrícola.</p>
+                    <p><strong>Histórico e Qualidade:</strong> Variedade pérola, com sabor adocicado, perfume marcante e coloração amarela clara. Declarada Patrimônio Cultural de Natureza Imaterial do estado em 2024.</p>
                 </div>
+
                 <div class="card-ig acai">
+                    <div class="card-ig-img-container">
+                        <img src="image_684c0e.png" alt="Selo IG Açaí do Bailique">
+                    </div>
                     <h3 style="color: #6a1b9a;">Açaí do Bailique</h3>
                     <span class="tag-status">Indicação de Procedência (IP)</span>
                     <p><strong>A Segunda IG do Amapá:</strong> Reconhecida oficialmente pelo INPI em 08 de abril de 2025.</p>
+                    <p><strong>O Território:</strong> Extraído no Arquipélago do Bailique, na foz do rio Amazonas. O ambiente é composto por oito ilhas fluviais e abriga cerca de 51 comunidades ribeirinhas.</p>
+                    <p><strong>Histórico e Sustentabilidade:</strong> Reconhecido como o açaí mais sustentável do mundo. Possui selo vegano SVB e certificação internacional FSC, garantindo o respeito pela floresta e pelos trabalhadores.</p>
                 </div>
             </div>
         </section>
@@ -170,14 +191,19 @@
         <section id="estruturacao">
             <h2>Em Processo de Estruturação: Farinha do Pacuí</h2>
             <p>A Farinha do Pacuí é um dos pilares da agricultura familiar no Amapá. O projeto de estruturação para a Indicação Geográfica está consolidado no <strong>Relatório Técnico Conclusivo</strong>, que integra o Caderno de Especificações Técnicas (CET), o Dossiê de Notoriedade e o Instrumento Oficial de Delimitação.</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="#" class="btn btn-blue" style="font-size: 1.1em; padding: 15px 30px;">📄 Acessar Relatório Técnico Conclusivo (Em breve)</a>
+            </div>
+
             <div class="grid-inventario">
                 <div class="card">
                     <h3>📍 O Território</h3>
-                    <p>Produzida no Distrito de São Joaquim do Pacuí, centro produtor de excelência.</p>
+                    <p>Produzida no Distrito de São Joaquim do Pacuí, reconhecido historicamente como um centro produtor de excelência.</p>
                 </div>
                 <div class="card">
                     <h3>🤲 Saber-Fazer</h3>
-                    <p>Técnicas artesanais que garantem crocância, coloração e granulometria únicas.</p>
+                    <p>O segredo reside nas técnicas artesanais de beneficiamento da mandioca, um conhecimento coletivo que garante crocância, coloração e granulometria únicas.</p>
                 </div>
                 <div class="card">
                     <h3>🤝 Organização</h3>
@@ -188,36 +214,51 @@
 
         <section id="potencialidades" style="background-color: #fafafa;">
             <h2>Potencialidades de IGs no Estado do Amapá</h2>
+            <p>O Amapá possui uma riqueza ímpar de produtos agroextrativistas e artesanais. O mapeamento abaixo apresenta os produtos e serviços que se encontram em fase de diagnóstico de potencialidade para futuras solicitações de Indicação Geográfica.</p>
+
             <div class="grid-inventario">
                 <div class="card-ig potencial">
                     <h3>🏺 Louças de Barro</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>Mapeamento das técnicas ancestrais e do valor cultural na produção da cerâmica tradicional, reconhecendo o artesanato local.</p>
                 </div>
                 <div class="card-ig potencial">
                     <h3>🍯 Mel do Carmo do Maruanum</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>Apuramento das características florais e da organização produtiva do Quilombo do Carmo do Maruanum para a produção de mel silvestre.</p>
                 </div>
                 <div class="card-ig potencial">
                     <h3>🌰 Castanha do Laranjal do Jari</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>O extrativismo sustentável da castanha-da-amazônia, fundamental para a bioeconomia da calha do Rio Jari.</p>
                 </div>
                 <div class="card-ig potencial">
                     <h3>🧀 Queijo da Região dos Lagos</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>O saber-fazer leiteiro e a identidade do queijo artesanal produzido no município do Amapá, na famosa Região dos Lagos.</p>
                 </div>
                 <div class="card-ig potencial">
                     <h3>🍫 Cacau do Cassiporé</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>No município de Oiapoque, o cultivo do cacau nativo na bacia do rio Cassiporé destaca-se pelo seu perfil genético e sabor único.</p>
                 </div>
                 <div class="card-ig potencial">
                     <h3>🐝 Mel do Quilombo da Pedreira</h3>
                     <span class="tag-status tag-potencial">Diagnóstico de Potencialidade</span>
+                    <p>A organização comunitária quilombola focada na apicultura sustentável e na pureza do mel amazónico.</p>
                 </div>
             </div>
         </section>
 
         <section id="mapa-secao">
             <h2>Mapa Integrado de Rotas e Produtores</h2>
+            <p>Navegue pelo território e conheça a delimitação oficial da área do Pacuí e a rota de acesso via rodovia AP-70. Clique nos produtores para descobrir as especificações de cada comunidade ou traçar a rota via GPS.</p>
+            
+            <div style="margin-bottom: 15px;">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=0.7523259,-50.60416" target="_blank" class="btn btn-blue" style="background-color: #4285F4;">
+                    🚗 Abrir Rota Central no Google Maps
+                </a>
+            </div>
             <div id="mapa"></div>
         </section>
 
@@ -227,9 +268,38 @@
         <div class="modal-janela">
             <span class="modal-fechar" onclick="fecharModal()">×</span>
             <h2 id="modalNome" class="modal-titulo">Nome da Comunidade</h2>
+            
             <div class="modal-seccao">
                 <h4>📜 História e Organização</h4>
                 <p id="modalHistoria">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao">
+                <h4>🏭 Infraestrutura de Produção</h4>
+                <p id="modalInfra">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao">
+                <h4>⚙️ Processo Produtivo</h4>
+                <p id="modalProcesso">Carregando...</p>
+            </div>
+            
+            <div class="modal-seccao" style="border-left-color: #1565c0;">
+                <h4>🔬 Dados Físico-Químicos (EMBRAPA)</h4>
+                <p id="modalEmbrapa">Carregando...</p>
+                
+                <div id="containerFotoFarinha" style="display: none; text-align: center; margin-top: 15px;">
+                    <img id="modalFotoFarinha" src="" alt="Amostra da Farinha" style="max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+
+            <div class="modal-seccao" style="border-left-color: #2e7d32; background-color: #e8f5e9;">
+                <h4>📊 Dados Económicos</h4>
+                <p id="modalEconomia">Carregando...</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <a id="modalBotaoRota" href="#" target="_blank" class="btn btn-blue" style="width: 100%; box-sizing: border-box;">🚗 Navegar até à Comunidade (GPS)</a>
             </div>
         </div>
     </div>
@@ -245,7 +315,7 @@
         </div>
         <div class="chat-body" id="chatBody">
             <div class="chat-msg msg-ai">
-                Olá! Sou o Assistente Virtual alimentado pela inteligência do Google Gemini, especializado no Inventário de Indicações Geográficas do Amapá. Como posso ajudar com a pesquisa hoje?
+                Olá! Sou o Assistente Virtual alimentado pela inteligência do Google Gemini, especializado no Inventário de Indicações Geográficas do Amapá. Como o posso ajudar com a pesquisa do NITT/UNIFAP hoje?
             </div>
             <div id="typingIndicator" class="typing-indicator">A pensar...</div>
         </div>
@@ -262,27 +332,25 @@
         <div class="disclaimer-box">
             <strong>Aviso de Transparência:</strong> Este portal é uma iniciativa de pesquisa independente dedicada a apoiar, divulgar e valorizar os saberes e as comunidades produtoras do Estado do Amapá. Não possui vínculo administrativo ou operacional com o Observatório de Dados do Estado do Amapá ou plataformas governamentais.
         </div>
+        
         <p style="margin-top: 30px; font-size: 0.8em; opacity: 0.8;">© 2026 Projeto de Inventário Digital Interativo.</p>
     </footer>
 
     <script>
         // ==========================================
-        // CONFIGURAÇÃO DA API DO GOOGLE GEMINI
+        // CONFIGURAÇÃO DA API DO GOOGLE GEMINI (CORRIGIDA)
         // ==========================================
         
-        // Se quiser fixar a chave no código para testes rápidos, coloque-a aqui dentro das aspas:
-        const CHAVE_API_FIXA = ""; 
-        
-        let geminiApiKey = CHAVE_API_FIXA || localStorage.getItem("GEMINI_API_KEY");
+        let geminiApiKey = localStorage.getItem("GEMINI_API_KEY");
 
         let chatHistory = [
             {
                 "role": "user",
-                "parts": [{ "text": "Aja como um Assistente Oficial e Especialista em Indicações Geográficas (IG) focado exclusivamente no estado do Amapá, Brasil. O seu nome é 'Assistente NITT'. Foi treinado pelo NITT da UNIFAP. Você domina informações sobre a IP do Abacaxi de Porto Grande (1ª do estado), a IP do Açaí do Bailique (sustentável, selo FSC e vegano) e o projeto em estruturação da Farinha do Pacuí (focada no saber-fazer e crocância, com associação ASMOPAP). Responda de forma profissional e académica. Não invente dados fora do escopo do INPI." }]
+                "parts": [{ "text": "Aja como um Assistente Oficial e Especialista em Indicações Geográficas (IG) focado exclusivamente no estado do Amapá, Brasil. O seu nome é 'Assistente NITT'. Foi treinado pelo NITT da UNIFAP. Você domina informações sobre a IP do Abacaxi de Porto Grande (1ª do estado), a IP do Açaí do Bailique (sustentável, selo FSC e vegano) e o projeto em estruturação da Farinha do Pacuí (focada no saber-fazer e crocância, com associação ASMOPAP). Tem também conhecimento sobre as potencialidades: Louças de barro, Mel do Maruanum, Castanha do Jari, Queijo da Região dos Lagos, Cacau do Cassiporé e Mel da Pedreira. Responda de forma profissional, educada, académica, mas acessível. Não invente dados fora do escopo do INPI e destas IGs." }]
             },
             {
                 "role": "model",
-                "parts": [{ "text": "Entendido. Atuarei como o Assistente NITT, especialista em IGs do Amapá." }]
+                "parts": [{ "text": "Entendido. Atuarei como o Assistente NITT, especialista em IGs do Amapá. Estou pronto para ajudar o utilizador." }]
             }
         ];
 
@@ -310,14 +378,16 @@
             input.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            if (!geminiApiKey) {
-                let chaveDigitada = prompt("🔒 Segurança NITT: Cole aqui a sua Chave API do Google Gemini para ativar o assistente:");
+            // Solicitação de chave corrigida com .trim() para evitar erro de espaço em branco ao colar pelo celular
+            if (!geminiApiKey || geminiApiKey.trim() === "") {
+                let chaveDigitada = prompt("🔒 Segurança NITT: Cole aqui a sua NOVA Chave API do Google Gemini para testar o assistente:");
+                
                 if (!chaveDigitada || chaveDigitada.trim() === "") {
-                    mostrarRespostaIA("⚠️ Operação cancelada. Sem a chave, a IA não pode ser ativada.");
+                    mostrarRespostaIA("⚠️ Operação cancelada. Sem a chave, o cérebro da IA não pode ser ativado.");
                     return;
                 }
-                // .trim() resolve o erro de espaços vazios copiados pelo celular
-                geminiApiKey = chaveDigitada.trim();
+                
+                geminiApiKey = chaveDigitada.trim(); // Remove espaços ocultos
                 localStorage.setItem("GEMINI_API_KEY", geminiApiKey);
             }
 
@@ -338,13 +408,19 @@
 
                 if (response.status === 400 || response.status === 403) {
                     localStorage.removeItem("GEMINI_API_KEY");
-                    geminiApiKey = "";
-                    throw new Error("Chave de API inválida ou sem permissão.");
+                    geminiApiKey = null;
+                    throw new Error("Chave inválida ou revogada pela Google. Geralmente ocorre se a chave tiver espaços em branco ou foi excluída no AI Studio.");
                 }
 
-                if (!response.ok) throw new Error("Erro no servidor Gemini.");
+                if (!response.ok) throw new Error("Erro de comunicação com o servidor Gemini.");
 
                 const data = await response.json();
+                
+                // Checagem de segurança caso a resposta venha vazia ou bloqueada por filtro de segurança
+                if (!data.candidates || !data.candidates[0].content) {
+                     throw new Error("A resposta foi bloqueada pelos filtros de segurança da API.");
+                }
+
                 const aiText = data.candidates[0].content.parts[0].text;
 
                 chatHistory.push({
@@ -356,47 +432,203 @@
 
             } catch (error) {
                 console.error(error);
-                mostrarRespostaIA("⚠️ Erro de conexão: " + error.message + " Gere uma nova chave no Google AI Studio e recarregue a página.");
+                mostrarRespostaIA("⚠️ Desculpe, ocorreu um erro de ligação: " + error.message + " Limpe os dados do navegador ou gere uma chave NOVA no AI Studio e recarregue a página.");
             } finally {
                 indicator.style.display = 'none';
+                chatBody.scrollTop = chatBody.scrollHeight;
             }
         }
 
         function mostrarRespostaIA(texto) {
             var chatBody = document.getElementById('chatBody');
             var indicator = document.getElementById('typingIndicator');
+            
             var aiMsgHtml = document.createElement('div');
             aiMsgHtml.className = 'chat-msg msg-ai';
             aiMsgHtml.innerHTML = texto.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
+            
             chatBody.insertBefore(aiMsgHtml, indicator);
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
-        function fecharModal() { document.getElementById('menuFlutuante').style.display = 'none'; }
+        // ==========================================
+        // FUNÇÕES DO MODAL DAS COMUNIDADES DO MAPA
+        // ==========================================
+        function fecharModal() {
+            document.getElementById('menuFlutuante').style.display = 'none';
+        }
+
+        function abrirModal(index, linkRota) {
+            var dados = window.armazemComunidades[index];
+            
+            document.getElementById('modalNome').innerText = dados.nome || "Comunidade Produtora";
+            document.getElementById('modalHistoria').innerText = dados.historia || "Informação em levantamento junto à comunidade local.";
+            document.getElementById('modalInfra').innerText = dados.infraestrutura || "Informação sobre quantidade de casas de farinha (manuais/mecanizadas) em atualização.";
+            document.getElementById('modalProcesso').innerText = dados.processo || "Mapeamento das etapas de produção em estruturação.";
+            document.getElementById('modalEmbrapa').innerText = dados.embrapa || "Aguardando compilação dos dados de análise laboratorial.";
+            document.getElementById('modalEconomia').innerText = dados.economia || "Levantamento de indicadores económicos em processamento.";
+            
+            var imgFarinha = document.getElementById('modalFotoFarinha');
+            var containerFoto = document.getElementById('containerFotoFarinha');
+            
+            if (dados.foto && dados.foto.trim() !== "") {
+                imgFarinha.src = dados.foto;          
+                containerFoto.style.display = 'block';
+            } else {
+                imgFarinha.src = "";                  
+                containerFoto.style.display = 'none'; 
+            }
+
+            document.getElementById('modalBotaoRota').href = linkRota;
+            document.getElementById('menuFlutuante').style.display = 'block';
+        }
 
         // ==========================================
         // CONFIGURAÇÃO DO MAPA INTERATIVO (LEAFLET)
         // ==========================================
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-        var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg');
+        var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
 
-        var mapa = L.map('mapa', { center: [0.8, -50.7], zoom: 9, layers: [osm] });
+        var mapa = L.map('mapa', {
+            center: [0.8, -50.7],
+            zoom: 9,
+            layers: [osm]
+        });
+
+        L.control.scale({imperial: false, metric: true}).addTo(mapa);
         var markers = L.markerClusterGroup();
+        window.armazemComunidades = [];
+
+        var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
         
-        // Coordenadas corrigidas (reduzidas para exemplo, sem gerar crash)
+        fetch(link)
+            .then(res => res.json())
+            .then(dados => {
+                dados.forEach(c => {
+                    var lat = parseFloat(c.lat);
+                    var lng = parseFloat(c.lng);
+                    
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        window.armazemComunidades.push(c);
+                        var index = window.armazemComunidades.length - 1;
+                        var linkRota = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lng;
+                        
+                        var conteudoBalao = "<div style='text-align:center;'><b>" + c.nome + "</b><br><span style='color:#555;'>Farinha: " + c.tipoFarinha + "</span><br><br>" +
+                                            "<button onclick='abrirModal(" + index + ", \"" + linkRota + "\")' style='background:#2e7d32; color:white; padding:8px 10px; border:none; border-radius:4px; cursor:pointer; font-weight:bold; width:100%; margin-bottom:5px; font-size:13px;'>📖 Ver Detalhes Completos</button>" +
+                                            "</div>";
+
+                        var marker = L.marker([lat, lng])
+                            .bindPopup(conteudoBalao)
+                            .bindTooltip(c.nome, { permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -10] });
+                        markers.addLayer(marker);
+                    }
+                });
+                mapa.addLayer(markers);
+            });
+
+        // Polígono do Território Pacuí
         var coordenadas = [
-            [-50.8875106, 0.7741841], [-50.8499791, 0.7558767], [-50.7706649, 0.677068], [-50.7392245, 0.6422421], 
-            [-50.6416446, 0.6177931], [-50.6259145, 0.6324067], [-50.621452, 0.7199759], [-50.5674564, 0.7645965], 
-            [-50.4848367, 0.7384284], [-50.4097693, 0.6233332], [-50.3287797, 0.6986639], [-50.2740654, 0.8368322], 
-            [-50.3056066, 0.9441023], [-50.4214723, 0.9608362], [-50.5190999, 0.8958309], [-50.6094322, 0.8923983], 
-            [-50.6864615, 0.836832], [-50.7789395, 0.8254607], [-50.8617621, 0.8095844], [-50.8875106, 0.7741841]
+            [-50.8875106, 0.7741841], [-50.8873946, 0.7742603], [-50.8499791, 0.7558767], [-50.8488836, 0.7553734], [-50.847958, 0.7545191],
+            [-50.8477444, 0.7541988], [-50.8466765, 0.7548751], [-50.8458934, 0.7546259], [-50.8455018, 0.75427], [-50.845217, 0.7543412],
+            [-50.8450034, 0.7551598], [-50.8438643, 0.7553734], [-50.8437219, 0.7551242], [-50.8437317, 0.7549023], [-50.844244, 0.7543047],
+            [-50.8439537, 0.7539632], [-50.8431683, 0.7537583], [-50.8430146, 0.7537071], [-50.8428438, 0.7541169], [-50.8429292, 0.7545608],
+            [-50.8427243, 0.7548681], [-50.8421779, 0.7547315], [-50.8417681, 0.7542193], [-50.8419388, 0.7533144], [-50.8418193, 0.7528705],
+            [-50.841529, 0.7528193], [-50.8413924, 0.7533486], [-50.8406241, 0.7538096], [-50.8402996, 0.7535535], [-50.8407094, 0.7531095],
+            [-50.8411192, 0.7526144], [-50.8406924, 0.7522388], [-50.8403509, 0.751829], [-50.8396678, 0.7522559], [-50.8388312, 0.7523754],
+            [-50.8386433, 0.7518461], [-50.8379603, 0.7516412], [-50.8376017, 0.7516754], [-50.8373115, 0.7518973], [-50.8373627, 0.7523242],
+            [-50.83697, 0.7525461], [-50.8363723, 0.7523071], [-50.8360821, 0.7524949], [-50.8361162, 0.7528876], [-50.8357576, 0.7531266],
+            [-50.8352966, 0.7529388], [-50.8345453, 0.7528705], [-50.8344087, 0.7526315], [-50.8343233, 0.7521534], [-50.834016, 0.7521022],
+            [-50.8338794, 0.7524607], [-50.8335379, 0.7526998], [-50.8331281, 0.7524949], [-50.8327183, 0.7519315], [-50.8321206, 0.7513168],
+            [-50.8314547, 0.7510266], [-50.8309766, 0.7510607], [-50.8303277, 0.7516071], [-50.8295935, 0.7516241], [-50.8286031, 0.7517266],
+            [-50.828125, 0.7518632], [-50.8274591, 0.7517266], [-50.8271859, 0.7515388], [-50.8271517, 0.7510778], [-50.8274762, 0.7507875],
+            [-50.8275786, 0.7503607], [-50.8278177, 0.7501387], [-50.8280226, 0.7500192], [-50.8283129, 0.7502412], [-50.8285007, 0.7506168],
+            [-50.828791, 0.7508387], [-50.8290642, 0.7506168], [-50.8289788, 0.7501387], [-50.8285178, 0.7495753], [-50.8280055, 0.7493875],
+            [-50.8272542, 0.7493363], [-50.8267108, 0.7486208], [-50.8267703, 0.7470757], [-50.8255816, 0.7477294], [-50.8241552, 0.7463625],
+            [-50.8250467, 0.7451145], [-50.8235014, 0.7438071], [-50.8242741, 0.7423213], [-50.8229665, 0.7411328], [-50.8232637, 0.7385773],
+            [-50.8204108, 0.7380425], [-50.8183901, 0.738399], [-50.8173203, 0.7370322], [-50.8162505, 0.7347739], [-50.8139325, 0.7333476],
+            [-50.8138137, 0.7299601], [-50.8125656, 0.7265132], [-50.8111986, 0.7240766], [-50.8093562, 0.7222938], [-50.808643, 0.7209863],
+            [-50.8068599, 0.7209863], [-50.805909, 0.7189063], [-50.8039477, 0.7183714], [-50.802759, 0.7157565], [-50.7998467, 0.7142708],
+            [-50.7990741, 0.7139737], [-50.7968156, 0.714984], [-50.7958052, 0.7129634], [-50.7943194, 0.7104079], [-50.7922392, 0.7086844],
+            [-50.7888516, 0.7095165], [-50.7883167, 0.7085657], [-50.788911, 0.7062479], [-50.7862365, 0.7039302], [-50.7852261, 0.7029793],
+            [-50.7865337, 0.6995324], [-50.7848101, 0.6982844], [-50.780412, 0.6974523], [-50.7774403, 0.6951346], [-50.7789261, 0.6906179],
+            [-50.7770837, 0.6888945], [-50.7762516, 0.6881219], [-50.7772025, 0.6851504], [-50.7743498, 0.6832487], [-50.7723885, 0.6830704],
+            [-50.771497, 0.6832487], [-50.7700111, 0.6822978], [-50.7703677, 0.6808121], [-50.7706649, 0.677068], [-50.7679904, 0.6767114],
+            [-50.76698, 0.6757606], [-50.7669206, 0.6742748], [-50.7688225, 0.6734428], [-50.7715564, 0.6735022], [-50.7723885, 0.6724325],
+            [-50.7724479, 0.6707685], [-50.7698328, 0.669461], [-50.7679309, 0.6676781], [-50.7637111, 0.6670244], [-50.763414, 0.6660735],
+            [-50.7664451, 0.6641717], [-50.7666234, 0.6630426], [-50.7654347, 0.6622105], [-50.7622253, 0.6625671], [-50.7608583, 0.6599522],
+            [-50.7602045, 0.659239], [-50.7577677, 0.6609625], [-50.7538451, 0.6594768], [-50.7521809, 0.6583476], [-50.7536074, 0.6562081],
+            [-50.7542613, 0.654247], [-50.7528943, 0.6532367], [-50.7496254, 0.6534744], [-50.7478424, 0.6525235], [-50.7487339, 0.6502057],
+            [-50.7480207, 0.6465805], [-50.7470698, 0.6433712], [-50.7444547, 0.6422421], [-50.7392245, 0.6422421], [-50.7355396, 0.6431335],
+            [-50.7335783, 0.6423609], [-50.7330434, 0.6387357], [-50.7311415, 0.6372499], [-50.7269811, 0.6374282], [-50.726149, 0.638914],
+            [-50.7265056, 0.6423015], [-50.7250792, 0.6446787], [-50.7225235, 0.6452136], [-50.7205028, 0.6419449], [-50.7190169, 0.640578],
+            [-50.7155103, 0.6427769], [-50.7128358, 0.6423609], [-50.7118849, 0.6379631], [-50.7114095, 0.6352294], [-50.7099831, 0.6329116],
+            [-50.7100425, 0.6311881], [-50.7116472, 0.6293458], [-50.7112312, 0.6258988], [-50.7100425, 0.624413], [-50.7071302, 0.6248291],
+            [-50.704634, 0.6239376], [-50.7034453, 0.6225113], [-50.7039208, 0.6195397], [-50.7039802, 0.6172814], [-50.7019595, 0.6140721],
+            [-50.7008897, 0.6124675], [-50.7020783, 0.6097931], [-50.7005331, 0.6075348], [-50.6991066, 0.6071782], [-50.6974425, 0.6078914],
+            [-50.6968482, 0.6100903], [-50.6963133, 0.6131807], [-50.6947085, 0.614191], [-50.6926283, 0.6136561], [-50.6892406, 0.6127647],
+            [-50.6862095, 0.6130618], [-50.6844859, 0.6153202], [-50.6824651, 0.6168059], [-50.6801472, 0.6179351], [-50.6797906, 0.6199558],
+            [-50.6815142, 0.621917], [-50.6825246, 0.6247102], [-50.6813953, 0.6279194], [-50.6788397, 0.6298212], [-50.6756302, 0.6295241],
+            [-50.6734312, 0.6297618], [-50.6718265, 0.628276], [-50.6706378, 0.6267308], [-50.669984, 0.6233433], [-50.6699246, 0.6198963],
+            [-50.6698057, 0.6152013], [-50.6686765, 0.6121704], [-50.6686765, 0.6121704], [-50.666834, 0.6100903], [-50.664635, 0.6089611],
+            [-50.6620199, 0.6093177], [-50.6599991, 0.6087234], [-50.6582161, 0.6069405], [-50.657384, 0.6044444], [-50.6583944, 0.6023049],
+            [-50.6592859, 0.5992145], [-50.6586321, 0.5967778], [-50.6567897, 0.5942223], [-50.6545312, 0.5929148], [-50.6520944, 0.594044],
+            [-50.649717, 0.596659], [-50.6478746, 0.5970155], [-50.644784, 0.5992145], [-50.6440114, 0.6020672], [-50.6464482, 0.6033152],
+            [-50.6486472, 0.6050981], [-50.6494793, 0.6075348], [-50.6491227, 0.6094366], [-50.6478151, 0.6099714], [-50.6459133, 0.6106846],
+            [-50.6435359, 0.6137156], [-50.6416446, 0.6177931], [-50.6420908, 0.6230361], [-50.6386324, 0.6243748], [-50.6337237, 0.6245979],
+            [-50.6304885, 0.6261597], [-50.6293729, 0.6292832], [-50.6259145, 0.6324067], [-50.6255798, 0.6374266], [-50.626807, 0.6409964],
+            [-50.6269185, 0.6451239], [-50.6255798, 0.6472434], [-50.6264723, 0.6513709], [-50.6263607, 0.6556099], [-50.625022, 0.6597374],
+            [-50.6263607, 0.6639764], [-50.6244642, 0.6678808], [-50.6231254, 0.6707812], [-50.6229023, 0.6730122], [-50.6270301, 0.6775859],
+            [-50.6263607, 0.6851715], [-50.6251335, 0.6901914], [-50.6233485, 0.69153], [-50.6187745, 0.689299], [-50.6165433, 0.6916416],
+            [-50.615093, 0.6993387], [-50.6159855, 0.7014582], [-50.6215636, 0.7046933], [-50.6222329, 0.7077052], [-50.620448, 0.7112748],
+            [-50.620448, 0.7143983], [-50.621452, 0.7176333], [-50.621452, 0.7199759], [-50.6202248, 0.7232109], [-50.6198901, 0.7258881],
+            [-50.6207826, 0.7296809], [-50.6210057, 0.7342545], [-50.6191092, 0.7377126], [-50.6174358, 0.7420631], [-50.6181052, 0.7463021],
+            [-50.6163202, 0.7485331], [-50.6130849, 0.7526605], [-50.60416, 0.7523259], [-50.6005901, 0.7514335], [-50.5960161, 0.7471945],
+            [-50.591219, 0.7466367], [-50.5873143, 0.7452981], [-50.5847484, 0.7439595], [-50.5806207, 0.7426209], [-50.5803974, 0.7378242],
+            [-50.5818477, 0.7336968], [-50.576939, 0.7358163], [-50.572365, 0.7388282], [-50.5675679, 0.743848], [-50.5679026, 0.7514335],
+            [-50.5685719, 0.7521028], [-50.5718072, 0.7499833], [-50.5722534, 0.760023], [-50.5674564, 0.7645965], [-50.568572, 0.7656005],
+            [-50.5712495, 0.7660467], [-50.5697992, 0.7700625], [-50.5648905, 0.7698394], [-50.5626593, 0.7669391], [-50.5550731, 0.7644849],
+            [-50.5479332, 0.7672737], [-50.5414627, 0.7639272], [-50.536554, 0.7583496], [-50.5342112, 0.7618077], [-50.5313106, 0.7638156],
+            [-50.5300835, 0.7586843], [-50.5316453, 0.7550031], [-50.5275176, 0.7563417], [-50.5280754, 0.7604691], [-50.5258441, 0.7613615],
+            [-50.522832, 0.7575688], [-50.5197083, 0.757011], [-50.5203776, 0.7623655], [-50.5165846, 0.7621424], [-50.5161383, 0.7555608],
+            [-50.5076597, 0.7583496], [-50.5028626, 0.7543338], [-50.498177, 0.7557839], [-50.498897, 0.749628], [-50.5055696, 0.7455771],
+            [-50.5017567, 0.7436707], [-50.4957989, 0.7448622], [-50.4924626, 0.7393815], [-50.4848367, 0.7384284], [-50.4867432, 0.734854],
+            [-50.4824536, 0.7305648], [-50.4722063, 0.731518], [-50.4638655, 0.7305648], [-50.4571928, 0.7308031], [-50.4548097, 0.7131696],
+            [-50.4498053, 0.7055443], [-50.4431326, 0.7005402], [-50.4421794, 0.6972041], [-50.4369366, 0.6917234], [-50.4390813, 0.6764727],
+            [-50.4443241, 0.6705154], [-50.4471839, 0.666941], [-50.4097693, 0.6233332], [-50.3287797, 0.6986639], [-50.3090396, 0.7362101],
+            [-50.3051774, 0.7589521], [-50.300457, 0.7834104], [-50.2886559, 0.826105], [-50.2740654, 0.8368322], [-50.2704177, 0.8432685],
+            [-50.2759965, 0.8615046], [-50.2830771, 0.8825296], [-50.2935909, 0.8904676], [-50.2998133, 0.9029109], [-50.2959512, 0.9243648],
+            [-50.2989551, 0.9361644], [-50.3056066, 0.9441023], [-50.3169786, 0.9460331], [-50.3302817, 0.9434587], [-50.3343585, 0.9355208],
+            [-50.3403664, 0.9271538], [-50.3433703, 0.9260812], [-50.3560297, 0.9331609], [-50.3646123, 0.9421715], [-50.3710493, 0.9378807],
+            [-50.3691182, 0.9331609], [-50.3723367, 0.928012], [-50.3843524, 0.9237212], [-50.3882146, 0.9247939], [-50.3860689, 0.9312301],
+            [-50.3897166, 0.9353063], [-50.3970118, 0.9325173], [-50.4040925, 0.9415279], [-50.4092421, 0.9520402], [-50.4148208, 0.9584763],
+            [-50.4214723, 0.9608362], [-50.4311278, 0.9518256], [-50.4367067, 0.9496799], [-50.437565, 0.944531], [-50.4371358, 0.9380949],
+            [-50.4412126, 0.9297279], [-50.4435728, 0.927368], [-50.4472205, 0.9312297], [-50.4508681, 0.9310152], [-50.4543011, 0.9288698],
+            [-50.4570905, 0.9200737], [-50.466746, 0.9166411], [-50.4712519, 0.9226482], [-50.4817656, 0.9269389], [-50.4914211, 0.9262953],
+            [-50.4978581, 0.9290843], [-50.5064407, 0.9226482], [-50.5025785, 0.9170702], [-50.5051533, 0.910634], [-50.5083716, 0.904627],
+            [-50.5128775, 0.899049], [-50.5190999, 0.8958309], [-50.519529, 0.891111], [-50.5216747, 0.8848893], [-50.527468, 0.8793113],
+            [-50.5330467, 0.8799549], [-50.533905, 0.8739478], [-50.5409856, 0.8733041], [-50.5454915, 0.8763077], [-50.550212, 0.8756641],
+            [-50.5570781, 0.8722314], [-50.5585801, 0.8707296], [-50.5645879, 0.8745914], [-50.5693084, 0.8782386], [-50.5723123, 0.8829585],
+            [-50.571454, 0.8857475], [-50.5776764, 0.8874638], [-50.5798221, 0.8851039], [-50.5761745, 0.8853184], [-50.576389, 0.8812422],
+            [-50.5781056, 0.8713733], [-50.58583, 0.8636498], [-50.5916232, 0.8623625], [-50.5967728, 0.8647225], [-50.5993476, 0.8662243],
+            [-50.5957, 0.8709442], [-50.5948417, 0.8728751], [-50.597202, 0.8786677], [-50.6002059, 0.8870347], [-50.6044972, 0.8917546],
+            [-50.6094322, 0.8923983], [-50.613509, 0.8923983], [-50.6147964, 0.888322], [-50.6113633, 0.8874638], [-50.6117925, 0.8853184],
+            [-50.6113633, 0.8788822], [-50.6126507, 0.8718023], [-50.6143672, 0.8696569], [-50.6126507, 0.8662243], [-50.6154401, 0.8619334],
+            [-50.6201605, 0.8619334], [-50.6212334, 0.8687988], [-50.6280995, 0.8718023], [-50.6341073, 0.8696569], [-50.6375404, 0.8664388],
+            [-50.6360384, 0.872446], [-50.6409734, 0.8730896], [-50.6394715, 0.8793113], [-50.6424754, 0.8812422], [-50.6448356, 0.8797404],
+            [-50.6424754, 0.8758786], [-50.646123, 0.8739478], [-50.6482687, 0.8788822], [-50.6512726, 0.8771659], [-50.6534183, 0.8743768],
+            [-50.6607135, 0.8730896], [-50.6611427, 0.8657952], [-50.6671505, 0.8578571], [-50.6650048, 0.8531372], [-50.6667214, 0.8505627],
+            [-50.6699399, 0.8488464], [-50.6705836, 0.8462719], [-50.6742312, 0.8473446], [-50.6759477, 0.8417665], [-50.6819556, 0.8385483],
+            [-50.6828138, 0.8327556], [-50.6864615, 0.836832], [-50.6926839, 0.8366174], [-50.6956878, 0.8333993], [-50.6999791, 0.8263193],
+            [-50.7040559, 0.8218139], [-50.7169298, 0.8183812], [-50.7231523, 0.8188103], [-50.7377428, 0.8188103], [-50.7443943, 0.8203121],
+            [-50.7495439, 0.8250321], [-50.7615597, 0.8213844], [-50.7725026, 0.8231007], [-50.7789395, 0.8254607], [-50.7864494, 0.8372606],
+            [-50.7954611, 0.8432678], [-50.8036147, 0.841766], [-50.8076914, 0.8364024], [-50.8160595, 0.8310389], [-50.8261441, 0.8250316],
+            [-50.8398763, 0.8215989], [-50.8617621, 0.8095844], [-50.8765671, 0.8010027], [-50.8857935, 0.7975699], [-50.88751, 0.7741844]
         ];
 
-        // Definindo coordenadas de rota dummy para evitar crash de variável inexistente
-        var coordenadasRota = [[-50.88, 0.77], [-50.85, 0.75]];
-
         var poligono = L.polygon(coordenadas.map(c => [c[1], c[0]]), { color: '#2e7d32', fillOpacity: 0.2 }).addTo(mapa);
-        
+
+        // CORREÇÃO DO CRASH DO MAPA: Declarando coordenadasRota vazias para evitar bloqueio do JavaScript
+        var coordenadasRota = []; 
         var rota = L.polyline(coordenadasRota.map(c => [c[1], c[0]]), {
             color: '#ff9800', weight: 4, opacity: 0.8, dashArray: '10, 10'
         }).addTo(mapa);
@@ -404,6 +636,17 @@
         var baseMaps = { "Mapa Padrão": osm, "Satélite": satelite };
         var overlayMaps = { "Território Pacuí": poligono, "Rodovia AP-70": rota, "Comunidades": markers };
         L.control.layers(baseMaps, overlayMaps).addTo(mapa);
+
+        // GPS DO USUÁRIO
+        var pinoUsuario = null;
+        mapa.locate({setView: false, watch: true, enableHighAccuracy: true});
+        mapa.on('locationfound', function(e) {
+            if (!pinoUsuario) {
+                pinoUsuario = L.circleMarker(e.latlng, { radius: 8, fillColor: "#2196F3", color: "#ffffff", weight: 3, opacity: 1, fillOpacity: 1 }).addTo(mapa);
+            } else {
+                pinoUsuario.setLatLng(e.latlng);
+            }
+        });
     </script>
 </body>
 </html>
