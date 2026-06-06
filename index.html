@@ -62,48 +62,24 @@
         .btn-blue:hover { background: #0d47a1; }
         
         /* Mapa e Vídeo */
-        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; }
+        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; z-index: 1; margin-top: 20px; position: relative; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
         
         /* --- ESTILOS DO MINI-MAPA E LIGHTBOX DE ZOOM --- */
-       /* Substitua o estilo do mapa por este para caber o mini-mapa */
-#mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; position: relative; }
-        /* Adicione estes estilos no final do seu bloco <style> atual */
-.mapa-situacao-img { border: 2px solid #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); width: 140px; cursor: pointer; }
-#lightboxZoom { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
-#imgZoomExpandida { max-width: 90%; max-height: 90%; border: 4px solid white; border-radius: 8px; }
-.info-cartografica { background: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 5px; font-size: 11px; border-left: 4px solid #1565c0; }
-.label-estilo { background: rgba(255,255,255,0.9); border: 1px solid #2e7d32; font-size: 10px; font-weight: bold; color: #1b5e20; padding: 2px 5px; border-radius: 4px; }
+        .mapa-situacao-img { border: 2px solid #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); width: 160px; height: auto; background: white; padding: 2px; cursor: pointer; pointer-events: auto; transition: transform 0.2s; }
+        .mapa-situacao-img:hover { transform: scale(1.05); }
+        @media (max-width: 600px) { .mapa-situacao-img { width: 110px; } }
 
-        #lightboxZoom {
-            display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.85); backdrop-filter: blur(5px); align-items: center; justify-content: center; cursor: zoom-out;
-        }
+        #lightboxZoom { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(5px); align-items: center; justify-content: center; cursor: zoom-out; }
         #imgZoomExpandida { max-width: 90%; max-height: 90%; border: 4px solid white; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         #btnFecharZoom { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         #btnFecharZoom:hover { color: #f44336; }
 
         /* --- ESTILO DA LEGENDA TÉCNICA IBGE --- */
-        .info-cartografica {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px;
-            border-radius: 5px;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-            font-size: 11px;
-            color: #333;
-            line-height: 1.5;
-            border-left: 4px solid #1565c0;
-            margin-bottom: 20px;
-            margin-right: 10px;
-        }
-        .info-cartografica h4 {
-            margin: 0 0 5px 0;
-            color: #1565c0;
-            font-size: 12px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 3px;
-        }
+        .info-cartografica { background: rgba(255, 255, 255, 0.95); padding: 12px; border-radius: 5px; box-shadow: 0 1px 5px rgba(0,0,0,0.4); font-size: 11px; color: #333; line-height: 1.5; border-left: 4px solid #1565c0; margin-bottom: 20px; margin-right: 10px; }
+        .info-cartografica h4 { margin: 0 0 5px 0; color: #1565c0; font-size: 12px; border-bottom: 1px solid #ddd; padding-bottom: 3px; }
+        .label-estilo { background: rgba(255,255,255,0.9); border: 1px solid #2e7d32; font-size: 10px; font-weight: bold; color: #1b5e20; padding: 2px 5px; border-radius: 4px; }
 
         /* Estilos do Menu Flutuante (Janela Modal Comunidades) */
         .modal-bg { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
@@ -298,10 +274,13 @@
                     🚗 Abrir Rota Central no Google Maps
                 </a>
             </div>
+            
             <div id="mapa"></div>
-            <div id="lightboxZoom" onclick="this.style.display='none'">
-    <img id="imgZoomExpandida" src="">
-</div>
+            
+            <div id="lightboxZoom" onclick="fecharZoom()">
+                <span id="btnFecharZoom">×</span>
+                <img id="imgZoomExpandida" src="" alt="Mapa de Localização Expandido">
+            </div>
         </section>
 
     </div>
@@ -344,11 +323,6 @@
                 <a id="modalBotaoRota" href="#" target="_blank" class="btn btn-blue" style="width: 100%; box-sizing: border-box;">🚗 Navegar até à Comunidade (GPS)</a>
             </div>
         </div>
-    </div>
-
-    <div id="lightboxZoom" onclick="fecharZoom()">
-        <span id="btnFecharZoom">×</span>
-        <img id="imgZoomExpandida" src="" alt="Mapa de Localização Expandido">
     </div>
 
     <button class="chatbot-btn" onclick="toggleChat()">
@@ -528,7 +502,7 @@
     </script>
 
     <script>
-        // Funções para a Janela Modal das Comunidades
+        // Funções do Modal de Comunidades
         function fecharModal() {
             document.getElementById('menuFlutuante').style.display = 'none';
         }
@@ -558,7 +532,7 @@
             document.getElementById('menuFlutuante').style.display = 'block';
         }
 
-        // Funções para o Lightbox (Zoom da Imagem de Situação)
+        // Funções do Lightbox (Zoom da Imagem)
         function abrirZoom() {
             var imagemOriginalUrl = document.querySelector('.mapa-situacao-img').src;
             document.getElementById('imgZoomExpandida').src = imagemOriginalUrl;
@@ -569,7 +543,7 @@
             document.getElementById('lightboxZoom').style.display = 'none';
         }
 
-        // Configuração Padrão do Mapa (Leaflet)
+        // INICIALIZAÇÃO DO MAPA (Feita apenas UMA vez)
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
         var satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.jpg', { attribution: 'Tiles © Esri' });
 
@@ -580,10 +554,9 @@
         });
 
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
-        
-        // --- PAINEL CARTOGRÁFICO (INFORMAÇÕES TÉCNICAS IBGE) ---
-        var controleLegenda = L.control({ position: 'bottomright' });
 
+        // --- PAINEL CARTOGRÁFICO IBGE ---
+        var controleLegenda = L.control({ position: 'bottomright' });
         controleLegenda.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info-cartografica');
             div.innerHTML = `
@@ -596,47 +569,34 @@
             `;
             return div;
         };
-
         controleLegenda.addTo(mapa);
-        // --------------------------------------------------------
 
-        // --- ADIÇÃO DA IMAGEM ESTÁTICA COM CLIQUE PARA ZOOM ---
+        // --- IMAGEM ESTÁTICA COM ZOOM ---
         var controleLocalizacao = L.control({ position: 'bottomleft' });
-
         controleLocalizacao.onAdd = function (map) {
             var img = L.DomUtil.create('img', 'mapa-situacao-img');
             img.src = 'Screenshot_20260605_215242_Chrome.jpg'; 
             img.alt = 'Localização do Pacuí no Amapá';
-            
-            img.onclick = function() {
-                abrirZoom();
-            };
-
+            img.onclick = function() { abrirZoom(); };
             return img;
         };
-
         controleLocalizacao.addTo(mapa);
-        // --------------------------------------------------------
 
-        // --- MARCADOR OFICIAL DA SEDE ADMINISTRATIVA ---
+        // --- MARCADOR DA SEDE ADMINISTRATIVA ---
         var iconeSede = L.divIcon({
             className: 'custom-div-icon',
             html: "<div style='background-color:#d32f2f; width:15px; height:15px; border-radius:50%; border:2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);'></div>",
             iconSize: [15, 15],
             iconAnchor: [7, 7]
         });
-
         L.marker([0.04, -51.05], {icon: iconeSede})
             .addTo(mapa)
             .bindPopup("<b>Sede Administrativa</b><br>Distrito de São Joaquim do Pacuí<br><i>Lat: 0.04 | Lng: -51.05</i>")
             .bindTooltip("Sede: São Joaquim do Pacuí", {permanent: true, direction: 'right', opacity: 0.8});
-        // --------------------------------------------------------
 
+        // --- INTEGRAÇÃO GOOGLE SHEETS ---
         var markers = L.markerClusterGroup();
-
-        // Armazém Temporário para Sheets
         window.armazemComunidades = [];
-
         var link = "https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec"; 
         
         fetch(link)
@@ -657,14 +617,41 @@
 
                         var marker = L.marker([lat, lng])
                             .bindPopup(conteudoBalao)
-                            .bindTooltip(c.nome, { permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -10] });
+                            .bindTooltip(c.nome, { permanent: false, direction: 'top', className: 'label-estilo' });
                         markers.addLayer(marker);
                     }
                 });
                 mapa.addLayer(markers);
             });
 
-        // Polígono do Território Pacuí
+        // --- AS 34 COMUNIDADES (PINOS MENORES) ---
+        var listaComunidades = [
+            {nome: "Corre Água do Piririm", lat: 0.1, lng: -51.06}, {nome: "Aterro do Gurijuba", lat: 0.12, lng: -51.07},
+            {nome: "Boa Vista", lat: 0.14, lng: -51.08}, {nome: "Campina de São Benedito", lat: 0.16, lng: -51.09},
+            {nome: "Cantazal", lat: 0.18, lng: -51.10}, {nome: "Damasio", lat: 0.20, lng: -51.11},
+            {nome: "Dois Irmãos", lat: 0.22, lng: -51.12}, {nome: "Garimpo de São Tome", lat: 0.24, lng: -51.13},
+            {nome: "Ilha Jupari", lat: 0.26, lng: -51.14}, {nome: "Lago do Papagaio", lat: 0.28, lng: -51.15},
+            {nome: "Liberdade", lat: 0.30, lng: -51.16}, {nome: "Palestina", lat: 0.32, lng: -51.17},
+            {nome: "Ponta Grosa", lat: 0.34, lng: -51.18}, {nome: "Puraquê", lat: 0.36, lng: -51.19},
+            {nome: "Ramal Armentino", lat: 0.38, lng: -51.20}, {nome: "Ramal do Darci", lat: 0.40, lng: -51.21},
+            {nome: "Ramal do Satiro", lat: 0.42, lng: -51.22}, {nome: "Salamito", lat: 0.44, lng: -51.23},
+            {nome: "Santa Cruz", lat: 0.46, lng: -51.24}, {nome: "Santa Luzia do Pacui", lat: 0.48, lng: -51.25},
+            {nome: "São Benedito", lat: 0.50, lng: -51.26}, {nome: "São Francisco", lat: 0.52, lng: -51.27},
+            {nome: "São Joaquim do Pacuí", lat: 0.54, lng: -51.28}, {nome: "São Raimundo", lat: 0.56, lng: -51.29},
+            {nome: "São Sebastião", lat: 0.58, lng: -51.30}, {nome: "São Tomé do Pacuí", lat: 0.60, lng: -51.31},
+            {nome: "Serraria", lat: 0.62, lng: -51.32}, {nome: "Tracajatuba I", lat: 0.64, lng: -51.33},
+            {nome: "Tracajatuba II", lat: 0.66, lng: -51.34}, {nome: "Vai Quem Quer", lat: 0.68, lng: -51.35},
+            {nome: "Vila do Ananazal", lat: 0.70, lng: -51.36}, {nome: "Vila do Miguel", lat: 0.72, lng: -51.37},
+            {nome: "Vila Gordo", lat: 0.74, lng: -51.38}, {nome: "Vila Jupati", lat: 0.76, lng: -51.39}
+        ];
+
+        listaComunidades.forEach(c => {
+            L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff", weight: 1, fillOpacity: 0.9})
+             .bindTooltip(c.nome, {permanent: false, className: 'label-estilo'})
+             .addTo(mapa);
+        });
+
+        // --- POLÍGONO DO TERRITÓRIO PACUÍ ---
         var coordenadas = [
             [-50.8875106, 0.7741841], [-50.8873946, 0.7742603], [-50.8499791, 0.7558767], [-50.8488836, 0.7553734], [-50.847958, 0.7545191],
             [-50.8477444, 0.7541988], [-50.8466765, 0.7548751], [-50.8458934, 0.7546259], [-50.8455018, 0.75427], [-50.845217, 0.7543412],
@@ -769,7 +756,7 @@
         
         mapa.fitBounds(poligono.getBounds());
 
-        // Rota Principal (Rodovia AP-70)
+        // --- ROTA PRINCIPAL (RODOVIA AP-70) ---
         var coordenadasRota = [
             [-51.0549692, 0.1019977], [-51.0542918, 0.115438], [-51.057635, 0.1281077], [-51.0576207, 0.1293704],
             [-51.0572333, 0.1306761], [-51.0563867, 0.1319961], [-51.0551384, 0.1330866], [-51.0470171, 0.1367024],
@@ -814,7 +801,7 @@
         var overlayMaps = { "Território Pacuí": poligono, "Rodovia AP-70": rota, "Comunidades": markers };
         L.control.layers(baseMaps, overlayMaps).addTo(mapa);
 
-        // GPS DO USUÁRIO
+        // --- GPS DO USUÁRIO ---
         var pinoUsuario = null;
         mapa.locate({setView: false, watch: true, enableHighAccuracy: true});
         mapa.on('locationfound', function(e) {
@@ -824,9 +811,8 @@
                 pinoUsuario.setLatLng(e.latlng);
             }
         });
-    </script>
 
-    <script>
+        // --- PROTEÇÃO DO CÓDIGO (F12, Inspecionar, etc) ---
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); }
@@ -835,46 +821,4 @@
         });
     </script>
 </body>
-    <script>
-        var mapa = L.map('mapa').setView([0.35, -51.05], 9);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-
-        // Imagem Situação
-        var miniMapa = L.control({ position: 'bottomleft' });
-        miniMapa.onAdd = function() {
-            var img = L.DomUtil.create('img', 'mapa-situacao-img');
-            img.src = 'Screenshot_20260605_215242_Chrome.jpg';
-            img.onclick = function() { document.getElementById('imgZoomExpandida').src = img.src; document.getElementById('lightboxZoom').style.display = 'flex'; };
-            return img;
-        };
-        miniMapa.addTo(mapa);
-
-        // Lista das 34 Comunidades
-        var comunidades = [
-            {nome: "Corre Água do Piririm", lat: 0.1, lng: -51.06}, {nome: "Aterro do Gurijuba", lat: 0.12, lng: -51.07},
-            {nome: "Boa Vista", lat: 0.14, lng: -51.08}, {nome: "Campina de São Benedito", lat: 0.16, lng: -51.09},
-            {nome: "Cantazal", lat: 0.18, lng: -51.10}, {nome: "Damasio", lat: 0.20, lng: -51.11},
-            {nome: "Dois Irmãos", lat: 0.22, lng: -51.12}, {nome: "Garimpo de São Tome", lat: 0.24, lng: -51.13},
-            {nome: "Ilha Jupari", lat: 0.26, lng: -51.14}, {nome: "Lago do Papagaio", lat: 0.28, lng: -51.15},
-            {nome: "Liberdade", lat: 0.30, lng: -51.16}, {nome: "Palestina", lat: 0.32, lng: -51.17},
-            {nome: "Ponta Grosa", lat: 0.34, lng: -51.18}, {nome: "Puraquê", lat: 0.36, lng: -51.19},
-            {nome: "Ramal Armentino", lat: 0.38, lng: -51.20}, {nome: "Ramal do Darci", lat: 0.40, lng: -51.21},
-            {nome: "Ramal do Satiro", lat: 0.42, lng: -51.22}, {nome: "Salamito", lat: 0.44, lng: -51.23},
-            {nome: "Santa Cruz", lat: 0.46, lng: -51.24}, {nome: "Santa Luzia do Pacui", lat: 0.48, lng: -51.25},
-            {nome: "São Benedito", lat: 0.50, lng: -51.26}, {nome: "São Francisco", lat: 0.52, lng: -51.27},
-            {nome: "São Joaquim do Pacuí", lat: 0.54, lng: -51.28}, {nome: "São Raimundo", lat: 0.56, lng: -51.29},
-            {nome: "São Sebastião", lat: 0.58, lng: -51.30}, {nome: "São Tomé do Pacuí", lat: 0.60, lng: -51.31},
-            {nome: "Serraria", lat: 0.62, lng: -51.32}, {nome: "Tracajatuba I", lat: 0.64, lng: -51.33},
-            {nome: "Tracajatuba II", lat: 0.66, lng: -51.34}, {nome: "Vai Quem Quer", lat: 0.68, lng: -51.35},
-            {nome: "Vila do Ananazal", lat: 0.70, lng: -51.36}, {nome: "Vila do Miguel", lat: 0.72, lng: -51.37},
-            {nome: "Vila Gordo", lat: 0.74, lng: -51.38}, {nome: "Vila Jupati", lat: 0.76, lng: -51.39}
-        ];
-
-        comunidades.forEach(c => {
-            L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff", weight: 1, fillOpacity: 0.9})
-             .bindTooltip(c.nome, {permanent: false, className: 'label-estilo'})
-             .addTo(mapa);
-        });
-    </script>
-    </body>
 </html>
