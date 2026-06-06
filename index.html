@@ -142,7 +142,7 @@
         <header id="inicio" class="hero">
             <div class="hero-content">
                 <h1>Inventário Digital das Indicações Geográficas do Amapá</h1>
-                <p>O primeiro grande mapeamento interativo do Estado. Conheça as nossas IG's reconhecidas, os produtos em estruturação e as grandes potencialidades da nossa bioeconomia.</p>
+                <p>Conheça as nossas IG's reconhecidas, os produtos em estruturação e as grandes potencialidades da nossa bioeconomia.</p>
             </div>
         </header>
 
@@ -625,31 +625,25 @@
             });
 
         // --- AS 34 COMUNIDADES (PINOS MENORES) ---
-        var listaComunidades = [
-            {nome: "Corre Água do Piririm", lat: 0.1, lng: -51.06}, {nome: "Aterro do Gurijuba", lat: 0.12, lng: -51.07},
-            {nome: "Boa Vista", lat: 0.14, lng: -51.08}, {nome: "Campina de São Benedito", lat: 0.16, lng: -51.09},
-            {nome: "Cantazal", lat: 0.18, lng: -51.10}, {nome: "Damasio", lat: 0.20, lng: -51.11},
-            {nome: "Dois Irmãos", lat: 0.22, lng: -51.12}, {nome: "Garimpo de São Tome", lat: 0.24, lng: -51.13},
-            {nome: "Ilha Jupari", lat: 0.26, lng: -51.14}, {nome: "Lago do Papagaio", lat: 0.28, lng: -51.15},
-            {nome: "Liberdade", lat: 0.30, lng: -51.16}, {nome: "Palestina", lat: 0.32, lng: -51.17},
-            {nome: "Ponta Grosa", lat: 0.34, lng: -51.18}, {nome: "Puraquê", lat: 0.36, lng: -51.19},
-            {nome: "Ramal Armentino", lat: 0.38, lng: -51.20}, {nome: "Ramal do Darci", lat: 0.40, lng: -51.21},
-            {nome: "Ramal do Satiro", lat: 0.42, lng: -51.22}, {nome: "Salamito", lat: 0.44, lng: -51.23},
-            {nome: "Santa Cruz", lat: 0.46, lng: -51.24}, {nome: "Santa Luzia do Pacui", lat: 0.48, lng: -51.25},
-            {nome: "São Benedito", lat: 0.50, lng: -51.26}, {nome: "São Francisco", lat: 0.52, lng: -51.27},
-            {nome: "São Joaquim do Pacuí", lat: 0.54, lng: -51.28}, {nome: "São Raimundo", lat: 0.56, lng: -51.29},
-            {nome: "São Sebastião", lat: 0.58, lng: -51.30}, {nome: "São Tomé do Pacuí", lat: 0.60, lng: -51.31},
-            {nome: "Serraria", lat: 0.62, lng: -51.32}, {nome: "Tracajatuba I", lat: 0.64, lng: -51.33},
-            {nome: "Tracajatuba II", lat: 0.66, lng: -51.34}, {nome: "Vai Quem Quer", lat: 0.68, lng: -51.35},
-            {nome: "Vila do Ananazal", lat: 0.70, lng: -51.36}, {nome: "Vila do Miguel", lat: 0.72, lng: -51.37},
-            {nome: "Vila Gordo", lat: 0.74, lng: -51.38}, {nome: "Vila Jupati", lat: 0.76, lng: -51.39}
-        ];
+       var mapa = L.map('mapa').setView([0.75, -50.60], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        listaComunidades.forEach(c => {
-            L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff", weight: 1, fillOpacity: 0.9})
-             .bindTooltip(c.nome, {permanent: false, className: 'label-estilo'})
-             .addTo(mapa);
-        });
+        // 1. CARREGAR COMUNIDADES DA PLANILHA
+        var urlPlanilha = "https://script.google.com/u/0/home/projects/1F_FZM9XKqmadple6q9LPXIpldWJwkndwh-H6TwsCWC14VltOY8N5Iuox/edit"; // <-- COLOQUE SUA URL AQUI
+        
+        fetch(urlPlanilha)
+            .then(res => res.json())
+            .then(dados => {
+                dados.forEach(c => {
+                    var lat = parseFloat(c.lat);
+                    var lng = parseFloat(c.lng);
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        L.circleMarker([lat, lng], {radius: 4, fillColor: "#2e7d32", color: "#fff", weight: 1, fillOpacity: 0.9})
+                         .bindTooltip(c.nome, {permanent: true, direction: 'top', className: 'label-estilo', offset: [0, -5]})
+                         .addTo(mapa);
+                    }
+                });
+            });
 
         // --- POLÍGONO DO TERRITÓRIO PACUÍ ---
         var coordenadas = [
