@@ -66,6 +66,21 @@
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top: 20px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
         
+        /* Mini-mapa de Situação (Imagem Estática no Mapa) */
+        .mapa-situacao-img {
+            border: 2px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            width: 160px;
+            height: auto;
+            background: white;
+            padding: 2px;
+            pointer-events: none; /* Deixa o clique passar reto caso o usuário clique na imagem sem querer */
+        }
+        @media (max-width: 600px) {
+            .mapa-situacao-img { width: 110px; } /* Menor no celular para não tapar o mapa interativo */
+        }
+
         /* Estilos do Menu Flutuante (Janela Modal) */
         .modal-bg { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(3px); }
         .modal-janela { background-color: #fff; margin: 5vh auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 700px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
@@ -359,7 +374,6 @@
             if(e.key === 'Enter') enviarMensagemGemini();
         }
 
-        // Função auxiliar para criar atraso (sleep)
         const delay = ms => new Promise(res => setTimeout(res, ms));
 
         async function enviarMensagemGemini() {
@@ -417,12 +431,10 @@
                             }
                         } catch (e) {}
 
-                        // Erro de High Demand (503 ou erro com texto 'high demand')
                         if (response.status === 503 || errorMessage.toLowerCase().includes("high demand")) {
-                            throw new Error("HighDemand"); // Dispara o catch para tentar de novo
+                            throw new Error("HighDemand"); 
                         }
                         
-                        // Erros fatais (não adianta tentar de novo)
                         if (response.status === 400 || response.status === 401 || response.status === 403) {
                             localStorage.removeItem("GEMINI_API_KEY");
                             geminiApiKey = null;
@@ -443,22 +455,22 @@
                     const aiText = data.candidates[0].content.parts[0].text;
                     chatHistory.push({ "role": "model", "parts": [{ "text": aiText }] });
                     mostrarRespostaIA(aiText);
-                    sucesso = true; // Sai do loop
+                    sucesso = true; 
 
                 } catch (error) {
                     if (error.message === "HighDemand") {
                         tentativas++;
                         console.log(`Tentativa ${tentativas} falhou por alta demanda. Aguardando para tentar novamente...`);
                         if (tentativas < maxTentativas) {
-                            await delay(2500); // Espera 2.5 segundos antes de tentar de novo
+                            await delay(2500); 
                         } else {
-                            chatHistory.pop(); // Remove a pergunta do histórico
+                            chatHistory.pop(); 
                             mostrarRespostaIA("⚠️ Os servidores da Google estão com tráfego muito alto neste momento e não conseguiram processar a resposta após várias tentativas. Por favor, aguarde alguns minutos e tente novamente.");
                         }
                     } else if (error.message.startsWith("Fatal:")) {
                         chatHistory.pop();
                         mostrarRespostaIA("⚠️ " + error.message.replace("Fatal: ", ""));
-                        break; // Sai do loop imediatamente em erros fatais
+                        break; 
                     } else {
                         chatHistory.pop();
                         mostrarRespostaIA("⚠️ Ocorreu um erro inesperado: " + error.message);
@@ -526,6 +538,21 @@
         });
 
         L.control.scale({imperial: false, metric: true}).addTo(mapa);
+        
+        // --- ADIÇÃO DA IMAGEM ESTÁTICA (MINI-MAPA DE SITUAÇÃO) ---
+        var controleLocalizacao = L.control({ position: 'bottomleft' });
+
+        controleLocalizacao.onAdd = function (map) {
+            var img = L.DomUtil.create('img', 'mapa-situacao-img');
+            // ATENÇÃO: Se o nome do seu arquivo de imagem for diferente, altere aqui:
+            img.src = 'localizacao_pacui.jpg'; 
+            img.alt = 'Localização do Pacuí no Amapá';
+            return img;
+        };
+
+        controleLocalizacao.addTo(mapa);
+        // --------------------------------------------------------
+
         var markers = L.markerClusterGroup();
 
         // Armazém Temporário
