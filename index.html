@@ -67,20 +67,14 @@
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; border-radius: 8px; }
         
         /* --- ESTILOS DO MINI-MAPA E LIGHTBOX DE ZOOM --- */
-        .mapa-situacao-img {
-            border: 2px solid #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-            width: 160px;
-            height: auto;
-            background: white;
-            padding: 2px;
-            cursor: pointer;
-            pointer-events: auto;
-            transition: transform 0.2s;
-        }
-        .mapa-situacao-img:hover { transform: scale(1.05); }
-        @media (max-width: 600px) { .mapa-situacao-img { width: 110px; } }
+       /* Substitua o estilo do mapa por este para caber o mini-mapa */
+#mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; position: relative; }
+        /* Adicione estes estilos no final do seu bloco <style> atual */
+.mapa-situacao-img { border: 2px solid #fff; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.4); width: 140px; cursor: pointer; }
+#lightboxZoom { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+#imgZoomExpandida { max-width: 90%; max-height: 90%; border: 4px solid white; border-radius: 8px; }
+.info-cartografica { background: rgba(255, 255, 255, 0.95); padding: 10px; border-radius: 5px; font-size: 11px; border-left: 4px solid #1565c0; }
+.label-estilo { background: rgba(255,255,255,0.9); border: 1px solid #2e7d32; font-size: 10px; font-weight: bold; color: #1b5e20; padding: 2px 5px; border-radius: 4px; }
 
         #lightboxZoom {
             display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
@@ -305,6 +299,9 @@
                 </a>
             </div>
             <div id="mapa"></div>
+            <div id="lightboxZoom" onclick="this.style.display='none'">
+    <img id="imgZoomExpandida" src="">
+</div>
         </section>
 
     </div>
