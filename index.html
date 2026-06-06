@@ -40,18 +40,16 @@
         fetch(urlAPI)
             .then(res => res.json())
             .then(comunidades => {
-                comunidades.forEach(c => {
-                    var marker = L.marker([c.lat, c.lng]).addTo(map);
-                    marker.bindPopup(`
-                        <b>${c.nome}</b><br>
-                        Tipo: ${c.tipoFarinha}<br>
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank">
-                            Como chegar (GPS)
-                        </a>
-                    `);
+                console.log("Comunidades encontradas:", comunidades); // Isso vai mostrar a lista no console
+                
+                comunidades.forEach(function(c) {
+                    if(c.lat && c.lng) {
+                        L.marker([c.lat, c.lng]).addTo(map)
+                         .bindPopup("<b>" + c.nome + "</b><br>Tipo: " + c.tipoFarinha);
+                    }
                 });
             })
-            .catch(err => console.error("Erro ao carregar dados da planilha:", err));
+            .catch(err => console.error("Erro ao carregar:", err));
     </script>
 </body>
 </html>
