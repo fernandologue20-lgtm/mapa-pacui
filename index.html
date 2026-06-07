@@ -2,15 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventário Digital de IGs - Amapá</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        /* Define que o mapa vai ocupar a tela toda */
-        #mapa { height: 600px; width: 100%; }
-        .label-estilo { background: transparent; border: none; font-size: 10px; font-weight: bold; color: #1b5e20; }
+        body { margin: 0; font-family: sans-serif; background-color: #f4f7f6; }
+        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; }
+        .label-estilo { 
+            background: transparent !important; border: none !important; font-size: 10px !important; 
+            font-weight: 800 !important; color: #1b5e20 !important;
+            text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF !important; 
+        }
     </style>
 </head>
 <body>
@@ -18,33 +23,36 @@
     <div id="mapa"></div>
 
     <script>
-        // 1. Cria o mapa
+        // Inicializa o mapa centralizado na região
         var mapa = L.map('mapa').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        // 2. Busca os dados da sua planilha
-        var url = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec";
+        // Substitua pela URL do seu Web App (Implantar > Nova versão)
+        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
-        fetch(url)
+        fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // Desenha o polígono
+                // 1. Desenha o Polígono
                 if (dados.poligono) {
-                    L.polygon(dados.poligono.map(p => [p.lat, p.lng]), {color: "red"}).addTo(mapa);
+                    L.polygon(dados.poligono.map(p => [p.lat, p.lng]), {color: "#b71c1c", weight: 3}).addTo(mapa);
                 }
-                // Desenha a rota
+
+                // 2. Desenha a Rota AP-70
                 if (dados.rota) {
-                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), {color: 'orange'}).addTo(mapa);
+                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
                 }
-                // Desenha os pontos das comunidades
+
+                // 3. Adiciona as Comunidades
                 if (dados.comunidades) {
                     dados.comunidades.forEach(c => {
-                        L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "green", color: "white"})
-                         .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
+                        L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff", weight: 1})
+                         .bindTooltip(c.nome, {permanent: true, direction: 'top', className: 'label-estilo'})
                          .addTo(mapa);
                     });
                 }
-            });
+            })
+            .catch(err => console.error("Erro ao carregar dados:", err));
     </script>
 </body>
 </html>
