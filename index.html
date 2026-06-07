@@ -1,55 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa da Farinha do Pacuí</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; text-align: center; }
-        #map { height: 600px; width: 100%; margin-top: 20px; border: 2px solid #333; }
-    </style>
-</head>
-<body>
 
-    <h1>Região do Pacuí: Comunidades Produtoras</h1>
-    <p>Mapa georreferenciado da dissertação de Mestrado PROFNIT/UNIFAP.</p>
-    <div id="map"></div>
+fetch("https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec")
+    .then(res => res.json())
+    .then(dados => {
+        // Desenha o Polígono
+        var coordsPol = dados.poligono.map(p => [p.lat, p.lng]);
+        L.polygon(coordsPol, {color: "#b71c1c", weight: 3}).addTo(mapa);
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        // Desenha a Rota
+        var coordsRota = dados.rota.map(r => [r.lat, r.lng]);
+        L.polyline(coordsRota, {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
 
-    <script>
-        // 1. Inicializar o mapa
-        var map = L.map('map').setView([0.75, -50.8], 11);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-        // 2. Carregar o arquivo GeoJSON (certifique-se de que o nome no seu repositório seja pacui.geojson)
-        fetch('pacui.geojson')
-            .then(res => res.json())
-            .then(data => {
-                L.geoJSON(data, { style: { color: 'green', weight: 3, fillOpacity: 0.2 } }).addTo(map);
-            })
-            .catch(err => console.error("Erro ao carregar o GeoJSON:", err));
-
-        // 3. Carregar os dados das comunidades via Apps Script
-        // SUBSTITUA O LINK ABAIXO PELO SEU LINK DO WEB APP (/exec)
-        var urlAPI = 'https://script.google.com/macros/s/AKfycbzxD5RjltttToGyUfR7SyrFSjAMHm7RIXCfn8N328MDiD7BtVCPxhvYpxyae8okQVWvTw/exec';
-
-        fetch(urlAPI)
-            .then(res => res.json())
-            .then(comunidades => {
-                console.log("Comunidades encontradas:", comunidades); // Isso vai mostrar a lista no console
-                
-                comunidades.forEach(function(c) {
-                    if(c.lat && c.lng) {
-                        L.marker([c.lat, c.lng]).addTo(map)
-                         .bindPopup("<b>" + c.nome + "</b><br>Tipo: " + c.tipoFarinha);
-                    }
-                });
-            })
-            .catch(err => console.error("Erro ao carregar:", err));
-    </script>
-</body>
-</html>
+        // Adiciona as Comunidades
+        dados.comunidades.forEach(c => {
+            L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff"})
+             .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
+             .addTo(mapa);
+        });
+    });
