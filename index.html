@@ -16,27 +16,35 @@
 
     <script>
         // Inicializa o mapa
-        var mapa = L.map('mapa').setView([0.75, -50.7], 10);
+        var mapa = L.map('mapa').setView([0.15, -51.0], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        // Busca os dados do seu Google Apps Script
-        fetch("https://script.google.com/macros/s/AKfycbgrHOhYywlHq_-8wULBkykeTmP8U01KzfdFwij4zxNoz_gajxwEnadhz_OuPBtndg/exec")
+        // URL do seu Web App (Google Apps Script)
+        var url = "https://script.google.com/macros/s/AKfycbgrHOhYywlHq_-8wULBkykeTmP8U01KzfdFwij4zxNoz_gajxwEnadhz_OuPBtndg/exec";
+
+        fetch(url)
             .then(res => res.json())
             .then(dados => {
                 // 1. Desenha o Polígono
-                var coordsPol = dados.poligono.map(p => [p.lat, p.lng]);
-                L.polygon(coordsPol, {color: "#b71c1c", weight: 3}).addTo(mapa);
+                if (dados.poligono) {
+                    var coordsPol = dados.poligono.map(p => [p.lat, p.lng]);
+                    L.polygon(coordsPol, {color: "#b71c1c", weight: 3}).addTo(mapa);
+                }
 
                 // 2. Desenha a Rota
-                var coordsRota = dados.rota.map(r => [r.lat, r.lng]);
-                L.polyline(coordsRota, {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                if (dados.rota) {
+                    var coordsRota = dados.rota.map(r => [r.lat, r.lng]);
+                    L.polyline(coordsRota, {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                }
 
-                // 3. Adiciona as Comunidades
-                dados.comunidades.forEach(c => {
-                    L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff"})
-                     .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
-                     .addTo(mapa);
-                });
+                // 3. Adiciona os Pinos (Comunidades)
+                if (dados.comunidades) {
+                    dados.comunidades.forEach(c => {
+                        L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff"})
+                         .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
+                         .addTo(mapa);
+                    });
+                }
             })
             .catch(err => console.error("Erro ao carregar dados:", err));
     </script>
