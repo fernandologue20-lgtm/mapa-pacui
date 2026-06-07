@@ -1,52 +1,27 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8">
-    <title>Inventário Digital de IGs - Amapá</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        #mapa { height: 600px; width: 100%; }
-        .label-estilo { background: transparent; border: none; font-size: 10px; font-weight: bold; color: #1b5e20; }
-    </style>
-</head>
-<body>
+fetch("https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec")
+    .then(res => res.json())
+    .then(dados => {
+        // Proteção: só desenha se os dados existirem e não estiverem vazios
+        if (dados.poligono && dados.poligono.length > 0) {
+            var coordsPol = dados.poligono.map(p => [p.lat, p.lng]);
+            L.polygon(coordsPol, {color: "#b71c1c", weight: 3}).addTo(mapa);
+        }
 
-    <div id="mapa"></div>
+        if (dados.rota && dados.rota.length > 0) {
+            var coordsRota = dados.rota.map(r => [r.lat, r.lng]);
+            L.polyline(coordsRota, {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
+        }
 
-    <script>
-        // Inicializa o mapa
-        var mapa = L.map('mapa').setView([0.15, -51.0], 10);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-
-        // URL do seu Web App (Google Apps Script)
-        var url = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec";
-
-        fetch(url)
-            .then(res => res.json())
-            .then(dados => {
-                // 1. Desenha o Polígono
-                if (dados.poligono) {
-                    var coordsPol = dados.poligono.map(p => [p.lat, p.lng]);
-                    L.polygon(coordsPol, {color: "#b71c1c", weight: 3}).addTo(mapa);
+        if (dados.comunidades && dados.comunidades.length > 0) {
+            dados.comunidades.forEach(c => {
+                var lat = parseFloat(c.lat);
+                var lng = parseFloat(c.lng);
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    L.circleMarker([lat, lng], {radius: 5, fillColor: "#2e7d32", color: "#fff"})
+                     .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
+                     .addTo(mapa);
                 }
-
-                // 2. Desenha a Rota
-                if (dados.rota) {
-                    var coordsRota = dados.rota.map(r => [r.lat, r.lng]);
-                    L.polyline(coordsRota, {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
-                }
-
-                // 3. Adiciona os Pinos (Comunidades)
-                if (dados.comunidades) {
-                    dados.comunidades.forEach(c => {
-                        L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff"})
-                         .bindTooltip(c.nome, {permanent: true, className: 'label-estilo'})
-                         .addTo(mapa);
-                    });
-                }
-            })
-            .catch(err => console.error("Erro ao carregar dados:", err));
-    </script>
-</body>
-</html>
+            });
+        }
+    })
+    .catch(err => console.error("Erro ao carregar dados:", err));
