@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f8; user-select: none; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f8; }
         .menu-nav { background-color: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
         .menu-nav button:hover { background: #ff9800; color: white; }
@@ -25,13 +25,6 @@
 </head>
 <body>
 
-    <script>
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) return false;
-        };
-    </script>
-
     <nav class="menu-nav">
         <button onclick="mostrar('home')">Início</button>
         <button onclick="mostrar('pacui')">Farinha do Pacuí</button>
@@ -42,7 +35,7 @@
     <div id="home" class="secao" style="display:block;">
         <div class="card">
             <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
-            <p>Sistema de suporte técnico para estruturação de IGs no Estado do Amapá.</p>
+            <p>Portal técnico para suporte à estruturação de Indicações Geográficas (IGs) no Amapá.</p>
         </div>
     </div>
 
@@ -61,9 +54,15 @@
 
     <div id="inpi" class="secao">
         <div class="card">
-            <h2>Legislação e Normas</h2>
-            <p>O processo de Indicação Geográfica no Brasil é fundamentado pela <strong>Lei nº 9.279/1996 (Lei de Propriedade Industrial)</strong>, que estabelece os requisitos para o reconhecimento de Indicações de Procedência (IP) e Denominações de Origem (DO).</p>
-            <p>Complementarmente, a <strong>Portaria INPI/PR nº 04/2022</strong> disciplina as condições específicas para o depósito e processamento dos pedidos de registro junto ao Instituto Nacional da Propriedade Industrial (INPI).</p>
+            <h2>Legislação e Normas (Manual INPI)</h2>
+            <p>De acordo com o Manual de Indicações Geográficas do INPI, o processo de registro exige o cumprimento de requisitos fundamentais previstos na Lei da Propriedade Industrial (Lei nº 9.279/96) e na Portaria INPI/PR nº 04/2022.</p>
+            <h3>Principais Instrumentos:</h3>
+            <ul>
+                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Documento que detalha as condições de produção e o saber-fazer tradicional.</li>
+                <li><strong>Dossiê de Notoriedade:</strong> Comprovação, por meio de evidências externas (técnicas, jornalísticas e institucionais), da reputação do território como centro produtor.</li>
+                <li><strong>Delimitação Territorial:</strong> Memorial descritivo e mapa georreferenciado da área geográfica, comprovando a vinculação histórica e a continuidade produtiva.</li>
+                <li><strong>Governança:</strong> Institucionalização da entidade representativa (Associação) com capacidade para fiscalizar o cumprimento das normas e gerir o direito coletivo da IG.</li>
+            </ul>
         </div>
     </div>
 
@@ -80,31 +79,39 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'pacui') { mapa.invalidateSize(); }
+            if(id === 'pacui') { 
+                mapa.invalidateSize(); 
+                mapa.setView([0.75, -50.7], 10); 
+            }
         }
 
+        // URL do seu Google Apps Script (retorno em JSON)
         var urlPlanilha = "SUA_URL_AQUI"; 
         
-        fetch(urlPlanilha)
-            .then(res => res.json())
-            .then(dados => {
-                // CORREÇÃO: Adicionando o Polígono
-                if (dados.poligono) {
-                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).addTo(mapa);
-                }
-
-                var listaDiv = document.getElementById('lista-itens');
-                dados.comunidades.forEach(c => {
-                    var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
-                    var div = document.createElement('div');
-                    div.className = 'item-comunidade';
-                    div.innerHTML = `📍 ${c.nome}`;
-                    div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                    listaDiv.appendChild(div);
-                });
-            });
+        function carregarDados() {
+            fetch(urlPlanilha)
+                .then(res => res.json())
+                .then(dados => {
+                    // Desenhar Polígono (se existir)
+                    if (dados.poligono) {
+                        L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).addTo(mapa);
+                    }
+                    // Desenhar Comunidades
+                    var listaDiv = document.getElementById('lista-itens');
+                    listaDiv.innerHTML = ""; // Limpar lista antes de adicionar
+                    dados.comunidades.forEach(c => {
+                        var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
+                        var div = document.createElement('div');
+                        div.className = 'item-comunidade';
+                        div.innerHTML = `📍 ${c.nome}`;
+                        div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                        listaDiv.appendChild(div);
+                    });
+                })
+                .catch(err => console.error("Erro ao carregar dados:", err));
+        }
+        
+        carregarDados();
     </script>
 </body>
 </html>
-
-   
