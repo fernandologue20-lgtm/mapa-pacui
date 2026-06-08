@@ -8,25 +8,29 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f9f9f9; user-select: none; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f6f8; user-select: none; }
         
-        .menu-nav { background-color: #2e7d32; padding: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s; }
+        .menu-nav { background-color: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 25px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
         .menu-nav button:hover { background: #ff9800; color: white; border-color: white; }
         
-        .secao { display: none; padding: 20px; max-width: 1000px; margin: auto; }
-        #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 8px; overflow: hidden; }
+        .secao { display: none; padding: 30px; max-width: 1000px; margin: auto; }
+        .card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 6px solid #2e7d32; }
         
+        #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: white; }
         #mapa-container { flex: 3; height: 100%; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
         
-        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; transition: 0.2s; }
-        .item-comunidade:hover { background: #f0f0f0; }
-        
-        .coords { font-size: 0.75em; color: #666; display: none; margin-top: 4px; font-style: italic; }
+        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .item-comunidade:hover { background: #f0f7f0; }
+        .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
         
-        .texto-pacui div { font-size: 20px; font-weight: 900; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; text-shadow: 2px 2px 4px #000; pointer-events: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        
+        .texto-pacui div { font-size: 18px; font-weight: 900; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; text-shadow: 2px 2px 4px #000; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -49,25 +53,42 @@
         <div id="container-mapa">
             <div id="mapa-container"></div>
             <div id="lista-comunidades">
-                <h4 style="padding:10px; background:#f4f4f4; margin:0;">Comunidades</h4>
+                <h4 style="padding:15px; background:#f8f9fa; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
                 <div id="lista-itens"></div>
             </div>
         </div>
     </div>
 
     <div id="inpi" class="secao">
-        <h2>Exigências do INPI</h2>
-        <p>Conteúdo sobre Dossiê, CET e Governança.</p>
+        <div class="card">
+            <h2>Exigências do INPI</h2>
+            <p>O processo de Indicação Geográfica (IG) no Brasil é gerido pelo INPI. Os pilares principais para o Pacuí incluem:</p>
+            <ul>
+                <li><strong>Delimitação:</strong> Definição precisa da área geográfica de produção.</li>
+                <li><strong>CET:</strong> O caderno de especificações técnicas (o "manual" da qualidade).</li>
+                <li><strong>Governança:</strong> Fortalecimento da associação de produtores.</li>
+            </ul>
+        </div>
     </div>
 
     <div id="amapa" class="secao">
-        <h2>IGs do Amapá</h2>
-        <p>Informações sobre o Abacaxi de Porto Grande e Açaí do Bailique.</p>
+        <div class="card">
+            <h2>Indicações Geográficas do Amapá</h2>
+            <p>Atualmente, o Amapá possui duas IGs reconhecidas que servem como referência de desenvolvimento regional:</p>
+            <p>1. <strong>Abacaxi de Porto Grande:</strong> Reconhecido pelas suas características únicas de doçura e acidez.</p>
+            <p>2. <strong>Açaí do Bailique:</strong> Reconhecido pelo manejo sustentável em região de várzea.</p>
+        </div>
     </div>
 
     <div id="biblioteca" class="secao">
-        <h2>Biblioteca Acadêmica</h2>
-        <p>Pesquisas sobre o Pacuí.</p>
+        <div class="card">
+            <h2>Biblioteca Acadêmica</h2>
+            <table>
+                <tr><th>Título</th><th>Tipo</th><th>Acesso</th></tr>
+                <tr><td>Estudo sobre a IG do Pacuí</td><td>Pesquisa</td><td><a href="#">Link</a></td></tr>
+                <tr><td>Caderno de Especificações</td><td>Documento</td><td><a href="#">Link</a></td></tr>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -95,7 +116,6 @@
                 var listaDiv = document.getElementById('lista-itens');
                 dados.comunidades.forEach(c => {
                     var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
-                    
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
                     div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
