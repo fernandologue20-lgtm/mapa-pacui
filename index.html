@@ -41,7 +41,7 @@
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        var urlPlanilha = "SUA_URL_AQUI"; 
+        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilha)
             .then(res => res.json())
