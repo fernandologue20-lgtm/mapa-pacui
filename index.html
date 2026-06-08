@@ -8,109 +8,73 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .menu-nav { background-color: #2e7d32; padding: 15px; display: flex; gap: 10px; justify-content: center; }
+        .container { display: flex; height: calc(100vh - 60px); }
         
-        .menu-nav { background-color: #2e7d32; padding: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .menu-nav button { 
-            background: #fff; border: 2px solid #ff9800; color: #2e7d32; 
-            padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s;
-        }
-        .menu-nav button:hover { background: #ff9800; color: white; border-color: white; }
+        #mapa-container { flex: 3; height: 100%; }
+        #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; padding: 15px; border-left: 2px solid #ddd; }
         
-        .secao { padding: 40px 20px; display: none; max-width: 900px; margin: auto; line-height: 1.6; }
-        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; }
+        .item-comunidade { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .item-comunidade:hover { background: #f0f0f0; }
+        .coords { font-size: 0.8em; color: #666; display: none; }
+        .item-comunidade:hover .coords { display: block; }
         
-        .comunidade-label {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border: 1px solid #1b5e20 !important;
-            border-radius: 6px; padding: 4px 8px !important;
-            font-size: 11px !important; font-weight: 600 !important; color: #1b5e20 !important;
-        }
-
-        .texto-pacui div {
-            font-size: 20px; font-weight: 900; color: rgba(255, 255, 255, 0.6); 
-            text-transform: uppercase; text-align: center; width: 250px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); pointer-events: none;
-        }
+        .texto-pacui div { font-size: 20px; font-weight: 900; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; text-shadow: 2px 2px 4px #000; pointer-events: none; }
     </style>
 </head>
 <body>
 
     <nav class="menu-nav">
-        <button onclick="mostrar('mapa')">Mapa Interativo</button>
-        <button onclick="mostrar('inpi')">Exigências INPI</button>
-        <button onclick="mostrar('amapa')">IGs do Amapá</button>
-        <button onclick="mostrar('biblioteca')">Biblioteca</button>
+        <button onclick="window.location.reload()">Recarregar Mapa</button>
     </nav>
 
-    <div id="mapa" class="secao" style="display:block;">
-        <div id="mapa-container" style="height: 600px;"></div>
-    </div>
-
-    <div id="inpi" class="secao">
-        <h2 style="color: #b71c1c;">Como registrar uma Indicação Geográfica?</h2>
-        <ul>
-            <li><strong>Delimitação:</strong> O mapa exato da área de produção.</li>
-            <li><strong>CET:</strong> A "receita" oficial e padrões de qualidade.</li>
-            <li><strong>Notoriedade:</strong> Provas da fama regional.</li>
-            <li><strong>Governança:</strong> Associação/Cooperativa representativa.</li>
-        </ul>
-    </div>
-
-    <div id="amapa" class="secao">
-        <h2 style="color: #2e7d32;">Indicações Geográficas do Amapá</h2>
-        <p><strong>Abacaxi de Porto Grande:</strong> Doçura característica.</p>
-        <p><strong>Açaí do Bailique:</strong> Manejo sustentável em áreas de ilha.</p>
-    </div>
-
-    <div id="biblioteca" class="secao">
-        <h2>Biblioteca Acadêmica</h2>
-        <p>Espaço destinado aos trabalhos de pesquisa sobre IGs no Amapá.</p>
+    <div class="container">
+        <div id="mapa-container"></div>
+        <div id="lista-comunidades">
+            <h3>Comunidades</h3>
+            <div id="lista-itens"></div>
+        </div>
     </div>
 
     <script>
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        function mostrar(id) {
-            document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-            if(id === 'mapa') {
-                mapa.invalidateSize(); 
-                mapa.setView([0.75, -50.7], 10); // Força a centralização correta
-            }
-        }
-
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        var urlPlanilha = "SUA_URL_AQUI"; 
         
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
+                // Desenha Polígono e Texto
                 if (dados.poligono) {
                     var poly = L.polygon(dados.poligono.map(p => [p.lat, p.lng]), 
                     {color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.3}).addTo(mapa);
-                    
-                    var centro = poly.getBounds().getCenter();
-                    L.marker(centro, {
+                    L.marker(poly.getBounds().getCenter(), {
                         icon: L.divIcon({className: 'texto-pacui', html: '<div>REGIÃO DO PACUÍ</div>', iconSize: [250, 40]})
                     }).addTo(mapa);
                 }
 
-                if (dados.rota) {
-                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
-                }
+                // Cria lista e pontos
+                var listaDiv = document.getElementById('lista-itens');
+                dados.comunidades.forEach(c => {
+                    // Adiciona Ponto no Mapa
+                    var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
+                                  .bindPopup(`<strong>${c.nome}</strong>`)
+                                  .addTo(mapa);
 
-                if (dados.comunidades) {
-                    dados.comunidades.forEach(c => {
-                        var popup = `<strong>${c.nome}</strong>`;
-                        if (c.foto && c.foto.startsWith('http')) {
-                            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
-                        }
-                        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
-                         .bindTooltip(c.nome, {permanent: false, direction: 'top', className: 'comunidade-label'})
-                         .bindPopup(popup).addTo(mapa);
-                    });
-                }
+                    // Adiciona na Lista Lateral
+                    var div = document.createElement('div');
+                    div.className = 'item-comunidade';
+                    div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                    
+                    div.onclick = function() {
+                        mapa.setView([c.lat, c.lng], 14);
+                        marker.openPopup();
+                    };
+                    
+                    listaDiv.appendChild(div);
+                });
             });
     </script>
 </body>
