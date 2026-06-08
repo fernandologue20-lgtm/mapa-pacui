@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Digital de Gestão e Delimitação Territorial para IGs</title>
+    <title>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -19,8 +19,11 @@
         #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: white; }
         #mapa-container { flex: 3; height: 100%; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; }
+        
+        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; transition: 0.2s; }
         .item-comunidade:hover { background: #f0f7f0; }
+        .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
+        .item-comunidade:hover .coords { display: block; }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
     <div id="home" class="secao" style="display:block;">
         <div class="card">
             <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
-            <p>Portal técnico para suporte à estruturação de Indicações Geográficas (IGs) no Amapá.</p>
+            <p>Portal técnico para suporte à estruturação de Indicações Geográficas (IGs) no Estado do Amapá[cite: 3, 4].</p>
         </div>
     </div>
 
@@ -55,13 +58,12 @@
     <div id="inpi" class="secao">
         <div class="card">
             <h2>Legislação e Normas (Manual INPI)</h2>
-            <p>De acordo com o Manual de Indicações Geográficas do INPI, o processo de registro exige o cumprimento de requisitos fundamentais previstos na Lei da Propriedade Industrial (Lei nº 9.279/96) e na Portaria INPI/PR nº 04/2022.</p>
-            <h3>Principais Instrumentos:</h3>
+            <p>A estruturação da Indicação Geográfica (IG) segue os preceitos da Lei nº 9.279/1996 [cite: 45] e as diretrizes do INPI[cite: 70, 451].</p>
             <ul>
-                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Documento que detalha as condições de produção e o saber-fazer tradicional.</li>
-                <li><strong>Dossiê de Notoriedade:</strong> Comprovação, por meio de evidências externas (técnicas, jornalísticas e institucionais), da reputação do território como centro produtor.</li>
-                <li><strong>Delimitação Territorial:</strong> Memorial descritivo e mapa georreferenciado da área geográfica, comprovando a vinculação histórica e a continuidade produtiva.</li>
-                <li><strong>Governança:</strong> Institucionalização da entidade representativa (Associação) com capacidade para fiscalizar o cumprimento das normas e gerir o direito coletivo da IG.</li>
+                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Instrumento normativo que define o padrão de produção[cite: 80].</li>
+                <li><strong>Dossiê de Notoriedade:</strong> Documentação técnica que comprova a reputação territorial[cite: 246].</li>
+                <li><strong>Delimitação Territorial:</strong> Memorial descritivo com coordenadas geográficas conforme o INPI[cite: 400, 428].</li>
+                <li><strong>Governança:</strong> Institucionalização da entidade representativa para gestão da IG[cite: 88, 96].</li>
             </ul>
         </div>
     </div>
@@ -79,39 +81,33 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'pacui') { 
-                mapa.invalidateSize(); 
-                mapa.setView([0.75, -50.7], 10); 
-            }
+            if(id === 'pacui') { mapa.invalidateSize(); mapa.setView([0.75, -50.7], 10); }
         }
 
-        // URL do seu Google Apps Script (retorno em JSON)
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
-        function carregarDados() {
-            fetch(urlPlanilha)
-                .then(res => res.json())
-                .then(dados => {
-                    // Desenhar Polígono (se existir)
-                    if (dados.poligono) {
-                        L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).addTo(mapa);
-                    }
-                    // Desenhar Comunidades
-                    var listaDiv = document.getElementById('lista-itens');
-                    listaDiv.innerHTML = ""; // Limpar lista antes de adicionar
-                    dados.comunidades.forEach(c => {
-                        var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
-                        var div = document.createElement('div');
-                        div.className = 'item-comunidade';
-                        div.innerHTML = `📍 ${c.nome}`;
-                        div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                        listaDiv.appendChild(div);
-                    });
-                })
-                .catch(err => console.error("Erro ao carregar dados:", err));
-        }
-        
-        carregarDados();
+        fetch(urlPlanilha)
+            .then(res => res.json())
+            .then(dados => {
+                // Desenhar Polígono
+                if (dados.poligono) {
+                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3, fillOpacity: 0.2}).addTo(mapa);
+                }
+                // Desenhar Rota AP-70
+                if (dados.rota) {
+                    L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                }
+
+                var listaDiv = document.getElementById('lista-itens');
+                dados.comunidades.forEach(c => {
+                    var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
+                    var div = document.createElement('div');
+                    div.className = 'item-comunidade';
+                    div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                    div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                    listaDiv.appendChild(div);
+                });
+            });
     </script>
 </body>
 </html>
