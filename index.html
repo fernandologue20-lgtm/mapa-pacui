@@ -10,7 +10,6 @@
     <style>
         body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; }
         
-        /* Menu */
         .menu-nav { background-color: #2e7d32; padding: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .menu-nav button { 
             background: #fff; border: 2px solid #ff9800; color: #2e7d32; 
@@ -18,9 +17,9 @@
         }
         .menu-nav button:hover { background: #ff9800; color: white; border-color: white; }
         
-        /* Conteúdo */
         .secao { padding: 40px 20px; display: none; max-width: 900px; margin: auto; line-height: 1.6; }
         #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; }
+        
         .comunidade-label {
             background: rgba(255, 255, 255, 0.9) !important;
             border: 1px solid #1b5e20 !important;
@@ -29,6 +28,18 @@
             font-size: 11px !important;
             font-weight: 600 !important;
             color: #1b5e20 !important;
+        }
+
+        /* Estilo para o texto centralizado do Pacuí */
+        .texto-pacui div {
+            font-size: 20px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.6); 
+            text-transform: uppercase;
+            text-align: center;
+            width: 250px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
     </style>
 </head>
@@ -47,34 +58,27 @@
 
     <div id="inpi" class="secao">
         <h2 style="color: #b71c1c;">Como registrar uma Indicação Geográfica?</h2>
-        <p>O reconhecimento de uma IG é como um "selo de garantia" da nossa terra. Para o INPI aprovar, a comunidade precisa de:</p>
+        <p>O reconhecimento de uma IG é um selo de garantia da nossa terra. Exige:</p>
         <ul>
-            <li><strong>1. Delimitação do Território:</strong> O mapa exato da área que produz o item.</li>
-            <li><strong>2. Caderno de Especificações Técnicas (CET):</strong> A "receita" oficial de como o produto é feito e suas qualidades.</li>
-            <li><strong>3. Notoriedade:</strong> Provas históricas de que o produto é famoso por ser da região (jornais, fotos, vídeos).</li>
-            <li><strong>4. Governança:</strong> Uma associação ou cooperativa que represente os produtores.</li>
+            <li><strong>Delimitação:</strong> O mapa exato da área de produção.</li>
+            <li><strong>CET:</strong> O documento com a "receita" e padrões de qualidade.</li>
+            <li><strong>Notoriedade:</strong> Provas da fama regional do produto.</li>
+            <li><strong>Governança:</strong> Uma associação representativa.</li>
         </ul>
     </div>
 
     <div id="amapa" class="secao">
         <h2 style="color: #2e7d32;">Indicações Geográficas do Amapá</h2>
-        <div style="border-left: 5px solid #ff9800; padding-left: 15px; margin-bottom: 20px;">
-            <h3 style="color: #ff9800;">Abacaxi de Porto Grande</h3>
-            <p>Conhecido pela doçura e suculência, fruto do solo único de Porto Grande.</p>
-        </div>
-        <div style="border-left: 5px solid #2e7d32; padding-left: 15px;">
-            <h3 style="color: #2e7d32;">Açaí do Bailique</h3>
-            <p>Açaí de ilha, manejado tradicionalmente com sustentabilidade nas áreas de várzea.</p>
-        </div>
+        <p><strong>Abacaxi de Porto Grande:</strong> Doçura característica.</p>
+        <p><strong>Açaí do Bailique:</strong> Manejo sustentável em áreas de ilha.</p>
     </div>
 
     <div id="biblioteca" class="secao">
         <h2>Biblioteca Acadêmica</h2>
-        <p>Lista de trabalhos e pesquisas sobre Indicações Geográficas no Amapá para suporte ao CET e Dossiê.</p>
-        </div>
+        <p>Espaço destinado aos trabalhos de pesquisa sobre IGs no Amapá.</p>
+    </div>
 
     <script>
-        // Inicialização do Mapa
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
@@ -84,14 +88,24 @@
             if(id === 'mapa') mapa.invalidateSize();
         }
 
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        var urlPlanilha = "SUA_URL_AQUI"; 
         
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
+                // Desenha Polígono e Texto Central
                 if (dados.poligono) {
-                    L.polygon(dados.poligono.map(p => [p.lat, p.lng]), 
+                    var poly = L.polygon(dados.poligono.map(p => [p.lat, p.lng]), 
                     {color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.3}).addTo(mapa);
+                    
+                    var centro = poly.getBounds().getCenter();
+                    L.marker(centro, {
+                        icon: L.divIcon({
+                            className: 'texto-pacui',
+                            html: '<div>REGIÃO DO PACUÍ</div>',
+                            iconSize: [250, 40]
+                        })
+                    }).addTo(mapa);
                 }
 
                 if (dados.rota) {
