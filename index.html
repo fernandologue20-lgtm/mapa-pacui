@@ -8,8 +8,19 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: sans-serif; }
-        #mapa { height: 100vh; width: 100%; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; }
+        
+        /* Menu */
+        .menu-nav { background-color: #2e7d32; padding: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .menu-nav button { 
+            background: #fff; border: 2px solid #ff9800; color: #2e7d32; 
+            padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 5px; transition: 0.3s;
+        }
+        .menu-nav button:hover { background: #ff9800; color: white; border-color: white; }
+        
+        /* Conteúdo */
+        .secao { padding: 40px 20px; display: none; max-width: 900px; margin: auto; line-height: 1.6; }
+        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; border-radius: 8px; }
         .comunidade-label {
             background: rgba(255, 255, 255, 0.9) !important;
             border: 1px solid #1b5e20 !important;
@@ -18,19 +29,61 @@
             font-size: 11px !important;
             font-weight: 600 !important;
             color: #1b5e20 !important;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
 
-    <div id="mapa"></div>
+    <nav class="menu-nav">
+        <button onclick="mostrar('mapa')">Mapa Interativo</button>
+        <button onclick="mostrar('inpi')">Exigências INPI</button>
+        <button onclick="mostrar('amapa')">IGs do Amapá</button>
+        <button onclick="mostrar('biblioteca')">Biblioteca</button>
+    </nav>
+
+    <div id="mapa" class="secao" style="display:block;">
+        <div id="mapa-container" style="height: 600px;"></div>
+    </div>
+
+    <div id="inpi" class="secao">
+        <h2 style="color: #b71c1c;">Como registrar uma Indicação Geográfica?</h2>
+        <p>O reconhecimento de uma IG é como um "selo de garantia" da nossa terra. Para o INPI aprovar, a comunidade precisa de:</p>
+        <ul>
+            <li><strong>1. Delimitação do Território:</strong> O mapa exato da área que produz o item.</li>
+            <li><strong>2. Caderno de Especificações Técnicas (CET):</strong> A "receita" oficial de como o produto é feito e suas qualidades.</li>
+            <li><strong>3. Notoriedade:</strong> Provas históricas de que o produto é famoso por ser da região (jornais, fotos, vídeos).</li>
+            <li><strong>4. Governança:</strong> Uma associação ou cooperativa que represente os produtores.</li>
+        </ul>
+    </div>
+
+    <div id="amapa" class="secao">
+        <h2 style="color: #2e7d32;">Indicações Geográficas do Amapá</h2>
+        <div style="border-left: 5px solid #ff9800; padding-left: 15px; margin-bottom: 20px;">
+            <h3 style="color: #ff9800;">Abacaxi de Porto Grande</h3>
+            <p>Conhecido pela doçura e suculência, fruto do solo único de Porto Grande.</p>
+        </div>
+        <div style="border-left: 5px solid #2e7d32; padding-left: 15px;">
+            <h3 style="color: #2e7d32;">Açaí do Bailique</h3>
+            <p>Açaí de ilha, manejado tradicionalmente com sustentabilidade nas áreas de várzea.</p>
+        </div>
+    </div>
+
+    <div id="biblioteca" class="secao">
+        <h2>Biblioteca Acadêmica</h2>
+        <p>Lista de trabalhos e pesquisas sobre Indicações Geográficas no Amapá para suporte ao CET e Dossiê.</p>
+        </div>
 
     <script>
-        var mapa = L.map('mapa').setView([0.75, -50.7], 10);
+        // Inicialização do Mapa
+        var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        // COLOQUE O SEU LINK DE DEPLOY AQUI:
+        function mostrar(id) {
+            document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            if(id === 'mapa') mapa.invalidateSize();
+        }
+
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilha)
@@ -47,17 +100,15 @@
                 }
 
                 if (dados.comunidades) {
-    dados.comunidades.forEach(c => {
-        var popup = `<strong>${c.nome}</strong>`;
-        if (c.foto && c.foto.startsWith('http')) {
-            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
-        }
-        
-        // Mudamos permanent: true para false (só mostra no mouse over)
-        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
-         .bindTooltip(c.nome, {permanent: false, direction: 'top', className: 'comunidade-label'})
-         .bindPopup(popup)
-         .addTo(mapa);
+                    dados.comunidades.forEach(c => {
+                        var popup = `<strong>${c.nome}</strong>`;
+                        if (c.foto && c.foto.startsWith('http')) {
+                            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
+                        }
+                        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
+                         .bindTooltip(c.nome, {permanent: false, direction: 'top', className: 'comunidade-label'})
+                         .bindPopup(popup)
+                         .addTo(mapa);
                     });
                 }
             });
