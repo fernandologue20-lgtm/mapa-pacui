@@ -3,16 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Gestão de IGs - Amapá</title>
+    <title>Plataforma Digital de Gestão e Delimitação Territorial para IGs</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f6f8; user-select: none; }
-        
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f8; user-select: none; }
         .menu-nav { background-color: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 25px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
-        .menu-nav button:hover { background: #ff9800; color: white; border-color: white; }
+        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
+        .menu-nav button:hover { background: #ff9800; color: white; }
         
         .secao { display: none; padding: 30px; max-width: 1000px; margin: auto; }
         .card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 6px solid #2e7d32; }
@@ -20,17 +19,10 @@
         #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: white; }
         #mapa-container { flex: 3; height: 100%; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        
-        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; }
         .item-comunidade:hover { background: #f0f7f0; }
         .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #ddd; }
-        th { background-color: #f8f9fa; }
-        
-        .texto-pacui div { font-size: 18px; font-weight: 900; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; text-shadow: 2px 2px 4px #000; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -43,17 +35,28 @@
     </script>
 
     <nav class="menu-nav">
-        <button onclick="mostrar('mapa')">Mapa Interativo</button>
-        <button onclick="mostrar('inpi')">Exigências INPI</button>
-        <button onclick="mostrar('amapa')">IGs do Amapá</button>
+        <button onclick="mostrar('home')">Início</button>
+        <button onclick="mostrar('pacui')">Farinha do Pacuí</button>
+        <button onclick="mostrar('inpi')">Legislação e INPI</button>
         <button onclick="mostrar('biblioteca')">Biblioteca</button>
     </nav>
 
-    <div id="mapa" class="secao" style="display:block;">
+    <div id="home" class="secao" style="display:block;">
+        <div class="card">
+            <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
+            <p>Bem-vindo à plataforma de suporte técnico para o desenvolvimento de IGs no Estado do Amapá. Este sistema integra o georreferenciamento de áreas produtivas à estruturação normativa necessária para a proteção de ativos coletivos.</p>
+        </div>
+    </div>
+
+    <div id="pacui" class="secao">
+        <div class="card">
+            <h2>Indicação de Procedência: Farinha do Pacuí</h2>
+            <p>Mapeamento e delimitação territorial da região produtora de farinha de mandioca do Pacuí.</p>
+        </div>
         <div id="container-mapa">
             <div id="mapa-container"></div>
             <div id="lista-comunidades">
-                <h4 style="padding:15px; background:#f8f9fa; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
+                <h4 style="padding:15px; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
                 <div id="lista-itens"></div>
             </div>
         </div>
@@ -61,33 +64,15 @@
 
     <div id="inpi" class="secao">
         <div class="card">
-            <h2>Exigências do INPI</h2>
-            <p>O processo de Indicação Geográfica (IG) no Brasil é gerido pelo INPI. Os pilares principais para o Pacuí incluem:</p>
-            <ul>
-                <li><strong>Delimitação:</strong> Definição precisa da área geográfica de produção.</li>
-                <li><strong>CET:</strong> O caderno de especificações técnicas (o "manual" da qualidade).</li>
-                <li><strong>Governança:</strong> Fortalecimento da associação de produtores.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="amapa" class="secao">
-        <div class="card">
-            <h2>Indicações Geográficas do Amapá</h2>
-            <p>Atualmente, o Amapá possui duas IGs reconhecidas que servem como referência de desenvolvimento regional:</p>
-            <p>1. <strong>Abacaxi de Porto Grande:</strong> Reconhecido pelas suas características únicas de doçura e acidez.</p>
-            <p>2. <strong>Açaí do Bailique:</strong> Reconhecido pelo manejo sustentável em região de várzea.</p>
+            <h2>Legislação e Normas</h2>
+            <p>O panorama nacional de IGs em 2025 consolidou 161 registros[cite: 839]. A estruturação técnica segue a Lei 9.279/1996 e as normas do INPI[cite: 840, 841].</p>
         </div>
     </div>
 
     <div id="biblioteca" class="secao">
         <div class="card">
             <h2>Biblioteca Acadêmica</h2>
-            <table>
-                <tr><th>Título</th><th>Tipo</th><th>Acesso</th></tr>
-                <tr><td>Estudo sobre a IG do Pacuí</td><td>Pesquisa</td><td><a href="#">Link</a></td></tr>
-                <tr><td>Caderno de Especificações</td><td>Documento</td><td><a href="#">Link</a></td></tr>
-            </table>
+            <p>Repositório de estudos sobre o desenvolvimento territorial e Indicações Geográficas[cite: 844, 856].</p>
         </div>
     </div>
 
@@ -98,7 +83,7 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'mapa') { mapa.invalidateSize(); mapa.setView([0.75, -50.7], 10); }
+            if(id === 'pacui') { mapa.invalidateSize(); mapa.setView([0.75, -50.7], 10); }
         }
 
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
@@ -106,13 +91,6 @@
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                if (dados.poligono) {
-                    var poly = L.polygon(dados.poligono.map(p => [p.lat, p.lng]), {color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.3}).addTo(mapa);
-                    L.marker(poly.getBounds().getCenter(), {
-                        icon: L.divIcon({className: 'texto-pacui', html: '<div>REGIÃO DO PACUÍ</div>', iconSize: [250, 40]})
-                    }).addTo(mapa);
-                }
-
                 var listaDiv = document.getElementById('lista-itens');
                 dados.comunidades.forEach(c => {
                     var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
