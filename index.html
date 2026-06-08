@@ -21,8 +21,6 @@
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
         .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; }
         .item-comunidade:hover { background: #f0f7f0; }
-        .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
-        .item-comunidade:hover .coords { display: block; }
     </style>
 </head>
 <body>
@@ -44,14 +42,13 @@
     <div id="home" class="secao" style="display:block;">
         <div class="card">
             <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
-            <p>Bem-vindo à plataforma de suporte técnico para o desenvolvimento de IGs no Estado do Amapá. Este sistema integra o georreferenciamento de áreas produtivas à estruturação normativa necessária para a proteção de ativos coletivos.</p>
+            <p>Sistema de suporte técnico para estruturação de IGs no Estado do Amapá.</p>
         </div>
     </div>
 
     <div id="pacui" class="secao">
         <div class="card">
             <h2>Indicação de Procedência: Farinha do Pacuí</h2>
-            <p>Mapeamento e delimitação territorial da região produtora de farinha de mandioca do Pacuí.</p>
         </div>
         <div id="container-mapa">
             <div id="mapa-container"></div>
@@ -65,14 +62,14 @@
     <div id="inpi" class="secao">
         <div class="card">
             <h2>Legislação e Normas</h2>
-            <p>O panorama nacional de IGs em 2025 consolidou 161 registros[cite: 839]. A estruturação técnica segue a Lei 9.279/1996 e as normas do INPI[cite: 840, 841].</p>
+            <p>O processo de Indicação Geográfica no Brasil é fundamentado pela <strong>Lei nº 9.279/1996 (Lei de Propriedade Industrial)</strong>, que estabelece os requisitos para o reconhecimento de Indicações de Procedência (IP) e Denominações de Origem (DO).</p>
+            <p>Complementarmente, a <strong>Portaria INPI/PR nº 04/2022</strong> disciplina as condições específicas para o depósito e processamento dos pedidos de registro junto ao Instituto Nacional da Propriedade Industrial (INPI).</p>
         </div>
     </div>
 
     <div id="biblioteca" class="secao">
         <div class="card">
             <h2>Biblioteca Acadêmica</h2>
-            <p>Repositório de estudos sobre o desenvolvimento territorial e Indicações Geográficas[cite: 844, 856].</p>
         </div>
     </div>
 
@@ -83,20 +80,25 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'pacui') { mapa.invalidateSize(); mapa.setView([0.75, -50.7], 10); }
+            if(id === 'pacui') { mapa.invalidateSize(); }
         }
 
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        var urlPlanilha = "SUA_URL_AQUI"; 
         
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
+                // CORREÇÃO: Adicionando o Polígono
+                if (dados.poligono) {
+                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).addTo(mapa);
+                }
+
                 var listaDiv = document.getElementById('lista-itens');
                 dados.comunidades.forEach(c => {
                     var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
-                    div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                    div.innerHTML = `📍 ${c.nome}`;
                     div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                     listaDiv.appendChild(div);
                 });
@@ -104,3 +106,5 @@
     </script>
 </body>
 </html>
+
+   
