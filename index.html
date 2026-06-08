@@ -3,18 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventário Digital de IGs - Amapá</title>
-    
+    <title>Plataforma de Gestão de IGs - Amapá</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
-        body { margin: 0; font-family: sans-serif; background-color: #f4f7f6; }
-        #mapa { height: 600px; width: 100%; border: 2px solid #ddd; }
-        .label-estilo { 
-            background: transparent !important; border: none !important; font-size: 10px !important; 
-            font-weight: 800 !important; color: #1b5e20 !important;
-            text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF !important; 
+        body { margin: 0; font-family: sans-serif; }
+        #mapa { height: 100vh; width: 100%; }
+        .comunidade-label {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 1px solid #1b5e20 !important;
+            border-radius: 6px;
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #1b5e20 !important;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -23,36 +27,38 @@
     <div id="mapa"></div>
 
     <script>
-        // Inicializa o mapa centralizado na região
         var mapa = L.map('mapa').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        // Substitua pela URL do seu Web App (Implantar > Nova versão)
+        // COLOQUE O SEU LINK DE DEPLOY AQUI:
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // 1. Desenha o Polígono
                 if (dados.poligono) {
-                    L.polygon(dados.poligono.map(p => [p.lat, p.lng]), {color: "#b71c1c", weight: 3}).addTo(mapa);
+                    L.polygon(dados.poligono.map(p => [p.lat, p.lng]), 
+                    {color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.3}).addTo(mapa);
                 }
 
-                // 2. Desenha a Rota AP-70
                 if (dados.rota) {
-                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), 
+                    {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
                 }
 
-                // 3. Adiciona as Comunidades
                 if (dados.comunidades) {
                     dados.comunidades.forEach(c => {
-                        L.circleMarker([c.lat, c.lng], {radius: 5, fillColor: "#2e7d32", color: "#fff", weight: 1})
-                         .bindTooltip(c.nome, {permanent: true, direction: 'top', className: 'label-estilo'})
+                        var popup = `<strong>${c.nome}</strong>`;
+                        if (c.foto && c.foto.startsWith('http')) {
+                            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
+                        }
+                        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
+                         .bindTooltip(c.nome, {permanent: true, direction: 'right', className: 'comunidade-label'})
+                         .bindPopup(popup)
                          .addTo(mapa);
                     });
                 }
-            })
-            .catch(err => console.error("Erro ao carregar dados:", err));
+            });
     </script>
 </body>
 </html>
