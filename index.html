@@ -23,23 +23,14 @@
         .comunidade-label {
             background: rgba(255, 255, 255, 0.9) !important;
             border: 1px solid #1b5e20 !important;
-            border-radius: 6px;
-            padding: 4px 8px !important;
-            font-size: 11px !important;
-            font-weight: 600 !important;
-            color: #1b5e20 !important;
+            border-radius: 6px; padding: 4px 8px !important;
+            font-size: 11px !important; font-weight: 600 !important; color: #1b5e20 !important;
         }
 
-        /* Estilo para o texto centralizado do Pacuí */
         .texto-pacui div {
-            font-size: 20px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.6); 
-            text-transform: uppercase;
-            text-align: center;
-            width: 250px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            pointer-events: none;
+            font-size: 20px; font-weight: 900; color: rgba(255, 255, 255, 0.6); 
+            text-transform: uppercase; text-align: center; width: 250px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); pointer-events: none;
         }
     </style>
 </head>
@@ -58,12 +49,11 @@
 
     <div id="inpi" class="secao">
         <h2 style="color: #b71c1c;">Como registrar uma Indicação Geográfica?</h2>
-        <p>O reconhecimento de uma IG é um selo de garantia da nossa terra. Exige:</p>
         <ul>
             <li><strong>Delimitação:</strong> O mapa exato da área de produção.</li>
-            <li><strong>CET:</strong> O documento com a "receita" e padrões de qualidade.</li>
-            <li><strong>Notoriedade:</strong> Provas da fama regional do produto.</li>
-            <li><strong>Governança:</strong> Uma associação representativa.</li>
+            <li><strong>CET:</strong> A "receita" oficial e padrões de qualidade.</li>
+            <li><strong>Notoriedade:</strong> Provas da fama regional.</li>
+            <li><strong>Governança:</strong> Associação/Cooperativa representativa.</li>
         </ul>
     </div>
 
@@ -85,7 +75,10 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'mapa') mapa.invalidateSize();
+            if(id === 'mapa') {
+                mapa.invalidateSize(); 
+                mapa.setView([0.75, -50.7], 10); // Força a centralização correta
+            }
         }
 
         var urlPlanilha = "SUA_URL_AQUI"; 
@@ -93,24 +86,18 @@
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // Desenha Polígono e Texto Central
                 if (dados.poligono) {
                     var poly = L.polygon(dados.poligono.map(p => [p.lat, p.lng]), 
                     {color: "#b71c1c", weight: 3, fillColor: "#f44336", fillOpacity: 0.3}).addTo(mapa);
                     
                     var centro = poly.getBounds().getCenter();
                     L.marker(centro, {
-                        icon: L.divIcon({
-                            className: 'texto-pacui',
-                            html: '<div>REGIÃO DO PACUÍ</div>',
-                            iconSize: [250, 40]
-                        })
+                        icon: L.divIcon({className: 'texto-pacui', html: '<div>REGIÃO DO PACUÍ</div>', iconSize: [250, 40]})
                     }).addTo(mapa);
                 }
 
                 if (dados.rota) {
-                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), 
-                    {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                    L.polyline(dados.rota.map(r => [r.lat, r.lng]), {color: '#ff9800', weight: 4, dashArray: '10, 10'}).addTo(mapa);
                 }
 
                 if (dados.comunidades) {
@@ -121,8 +108,7 @@
                         }
                         L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
                          .bindTooltip(c.nome, {permanent: false, direction: 'top', className: 'comunidade-label'})
-                         .bindPopup(popup)
-                         .addTo(mapa);
+                         .bindPopup(popup).addTo(mapa);
                     });
                 }
             });
