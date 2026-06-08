@@ -47,15 +47,17 @@
                 }
 
                 if (dados.comunidades) {
-                    dados.comunidades.forEach(c => {
-                        var popup = `<strong>${c.nome}</strong>`;
-                        if (c.foto && c.foto.startsWith('http')) {
-                            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
-                        }
-                        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
-                         .bindTooltip(c.nome, {permanent: true, direction: 'right', className: 'comunidade-label'})
-                         .bindPopup(popup)
-                         .addTo(mapa);
+    dados.comunidades.forEach(c => {
+        var popup = `<strong>${c.nome}</strong>`;
+        if (c.foto && c.foto.startsWith('http')) {
+            popup += `<br><img src="${c.foto}" style="width:120px; border-radius:4px; margin-top:5px;">`;
+        }
+        
+        // Mudamos permanent: true para false (só mostra no mouse over)
+        L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2})
+         .bindTooltip(c.nome, {permanent: false, direction: 'top', className: 'comunidade-label'})
+         .bindPopup(popup)
+         .addTo(mapa);
                     });
                 }
             });
