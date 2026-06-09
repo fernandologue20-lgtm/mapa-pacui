@@ -25,7 +25,6 @@
         .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
 
-        /* Estilo dos rótulos no mapa */
         .rotulo-area { background: transparent; border: none; box-shadow: none; font-weight: bold; color: #b71c1c; font-size: 14px; }
         .rotulo-rota { background: rgba(255, 255, 255, 0.7); border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px 5px; }
     </style>
@@ -57,6 +56,10 @@
                 <div id="lista-itens"></div>
             </div>
         </div>
+        <div class="card">
+            <h3>📢 Mural de Notícias</h3>
+            <div id="lista-noticias"></div>
+        </div>
     </div>
 
     <div id="inpi" class="secao">
@@ -67,7 +70,7 @@
                 <li><strong>Caderno de Especificações Técnicas (CET):</strong> Manual normativo do saber-fazer e qualidade do produto.</li>
                 <li><strong>Dossiê de Notoriedade:</strong> Provas da reputação do território como centro produtor.</li>
                 <li><strong>Delimitação Territorial:</strong> Memorial e mapa que asseguram a identidade da área geográfica.</li>
-                <li><strong>Governança:</strong> Atuação da entidade gestora (Associação) na fiscalização e proteção do nome.</li>
+                <li><strong>Governança:</strong> Institucionalização da entidade representativa (Associação) para gestão da IG.</li>
             </ul>
         </div>
     </div>
@@ -75,7 +78,6 @@
     <div id="biblioteca" class="secao">
         <div class="card">
             <h2>Biblioteca Acadêmica</h2>
-            <p>Repositório de estudos, teses e dissertações sobre Propriedade Intelectual e desenvolvimento regional.</p>
         </div>
     </div>
 
@@ -94,15 +96,13 @@
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // Desenhar Polígono com rótulo
                 if (dados.poligono) {
                     var pol = L.polygon(dados.poligono, {color: "#b71c1c", weight: 3, fillOpacity: 0.2}).addTo(mapa);
                     pol.bindTooltip("Região do Pacuí", {permanent: true, direction: "center", className: "rotulo-area"}).openTooltip();
                 }
-                // Desenhar Rota AP-70 com rótulo
                 if (dados.rota) {
                     var rot = L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray: '10, 10'}).addTo(mapa);
-                    rot.bindTooltip("Rota de acesso a região do Pacuí (AP-70)", {permanent: true, direction: "auto", className: "rotulo-rota"}).openTooltip();
+                    rot.bindTooltip("Rota de acesso (AP-70)", {permanent: true, direction: "auto", className: "rotulo-rota"}).openTooltip();
                 }
 
                 var listaDiv = document.getElementById('lista-itens');
@@ -113,6 +113,14 @@
                     div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
                     div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                     listaDiv.appendChild(div);
+                });
+
+                var noticiasDiv = document.getElementById('lista-noticias');
+                dados.noticias.forEach(n => {
+                    var div = document.createElement('div');
+                    div.style.cssText = "border-bottom: 1px solid #ddd; padding: 15px 0;";
+                    div.innerHTML = `<h4>${n.titulo}</h4><p style="font-size: 0.9em;">${n.resumo} <a href="${n.link}" target="_blank">Leia mais</a></p><small style="color: #666;">Fonte: ${n.fonte} | ${n.data}</small>`;
+                    noticiasDiv.appendChild(div);
                 });
             });
     </script>
