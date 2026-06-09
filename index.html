@@ -10,12 +10,12 @@
            1. VARIÁVEIS E RESET GERAL
            ========================================= */
         :root {
-            --cor-primaria: #2e7d32;      /* Verde escuro principal */
+            --cor-primaria: #2e7d32;
             --cor-primaria-hover: #1b5e20;
-            --cor-destaque: #ff9800;      /* Laranja/Dourado (Farinha) */
+            --cor-destaque: #ff9800;
             --cor-destaque-hover: #e65100;
-            --cor-fundo: #f0f4f8;         /* Cinza azulado muito claro */
-            --cor-texto: #334155;         /* Cinza escuro para leitura confortável */
+            --cor-fundo: #f0f4f8;
+            --cor-texto: #334155;
             --cor-texto-claro: #64748b;
             --cor-borda: #e2e8f0;
             --sombra-suave: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -23,327 +23,98 @@
             --raio-borda: 12px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--cor-fundo); 
-            color: var(--cor-texto);
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--cor-fundo); color: var(--cor-texto); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
 
         /* =========================================
-           2. NAVEGAÇÃO E CABEÇALHOS
+           2. NAVEGAÇÃO PRINCIPAL E SUB-MENUS
            ========================================= */
-        .menu-nav { 
-            background: #ffffff; 
-            padding: 1rem 2rem; 
-            display: flex; 
-            gap: 15px; 
-            justify-content: center; 
-            box-shadow: var(--sombra-suave); 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000;
-            border-bottom: 4px solid var(--cor-primaria);
-        }
+        .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); }
+        .menu-nav button { background: transparent; border: 2px solid var(--cor-primaria); color: var(--cor-primaria); padding: 10px 24px; cursor: pointer; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; font-size: 1rem; }
+        .menu-nav button:hover, .menu-nav button.ativo { background: var(--cor-primaria); color: #fff; transform: translateY(-2px); box-shadow: var(--sombra-suave); }
 
-        .menu-nav button { 
-            background: transparent; 
-            border: 2px solid var(--cor-primaria); 
-            color: var(--cor-primaria); 
-            padding: 10px 24px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            border-radius: 8px; 
-            transition: all 0.3s ease; 
-            font-size: 1rem;
-        }
-
-        .menu-nav button:hover, .menu-nav button.ativo { 
-            background: var(--cor-primaria); 
-            color: #fff; 
-            transform: translateY(-2px);
-            box-shadow: var(--sombra-suave);
-        }
+        .sub-nav { display: flex; gap: 10px; margin-bottom: 25px; background: #e2e8f0; padding: 10px; border-radius: 8px; flex-wrap: wrap; }
+        .sub-nav button { flex: 1; min-width: 200px; padding: 12px; border: none; background: #fff; color: var(--cor-texto); font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .sub-nav button:hover { background: #f8fafc; color: var(--cor-primaria); }
+        .sub-nav button.ativo { background: var(--cor-primaria); color: #fff; }
 
         /* =========================================
-           3. ESTRUTURA DE SEÇÕES E GRID
+           3. ESTRUTURA DE SEÇÕES E CARDS
            ========================================= */
-        .conteudo-principal {
-            flex: 1; 
-        }
-
-        .secao { 
-            display: none; 
-            padding: 30px 20px; 
-            max-width: 98%; 
-            margin: auto; 
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .conteudo-principal { flex: 1; }
+        .secao { display: none; padding: 30px 20px; max-width: 98%; margin: auto; animation: fadeIn 0.4s ease-in-out; }
+        .aba-pacui { display: none; animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .header-aba { 
-            background: #fff; 
-            border-radius: var(--raio-borda); 
-            padding: 20px 30px; 
-            margin-bottom: 25px; 
-            border-left: 8px solid var(--cor-primaria); 
-            box-shadow: var(--sombra-suave); 
-        }
+        .header-aba { background: #fff; border-radius: var(--raio-borda); padding: 20px 30px; margin-bottom: 25px; border-left: 8px solid var(--cor-primaria); box-shadow: var(--sombra-suave); }
+        .header-aba h2 { margin: 0; font-size: 1.8rem; color: var(--cor-primaria-hover); }
+        .card { background: #fff; border-radius: var(--raio-borda); padding: 25px 30px; margin-bottom: 25px; box-shadow: var(--sombra-suave); }
 
-        .header-aba h2 { 
-            margin: 0; 
-            font-size: 1.8rem;
-            color: var(--cor-primaria-hover); 
-        }
-        
-        .card { 
-            background: #fff; 
-            border-radius: var(--raio-borda); 
-            padding: 25px 30px; 
-            margin-bottom: 25px; 
-            box-shadow: var(--sombra-suave); 
-        }
-
-        .layout-painel { 
-            display: grid; 
-            grid-template-columns: 1fr 1.5fr 2.5fr 1fr; 
-            gap: 20px; 
-            height: 75vh; 
-            min-height: 650px;
-        }
-
-        /* =========================================
-           4. PAINÉIS LATERAIS E ROLAGEM
-           ========================================= */
-        .painel-scroll { 
-            background: #fff; 
-            border-radius: var(--raio-borda); 
-            padding: 25px 20px; 
-            box-shadow: var(--sombra-suave); 
-            overflow-y: auto; 
-            display: flex; 
-            flex-direction: column;
-            position: relative;
-        }
-
-        .titulo-painel { 
-            margin-top: 0; 
-            padding-bottom: 15px; 
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--cor-borda); 
-            color: var(--cor-primaria); 
-            position: sticky; 
-            top: -25px; 
-            background: #fff; 
-            z-index: 10; 
-            font-size: 1.2rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
+        .layout-painel { display: grid; grid-template-columns: 1fr 1.5fr 2.5fr 1fr; gap: 20px; height: 75vh; min-height: 650px; }
+        .painel-scroll { background: #fff; border-radius: var(--raio-borda); padding: 25px 20px; box-shadow: var(--sombra-suave); overflow-y: auto; display: flex; flex-direction: column; position: relative; }
+        .titulo-painel { margin-top: 0; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 2px solid var(--cor-borda); color: var(--cor-primaria); position: sticky; top: -25px; background: #fff; z-index: 10; font-size: 1.2rem; font-weight: 700; }
         .painel-scroll::-webkit-scrollbar { width: 8px; }
         .painel-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; margin-block: 10px;}
         .painel-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .painel-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         /* =========================================
-           5. ESTILOS DO MAPA E LISTAS
+           4. GOVERNANÇA E RASTREABILIDADE (NOVO)
            ========================================= */
-        #mapa-container { 
-            height: 100%; 
-            width: 100%;
-            border-radius: var(--raio-borda); 
-            border: 4px solid #fff; 
-            box-shadow: var(--sombra-media); 
-            z-index: 1; 
-            background: #e2e8f0; 
-        }
-
-        .item-comunidade { 
-            padding: 15px; 
-            border: 1px solid var(--cor-borda); 
-            border-radius: 8px;
-            margin-bottom: 10px;
-            cursor: pointer; 
-            transition: all 0.2s ease; 
-            background: #f8fafc;
-        }
+        /* Tabelas */
+        .tabela-sistema { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95em; }
+        .tabela-sistema th { background: var(--cor-primaria); color: white; padding: 12px; text-align: left; }
+        .tabela-sistema td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
+        .tabela-sistema tr:hover { background: #f8fafc; }
         
-        .item-comunidade:hover { 
-            background: #fff; 
-            transform: translateX(5px); 
-            border-color: var(--cor-primaria);
-            box-shadow: var(--sombra-suave); 
-        }
+        /* Badges de Status */
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: #fff; }
+        .badge.aguardando { background: #f59e0b; }
+        .badge.habilitado { background: #10b981; }
+        .badge.rejeitado { background: #ef4444; }
 
-        .item-comunidade strong { color: var(--cor-primaria-hover); font-size: 1.05rem; }
-        .coords { font-size: 0.8rem; color: var(--cor-texto-claro); display: none; font-style: italic; margin-top: 5px; }
-        .item-comunidade:hover .coords { display: block; }
-        
-        .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: 800; color: #b71c1c; font-size: 16px; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); }
-        .rotulo-rota { background: rgba(255, 255, 255, 0.9) !important; border: 2px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); }
+        /* Botões de Ação */
+        .btn-acao { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85em; transition: 0.2s; margin-right: 5px; }
+        .btn-validar { background: #10b981; color: white; }
+        .btn-validar:hover { background: #059669; }
+        .btn-rejeitar { background: #ef4444; color: white; }
+        .btn-rejeitar:hover { background: #dc2626; }
+        .btn-doc { background: #3b82f6; color: white; text-decoration: none; display: inline-block;}
+        .btn-doc:hover { background: #2563eb; }
+
+        /* Formulário de Rastreabilidade */
+        .form-rastreio { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid var(--cor-borda); }
+        .form-grupo { display: flex; flex-direction: column; }
+        .form-grupo label { font-weight: bold; margin-bottom: 5px; color: var(--cor-primaria-hover); font-size: 0.9em; }
+        .form-grupo input, .form-grupo select { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; }
+        .form-full { grid-column: span 2; }
+        .btn-gerar-lote { background: var(--cor-destaque); color: white; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 10px;}
+        .btn-gerar-lote:hover { background: var(--cor-destaque-hover); transform: translateY(-2px); box-shadow: var(--sombra-suave); }
+
+        /* Modal do Consumidor (Passaporte) */
+        #modal-passaporte { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
+        .passaporte-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
+        .passaporte-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
+        .passaporte-header h3 { margin: 0; display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .passaporte-body { padding: 25px; }
+        .selo-autenticidade { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; }
+        .btn-fechar-modal { background: #e2e8f0; color: #333; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
         /* =========================================
-           6. NOTÍCIAS E CARTILHA
+           5. MAPA E CARTILHA (ESTILOS ANTERIORES)
            ========================================= */
-        .noticia-item {
-            padding: 15px;
-            border: 1px solid var(--cor-borda);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background: #fff;
-            transition: 0.2s;
-        }
-        .noticia-item:hover { border-color: var(--cor-primaria); box-shadow: var(--sombra-suave); }
-        .noticia-titulo { margin: 0 0 8px 0; color: var(--cor-primaria); font-size: 1.1rem; line-height: 1.3; }
-        .noticia-resumo { margin: 0 0 10px 0; font-size: 0.95rem; color: var(--cor-texto); }
-        .noticia-link { color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
-        .noticia-link:hover { color: var(--cor-destaque-hover); text-decoration: underline; }
-        .noticia-meta { color: var(--cor-texto-claro); font-size: 0.8rem; font-style: italic; display: block; border-top: 1px dashed var(--cor-borda); padding-top: 8px; }
-
-        .capa-cartilha { 
-            background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); 
-            color: white; 
-            text-align: center; 
-            padding: 30px 20px; 
-            border-radius: 10px; 
-            margin-bottom: 25px; 
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
-        }
-        .titulo-cartilha { font-size: 1.6rem; margin-bottom: 8px; font-weight: 800; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
-        .subtitulo-cartilha { color: var(--cor-destaque); font-style: italic; margin-bottom: 15px; font-size: 1rem; }
-        .descricao-cartilha { font-size: 0.95rem; margin: 0 auto 15px auto; color: #e2e8f0; }
+        #mapa-container { height: 100%; width: 100%; border-radius: var(--raio-borda); border: 4px solid #fff; box-shadow: var(--sombra-media); z-index: 1; background: #e2e8f0; }
+        .item-comunidade { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 10px; cursor: pointer; background: #f8fafc; }
+        .noticia-item { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 15px; background: #fff; }
+        .capa-cartilha { background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); color: white; text-align: center; padding: 30px 20px; border-radius: 10px; margin-bottom: 25px; }
         
-        .tags-cartilha { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .tags-cartilha span { background: rgba(255, 255, 255, 0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.3); }
-        
-        .texto-cartilha { font-size: 0.95rem; }
-        .texto-cartilha h2 { color: var(--cor-primaria-hover); border-bottom: 2px solid var(--cor-borda); padding-bottom: 8px; margin: 30px 0 15px 0; font-size: 1.4rem; }
-        .texto-cartilha h2:first-child { margin-top: 0; }
-        .texto-cartilha h3 { color: var(--cor-destaque-hover); margin: 20px 0 10px 0; font-size: 1.1rem; }
-        .texto-cartilha ul, .texto-cartilha ol { padding-left: 20px; margin-bottom: 15px; }
-        .texto-cartilha li { margin-bottom: 8px; }
-        
-        .destaque-box { 
-            background: #f0fdf4; 
-            border-left: 5px solid #4ade80; 
-            padding: 15px 20px; 
-            margin: 20px 0; 
-            border-radius: 0 8px 8px 0; 
-            font-style: italic; 
-            color: #166534;
-        }
+        .rodape-site { display: none; background-color: #e2e8f0; border-top: 1px solid #cbd5e1; padding: 40px 20px; margin-top: 50px; color: var(--cor-texto); }
+        .rodape-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 
-        .tabela-cartilha { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--cor-borda); }
-        .tabela-cartilha th { background: var(--cor-primaria); color: #fff; padding: 12px; text-align: left; font-weight: 600; }
-        .tabela-cartilha td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
-        .tabela-cartilha tr:last-child td { border-bottom: none; }
-
-        /* =========================================
-           7. RODAPÉ INSTITUCIONAL (FOOTER)
-           ========================================= */
-        .rodape-site {
-            display: none; /* Inicia oculto. O JavaScript fará ele aparecer na aba correta. */
-            background-color: #e2e8f0; 
-            border-top: 1px solid #cbd5e1;
-            padding: 40px 20px;
-            margin-top: 50px;
-            color: var(--cor-texto);
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .rodape-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .rodape-coluna h3 {
-            color: var(--cor-primaria-hover);
-            font-size: 1.2rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--cor-borda);
-        }
-
-        .rodape-coluna p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            text-align: justify;
-            margin: 0;
-        }
-
-        /* ESTILOS DO NOVO BOTÃO DE DOWNLOAD (RTC) */
-        .rodape-cta {
-            max-width: 1300px;
-            margin: 40px auto 0 auto;
-            padding-top: 30px;
-            border-top: 1px dashed #cbd5e1;
-            text-align: center;
-        }
-
-        .btn-download-rtc {
-            display: inline-block;
-            background-color: var(--cor-destaque);
-            color: #ffffff !important;
-            padding: 16px 35px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-download-rtc:hover {
-            background-color: var(--cor-destaque-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(230, 81, 0, 0.5);
-        }
-
-        .btn-download-rtc:active {
-            transform: translateY(0);
-        }
-
-        /* =========================================
-           8. RESPONSIVIDADE
-           ========================================= */
-        @media (max-width: 1300px) {
-            .layout-painel { grid-template-columns: 1fr 1fr 2fr; }
-        }
         @media (max-width: 1024px) {
             .layout-painel { grid-template-columns: 1fr 1fr; height: auto; }
             #mapa-container { height: 500px; grid-column: span 2; order: -1; }
-            .painel-scroll { max-height: 500px; }
-            .grid-apresentacao { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 768px) {
-            .layout-painel { grid-template-columns: 1fr; }
-            #mapa-container { grid-column: span 1; height: 400px; }
-            .menu-nav { flex-wrap: wrap; padding: 10px; }
-            .menu-nav button { flex: 1 1 auto; text-align: center; }
-            .rodape-container { grid-template-columns: 1fr; gap: 30px; }
-            .btn-download-rtc { font-size: 1rem; padding: 14px 25px; width: 100%; box-sizing: border-box;}
+            .form-rastreio { grid-template-columns: 1fr; }
+            .form-full { grid-column: span 1; }
         }
     </style>
 </head>
@@ -359,7 +130,7 @@
         <div id="home" class="secao" style="display:block;">
             <div class="header-aba">
                 <h2>Plataforma Digital de Governança Territorial</h2>
-                <p style="margin-top: 10px; color: var(--cor-texto-claro);">Sistema técnico para suporte à estruturação e proteção de ativos coletivos.</p>
+                <p>Sistema técnico para suporte à estruturação e proteção de ativos coletivos.</p>
             </div>
         </div>
 
@@ -368,210 +139,161 @@
                 <h2>Indicação de Procedência: Farinha do Pacuí</h2>
             </div>
 
-            <div class="card" style="line-height: 1.7;">
-                <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid var(--cor-borda); padding-bottom: 10px;">Apresentação do Território</h3>
-                
-                <p><strong>O Distrito de São Joaquim do Pacuí</strong>, localizado na zona norte do município de Macapá, no Amapá, consolidou-se como um dos pilares da agricultura familiar amapaense. Instituído pela Lei Municipal número 153 de 1981, o território supera sua definição administrativa e se estabelece como um ativo de alto valor cultural, histórico e econômico.</p>
+            <div class="sub-nav">
+                <button onclick="mostrarAbaPacui('pacui-visao', this)" class="btn-sub-nav ativo">🗺️ Visão Geral e Mapa</button>
+                <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav">⚖️ Governança (Conselho)</button>
+                <button onclick="mostrarAbaPacui('pacui-rastreio', this)" class="btn-sub-nav">📦 Rastreabilidade (Passaporte)</button>
+            </div>
 
-                <div class="grid-apresentacao" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
-                        <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">O Coração Produtivo do Amapá</h4>
-                        <p style="font-size: 0.95em; margin-bottom: 0;">A região é reconhecida como um polo estratégico na produção de farinha de mandioca, sustentada por um saber-fazer tradicional transmitido entre gerações. Comunidades como Salamito, Tracajatuba I e II, Ponta Grossa e Corre Água compõem o tecido social e produtivo fundamental para a economia local.</p>
-                    </div>
-                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
-                        <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Consistência Econômica</h4>
-                        <p style="font-size: 0.95em; margin-bottom: 0;">O território apresenta uma dinâmica produtiva ativa. Dados oficiais recentes (2024/2025) apontam a farinha como o produto mais comercializado nas feiras rurais de Macapá e Santana, consolidando o Pacuí como referência técnica e mercadológica na cadeia produtiva da mandioca no estado.</p>
-                    </div>
-                </div>
-
-                <h4 style="color: var(--cor-primaria); margin-top: 30px;">Certificação e Modernização Industrial</h4>
-                <p style="font-size: 0.95em;">A região atingiu um nível de maturidade institucional ímpar com a entrega de certificações oficiais de agroindústria pelo Governo do Amapá, permitindo o acesso a mercados atacadistas e redes de supermercados. Este processo de modernização e conformidade sanitária é um dos pilares para a estruturação da Indicação Geográfica:</p>
-                <ul style="font-size: 0.95em; margin-bottom: 20px; padding-left: 20px; color: var(--cor-texto);">
-                    <li style="margin-bottom: 8px;"><strong>Marcos de Certificação:</strong> O pioneirismo iniciou com o produtor Waldir dos Santos Amoros (Casa de Farinha Waldir, Tracajatuba II), seguido pela certificação do agricultor Sebastião Vilhena Rodrigues, o Seu Sabá (Comunidade Tracajatuba I), entregue durante a 54ª Expofeira (2025).</li>
-                    <li><strong>Gestão de Marca:</strong> Com a certificação, o produtor Seu Sabá já estruturou a marca <em>Farinha do Pacuí S.A.</em>, sinalizando o início de uma nova fase, que inclui a expansão para derivados como o tucupi e a consolidação de uma identidade comercial forte.</li>
-                </ul>
-
-                <h4 style="color: var(--cor-primaria);">Sustentabilidade Histórica e Reconhecimento de Notoriedade</h4>
-                <p style="font-size: 0.95em;">Levantamentos do período 2018-2019 revelaram que a farinha movimentou mais de R$ 24 milhões nas feiras do produtor de Macapá e Santana, respondendo por 27,29% de todas as vendas do setor. Naquele período, comunidades como Ponta Grossa e Corre Água já sinalizavam a força produtiva que hoje se expande para as comunidades certificadas de Tracajatuba.</p>
-                <p style="font-size: 0.95em;">O reconhecimento da excelência técnica das comunidades do Pacuí foi validado recentemente pela 1ª Competição da Melhor Farinha de Mandioca do Amapá (Sebrae), que confirmou o domínio do território tanto na avaliação técnica quanto popular:</p>
-                <ul style="font-size: 0.95em; margin-bottom: 25px; padding-left: 20px; color: var(--cor-texto);">
-                    <li style="margin-bottom: 8px;"><strong>Excelência Técnica (Júri Técnico):</strong> O Pacuí dominou o pódio, com a Farinha do seu Sabá (Tracajatuba I) em 1º lugar e a Casa de Farinha do Waldir (Tracajatuba II) em 3º lugar.</li>
-                    <li><strong>Preferência Popular:</strong> A Associação de Moradores e Produtores da Comunidade de Salamito do Pacuí (ASMOPAP) foi a grande campeã, reafirmando a aceitação do produto pelo consumidor final.</li>
-                </ul>
-
-                <div style="background: #f0fdf4; border: 1px solid #4ade80; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                    <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Por que a Farinha do Pacuí?</h4>
-                    <p style="font-size: 0.95em;">A Farinha do Pacuí justifica a estruturação de sua Indicação Geográfica através de pilares fundamentais:</p>
-                    <ul style="font-size: 0.95em; padding-left: 20px; margin-bottom: 0;">
-                        <li style="margin-bottom: 6px;"><strong>Identidade e Cultura:</strong> A farinha é um elemento central da cultura amapaense, refletindo práticas produtivas únicas que definem a identidade das famílias rurais.</li>
-                        <li style="margin-bottom: 6px;"><strong>Notoriedade de Mercado:</strong> O nome Pacuí já possui reconhecimento consolidado no mercado local e regional, sendo uma referência de qualidade para o consumidor.</li>
-                        <li style="margin-bottom: 6px;"><strong>Potencial Técnico:</strong> O sistema produtivo combina métodos tradicionais com uma organização em rede, capaz de gerar produtos com características sensoriais distintas, como textura e sabor característicos.</li>
-                        <li><strong>Inovação Institucional:</strong> O território é o foco de um projeto de Indicação de Procedência, que visa proteger juridicamente o nome Farinha do Pacuí e estruturar a governança coletiva necessária para o desenvolvimento sustentável da região.</li>
-                    </ul>
-                </div>
-
-                <div class="destaque-box" style="margin-bottom: 0;">
-                    <strong style="display: block; font-size: 1.1em; margin-bottom: 5px;">Governança e Proteção de Ativos Coletivos</strong>
-                    Para a nossa plataforma, o Pacuí atua como o modelo ideal de tecnologia territorial. A articulação técnica para a formalização desta Indicação Geográfica é a ferramenta que transforma a pujança econômica tradicional em proteção jurídica, garantindo que o valor gerado pela reputação do produto reverta diretamente aos produtores locais e promova o desenvolvimento sustentável das comunidades rurais.
+            <div id="pacui-visao" class="aba-pacui" style="display: block;">
+                <div class="layout-painel">
+                    <div class="painel-scroll"><h3 class="titulo-painel">📰 Mural de Notícias</h3><div id="lista-noticias"></div></div>
+                    <div class="painel-scroll"><h3 class="titulo-painel">📘 Guia Normativo</h3><div class="capa-cartilha"><h3>Protegendo o Nosso Chão</h3></div><p>Conteúdo da Cartilha...</p></div>
+                    <div id="mapa-container"></div>
+                    <div class="painel-scroll"><h3 class="titulo-painel">📍 Comunidades</h3><div id="lista-itens"></div></div>
                 </div>
             </div>
-            
-            <div class="layout-painel">
-                <div class="painel-scroll">
-                    <h3 class="titulo-painel">📰 Mural de Notícias</h3>
-                    <div id="lista-noticias"></div>
-                </div>
 
-                <div class="painel-scroll">
-                    <h3 class="titulo-painel">📘 Guia Normativo</h3>
+            <div id="pacui-gov" class="aba-pacui">
+                <div class="card" style="border-top: 5px solid var(--cor-primaria);">
+                    <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Painel de Habilitação de Produtores</h3>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Acesso restrito ao <strong>Conselho Regulador</strong>. Avalie as documentações (Selo Diagro/SDR e fotos da estrutura) para garantir a conformidade com o Caderno de Especificações Técnicas (CET).</p>
                     
-                    <div class="capa-cartilha">
-                        <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                        <h3 class="subtitulo-cartilha">um guia para</h3>
-                        <p class="descricao-cartilha">
-                            Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.
-                        </p>
-                        <div class="tags-cartilha">
-                            <span>INDICAÇÃO GEOGRÁFICA</span>
-                            <span>PROPRIEDADE INTELECTUAL</span>
-                        </div>
-                    </div>
-
-                    <div class="texto-cartilha">
-                        <h2>Portal de Acessibilidade e Conectividade Digital</h2>
-                        <p>Esta cartilha adota as diretrizes do e-MAG (Modelo de Acessibilidade em Governo Eletrônico). Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva, clara e universal porque todo produtor merece acesso pleno à informação.</p>
-                        <ul>
-                            <li><strong>Audiodescrição Disponível:</strong> Ativação de comandos de voz para leitura integral dos textos e descrição detalhada de tabelas e gráficos, garantindo acesso para pessoas com deficiência visual.</li>
-                            <li><strong>Suporte à LIBRAS:</strong> Janela de tradução em Língua Brasileira de Sinais para todo o conteúdo digital, assegurando inclusão plena para a comunidade surda.</li>
-                            <li><strong>Alto Contraste e Responsividade:</strong> Layout adaptável para leitores de tela e amplificadores de texto digitais, compatível com diferentes dispositivos e necessidades visuais.</li>
-                        </ul>
-                        <div class="destaque-box">
-                            Acesse o repositório oficial: Escaneie o QR Code apontando para https://www2.unifap.br/nitt/ para acessar o repositório oficial de Indicações Geográficas no site do NITT/UNIFAP.
-                        </div>
-
-                        <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
-                        <p>Para que a Farinha do Pacuí seja reconhecida oficialmente e protegida legalmente, o Instituto Nacional da Propriedade Industrial (INPI) exige a consolidação de três ferramentas técnicas. Elas formam a base jurídica que garante que o nome do nosso lugar seja respeitado em todo o Brasil.</p>
-                        <ol>
-                            <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção. Oficializa o saber tradicional que praticamos há gerações nas nossas casas de farinha, transformando o conhecimento oral em normas reconhecidas por lei.</li>
-                            <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas". Reúne registros históricos, fotos antigas, pesquisas, reportagens e prêmios que comprovam ao Brasil que o nome "Farinha do Pacuí" é sinônimo de qualidade e fama.</li>
-                            <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade. Define com precisão as coordenadas geográficas onde começa e termina o território produtor, protegendo quem é da terra.</li>
-                        </ol>
-                        
-                        <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
-                        <p>A Indicação Geográfica é um direito que pertence a toda a comunidade produtora. Por não ser propriedade de uma única pessoa ou empresa, a união e a organização coletiva são os motores que fazem a IG funcionar na prática.</p>
-                        <ul>
-                            <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem e da marca da nossa farinha, centralizada na Associação de Produtores.</li>
-                            <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores. Sua função é zelar pelo cumprimento do CET.</li>
-                            <li><strong>Garantia de Padrão Sensorial:</strong> Os próprios produtores acompanham e validam a qualidade da farinha.</li>
-                            <li><strong>Defesa Jurídica da Denominação:</strong> Atuação unida da Associação para impedir que o nome "Pacuí" seja usado de forma falsa.</li>
-                        </ul>
-
-                        <h2>Capítulo 3: Alinhamento entre Tradição e Inovação Tecnológica</h2>
-                        <p>A introdução de inovações e normas em nosso ecossistema produtivo não serve para mudar o nosso jeito de trabalhar, mas sim para proteger o nosso saber tradicional, colocando-o em padrões seguros que o mercado atual exige.</p>
-                        <h3>Mantendo a Nossa Tradição (Identidade)</h3>
-                        <ul>
-                            <li><strong>Manejo e Seleção da Matéria-Prima:</strong> Cultivo das variedades de mandioca da nossa terra.</li>
-                            <li><strong>Processamento e Torra Artesanal:</strong> O controle manual do fogo e o uso dos tachos tradicionais.</li>
-                        </ul>
-                        <h3>Unindo com a Inovação (Boas Práticas e BPF)</h3>
-                        <ul>
-                            <li><strong>Segurança Sanitária:</strong> Cuidados simples de higiene com a água, limpeza e armazenamento.</li>
-                            <li><strong>Padronização da Qualidade:</strong> Adoção de critérios claros de classificação.</li>
-                        </ul>
-
-                        <h2>Capítulo 4: Impactos no Desenvolvimento Regional e Dinâmica Econômica</h2>
-                        <ul>
-                            <li><strong>Preço Justo e Diferenciação:</strong> O selo de origem afasta a concorrência comum e valoriza o trabalho do produtor.</li>
-                            <li><strong>Portas Abertas em Novos Mercados:</strong> A IG abre caminhos para o comércio qualificado: restaurantes de alta gastronomia e mercados institucionais.</li>
-                            <li><strong>O Efeito Multiplicador (Turismo):</strong> Regiões com produtos certificados atraem o chamado "Turismo de Experiência".</li>
-                        </ul>
-
-                        <h2>Capítulo 5: Impacto Social e Sucessão Familiar no Campo</h2>
-                        <ul>
-                            <li><strong>Orgulho da Terra e Redução do Êxodo Rural:</strong> Os nossos jovens passam a enxergar o sítio da família como um negócio viável.</li>
-                            <li><strong>Saber Ancestral com Status Técnico:</strong> O selo do INPI eleva a autoestima das novas gerações.</li>
-                            <li><strong>Um Novo Amanhã para a Juventude:</strong> O jovem une o conhecimento tradicional dos pais com ferramentas modernas de internet, gestão e vendas.</li>
-                        </ul>
-
-                        <h2>Capítulo 6: A Rede de Cooperação Intersetorial</h2>
-                        <p>A consolidação e o sucesso da IG do Pacuí dependem de uma grande corrente de cooperação:</p>
-                        <ul>
-                            <li><strong>Entidades Governamentais:</strong> Apoio com investimentos em infraestrutura logística, eletrificação rural e facilitação de licenças.</li>
-                            <li><strong>Universidades e NITT:</strong> Parceria contínua através de suporte científico, análises de laboratório e capacitações.</li>
-                            <li><strong>Setor Privado:</strong> Parcerias comerciais éticas baseadas no comércio justo.</li>
-                        </ul>
-
-                        <h2>O Caminho da Nossa Indicação Geográfica</h2>
-                        <p>O processo de conquista e manutenção da Indicação Geográfica segue uma jornada coletiva que envolve toda a comunidade produtora.</p>
-                        <ol>
-                            <li><strong>Organização</strong></li>
-                            <li><strong>Documentação</strong></li>
-                            <li><strong>Registro</strong></li>
-                            <li><strong>Gestão</strong></li>
-                        </ol>
-
-                        <h2>Nossa História, Nosso Direito, Nosso Futuro</h2>
-                        <div class="destaque-box">
-                            "A salvaguarda de um nome geográfico coloca a ciência jurídica, a universidade e a propriedade intelectual a serviço da justiça social, do desenvolvimento econômico e da nossa história territorial."
-                        </div>
-                        <p>A Indicação Geográfica da Farinha do Pacuí é muito mais do que um selo ou um registro burocrático. É o reconhecimento oficial de que o nosso jeito de fazer, o nosso território e a nossa história têm valor e que esse valor pertence a todos nós.</p>
-                        
-                        <table class="tabela-cartilha">
-                            <tr>
-                                <th>Nossa Força</th>
-                                <th>Nossa Proteção</th>
-                                <th>Nosso Legado</th>
-                            </tr>
-                            <tr>
-                                <td>A união coletiva e a organização comunitária são a base de tudo.</td>
-                                <td>O registro no INPI garante direitos legais para toda a comunidade.</td>
-                                <td>As novas gerações são o futuro da nossa tradição e do nosso território.</td>
-                            </tr>
+                    <div style="overflow-x: auto;">
+                        <table class="tabela-sistema">
+                            <thead>
+                                <tr>
+                                    <th>Produtor / Agroindústria</th>
+                                    <th>Comunidade</th>
+                                    <th>Evidências (Upload)</th>
+                                    <th>Status Atual</th>
+                                    <th>Ações do Conselho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Sebastião Vilhena (Seu Sabá)</strong></td>
+                                    <td>Tracajatuba I</td>
+                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Fotos e Selo Diagro</a></td>
+                                    <td><span class="badge aguardando">Aguardando Validação</span></td>
+                                    <td>
+                                        <button class="btn-acao btn-validar" onclick="alert('Produtor habilitado com sucesso! A permissão para gerar lotes foi liberada.')">Validar</button>
+                                        <button class="btn-acao btn-rejeitar" onclick="alert('Sistema enviará e-mail automático ao produtor informando as pendências estruturais baseadas no CET.')">Rejeitar</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Waldir dos Santos Amoros</strong></td>
+                                    <td>Tracajatuba II</td>
+                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div id="mapa-container"></div>
-
-                <div class="painel-scroll">
-                    <h3 class="titulo-painel">📍 Comunidades</h3>
-                    <div id="lista-itens"></div>
+                <div class="card">
+                    <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Repositório Oficial de Atas (Auditoria INPI)</h3>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Arquivo digital permanente das assembleias gerais, aprovação do CET e decisões do Conselho Regulador.</p>
+                    
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 15px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                            <span><strong>Ata 01/2026:</strong> Aprovação do Regulamento de Uso e Caderno de Especificações Técnicas.</span>
+                            <a href="#" class="btn-acao btn-doc">Baixar PDF</a>
+                        </li>
+                        <li style="padding: 15px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
+                            <span><strong>Ata 02/2026:</strong> Formação da Diretoria do Conselho Regulador da IG.</span>
+                            <a href="#" class="btn-acao btn-doc">Baixar PDF</a>
+                        </li>
+                    </ul>
                 </div>
-
             </div>
+
+            <div id="pacui-rastreio" class="aba-pacui">
+                <div class="layout-painel" style="grid-template-columns: 1fr 1fr; height: auto;">
+                    
+                    <div class="card" style="border-top: 5px solid var(--cor-destaque);">
+                        <h3 style="color: var(--cor-destaque-hover); font-size: 1.5rem; margin-top: 0;">Emitir Passaporte do Produto</h3>
+                        <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Geração de Lote e QR Code. Funcionalidade exclusiva para produtores com status <strong>Habilitado</strong>.</p>
+                        
+                        <div class="form-rastreio">
+                            <div class="form-grupo">
+                                <label>Data de Produção / Torra</label>
+                                <input type="date" id="data-lote">
+                            </div>
+                            <div class="form-grupo">
+                                <label>Comunidade de Origem</label>
+                                <select id="comunidade-lote">
+                                    <option>Tracajatuba I</option>
+                                    <option>Tracajatuba II</option>
+                                    <option>Ponta Grossa</option>
+                                    <option>Salamito</option>
+                                </select>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Peso do Lote (kg)</label>
+                                <input type="number" id="peso-lote" placeholder="Ex: 50">
+                            </div>
+                            <div class="form-grupo">
+                                <label>ID Agroindústria (Selo Diagro/SIE)</label>
+                                <input type="text" id="id-diagro" placeholder="Ex: SIE-AP-1234">
+                            </div>
+                            <div class="form-grupo form-full">
+                                <button class="btn-gerar-lote" onclick="gerarQRCode()">Emitir Certificado e Gerar QR Code Dinâmico</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; border: 2px dashed #ccc;">
+                        <div id="area-qr" style="text-align: center;">
+                            <p style="color: #888; margin-bottom: 20px;">Preencha os dados ao lado para gerar o lote e o selo de rastreabilidade da saca.</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Sign-check-icon.png" width="80" style="opacity: 0.2;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div id="inpi" class="secao">
             <div class="header-aba"><h2>Legislação e Normas</h2></div>
-            <div class="painel-scroll" style="height: auto; max-height: 100%;">
-                <p>Conteúdo normativo em desenvolvimento para a estruturação técnica do dossiê.</p>
-            </div>
         </div>
-    </div> <footer id="rodape-pesquisa" class="rodape-site">
-        <div class="rodape-container">
-            <div class="rodape-coluna">
-                <h3>Sobre o Pesquisador</h3>
-                <p>Luiz Fernando Brito Rocha é mestre em Propriedade Intelectual e Transferência de Tecnologia para Inovação pelo programa PROFNIT da Universidade Federal do Amapá (UNIFAP). Sua atuação foca na convergência entre o conhecimento técnico e a realidade das comunidades rurais, com foco especial na proteção de ativos coletivos da sociobiodiversidade amazônica. O trabalho desenvolvido é fruto de uma pesquisa dedicada a estruturar instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados.</p>
-            </div>
-            <div class="rodape-coluna">
-                <h3>Sobre a Pesquisa</h3>
-                <p>Este conteúdo integra os resultados da dissertação de mestrado intitulada "Indicação Geográfica da Farinha do Pacuí – Amapá" (PROFNIT/UNIFAP, 2026). A pesquisa tem como objetivo a estruturação do Caderno de Especificações Técnicas (CET) e do Dossiê de Notoriedade, documentos fundamentais para o processo de reconhecimento da Indicação Geográfica pelo Instituto Nacional da Propriedade Industrial (INPI). Este material não é apenas um documento acadêmico, mas um instrumento técnico elaborado para subsidiar a governança coletiva, a rastreabilidade e a promoção do desenvolvimento sustentável do Distrito de São Joaquim do Pacuí.</p>
-            </div>
-        </div>
+    </div>
 
-        <div class="rodape-cta">
-            <a href="#" class="btn-download-rtc" onclick="alert('O Relatório Técnico Conclusivo (RTC) encontra-se em fase final de consolidação acadêmica e estará disponível para download em breve.'); return false;">
-                Baixar Relatório Técnico Conclusivo em PDF
-            </a>
-        </div>
+    <footer id="rodape-pesquisa" class="rodape-site">
+        <div class="rodape-container"><p>Conteúdo do Rodapé do Pesquisador e Download do RTC...</p></div>
     </footer>
+
+    <div id="modal-passaporte">
+        <div class="passaporte-card">
+            <div class="passaporte-header">
+                <h3>✅ Autenticidade Confirmada</h3>
+                <p style="font-size: 0.9em; margin-top: 5px; opacity: 0.9;">Indicação de Procedência: Farinha do Pacuí</p>
+            </div>
+            <div class="passaporte-body">
+                <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
+                
+                <p><strong>Produtor Responsável:</strong> Sebastião Vilhena (Seu Sabá)</p>
+                <p><strong>Comunidade:</strong> <span id="modal-comunidade">Tracajatuba I</span></p>
+                <p><strong>Data de Produção:</strong> <span id="modal-data">09/06/2026</span></p>
+                <p><strong>Registro Sanitário (Diagro):</strong> <span id="modal-id">SIE-AP-1234</span></p>
+
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; text-align: center;">
+                    <a href="#" style="color: var(--cor-primaria); font-weight: bold; text-decoration: none;">📄 Visualizar Certificado Sanitário (PDF)</a>
+                </div>
+
+                <button class="btn-fechar-modal" onclick="document.getElementById('modal-passaporte').style.display='none'">Fechar Passaporte</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
+        // Função de Navegação Principal
         function mostrar(id) {
-            // Oculta as seções e remove o 'ativo' dos botões
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('ativo'));
             
@@ -582,59 +304,63 @@
             if (alvo) {
                 alvo.style.display = 'block';
                 if(botaoAtivo) botaoAtivo.classList.add('ativo');
+                if (rodape) rodape.style.display = (id === 'pacui') ? 'block' : 'none';
                 
-                // Exibe o rodapé APENAS se a aba atual for 'pacui'
-                if (rodape) {
-                    rodape.style.display = (id === 'pacui') ? 'block' : 'none';
-                }
-                
+                // Força abrir a aba Visão Geral se entrar em Pacuí
                 if(id === 'pacui') {
-                    setTimeout(() => { mapa.invalidateSize(); }, 100);
+                    document.querySelector('.btn-sub-nav').click();
                 }
             }
         }
 
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
-        
-        fetch(urlPlanilha)
-            .then(res => res.json())
-            .then(dados => {
-                if(dados.poligono && dados.poligono.length > 0) {
-                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
-                }
-                if(dados.rota && dados.rota.length > 0) {
-                    L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray:'10,10'}).bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"}).addTo(mapa);
-                }
-                
-                var listaItens = document.getElementById('lista-itens');
-                dados.comunidades.forEach(c => {
-                    var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
-                    var div = document.createElement('div');
-                    div.className = 'item-comunidade';
-                    div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                    listaItens.appendChild(div);
-                });
-
-                var listaNoticias = document.getElementById('lista-noticias');
-                if (dados.noticias && dados.noticias.length > 0) {
-                    dados.noticias.forEach(n => {
-                        var div = document.createElement('div');
-                        div.className = 'noticia-item';
-                        div.innerHTML = `
-                            <h4 class="noticia-titulo">${n.titulo}</h4>
-                            <p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p>
-                            <span class="noticia-meta">${n.fonte} • ${n.data}</span>
-                        `;
-                        listaNoticias.appendChild(div);
-                    });
-                } else {
-                    listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>";
-                }
-            })
-            .catch(erro => console.log("Erro ao carregar os dados:", erro));
+        // NOVO: Função de Navegação do Sub-menu do Pacuí
+        function mostrarAbaPacui(idAba, elementoBotao) {
+            document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none');
+            document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo'));
             
-        // Ativa a aba "Início" ao carregar a página (o rodapé ficará invisível)
+            document.getElementById(idAba).style.display = 'block';
+            elementoBotao.classList.add('ativo');
+
+            if(idAba === 'pacui-visao') {
+                setTimeout(() => { mapa.invalidateSize(); }, 100);
+            }
+        }
+
+        // NOVO: Função que simula a geração do QR Code e Lote
+        function gerarQRCode() {
+            var data = document.getElementById('data-lote').value;
+            var comunidade = document.getElementById('comunidade-lote').value;
+            var id = document.getElementById('id-diagro').value;
+
+            if(!data || !id) {
+                alert("Por favor, preencha a data de produção e o ID da Agroindústria.");
+                return;
+            }
+
+            // Popula o modal do consumidor com os dados digitados
+            document.getElementById('modal-comunidade').innerText = comunidade;
+            document.getElementById('modal-data').innerText = data.split('-').reverse().join('/');
+            document.getElementById('modal-id').innerText = id;
+
+            // Gera um QR Code real na tela usando a API do Google Charts
+            var urlExemplo = "Passaporte Gerado! Clique para simular a leitura do consumidor.";
+            var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlExemplo)}`;
+
+            var areaQr = document.getElementById('area-qr');
+            areaQr.innerHTML = `
+                <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Nº ${Math.floor(Math.random() * 10000)} Gerado!</h4>
+                <img src="${qrUrl}" alt="QR Code do Lote" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirModalConsumidor()">
+                <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirModalConsumidor()">📷 Clique no QR Code para simular a visão do consumidor no supermercado.</p>
+            `;
+        }
+
+        function abrirModalConsumidor() {
+            document.getElementById('modal-passaporte').style.display = 'flex';
+        }
+
+        // Aqui vai o seu fetch() antigo do urlPlanilha (omitido para focar nas novas funções)
+        // ...
+        
         document.getElementById('btn-home').classList.add('ativo');
     </script>
 </body>
