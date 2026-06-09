@@ -368,7 +368,7 @@
             </div> <div id="pacui-gov" class="aba-pacui">
                 <div class="card" style="border-top: 5px solid var(--cor-primaria);">
                     <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Painel de Habilitação de Produtores</h3>
-                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Acesso restrito ao <strong>Conselho Regulador</strong>. Avalie as documentações (Selo Diagro/SDR e fotos da estrutura) para garantir a conformidade com o Caderno de Especificações Técnicas (CET).</p>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Acesso restrito ao <strong>Conselho Regulador</strong>.<br>Avalie as documentações para garantir a conformidade com o Caderno de Especificações Técnicas (CET).</p>
                     
                     <div style="overflow-x: auto;">
                         <table class="tabela-sistema">
@@ -385,16 +385,20 @@
                                 <tr>
                                     <td><strong>Sebastião Vilhena (Seu Sabá)</strong></td>
                                     <td>Tracajatuba I</td>
-                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Fotos e Selo Diagro</a></td>
-                                    <td><span class="badge aguardando">Aguardando Validação</span></td>
-                                    <td>
-                                        <button class="btn-acao btn-validar" onclick="alert('Produtor habilitado com sucesso! A permissão para gerar lotes foi liberada.')">Validar</button>
-                                        <button class="btn-acao btn-rejeitar" onclick="alert('Sistema enviará e-mail automático ao produtor informando as pendências estruturais baseadas no CET.')">Rejeitar</button>
-                                    </td>
+                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Waldir dos Santos Amoros</strong></td>
                                     <td>Tracajatuba II</td>
+                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Associação de Moradores e Produtores (ASMOPAP)</strong></td>
+                                    <td>Salamito</td>
                                     <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
                                     <td><span class="badge habilitado">Habilitado</span></td>
                                     <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
@@ -552,7 +556,6 @@
             }
         }
 
-        // NOVO: Função REAL de envio de dados para o Apps Script
         function gerarQRCode() {
             var data = document.getElementById('data-lote').value;
             var comunidade = document.getElementById('comunidade-lote').value;
@@ -565,13 +568,13 @@
                 return;
             }
 
-            // 1. Muda o botão para mostrar que está carregando
+            // Muda o botão para estado de carregamento
             var textoOriginal = btnGera.innerHTML;
-            btnGera.innerHTML = "⏳ Conectando à Associação e Registrando Lote...";
-            btnGera.style.backgroundColor = "#64748b"; // Fica cinza
+            btnGera.innerHTML = "⏳ Registrando Lote...";
+            btnGera.style.backgroundColor = "#64748b"; 
             btnGera.disabled = true;
 
-            // 2. Prepara o "pacote" de dados para enviar ao Apps Script
+            // Prepara os dados para o Apps Script
             var pacoteDados = {
                 acao: "gerar_lote",
                 data: data,
@@ -580,7 +583,7 @@
                 id_diagro: id
             };
 
-            // 3. Envia para o seu servidor (Substitua pela SUA URL DE IMPLANTAÇÃO)
+            // Lembre-se de colar a sua URL de implantação atualizada aqui!
             var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
 
             fetch(urlPlanilha, {
@@ -592,13 +595,12 @@
             })
             .then(resposta => resposta.json())
             .then(retorno => {
-                // Voltar o botão ao normal
+                // Voltar botão ao normal
                 btnGera.innerHTML = textoOriginal;
                 btnGera.style.backgroundColor = "var(--cor-destaque)";
                 btnGera.disabled = false;
 
                 if (retorno.sucesso) {
-                    // O servidor salvou! Vamos mostrar o QR Code com o LOTE REAL
                     var loteOficial = retorno.loteGerado;
                     
                     document.getElementById('modal-comunidade').innerText = comunidade;
@@ -616,23 +618,23 @@
                         <p style="font-size: 0.8em; color: #10b981; margin-top: 5px;">✔️ Salvo no banco de dados da Associação.</p>
                     `;
                     
-                    // Limpa o formulário
-                    document.getElementById('peso-lote').value = "";
+                    document.getElementById('peso-lote').value = ""; // Limpa o formulário
                 } else {
-                    alert("Erro ao salvar no banco de dados: " + retorno.erro);
+                    alert("Erro ao salvar: " + retorno.erro);
                 }
             })
             .catch(erro => {
-                alert("Falha de conexão. Verifique se o URL do script está correto e tem permissões.");
+                alert("Falha de conexão. Verifique se o URL do script está correto.");
                 btnGera.innerHTML = textoOriginal;
                 btnGera.style.backgroundColor = "var(--cor-destaque)";
                 btnGera.disabled = false;
             });
         }
 
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        // Lembre-se de colar a sua URL de implantação atualizada aqui também!
+        var urlPlanilhaLeitura = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
-        fetch(urlPlanilha)
+        fetch(urlPlanilhaLeitura)
             .then(res => res.json())
             .then(dados => {
                 if(dados.poligono && dados.poligono.length > 0) {
