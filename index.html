@@ -12,41 +12,50 @@
         .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
         .menu-nav button:hover { background: #ff9800; color: #fff; transform: translateY(-2px); }
         
-        .secao { display: none; padding: 30px; max-width: 1300px; margin: auto; }
-        .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        /* Largura expandida para acomodar 4 colunas */
+        .secao { display: none; padding: 20px; max-width: 98%; margin: auto; }
         
-        /* LAYOUT ESQUERDA (DADOS) / DIREITA (MAPA) */
-        .layout-painel { display: flex; gap: 25px; align-items: flex-start; }
-        
-        .coluna-esquerda { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
+        /* CABEÇALHO DA ABA */
+        .header-aba { background: #fff; border-radius: 12px; padding: 20px 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header-aba h2 { margin: 0; color: #333; }
+
+        /* LAYOUT PRINCIPAL (CSS GRID: 4 COLUNAS) */
+        /* Proporção: 1.2 (Notícias) | 1.5 (Cartilha) | 2.5 (Mapa) | 1 (Comunidades) */
+        .layout-painel { 
+            display: grid; 
+            grid-template-columns: 1.2fr 1.5fr 2.5fr 1fr; 
             gap: 20px; 
-            max-width: 380px; 
+            height: 75vh; /* Altura fixa baseada na tela do usuário */
+            min-height: 650px;
         }
 
-        .coluna-direita { 
-            flex: 2; 
-            min-width: 0; 
+        /* CARDS COM ROLAGEM INDEPENDENTE */
+        .painel-scroll { 
+            background: #fff; 
+            border-radius: 12px; 
+            padding: 20px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column;
+            border-top: 5px solid #2e7d32;
         }
 
-        /* LISTAS COM ROLAGEM INDEPENDENTE (COMUNIDADES E NOTÍCIAS) */
-        .painel-scroll { max-height: 310px; overflow-y: auto; padding-right: 10px; }
-        .titulo-painel { margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #eee; color: #2e7d32; position: sticky; top: 0; background: #fff; z-index: 10; }
-        
+        .titulo-painel { margin-top: 0; padding-bottom: 12px; border-bottom: 2px solid #eee; color: #2e7d32; position: sticky; top: -20px; background: #fff; z-index: 10; font-size: 1.1em; }
+
         /* ESTILIZAÇÃO DE SCROLLBAR */
         .painel-scroll::-webkit-scrollbar { width: 6px; }
         .painel-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .painel-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
         .painel-scroll::-webkit-scrollbar-thumb:hover { background: #2e7d32; }
 
-        /* ESTÉTICA MELHORADA DO MAPA */
+        /* ESTÉTICA MELHORADA DO MAPA (COLUNA CENTRAL) */
         #mapa-container { 
-            height: 640px; 
-            border-radius: 16px; 
-            border: 6px solid #fff; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            height: 100%; 
+            width: 100%;
+            border-radius: 12px; 
+            border: 4px solid #ffffff; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12); 
             z-index: 1; 
             background: #e5e3df; 
         }
@@ -61,23 +70,31 @@
         .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: bold; color: #b71c1c; font-size: 14px; text-shadow: 1px 1px 2px #fff; }
         .rotulo-rota { background: rgba(255, 255, 255, 0.85) !important; border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 3px 6px; border-radius: 4px; font-weight: bold; }
         
-        /* ESTILOS DA CARTILHA DIGITAL (FULL WIDTH NO FINAL) */
-        .cartilha-container { margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; }
-        .capa-cartilha { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: white; text-align: center; padding: 50px 30px; border-radius: 12px 12px 0 0; border: none; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
-        .titulo-cartilha { font-size: 2.2em; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
-        .subtitulo-cartilha { color: #ff9800; font-style: italic; margin-bottom: 15px; font-size: 1.2em; }
-        .descricao-cartilha { font-size: 1.05em; margin: 0 auto 25px auto; line-height: 1.6; max-width: 800px; }
-        .tags-cartilha { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .tags-cartilha span { background: rgba(255, 255, 255, 0.2); padding: 6px 14px; border-radius: 20px; font-size: 0.8em; font-weight: bold; letter-spacing: 1px; }
-        .pagina-cartilha { background: #fff; padding: 50px; line-height: 1.8; font-size: 1.05em; color: #333; border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-top: 0; }
-        .pagina-cartilha h2 { color: #2e7d32; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; font-size: 1.5em; }
+        /* ESTILOS INTERNOS DA CARTILHA DIGITAL */
+        .capa-cartilha { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: white; text-align: center; padding: 25px 15px; border-radius: 8px; margin-bottom: 20px; }
+        .titulo-cartilha { font-size: 1.5em; margin-bottom: 5px; font-weight: 800; line-height: 1.2; }
+        .subtitulo-cartilha { color: #ff9800; font-style: italic; margin-bottom: 10px; font-size: 1em; }
+        .descricao-cartilha { font-size: 0.9em; margin: 0 auto 15px auto; line-height: 1.4; }
+        .tags-cartilha { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; }
+        .tags-cartilha span { background: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 15px; font-size: 0.7em; font-weight: bold; }
+        
+        .texto-cartilha { line-height: 1.6; font-size: 0.9em; color: #333; }
+        .texto-cartilha h2 { color: #2e7d32; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; font-size: 1.3em; }
+        .texto-cartilha h3 { color: #ff9800; margin-top: 15px; margin-bottom: 8px; font-size: 1.1em; }
+        .destaque-box { background: #f9fbe7; border-left: 4px solid #8bc34a; padding: 12px 15px; margin: 15px 0; border-radius: 0 8px 8px 0; font-style: italic; font-size: 0.95em; }
+        .tabela-cartilha { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.85em; }
+        .tabela-cartilha th { background: #2e7d32; color: #fff; padding: 8px; border: 1px solid #ddd; }
+        .tabela-cartilha td { padding: 8px; border: 1px solid #ddd; }
 
-        /* RESPONSIVIDADE */
-        @media (max-width: 950px) {
-            .layout-painel { flex-direction: column-reverse; }
-            .coluna-esquerda { max-width: 100%; }
-            .painel-scroll { max-height: none; overflow-y: visible; }
-            #mapa-container { height: 450px; }
+        /* RESPONSIVIDADE (Tablets e Celulares) */
+        @media (max-width: 1200px) {
+            .layout-painel { grid-template-columns: 1fr 1fr; height: auto; }
+            #mapa-container { height: 500px; grid-column: span 2; order: -1; } /* Mapa vai pro topo em telas menores */
+            .painel-scroll { max-height: 500px; }
+        }
+        @media (max-width: 768px) {
+            .layout-painel { grid-template-columns: 1fr; }
+            #mapa-container { grid-column: span 1; }
         }
     </style>
 </head>
@@ -89,69 +106,131 @@
     </nav>
 
     <div id="home" class="secao" style="display:block;">
-        <div class="card"><h1>Plataforma de Gestão de Indicações Geográficas</h1></div>
+        <div class="header-aba"><h1>Plataforma de Gestão de Indicações Geográficas</h1></div>
     </div>
 
     <div id="pacui" class="secao">
-        <div class="card" style="margin-bottom: 25px;">
+        <div class="header-aba">
             <h2>Indicação de Procedência: Farinha do Pacuí</h2>
         </div>
         
         <div class="layout-painel">
             
-            <div class="coluna-esquerda">
-                
-                <div class="card painel-scroll" style="margin-bottom: 0;">
-                    <h3 class="titulo-painel">📍 Comunidades</h3>
-                    <div id="lista-itens"></div>
-                </div>
-
-                <div class="card painel-scroll" style="margin-bottom: 0;">
-                    <h3 class="titulo-painel">📢 Mural de Notícias</h3>
-                    <div id="lista-noticias"></div>
-                </div>
-
+            <div class="painel-scroll">
+                <h3 class="titulo-painel">📢 Mural de Notícias</h3>
+                <div id="lista-noticias"></div>
             </div>
 
-            <div class="coluna-direita">
-                <div id="mapa-container"></div>
+            <div class="painel-scroll">
+                <h3 class="titulo-painel">📘 Guia e Normas (Cartilha)</h3>
+                
+                <div class="capa-cartilha">
+                    <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                    <h3 class="subtitulo-cartilha">um guia para</h3>
+                    <p class="descricao-cartilha">
+                        Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para comunidades tradicionais, lideranças locais e agentes públicos.
+                    </p>
+                    <div class="tags-cartilha">
+                        <span>INDICAÇÃO GEOGRÁFICA</span>
+                        <span>PROPRIEDADE INTELECTUAL</span>
+                    </div>
+                </div>
+
+                <div class="texto-cartilha">
+                    <h2>Portal de Acessibilidade e Conectividade Digital</h2>
+                    <p>Esta cartilha adota as diretrizes do e-MAG. Os recursos garantem que o conhecimento seja distribuído de forma inclusiva[cite: 16, 17]:</p>
+                    <ul>
+                        <li><strong>Audiodescrição Disponível:</strong> Ativação de comandos de voz para leitura integral para pessoas com deficiência visual[cite: 19, 20, 21, 22, 23].</li>
+                        <li><strong>Suporte à LIBRAS:</strong> Janela de tradução em Língua Brasileira de Sinais[cite: 24, 25].</li>
+                        <li><strong>Alto Contraste:</strong> Layout adaptável para leitores de tela[cite: 26, 27].</li>
+                    </ul>
+                    <div class="destaque-box">
+                        Acesse o repositório oficial do NITT/UNIFAP em https://www2.unifap.br/nitt/[cite: 28, 29].
+                    </div>
+
+                    <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
+                    <p>Para o reconhecimento oficial, o INPI exige três ferramentas técnicas[cite: 33]:</p>
+                    <ol>
+                        <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel da nossa produção, transformando o conhecimento oral em normas reconhecidas por lei[cite: 38, 39].</li>
+                        <li><strong>Dossiê de Notoriedade:</strong> Reúne registros históricos e provas que comprovam ao Brasil que o nome "Farinha do Pacuí" é sinônimo de qualidade e fama[cite: 40, 41].</li>
+                        <li><strong>Instrumento de Delimitação Geográfica:</strong> Define com precisão as coordenadas geográficas onde começa e termina o território produtor[cite: 42, 43].</li>
+                    </ol>
+
+                    <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
+                    <ul>
+                        <li><strong>Governança Coletiva:</strong> Gestão compartilhada centralizada na Associação de Produtores[cite: 50, 51].</li>
+                        <li><strong>Conselho Regulador:</strong> Comitê de produtores que zela pelo cumprimento do CET[cite: 53, 54].</li>
+                        <li><strong>Garantia de Padrão Sensorial:</strong> Os produtores acompanham e validam a qualidade, garantindo crocância, cor e sabor[cite: 55, 56].</li>
+                        <li><strong>Defesa Jurídica da Denominação:</strong> Atuação unida para impedir o uso falso do nome "Pacuí"[cite: 57, 58].</li>
+                    </ul>
+
+                    <h2>Capítulo 3: Alinhamento entre Tradição e Inovação</h2>
+                    <h3>Mantendo a Nossa Tradição</h3>
+                    <ul>
+                        <li><strong>Manejo:</strong> Cultivo das variedades de mandioca da terra[cite: 66].</li>
+                        <li><strong>Processamento:</strong> O controle manual do fogo e uso dos tachos tradicionais[cite: 67].</li>
+                    </ul>
+                    <h3>Unindo com a Inovação (BPF)</h3>
+                    <ul>
+                        <li><strong>Segurança Sanitária:</strong> Cuidados de higiene com água e equipamentos[cite: 70].</li>
+                        <li><strong>Padronização:</strong> Adoção de critérios claros de classificação[cite: 71].</li>
+                    </ul>
+
+                    <h2>Capítulo 4: Impactos no Desenvolvimento Regional</h2>
+                    <ul>
+                        <li><strong>Preço Justo:</strong> O selo afasta a concorrência comum e valoriza o trabalho do produtor[cite: 78, 79, 80].</li>
+                        <li><strong>Novos Mercados:</strong> Abre caminhos para comércio qualificado como alta gastronomia e compras do governo[cite: 81, 82].</li>
+                        <li><strong>Turismo de Experiência:</strong> Atrai pessoas para conhecer as casas de farinha, movimentando o comércio[cite: 83, 84, 85].</li>
+                    </ul>
+
+                    <h2>Capítulo 5: Impacto Social e Sucessão Familiar</h2>
+                    <p>O maior ganho é a continuidade das famílias no meio rural[cite: 89, 90]. A Indicação Geográfica promove:</p>
+                    <ul>
+                        <li><strong>Orgulho e Redução do Êxodo:</strong> Os jovens passam a enxergar o sítio como um negócio viável[cite: 92, 93].</li>
+                        <li><strong>Status Técnico:</strong> O selo eleva a autoestima e o saber ancestral é reconhecido oficialmente[cite: 94, 95, 96].</li>
+                    </ul>
+
+                    <h2>Capítulo 6: A Rede de Cooperação Intersetorial</h2>
+                    <p>A consolidação depende da união entre comunidade, Estado e universidades[cite: 103, 104]:</p>
+                    <ul>
+                        <li><strong>Governamentais:</strong> Apoio com infraestrutura logística e ramais[cite: 107, 108, 109].</li>
+                        <li><strong>NITT/UNIFAP:</strong> Suporte científico e análises de laboratório[cite: 110, 111, 112].</li>
+                        <li><strong>Setor Privado:</strong> Parcerias comerciais éticas baseadas no comércio justo[cite: 113, 114].</li>
+                    </ul>
+
+                    <h2>Nossa História, Nosso Direito, Nosso Futuro</h2>
+                    <p>A Indicação Geográfica é o reconhecimento oficial de que o nosso jeito de fazer e o nosso território têm valor e pertencem à nossa gente[cite: 128, 129].</p>
+                    
+                    <table class="tabela-cartilha">
+                        <tr>
+                            <th>Nossa Força</th>
+                            <th>Nossa Proteção</th>
+                            <th>Nosso Legado</th>
+                        </tr>
+                        <tr>
+                            <td>A união coletiva e a organização comunitária são a base de tudo[cite: 130].</td>
+                            <td>O registro no INPI garante direitos legais para toda a comunidade[cite: 130].</td>
+                            <td>As novas gerações são o futuro da nossa tradição e do nosso território[cite: 130].</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="mapa-container"></div>
+
+            <div class="painel-scroll">
+                <h3 class="titulo-painel">📍 Comunidades</h3>
+                <div id="lista-itens"></div>
             </div>
 
         </div>
-
-        <div class="cartilha-container">
-            <div class="capa-cartilha">
-                <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                <h3 class="subtitulo-cartilha">um guia para</h3>
-                <p class="descricao-cartilha">
-                    Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para comunidades tradicionais, lideranças locais e agentes públicos sobre como garantir o reconhecimento legal, a valorização cultural e o desenvolvimento sustentável do nosso território produtivo.
-                </p>
-                <div class="tags-cartilha">
-                    <span>INDICAÇÃO GEOGRÁFICA</span>
-                    <span>PROPRIEDADE INTELECTUAL</span>
-                    <span>COMUNIDADES TRADICIONAIS</span>
-                </div>
-            </div>
-
-            <div class="pagina-cartilha">
-                <h2>1. Apresentação</h2>
-                <p>Este material foi construído de forma colaborativa para e pelas comunidades produtoras, garantindo que o protagonismo da proteção da nossa identidade, do nosso modo de fazer tradicional e da governança territorial permaneça inteiramente nas mãos de quem vive, trabalha e mantém a cultura do Pacuí viva.</p>
-                
-                <h2>2. O Que é a Indicação Geográfica?</h2>
-                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
-
-                <h2>3. Governança e Propriedade Intelectual</h2>
-                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
-
-                <h2>4. Delimitação Territorial do Pacuí</h2>
-                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
-            </div>
-        </div>
-
     </div>
 
     <div id="inpi" class="secao">
-        <div class="card"><h2>Legislação e Normas</h2><p>Conteúdo conforme Manual do INPI.</p></div>
+        <div class="header-aba"><h2>Legislação e Normas</h2></div>
+        <div class="painel-scroll" style="height: auto;">
+            <p>Conteúdo conforme Manual do INPI.</p>
+        </div>
     </div>
 
     <script>
