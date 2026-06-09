@@ -78,7 +78,7 @@
            3. ESTRUTURA DE SEÇÕES E GRID
            ========================================= */
         .conteudo-principal {
-            flex: 1; /* Permite que o conteúdo empurre o rodapé para baixo */
+            flex: 1; 
         }
 
         .secao { 
@@ -162,7 +162,7 @@
         .painel-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         /* =========================================
-           5. ESTILOS DO MAPA (LEAFLET) E LISTAS
+           5. ESTILOS DO MAPA E LISTAS
            ========================================= */
         #mapa-container { 
             height: 100%; 
@@ -199,7 +199,7 @@
         .rotulo-rota { background: rgba(255, 255, 255, 0.9) !important; border: 2px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); }
 
         /* =========================================
-           6. NOTÍCIAS E CARTILHA (TIPOGRAFIA)
+           6. NOTÍCIAS E CARTILHA
            ========================================= */
         .noticia-item {
             padding: 15px;
@@ -289,6 +289,40 @@
             margin: 0;
         }
 
+        /* ESTILOS DO NOVO BOTÃO DE DOWNLOAD (RTC) */
+        .rodape-cta {
+            max-width: 1300px;
+            margin: 40px auto 0 auto;
+            padding-top: 30px;
+            border-top: 1px dashed #cbd5e1;
+            text-align: center;
+        }
+
+        .btn-download-rtc {
+            display: inline-block;
+            background-color: var(--cor-destaque);
+            color: #ffffff !important;
+            padding: 16px 35px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-download-rtc:hover {
+            background-color: var(--cor-destaque-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(230, 81, 0, 0.5);
+        }
+
+        .btn-download-rtc:active {
+            transform: translateY(0);
+        }
+
         /* =========================================
            8. RESPONSIVIDADE
            ========================================= */
@@ -306,7 +340,8 @@
             #mapa-container { grid-column: span 1; height: 400px; }
             .menu-nav { flex-wrap: wrap; padding: 10px; }
             .menu-nav button { flex: 1 1 auto; text-align: center; }
-            .rodape-container { grid-template-columns: 1fr; gap: 30px; } /* Rodapé em coluna no celular */
+            .rodape-container { grid-template-columns: 1fr; gap: 30px; }
+            .btn-download-rtc { font-size: 1rem; padding: 14px 25px; width: 100%; box-sizing: border-box;}
         }
     </style>
 </head>
@@ -520,6 +555,12 @@
                 <h3>Sobre a Pesquisa</h3>
                 <p>Este conteúdo integra os resultados da dissertação de mestrado intitulada "Indicação Geográfica da Farinha do Pacuí – Amapá" (PROFNIT/UNIFAP, 2026). A pesquisa tem como objetivo a estruturação do Caderno de Especificações Técnicas (CET) e do Dossiê de Notoriedade, documentos fundamentais para o processo de reconhecimento da Indicação Geográfica pelo Instituto Nacional da Propriedade Industrial (INPI). Este material não é apenas um documento acadêmico, mas um instrumento técnico elaborado para subsidiar a governança coletiva, a rastreabilidade e a promoção do desenvolvimento sustentável do Distrito de São Joaquim do Pacuí.</p>
             </div>
+        </div>
+
+        <div class="rodape-cta">
+            <a href="#" class="btn-download-rtc" onclick="alert('O Relatório Técnico Conclusivo (RTC) encontra-se em fase final de consolidação acadêmica e estará disponível para download em breve.'); return false;">
+                Baixar Relatório Técnico Conclusivo em PDF
+            </a>
         </div>
     </footer>
 
