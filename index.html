@@ -2,57 +2,43 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Digital de Gestão e Delimitação Territorial para IGs</title>
+    <title>Plataforma de Gestão de IGs - Amapá</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
     <style>
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f4f6f8; }
-        .menu-nav { background-color: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
-        .menu-nav button:hover { background: #ff9800; color: white; }
-        
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f6f8; }
+        .menu-nav { background: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; }
+        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; }
         .secao { display: none; padding: 30px; max-width: 1000px; margin: auto; }
-        .card { background: #fff; border-radius: 12px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 20px; border-left: 6px solid #2e7d32; }
-        
-        #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: white; }
-        #mapa-container { flex: 3; height: 100%; }
+        .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; }
+        #mapa-container { flex: 3; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        
-        .item-comunidade { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; transition: 0.2s; }
+        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; }
         .item-comunidade:hover { background: #f0f7f0; }
-        .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
+        .coords { font-size: 0.75em; color: #666; display: none; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
-
-        .rotulo-area { background: transparent; border: none; box-shadow: none; font-weight: bold; color: #b71c1c; font-size: 14px; }
-        .rotulo-rota { background: rgba(255, 255, 255, 0.7); border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px 5px; }
+        .rotulo-area { background: transparent; border: none; font-weight: bold; color: #b71c1c; font-size: 14px; }
+        .rotulo-rota { background: rgba(255, 255, 255, 0.7); border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px; }
     </style>
 </head>
 <body>
-
     <nav class="menu-nav">
         <button onclick="mostrar('home')">Início</button>
         <button onclick="mostrar('pacui')">Farinha do Pacuí</button>
         <button onclick="mostrar('inpi')">Legislação e INPI</button>
-        <button onclick="mostrar('biblioteca')">Biblioteca</button>
     </nav>
 
     <div id="home" class="secao" style="display:block;">
-        <div class="card">
-            <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
-            <p>Sistema técnico para suporte à estruturação e proteção de ativos coletivos no Amapá.</p>
-        </div>
+        <div class="card"><h1>Plataforma de Gestão de Indicações Geográficas</h1></div>
     </div>
 
     <div id="pacui" class="secao">
-        <div class="card">
-            <h2>Indicação de Procedência: Farinha do Pacuí</h2>
-        </div>
+        <div class="card"><h2>Indicação de Procedência: Farinha do Pacuí</h2></div>
         <div id="container-mapa">
             <div id="mapa-container"></div>
             <div id="lista-comunidades">
-                <h4 style="padding:15px; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
+                <h4 style="padding:10px; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
                 <div id="lista-itens"></div>
             </div>
         </div>
@@ -63,22 +49,7 @@
     </div>
 
     <div id="inpi" class="secao">
-        <div class="card">
-            <h2>Legislação e Normas (Manual INPI)</h2>
-            <p>O registro de uma Indicação Geográfica segue a <strong>Lei nº 9.279/1996</strong> e a <strong>Portaria INPI/PR nº 04/2022</strong>. Os pilares técnicos exigidos são:</p>
-            <ul>
-                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Manual normativo do saber-fazer e qualidade do produto.</li>
-                <li><strong>Dossiê de Notoriedade:</strong> Provas da reputação do território como centro produtor.</li>
-                <li><strong>Delimitação Territorial:</strong> Memorial e mapa que asseguram a identidade da área geográfica.</li>
-                <li><strong>Governança:</strong> Institucionalização da entidade representativa (Associação) para gestão da IG.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="biblioteca" class="secao">
-        <div class="card">
-            <h2>Biblioteca Acadêmica</h2>
-        </div>
+        <div class="card"><h2>Legislação e Normas</h2><p>Conteúdo conforme Manual do INPI.</p></div>
     </div>
 
     <script>
@@ -88,39 +59,34 @@
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'pacui') { mapa.invalidateSize(); mapa.setView([0.75, -50.7], 10); }
+            if(id === 'pacui') { mapa.invalidateSize(); }
         }
 
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
-        
+        var urlPlanilha = "SUA_URL_AQUI"; 
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                if (dados.poligono) {
-                    var pol = L.polygon(dados.poligono, {color: "#b71c1c", weight: 3, fillOpacity: 0.2}).addTo(mapa);
-                    pol.bindTooltip("Região do Pacuí", {permanent: true, direction: "center", className: "rotulo-area"}).openTooltip();
-                }
-                if (dados.rota) {
-                    var rot = L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray: '10, 10'}).addTo(mapa);
-                    rot.bindTooltip("Rota de acesso (AP-70)", {permanent: true, direction: "auto", className: "rotulo-rota"}).openTooltip();
-                }
+                // Desenhar área e rota
+                if(dados.poligono) L.polygon(dados.poligono, {color: "#b71c1c"}).bindTooltip("Região do Pacuí", {permanent:true, className:"rotulo-area"}).addTo(mapa);
+                if(dados.rota) L.polyline(dados.rota, {color: "#0d47a1", dashArray:'10,10'}).bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"}).addTo(mapa);
 
-                var listaDiv = document.getElementById('lista-itens');
+                // Comunidades e Notícias
+                var listaItens = document.getElementById('lista-itens');
                 dados.comunidades.forEach(c => {
-                    var marker = L.circleMarker([c.lat, c.lng], {radius: 6, fillColor: "#2e7d32", color: "#fff", weight: 2}).bindPopup(`<strong>${c.nome}</strong>`).addTo(mapa);
+                    var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
-                    div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                    div.onclick = function() { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                    listaDiv.appendChild(div);
+                    div.innerHTML = `📍 ${c.nome}<br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                    listaItens.appendChild(div);
                 });
 
-                var noticiasDiv = document.getElementById('lista-noticias');
+                var listaNoticias = document.getElementById('lista-noticias');
                 dados.noticias.forEach(n => {
                     var div = document.createElement('div');
-                    div.style.cssText = "border-bottom: 1px solid #ddd; padding: 15px 0;";
-                    div.innerHTML = `<h4>${n.titulo}</h4><p style="font-size: 0.9em;">${n.resumo} <a href="${n.link}" target="_blank">Leia mais</a></p><small style="color: #666;">Fonte: ${n.fonte} | ${n.data}</small>`;
-                    noticiasDiv.appendChild(div);
+                    div.style.borderBottom = "1px solid #ddd";
+                    div.innerHTML = `<h4>${n.titulo}</h4><p>${n.resumo} <a href="${n.link}">Leia mais</a></p><small>${n.fonte} | ${n.data}</small>`;
+                    listaNoticias.appendChild(div);
                 });
             });
     </script>
