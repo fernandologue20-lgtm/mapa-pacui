@@ -374,32 +374,34 @@
                         <table class="tabela-sistema">
                             <thead>
                                 <tr>
-                                    <th>Produtor / Agroindústria</th>
-                                    <th>Comunidade</th>
-                                    <th>Evidências (Upload)</th>
+                                    <th>Produtores / Comunidade</th>
                                     <th>Status Atual</th>
                                     <th>Ações do Conselho</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><strong>Sebastião Vilhena (Seu Sabá)</strong></td>
-                                    <td>Tracajatuba I</td>
-                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><strong>Comunidade de Tracajatuba I</strong></td>
                                     <td><span class="badge habilitado">Habilitado</span></td>
                                     <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Waldir dos Santos Amoros</strong></td>
-                                    <td>Tracajatuba II</td>
-                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><strong>Comunidade de Tracajatuba II</strong></td>
                                     <td><span class="badge habilitado">Habilitado</span></td>
                                     <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Associação de Moradores e Produtores (ASMOPAP)</strong></td>
-                                    <td>Salamito</td>
-                                    <td><a href="#" class="btn-acao btn-doc">📄 Ver Dossiê Completo</a></td>
+                                    <td><strong>Comunidade do Salamito</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade de Ponta Grossa</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade do Corre Água</strong></td>
                                     <td><span class="badge habilitado">Habilitado</span></td>
                                     <td><button class="btn-acao" style="background: #ccc;">Revogar Permissão</button></td>
                                 </tr>
@@ -497,7 +499,7 @@
             <div class="passaporte-body">
                 <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
                 
-                <p><strong>Produtor Responsável:</strong> Produtor Habilitado</p>
+                <p><strong>Núcleo Produtivo:</strong> <span id="modal-produtor">Comunidade Habilitada</span></p>
                 <p><strong>Comunidade:</strong> <span id="modal-comunidade">-</span></p>
                 <p><strong>Data de Produção:</strong> <span id="modal-data">-</span></p>
                 <p><strong>Registro/ID:</strong> <span id="modal-id">-</span></p>
@@ -554,11 +556,9 @@
             var data = document.getElementById('data-lote').value;
             var comunidade = document.getElementById('comunidade-lote').value;
             var peso = document.getElementById('peso-lote').value;
-            // Se o campo do ID estiver vazio, define como Artesanal (Isento)
             var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
             var btnGera = document.querySelector('.btn-gerar-lote');
 
-            // Validação atualizada: Não exige mais o ID
             if(!data || !peso || !comunidade) {
                 alert("Por favor, preencha a data de produção, a comunidade e o peso do lote.");
                 return;
@@ -599,6 +599,7 @@
                     document.getElementById('modal-comunidade').innerText = comunidade;
                     document.getElementById('modal-data').innerText = data.split('-').reverse().join('/');
                     document.getElementById('modal-id').innerText = id;
+                    document.getElementById('modal-produtor').innerText = "Comunidade " + comunidade;
 
                     var urlPassaporte = "Plataforma Pacuí: Lote " + loteOficial + " Autenticado com sucesso!";
                     var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlPassaporte)}`;
@@ -625,7 +626,6 @@
             });
         }
 
-        // Lembre-se de colar a sua URL de implantação atualizada aqui também!
         var urlPlanilhaLeitura = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilhaLeitura)
@@ -639,11 +639,10 @@
                 }
                 
                 var listaItens = document.getElementById('lista-itens');
-                var selectComunidade = document.getElementById('comunidade-lote'); // Referência para o Dropdown
-                selectComunidade.innerHTML = ''; // Limpa a mensagem "Carregando comunidades..."
+                var selectComunidade = document.getElementById('comunidade-lote'); 
+                selectComunidade.innerHTML = ''; 
                 
                 dados.comunidades.forEach(c => {
-                    // Preenche a lista do mapa
                     var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
@@ -651,7 +650,6 @@
                     div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                     listaItens.appendChild(div);
 
-                    // Alimenta automaticamente o Dropdown da aba Rastreabilidade
                     var option = document.createElement('option');
                     option.value = c.nome;
                     option.textContent = c.nome;
@@ -676,7 +674,6 @@
             })
             .catch(erro => console.log("Erro ao carregar os dados do Google Sheets:", erro));
             
-        // Ativa a aba "Início" ao carregar a página
         document.getElementById('btn-home').click();
     </script>
 </body>
