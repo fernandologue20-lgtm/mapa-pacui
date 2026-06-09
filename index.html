@@ -6,20 +6,66 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
+        /* CONFIGURAÇÕES GERAIS */
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f6f8; }
         .menu-nav { background: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; }
-        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; }
-        .secao { display: none; padding: 30px; max-width: 1000px; margin: auto; }
+        .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
+        .menu-nav button:hover { background: #ff9800; color: #fff; }
+        
+        /* Aumentado para 1300px para caber as duas colunas com folga */
+        .secao { display: none; padding: 30px; max-width: 1300px; margin: auto; }
         .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; }
+        
+        /* LAYOUT DE DUAS COLUNAS (DASHBOARD) */
+        .layout-painel { display: flex; gap: 25px; align-items: flex-start; }
+        .coluna-principal { flex: 2; min-width: 0; } /* 66% da tela para o Mapa */
+        .coluna-lateral { 
+            flex: 1; /* 33% da tela para Notícias/Cartilha */
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            max-height: 650px; /* Mesma altura do mapa */
+            overflow-y: auto; /* Cria uma barra de rolagem só para a lateral */
+            padding-right: 10px;
+        }
+
+        /* Estilização da barra de rolagem lateral */
+        .coluna-lateral::-webkit-scrollbar { width: 8px; }
+        .coluna-lateral::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .coluna-lateral::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
+        .coluna-lateral::-webkit-scrollbar-thumb:hover { background: #2e7d32; }
+
+        /* MAPA E COMUNIDADES */
+        #container-mapa { display: flex; height: 650px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; }
         #mapa-container { flex: 3; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
         .item-comunidade:hover { background: #f0f7f0; }
         .coords { font-size: 0.75em; color: #666; display: none; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
+        
+        /* RÓTULOS DO MAPA */
         .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: bold; color: #b71c1c; font-size: 14px; }
         .rotulo-rota { background: rgba(255, 255, 255, 0.7) !important; border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px 5px; }
+        
+        /* ESTILOS DA CARTILHA DIGITAL */
+        .capa-cartilha { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: white; text-align: center; padding: 40px 20px; border-left: none; margin-bottom: 0; }
+        .titulo-cartilha { font-size: 1.8em; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
+        .subtitulo-cartilha { color: #ff9800; font-style: italic; margin-bottom: 15px; font-size: 1em; }
+        .descricao-cartilha { font-size: 0.9em; margin: 0 auto 20px auto; line-height: 1.5; }
+        .tags-cartilha { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .tags-cartilha span { background: rgba(255, 255, 255, 0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.75em; font-weight: bold; }
+        .pagina-cartilha { padding: 25px; line-height: 1.6; font-size: 0.95em; color: #333; margin-bottom: 0; }
+        .pagina-cartilha h2 { color: #2e7d32; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-size: 1.3em; }
+
+        /* RESPONSIVIDADE (Celulares e Tablets menores) */
+        @media (max-width: 950px) {
+            .layout-painel { flex-direction: column; }
+            .coluna-lateral { max-height: none; overflow-y: visible; }
+            #container-mapa { flex-direction: column; height: auto; }
+            #mapa-container { height: 400px; }
+            #lista-comunidades { height: 250px; }
+        }
     </style>
 </head>
 <body>
@@ -34,16 +80,50 @@
     </div>
 
     <div id="pacui" class="secao">
-        <div class="card"><h2>Indicação de Procedência: Farinha do Pacuí</h2></div>
-        <div id="container-mapa">
-            <div id="mapa-container"></div>
-            <div id="lista-comunidades">
-                <h4 style="padding:10px; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
-                <div id="lista-itens"></div>
+        <div class="card" style="margin-bottom: 25px;">
+            <h2>Indicação de Procedência: Farinha do Pacuí</h2>
+        </div>
+        
+        <div class="layout-painel">
+            
+            <div class="coluna-principal">
+                <div id="container-mapa">
+                    <div id="mapa-container"></div>
+                    <div id="lista-comunidades">
+                        <h4 style="padding:15px; margin:0; border-bottom:1px solid #eee; background: #fafafa; position: sticky; top: 0; z-index: 10;">📍 Comunidades</h4>
+                        <div id="lista-itens"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="coluna-lateral">
+                
+                <div class="card" style="margin-bottom: 0;">
+                    <h3 style="margin-top: 0;">📢 Mural de Notícias</h3>
+                    <div id="lista-noticias"></div>
+                </div>
+
+                <div class="card capa-cartilha">
+                    <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                    <h3 class="subtitulo-cartilha">um guia para</h3>
+                    <p class="descricao-cartilha">
+                        Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos[cite: 3, 4].
+                    </p>
+                    <div class="tags-cartilha">
+                        <span>INDICAÇÃO GEOGRÁFICA</span>
+                        <span>PROPRIEDADE INTELECTUAL</span>
+                        <span>COMUNIDADES TRADICIONAIS</span>
+                    </div>
+                </div>
+
+                <div class="card pagina-cartilha">
+                    <h2>Apresentação</h2>
+                    <p>Este material foi construído de forma colaborativa para e pelas comunidades produtoras, garantindo que o protagonismo da proteção da nossa identidade, do nosso modo de fazer tradicional e da governança territorial permaneça inteiramente nas mãos de quem vive, trabalha e mantém a cultura do Pacuí viva.</p>
+                    </div>
+
             </div>
         </div>
-        <div class="card"><h3>📢 Mural de Notícias</h3><div id="lista-noticias"></div></div>
-    </div>
+        </div>
 
     <div id="inpi" class="secao">
         <div class="card"><h2>Legislação e Normas</h2><p>Conteúdo conforme Manual do INPI.</p></div>
@@ -58,11 +138,16 @@
             var alvo = document.getElementById(id);
             if (alvo) {
                 alvo.style.display = 'block';
-                if(id === 'pacui') mapa.invalidateSize();
+                // Quando muda de aba e a div do mapa estava escondida, o Leaflet precisa "recalcular" o tamanho
+                if(id === 'pacui') {
+                    setTimeout(() => { mapa.invalidateSize(); }, 100);
+                }
             }
         }
 
+        // COLOQUE O LINK DO SEU GOOGLE APPS SCRIPT AQUI
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
@@ -78,19 +163,26 @@
                     var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
-                    div.innerHTML = `📍 ${c.nome}<br><span class="coords">${c.lat}, ${c.lng}</span>`;
+                    div.innerHTML = `📍 <strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
                     div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                     listaItens.appendChild(div);
                 });
 
                 var listaNoticias = document.getElementById('lista-noticias');
-                dados.noticias.forEach(n => {
-                    var div = document.createElement('div');
-                    div.style.borderBottom = "1px solid #ddd";
-                    div.innerHTML = `<h4>${n.titulo}</h4><p>${n.resumo} <a href="${n.link}" target="_blank">Leia mais</a></p><small>${n.fonte} | ${n.data}</small>`;
-                    listaNoticias.appendChild(div);
-                });
-            });
+                if (dados.noticias && dados.noticias.length > 0) {
+                    dados.noticias.forEach(n => {
+                        var div = document.createElement('div');
+                        div.style.borderBottom = "1px solid #ddd";
+                        div.style.paddingBottom = "10px";
+                        div.style.marginBottom = "10px";
+                        div.innerHTML = `<h4 style="margin:0 0 5px 0; color:#2e7d32;">${n.titulo}</h4><p style="margin:0 0 5px 0; font-size:0.9em;">${n.resumo} <a href="${n.link}" target="_blank">Ler mais</a></p><small style="color:#888;">${n.fonte} | ${n.data}</small>`;
+                        listaNoticias.appendChild(div);
+                    });
+                } else {
+                    listaNoticias.innerHTML = "<p style='font-size:0.9em; color:#666;'>Nenhuma notícia publicada ainda.</p>";
+                }
+            })
+            .catch(erro => console.log("Erro ao carregar os dados:", erro));
     </script>
 </body>
 </html>
