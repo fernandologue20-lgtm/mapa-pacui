@@ -34,6 +34,9 @@
             background: var(--cor-fundo); 
             color: var(--cor-texto);
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* =========================================
@@ -74,6 +77,10 @@
         /* =========================================
            3. ESTRUTURA DE SEÇÕES E GRID
            ========================================= */
+        .conteudo-principal {
+            flex: 1; /* Permite que o conteúdo empurre o rodapé para baixo */
+        }
+
         .secao { 
             display: none; 
             padding: 30px 20px; 
@@ -102,7 +109,6 @@
             color: var(--cor-primaria-hover); 
         }
         
-        /* CARD PADRÃO DE CONTEÚDO */
         .card { 
             background: #fff; 
             border-radius: var(--raio-borda); 
@@ -111,7 +117,6 @@
             box-shadow: var(--sombra-suave); 
         }
 
-        /* O GRANDE LAYOUT DE 4 COLUNAS */
         .layout-painel { 
             display: grid; 
             grid-template-columns: 1fr 1.5fr 2.5fr 1fr; 
@@ -211,7 +216,6 @@
         .noticia-link:hover { color: var(--cor-destaque-hover); text-decoration: underline; }
         .noticia-meta { color: var(--cor-texto-claro); font-size: 0.8rem; font-style: italic; display: block; border-top: 1px dashed var(--cor-borda); padding-top: 8px; }
 
-        /* Cartilha */
         .capa-cartilha { 
             background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); 
             color: white; 
@@ -251,7 +255,42 @@
         .tabela-cartilha tr:last-child td { border-bottom: none; }
 
         /* =========================================
-           7. RESPONSIVIDADE
+           7. RODAPÉ INSTITUCIONAL (FOOTER)
+           ========================================= */
+        .rodape-site {
+            background-color: #e2e8f0; /* Cinza claro */
+            border-top: 1px solid #cbd5e1;
+            padding: 40px 20px;
+            margin-top: 50px;
+            color: var(--cor-texto);
+        }
+
+        .rodape-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .rodape-coluna h3 {
+            color: var(--cor-primaria-hover);
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--cor-borda);
+        }
+
+        .rodape-coluna p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: justify;
+            margin: 0;
+        }
+
+        /* =========================================
+           8. RESPONSIVIDADE
            ========================================= */
         @media (max-width: 1300px) {
             .layout-painel { grid-template-columns: 1fr 1fr 2fr; }
@@ -267,6 +306,7 @@
             #mapa-container { grid-column: span 1; height: 400px; }
             .menu-nav { flex-wrap: wrap; padding: 10px; }
             .menu-nav button { flex: 1 1 auto; text-align: center; }
+            .rodape-container { grid-template-columns: 1fr; gap: 30px; } /* Rodapé em coluna no celular */
         }
     </style>
 </head>
@@ -277,226 +317,218 @@
         <button onclick="mostrar('inpi')" id="btn-inpi">Legislação e INPI</button>
     </nav>
 
-    <div id="home" class="secao" style="display:block;">
-        <div class="header-aba">
-            <h2>Plataforma Digital de Governança Territorial</h2>
-            <p style="margin-top: 10px; color: var(--cor-texto-claro);">Sistema técnico para suporte à estruturação e proteção de ativos coletivos.</p>
-        </div>
-    </div>
-
-    <div id="pacui" class="secao">
-        <div class="header-aba">
-            <h2>Indicação de Procedência: Farinha do Pacuí</h2>
-        </div>
-
-        <div class="card" style="line-height: 1.7;">
-            <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid var(--cor-borda); padding-bottom: 10px;">Apresentação do Território</h3>
-            
-            <p><strong>O Distrito de São Joaquim do Pacuí</strong>, localizado na zona norte do município de Macapá, no Amapá, consolidou-se como um dos pilares da agricultura familiar amapaense. Instituído pela Lei Municipal número 153 de 1981, o território supera sua definição administrativa e se estabelece como um ativo de alto valor cultural, histórico e econômico.</p>
-
-            <div class="grid-apresentacao" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
-                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
-                    <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">O Coração Produtivo do Amapá</h4>
-                    <p style="font-size: 0.95em; margin-bottom: 0;">A região é reconhecida como um polo estratégico na produção de farinha de mandioca, sustentada por um saber-fazer tradicional transmitido entre gerações. Comunidades como Salamito, Tracajatuba I e II, Ponta Grossa e Corre Água compõem o tecido social e produtivo fundamental para a economia local.</p>
-                </div>
-                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
-                    <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Consistência Econômica</h4>
-                    <p style="font-size: 0.95em; margin-bottom: 0;">O território apresenta uma dinâmica produtiva ativa. Dados oficiais recentes (2024/2025) apontam a farinha como o produto mais comercializado nas feiras rurais de Macapá e Santana, consolidando o Pacuí como referência técnica e mercadológica na cadeia produtiva da mandioca no estado.</p>
-                </div>
-            </div>
-
-            <h4 style="color: var(--cor-primaria); margin-top: 30px;">Certificação e Modernização Industrial</h4>
-            <p style="font-size: 0.95em;">A região atingiu um nível de maturidade institucional ímpar com a entrega de certificações oficiais de agroindústria pelo Governo do Amapá, permitindo o acesso a mercados atacadistas e redes de supermercados. Este processo de modernização e conformidade sanitária é um dos pilares para a estruturação da Indicação Geográfica:</p>
-            <ul style="font-size: 0.95em; margin-bottom: 20px; padding-left: 20px; color: var(--cor-texto);">
-                <li style="margin-bottom: 8px;"><strong>Marcos de Certificação:</strong> O pioneirismo iniciou com o produtor Waldir dos Santos Amoros (Casa de Farinha Waldir, Tracajatuba II), seguido pela certificação do agricultor Sebastião Vilhena Rodrigues, o Seu Sabá (Comunidade Tracajatuba I), entregue durante a 54ª Expofeira (2025).</li>
-                <li><strong>Gestão de Marca:</strong> Com a certificação, o produtor Seu Sabá já estruturou a marca <em>Farinha do Pacuí S.A.</em>, sinalizando o início de uma nova fase, que inclui a expansão para derivados como o tucupi e a consolidação de uma identidade comercial forte.</li>
-            </ul>
-
-            <h4 style="color: var(--cor-primaria);">Sustentabilidade Histórica e Reconhecimento de Notoriedade</h4>
-            <p style="font-size: 0.95em;">Levantamentos do período 2018-2019 revelaram que a farinha movimentou mais de R$ 24 milhões nas feiras do produtor de Macapá e Santana, respondendo por 27,29% de todas as vendas do setor. Naquele período, comunidades como Ponta Grossa e Corre Água já sinalizavam a força produtiva que hoje se expande para as comunidades certificadas de Tracajatuba.</p>
-            <p style="font-size: 0.95em;">O reconhecimento da excelência técnica das comunidades do Pacuí foi validado recentemente pela 1ª Competição da Melhor Farinha de Mandioca do Amapá (Sebrae), que confirmou o domínio do território tanto na avaliação técnica quanto popular:</p>
-            <ul style="font-size: 0.95em; margin-bottom: 25px; padding-left: 20px; color: var(--cor-texto);">
-                <li style="margin-bottom: 8px;"><strong>Excelência Técnica (Júri Técnico):</strong> O Pacuí dominou o pódio, com a Farinha do seu Sabá (Tracajatuba I) em 1º lugar e a Casa de Farinha do Waldir (Tracajatuba II) em 3º lugar.</li>
-                <li><strong>Preferência Popular:</strong> A Associação de Moradores e Produtores da Comunidade de Salamito do Pacuí (ASMOPAP) foi a grande campeã, reafirmando a aceitação do produto pelo consumidor final.</li>
-            </ul>
-
-            <div style="background: #f0fdf4; border: 1px solid #4ade80; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Por que a Farinha do Pacuí?</h4>
-                <p style="font-size: 0.95em;">A Farinha do Pacuí justifica a estruturação de sua Indicação Geográfica através de pilares fundamentais:</p>
-                <ul style="font-size: 0.95em; padding-left: 20px; margin-bottom: 0;">
-                    <li style="margin-bottom: 6px;"><strong>Identidade e Cultura:</strong> A farinha é um elemento central da cultura amapaense, refletindo práticas produtivas únicas que definem a identidade das famílias rurais.</li>
-                    <li style="margin-bottom: 6px;"><strong>Notoriedade de Mercado:</strong> O nome Pacuí já possui reconhecimento consolidado no mercado local e regional, sendo uma referência de qualidade para o consumidor.</li>
-                    <li style="margin-bottom: 6px;"><strong>Potencial Técnico:</strong> O sistema produtivo combina métodos tradicionais com uma organização em rede, capaz de gerar produtos com características sensoriais distintas, como textura e sabor característicos.</li>
-                    <li><strong>Inovação Institucional:</strong> O território é o foco de um projeto de Indicação de Procedência, que visa proteger juridicamente o nome Farinha do Pacuí e estruturar a governança coletiva necessária para o desenvolvimento sustentável da região.</li>
-                </ul>
-            </div>
-
-            <div class="destaque-box" style="margin-bottom: 0;">
-                <strong style="display: block; font-size: 1.1em; margin-bottom: 5px;">Governança e Proteção de Ativos Coletivos</strong>
-                Para a nossa plataforma, o Pacuí atua como o modelo ideal de tecnologia territorial. A articulação técnica para a formalização desta Indicação Geográfica é a ferramenta que transforma a pujança econômica tradicional em proteção jurídica, garantindo que o valor gerado pela reputação do produto reverta diretamente aos produtores locais e promova o desenvolvimento sustentável das comunidades rurais.
+    <div class="conteudo-principal">
+        
+        <div id="home" class="secao" style="display:block;">
+            <div class="header-aba">
+                <h2>Plataforma Digital de Governança Territorial</h2>
+                <p style="margin-top: 10px; color: var(--cor-texto-claro);">Sistema técnico para suporte à estruturação e proteção de ativos coletivos.</p>
             </div>
         </div>
-        <div class="layout-painel">
-            
-            <div class="painel-scroll">
-                <h3 class="titulo-painel">📰 Mural de Notícias</h3>
-                <div id="lista-noticias"></div>
+
+        <div id="pacui" class="secao">
+            <div class="header-aba">
+                <h2>Indicação de Procedência: Farinha do Pacuí</h2>
             </div>
 
-            <div class="painel-scroll">
-                <h3 class="titulo-painel">📘 Guia Normativo</h3>
+            <div class="card" style="line-height: 1.7;">
+                <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid var(--cor-borda); padding-bottom: 10px;">Apresentação do Território</h3>
                 
-                <div class="capa-cartilha">
-                    <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                    <h3 class="subtitulo-cartilha">um guia para</h3>
-                    <p class="descricao-cartilha">
-                        Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.
-                    </p>
-                    <div class="tags-cartilha">
-                        <span>INDICAÇÃO GEOGRÁFICA</span>
-                        <span>PROPRIEDADE INTELECTUAL</span>
+                <p><strong>O Distrito de São Joaquim do Pacuí</strong>, localizado na zona norte do município de Macapá, no Amapá, consolidou-se como um dos pilares da agricultura familiar amapaense. Instituído pela Lei Municipal número 153 de 1981, o território supera sua definição administrativa e se estabelece como um ativo de alto valor cultural, histórico e econômico.</p>
+
+                <div class="grid-apresentacao" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
+                        <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">O Coração Produtivo do Amapá</h4>
+                        <p style="font-size: 0.95em; margin-bottom: 0;">A região é reconhecida como um polo estratégico na produção de farinha de mandioca, sustentada por um saber-fazer tradicional transmitido entre gerações. Comunidades como Salamito, Tracajatuba I e II, Ponta Grossa e Corre Água compõem o tecido social e produtivo fundamental para a economia local.</p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid var(--cor-destaque);">
+                        <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Consistência Econômica</h4>
+                        <p style="font-size: 0.95em; margin-bottom: 0;">O território apresenta uma dinâmica produtiva ativa. Dados oficiais recentes (2024/2025) apontam a farinha como o produto mais comercializado nas feiras rurais de Macapá e Santana, consolidando o Pacuí como referência técnica e mercadológica na cadeia produtiva da mandioca no estado.</p>
                     </div>
                 </div>
 
-                <div class="texto-cartilha">
-                    <h2>Portal de Acessibilidade e Conectividade Digital</h2>
-                    <p>Esta cartilha adota as diretrizes do e-MAG (Modelo de Acessibilidade em Governo Eletrônico). Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva, clara e universal porque todo produtor merece acesso pleno à informação.</p>
-                    <ul>
-                        <li><strong>Audiodescrição Disponível:</strong> Ativação de comandos de voz para leitura integral dos textos e descrição detalhada de tabelas e gráficos, garantindo acesso para pessoas com deficiência visual.</li>
-                        <li><strong>Suporte à LIBRAS:</strong> Janela de tradução em Língua Brasileira de Sinais para todo o conteúdo digital, assegurando inclusão plena para a comunidade surda.</li>
-                        <li><strong>Alto Contraste e Responsividade:</strong> Layout adaptável para leitores de tela e amplificadores de texto digitais, compatível com diferentes dispositivos e necessidades visuais.</li>
+                <h4 style="color: var(--cor-primaria); margin-top: 30px;">Certificação e Modernização Industrial</h4>
+                <p style="font-size: 0.95em;">A região atingiu um nível de maturidade institucional ímpar com a entrega de certificações oficiais de agroindústria pelo Governo do Amapá, permitindo o acesso a mercados atacadistas e redes de supermercados. Este processo de modernização e conformidade sanitária é um dos pilares para a estruturação da Indicação Geográfica:</p>
+                <ul style="font-size: 0.95em; margin-bottom: 20px; padding-left: 20px; color: var(--cor-texto);">
+                    <li style="margin-bottom: 8px;"><strong>Marcos de Certificação:</strong> O pioneirismo iniciou com o produtor Waldir dos Santos Amoros (Casa de Farinha Waldir, Tracajatuba II), seguido pela certificação do agricultor Sebastião Vilhena Rodrigues, o Seu Sabá (Comunidade Tracajatuba I), entregue durante a 54ª Expofeira (2025).</li>
+                    <li><strong>Gestão de Marca:</strong> Com a certificação, o produtor Seu Sabá já estruturou a marca <em>Farinha do Pacuí S.A.</em>, sinalizando o início de uma nova fase, que inclui a expansão para derivados como o tucupi e a consolidação de uma identidade comercial forte.</li>
+                </ul>
+
+                <h4 style="color: var(--cor-primaria);">Sustentabilidade Histórica e Reconhecimento de Notoriedade</h4>
+                <p style="font-size: 0.95em;">Levantamentos do período 2018-2019 revelaram que a farinha movimentou mais de R$ 24 milhões nas feiras do produtor de Macapá e Santana, respondendo por 27,29% de todas as vendas do setor. Naquele período, comunidades como Ponta Grossa e Corre Água já sinalizavam a força produtiva que hoje se expande para as comunidades certificadas de Tracajatuba.</p>
+                <p style="font-size: 0.95em;">O reconhecimento da excelência técnica das comunidades do Pacuí foi validado recentemente pela 1ª Competição da Melhor Farinha de Mandioca do Amapá (Sebrae), que confirmou o domínio do território tanto na avaliação técnica quanto popular:</p>
+                <ul style="font-size: 0.95em; margin-bottom: 25px; padding-left: 20px; color: var(--cor-texto);">
+                    <li style="margin-bottom: 8px;"><strong>Excelência Técnica (Júri Técnico):</strong> O Pacuí dominou o pódio, com a Farinha do seu Sabá (Tracajatuba I) em 1º lugar e a Casa de Farinha do Waldir (Tracajatuba II) em 3º lugar.</li>
+                    <li><strong>Preferência Popular:</strong> A Associação de Moradores e Produtores da Comunidade de Salamito do Pacuí (ASMOPAP) foi a grande campeã, reafirmando a aceitação do produto pelo consumidor final.</li>
+                </ul>
+
+                <div style="background: #f0fdf4; border: 1px solid #4ade80; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                    <h4 style="color: var(--cor-primaria-hover); margin-top: 0;">Por que a Farinha do Pacuí?</h4>
+                    <p style="font-size: 0.95em;">A Farinha do Pacuí justifica a estruturação de sua Indicação Geográfica através de pilares fundamentais:</p>
+                    <ul style="font-size: 0.95em; padding-left: 20px; margin-bottom: 0;">
+                        <li style="margin-bottom: 6px;"><strong>Identidade e Cultura:</strong> A farinha é um elemento central da cultura amapaense, refletindo práticas produtivas únicas que definem a identidade das famílias rurais.</li>
+                        <li style="margin-bottom: 6px;"><strong>Notoriedade de Mercado:</strong> O nome Pacuí já possui reconhecimento consolidado no mercado local e regional, sendo uma referência de qualidade para o consumidor.</li>
+                        <li style="margin-bottom: 6px;"><strong>Potencial Técnico:</strong> O sistema produtivo combina métodos tradicionais com uma organização em rede, capaz de gerar produtos com características sensoriais distintas, como textura e sabor característicos.</li>
+                        <li><strong>Inovação Institucional:</strong> O território é o foco de um projeto de Indicação de Procedência, que visa proteger juridicamente o nome Farinha do Pacuí e estruturar a governança coletiva necessária para o desenvolvimento sustentável da região.</li>
                     </ul>
-                    <div class="destaque-box">
-                        Acesse o repositório oficial: Escaneie o QR Code apontando para https://www2.unifap.br/nitt/ para acessar o repositório oficial de Indicações Geográficas no site do NITT/UNIFAP.
-                    </div>
+                </div>
 
-                    <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
-                    <p>Para que a Farinha do Pacuí seja reconhecida oficialmente e protegida legalmente, o Instituto Nacional da Propriedade Industrial (INPI) exige a consolidação de três ferramentas técnicas. Elas formam a base jurídica que garante que o nome do nosso lugar seja respeitado em todo o Brasil.</p>
-                    <ol>
-                        <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção. Oficializa o saber tradicional que praticamos há gerações nas nossas casas de farinha, transformando o conhecimento oral em normas reconhecidas por lei.</li>
-                        <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas". Reúne registros históricos, fotos antigas, pesquisas, reportagens e prêmios que comprovam ao Brasil que o nome "Farinha do Pacuí" é sinônimo de qualidade e fama.</li>
-                        <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade. Define com precisão as coordenadas geográficas onde começa e termina o território produtor, protegendo quem é da terra.</li>
-                    </ol>
-                    <div class="destaque-box">
-                        <strong>Você Sabia?</strong> Para conseguir uma Indicação Geográfica (IG), não basta dizer que o produto é bom - é preciso provar que o nome do lugar ficou famoso por causa dele. O Dossiê de Notoriedade junta todas as memórias da nossa comunidade para mostrar ao INPI que o nosso saber-fazer tem história e prestígio no mercado.
-                    </div>
+                <div class="destaque-box" style="margin-bottom: 0;">
+                    <strong style="display: block; font-size: 1.1em; margin-bottom: 5px;">Governança e Proteção de Ativos Coletivos</strong>
+                    Para a nossa plataforma, o Pacuí atua como o modelo ideal de tecnologia territorial. A articulação técnica para a formalização desta Indicação Geográfica é a ferramenta que transforma a pujança econômica tradicional em proteção jurídica, garantindo que o valor gerado pela reputação do produto reverta diretamente aos produtores locais e promova o desenvolvimento sustentável das comunidades rurais.
+                </div>
+            </div>
+            
+            <div class="layout-painel">
+                <div class="painel-scroll">
+                    <h3 class="titulo-painel">📰 Mural de Notícias</h3>
+                    <div id="lista-noticias"></div>
+                </div>
 
-                    <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
-                    <p>A Indicação Geográfica é um direito que pertence a toda a comunidade produtora. Por não ser propriedade de uma única pessoa ou empresa, a união e a organização coletiva são os motores que fazem a IG funcionar na prática.</p>
-                    <ul>
-                        <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem e da marca da nossa farinha, centralizada na Associação de Produtores. Garante que todos tenham voz e que as decisões defendam o interesse de todo o território.</li>
-                        <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores. Sua função é zelar pelo cumprimento do CET, atuando de forma pedagógica para orientar, apoiar e validar as casas de farinha aptas a usar o selo.</li>
-                        <li><strong>Garantia de Padrão Sensorial:</strong> Os próprios produtores acompanham e validam a qualidade da farinha, garantindo a crocância, a cor e o sabor que nos deram fama o cuidado "de olho no olho".</li>
-                        <li><strong>Defesa Jurídica da Denominação:</strong> Atuação unida da Associação para impedir que o nome "Pacuí" seja usado de forma falsa por produtores de outras regiões para lucrar de forma injusta.</li>
-                    </ul>
-                    <div class="destaque-box">
-                        <strong>Controle Social em Ação:</strong> Se um atravessador tentar vender farinha comum usando falsamente o nome "Farinha do Pacuí", a Associação - respaldada pelo Conselho Regulador e pelo registro do INPI tem poder legal para acionar as autoridades e apreender o lote falsificado, protegendo o preço e o mercado dos produtores legítimos.
-                    </div>
-
-                    <h2>Capítulo 3: Alinhamento entre Tradição e Inovação Tecnológica</h2>
-                    <p>A introdução de inovações e normas em nosso ecossistema produtivo não serve para mudar o nosso jeito de trabalhar, mas sim para proteger o nosso saber tradicional, colocando-o em padrões seguros que o mercado atual exige. A alma artesanal permanece intacta.</p>
-                    <h3>Mantendo a Nossa Tradição (Identidade)</h3>
-                    <ul>
-                        <li><strong>Manejo e Seleção da Matéria-Prima:</strong> Cultivo das variedades de mandioca da nossa terra e o conhecimento do ponto exato da colheita.</li>
-                        <li><strong>Processamento e Torra Artesanal:</strong> O controle manual do fogo e o uso dos tachos tradicionais, responsáveis pela granulometria e textura únicas da farinha.</li>
-                    </ul>
-                    <h3>Unindo com a Inovação (Boas Práticas e BPF)</h3>
-                    <ul>
-                        <li><strong>Segurança Sanitária:</strong> Cuidados simples de higiene com a água, limpeza dos equipamentos e armazenamento correto para evitar contaminações.</li>
-                        <li><strong>Padronização da Qualidade:</strong> Adoção de critérios claros de classificação para que o cliente saiba que está comprando a autêntica e legítima Farinha do Pacuí.</li>
-                    </ul>
-                    <div class="destaque-box">
-                        <strong>Diretriz Técnica:</strong> A conformidade com as leis de saúde não exige transformar a casa de farinha em uma indústria mecânica. As Boas Práticas de Fabricação (BPF) são adaptadas à nossa realidade da agricultura familiar: mudam-se os cuidados com a higiene e a organização, mas mantém-se viva a alma do processo artesanal.
-                    </div>
-
-                    <h2>Capítulo 4: Impactos no Desenvolvimento Regional e Dinâmica Econômica</h2>
-                    <p>A estruturação da nossa Indicação Geográfica funciona como um motor de desenvolvimento para a nossa região, gerando benefícios econômicos e sociais para todas as famílias do território. A nossa reputação se transforma em qualidade de vida real.</p>
-                    <ul>
-                        <li><strong>Preço Justo e Diferenciação:</strong> O selo de origem destaca o nosso produto nas gôndolas e feiras. Isso afasta a concorrência comum e valoriza o trabalho do produtor, permitindo cobrar um preço que paga com justiça o suor do campo.</li>
-                        <li><strong>Portas Abertas em Novos Mercados:</strong> A IG abre caminhos para o comércio qualificado: redes de supermercados, restaurantes de alta gastronomia e mercados institucionais como compras do governo para merenda escolar.</li>
-                        <li><strong>O Efeito Multiplicador (Turismo):</strong> Regiões com produtos certificados atraem o chamado "Turismo de Experiência". Pessoas vêm conhecer as nossas casas de farinha, movimentando o comércio, o transporte e gerando novas rendas na comunidade.</li>
-                    </ul>
-                    <div class="destaque-box">
-                        <strong>O Valor da Nossa Origem:</strong> Pesquisas mostram que produtos agrícolas com selo de Indicação Geográfica passam a ter valorização comercial muito maior do que os produtos comuns. Esse selo protege a economia das pequenas comunidades rurais contra as crises de preços do mercado geral.
-                    </div>
-
-                    <h2>Capítulo 5: Impacto Social e Sucessão Familiar no Campo</h2>
-                    <p>O maior ganho da nossa Indicação Geográfica não é medido apenas em dinheiro, mas na continuidade das nossas famílias e na valorização da nossa gente no meio rural. Garantir o futuro e a permanência das novas gerações é o nosso legado mais precioso.</p>
-                    <ul>
-                        <li><strong>Orgulho da Terra e Redução do Êxodo Rural:</strong> Quando a produção de farinha se torna uma atividade lucrativa, respeitada e segura, os nossos jovens passam a enxergar o sítio da família como um negócio viável, escolhendo permanecer no campo perto de suas raízes.</li>
-                        <li><strong>Saber Ancestral com Status Técnico:</strong> O selo do INPI eleva a autoestima das novas gerações. O trabalho que antes era visto como pesado e sem valor passa a ser reconhecido oficialmente pelo Estado brasileiro como uma profissão de prestígio cultural e técnico.</li>
-                        <li><strong>Um Novo Amanhã para a Juventude:</strong> Ao ver que a propriedade protegida gera sustento estável e orgulho para a comunidade, o jovem escolhe ficar na terra. Ele une o conhecimento tradicional dos pais com ferramentas modernas de internet, gestão e vendas, expandindo horizontes sem abandonar a história da família.</li>
-                    </ul>
-
-                    <h2>Capítulo 6: A Rede de Cooperação Intersetorial</h2>
-                    <p>A consolidação e o sucesso da IG do Pacuí dependem de uma grande corrente de cooperação, onde cada parceiro tem um papel fundamental para fortalecer o nosso território. A união entre comunidade, universidades e Estado é a força que transforma o registro em realidade.</p>
-                    <ul>
-                        <li><strong>Entidades Governamentais:</strong> Apoio com investimentos em infraestrutura logística, melhoria dos ramais e estradas de escoamento, eletrificação rural estável e facilitação de licenças ambientais e sanitárias para os produtores.</li>
-                        <li><strong>Universidades e NITT:</strong> Parceria contínua através de suporte científico, análises de laboratório para atestar a qualidade da farinha, capacitações sobre direitos de propriedade intelectual e tecnologias sociais de extensão.</li>
-                        <li><strong>Setor Privado:</strong> Parcerias comerciais éticas baseadas no comércio justo (fair trade), onde restaurantes, feiras e distribuidores valorizam a nossa história e ajudam a promover a marca coletiva do Pacuí.</li>
-                    </ul>
-
-                    <h2>O Caminho da Nossa Indicação Geográfica</h2>
-                    <p>O processo de conquista e manutenção da Indicação Geográfica segue uma jornada coletiva que envolve toda a comunidade produtora. Cada etapa é um passo em direção ao reconhecimento oficial e à proteção permanente do nosso saber.</p>
-                    <ol>
-                        <li><strong>Organização</strong></li>
-                        <li><strong>Documentação</strong></li>
-                        <li><strong>Registro</strong></li>
-                        <li><strong>Gestão</strong></li>
-                    </ol>
-                    <p>Essa jornada não termina com o registro ela se renova a cada safra, com cada família produtora comprometida em manter viva a identidade, a qualidade e a história da Farinha do Pacuí.</p>
-
-                    <h2>Nossa História, Nosso Direito, Nosso Futuro</h2>
-                    <div class="destaque-box">
-                        "A salvaguarda de um nome geográfico coloca a ciência jurídica, a universidade e a propriedade intelectual a serviço da justiça social, do desenvolvimento econômico e da nossa história territorial."
-                    </div>
-                    <p>A Indicação Geográfica da Farinha do Pacuí é muito mais do que um selo ou um registro burocrático. É o reconhecimento oficial de que o nosso jeito de fazer, o nosso território e a nossa história têm valor e que esse valor pertence a todos nós, produtores e comunidades que mantêm viva essa tradição há gerações.</p>
+                <div class="painel-scroll">
+                    <h3 class="titulo-painel">📘 Guia Normativo</h3>
                     
-                    <table class="tabela-cartilha">
-                        <tr>
-                            <th>Nossa Força</th>
-                            <th>Nossa Proteção</th>
-                            <th>Nosso Legado</th>
-                        </tr>
-                        <tr>
-                            <td>A união coletiva e a organização comunitária são a base de tudo.</td>
-                            <td>O registro no INPI garante direitos legais para toda a comunidade.</td>
-                            <td>As novas gerações são o futuro da nossa tradição e do nosso território.</td>
-                        </tr>
-                    </table>
+                    <div class="capa-cartilha">
+                        <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                        <h3 class="subtitulo-cartilha">um guia para</h3>
+                        <p class="descricao-cartilha">
+                            Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.
+                        </p>
+                        <div class="tags-cartilha">
+                            <span>INDICAÇÃO GEOGRÁFICA</span>
+                            <span>PROPRIEDADE INTELECTUAL</span>
+                        </div>
+                    </div>
 
-                    <p style="margin-top: 20px; text-align: center; font-size: 0.85em; color: var(--cor-texto-claro);">
-                        Acesse mais informações: Visite o repositório oficial de Indicações Geográficas no site do NITT/UNIFAP - https://www2.unifap.br/nitt/ - para consultar documentos, legislações e materiais de apoio à sua comunidade.
-                    </p>
+                    <div class="texto-cartilha">
+                        <h2>Portal de Acessibilidade e Conectividade Digital</h2>
+                        <p>Esta cartilha adota as diretrizes do e-MAG (Modelo de Acessibilidade em Governo Eletrônico). Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva, clara e universal porque todo produtor merece acesso pleno à informação.</p>
+                        <ul>
+                            <li><strong>Audiodescrição Disponível:</strong> Ativação de comandos de voz para leitura integral dos textos e descrição detalhada de tabelas e gráficos, garantindo acesso para pessoas com deficiência visual.</li>
+                            <li><strong>Suporte à LIBRAS:</strong> Janela de tradução em Língua Brasileira de Sinais para todo o conteúdo digital, assegurando inclusão plena para a comunidade surda.</li>
+                            <li><strong>Alto Contraste e Responsividade:</strong> Layout adaptável para leitores de tela e amplificadores de texto digitais, compatível com diferentes dispositivos e necessidades visuais.</li>
+                        </ul>
+                        <div class="destaque-box">
+                            Acesse o repositório oficial: Escaneie o QR Code apontando para https://www2.unifap.br/nitt/ para acessar o repositório oficial de Indicações Geográficas no site do NITT/UNIFAP.
+                        </div>
+
+                        <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
+                        <p>Para que a Farinha do Pacuí seja reconhecida oficialmente e protegida legalmente, o Instituto Nacional da Propriedade Industrial (INPI) exige a consolidação de três ferramentas técnicas. Elas formam a base jurídica que garante que o nome do nosso lugar seja respeitado em todo o Brasil.</p>
+                        <ol>
+                            <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção. Oficializa o saber tradicional que praticamos há gerações nas nossas casas de farinha, transformando o conhecimento oral em normas reconhecidas por lei.</li>
+                            <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas". Reúne registros históricos, fotos antigas, pesquisas, reportagens e prêmios que comprovam ao Brasil que o nome "Farinha do Pacuí" é sinônimo de qualidade e fama.</li>
+                            <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade. Define com precisão as coordenadas geográficas onde começa e termina o território produtor, protegendo quem é da terra.</li>
+                        </ol>
+                        
+                        <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
+                        <p>A Indicação Geográfica é um direito que pertence a toda a comunidade produtora. Por não ser propriedade de uma única pessoa ou empresa, a união e a organização coletiva são os motores que fazem a IG funcionar na prática.</p>
+                        <ul>
+                            <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem e da marca da nossa farinha, centralizada na Associação de Produtores.</li>
+                            <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores. Sua função é zelar pelo cumprimento do CET.</li>
+                            <li><strong>Garantia de Padrão Sensorial:</strong> Os próprios produtores acompanham e validam a qualidade da farinha.</li>
+                            <li><strong>Defesa Jurídica da Denominação:</strong> Atuação unida da Associação para impedir que o nome "Pacuí" seja usado de forma falsa.</li>
+                        </ul>
+
+                        <h2>Capítulo 3: Alinhamento entre Tradição e Inovação Tecnológica</h2>
+                        <p>A introdução de inovações e normas em nosso ecossistema produtivo não serve para mudar o nosso jeito de trabalhar, mas sim para proteger o nosso saber tradicional, colocando-o em padrões seguros que o mercado atual exige.</p>
+                        <h3>Mantendo a Nossa Tradição (Identidade)</h3>
+                        <ul>
+                            <li><strong>Manejo e Seleção da Matéria-Prima:</strong> Cultivo das variedades de mandioca da nossa terra.</li>
+                            <li><strong>Processamento e Torra Artesanal:</strong> O controle manual do fogo e o uso dos tachos tradicionais.</li>
+                        </ul>
+                        <h3>Unindo com a Inovação (Boas Práticas e BPF)</h3>
+                        <ul>
+                            <li><strong>Segurança Sanitária:</strong> Cuidados simples de higiene com a água, limpeza e armazenamento.</li>
+                            <li><strong>Padronização da Qualidade:</strong> Adoção de critérios claros de classificação.</li>
+                        </ul>
+
+                        <h2>Capítulo 4: Impactos no Desenvolvimento Regional e Dinâmica Econômica</h2>
+                        <ul>
+                            <li><strong>Preço Justo e Diferenciação:</strong> O selo de origem afasta a concorrência comum e valoriza o trabalho do produtor.</li>
+                            <li><strong>Portas Abertas em Novos Mercados:</strong> A IG abre caminhos para o comércio qualificado: restaurantes de alta gastronomia e mercados institucionais.</li>
+                            <li><strong>O Efeito Multiplicador (Turismo):</strong> Regiões com produtos certificados atraem o chamado "Turismo de Experiência".</li>
+                        </ul>
+
+                        <h2>Capítulo 5: Impacto Social e Sucessão Familiar no Campo</h2>
+                        <ul>
+                            <li><strong>Orgulho da Terra e Redução do Êxodo Rural:</strong> Os nossos jovens passam a enxergar o sítio da família como um negócio viável.</li>
+                            <li><strong>Saber Ancestral com Status Técnico:</strong> O selo do INPI eleva a autoestima das novas gerações.</li>
+                            <li><strong>Um Novo Amanhã para a Juventude:</strong> O jovem une o conhecimento tradicional dos pais com ferramentas modernas de internet, gestão e vendas.</li>
+                        </ul>
+
+                        <h2>Capítulo 6: A Rede de Cooperação Intersetorial</h2>
+                        <p>A consolidação e o sucesso da IG do Pacuí dependem de uma grande corrente de cooperação:</p>
+                        <ul>
+                            <li><strong>Entidades Governamentais:</strong> Apoio com investimentos em infraestrutura logística, eletrificação rural e facilitação de licenças.</li>
+                            <li><strong>Universidades e NITT:</strong> Parceria contínua através de suporte científico, análises de laboratório e capacitações.</li>
+                            <li><strong>Setor Privado:</strong> Parcerias comerciais éticas baseadas no comércio justo.</li>
+                        </ul>
+
+                        <h2>O Caminho da Nossa Indicação Geográfica</h2>
+                        <p>O processo de conquista e manutenção da Indicação Geográfica segue uma jornada coletiva que envolve toda a comunidade produtora.</p>
+                        <ol>
+                            <li><strong>Organização</strong></li>
+                            <li><strong>Documentação</strong></li>
+                            <li><strong>Registro</strong></li>
+                            <li><strong>Gestão</strong></li>
+                        </ol>
+
+                        <h2>Nossa História, Nosso Direito, Nosso Futuro</h2>
+                        <div class="destaque-box">
+                            "A salvaguarda de um nome geográfico coloca a ciência jurídica, a universidade e a propriedade intelectual a serviço da justiça social, do desenvolvimento econômico e da nossa história territorial."
+                        </div>
+                        <p>A Indicação Geográfica da Farinha do Pacuí é muito mais do que um selo ou um registro burocrático. É o reconhecimento oficial de que o nosso jeito de fazer, o nosso território e a nossa história têm valor e que esse valor pertence a todos nós.</p>
+                        
+                        <table class="tabela-cartilha">
+                            <tr>
+                                <th>Nossa Força</th>
+                                <th>Nossa Proteção</th>
+                                <th>Nosso Legado</th>
+                            </tr>
+                            <tr>
+                                <td>A união coletiva e a organização comunitária são a base de tudo.</td>
+                                <td>O registro no INPI garante direitos legais para toda a comunidade.</td>
+                                <td>As novas gerações são o futuro da nossa tradição e do nosso território.</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
+
+                <div id="mapa-container"></div>
+
+                <div class="painel-scroll">
+                    <h3 class="titulo-painel">📍 Comunidades</h3>
+                    <div id="lista-itens"></div>
+                </div>
+
             </div>
+        </div>
 
-            <div id="mapa-container"></div>
-
-            <div class="painel-scroll">
-                <h3 class="titulo-painel">📍 Comunidades</h3>
-                <div id="lista-itens"></div>
+        <div id="inpi" class="secao">
+            <div class="header-aba"><h2>Legislação e Normas</h2></div>
+            <div class="painel-scroll" style="height: auto; max-height: 100%;">
+                <p>Conteúdo normativo em desenvolvimento para a estruturação técnica do dossiê.</p>
             </div>
-
         </div>
-    </div>
-
-    <div id="inpi" class="secao">
-        <div class="header-aba"><h2>Legislação e Normas</h2></div>
-        <div class="painel-scroll" style="height: auto; max-height: 100%;">
-            <p>Conteúdo normativo em desenvolvimento para a estruturação técnica do dossiê.</p>
+    </div> <footer class="rodape-site">
+        <div class="rodape-container">
+            <div class="rodape-coluna">
+                <h3>Sobre o Pesquisador</h3>
+                <p>Luiz Fernando Brito Rocha é mestre em Propriedade Intelectual e Transferência de Tecnologia para Inovação pelo programa PROFNIT da Universidade Federal do Amapá (UNIFAP). Sua atuação foca na convergência entre o conhecimento técnico e a realidade das comunidades rurais, com foco especial na proteção de ativos coletivos da sociobiodiversidade amazônica. O trabalho desenvolvido é fruto de uma pesquisa dedicada a estruturar instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados.</p>
+            </div>
+            <div class="rodape-coluna">
+                <h3>Sobre a Pesquisa</h3>
+                <p>Este conteúdo integra os resultados da dissertação de mestrado intitulada "Indicação Geográfica da Farinha do Pacuí – Amapá" (PROFNIT/UNIFAP, 2026). A pesquisa tem como objetivo a estruturação do Caderno de Especificações Técnicas (CET) e do Dossiê de Notoriedade, documentos fundamentais para o processo de reconhecimento da Indicação Geográfica pelo Instituto Nacional da Propriedade Industrial (INPI). Este material não é apenas um documento acadêmico, mas um instrumento técnico elaborado para subsidiar a governança coletiva, a rastreabilidade e a promoção do desenvolvimento sustentável do Distrito de São Joaquim do Pacuí.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
     <script>
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
         function mostrar(id) {
-            // Oculta todas as seções
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
-            
-            // Remove a classe ativo de todos os botões
             document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('ativo'));
             
             var alvo = document.getElementById(id);
@@ -512,7 +544,6 @@
             }
         }
 
-        // COLOQUE O LINK DO SEU GOOGLE APPS SCRIPT AQUI
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilha)
@@ -553,7 +584,6 @@
             })
             .catch(erro => console.log("Erro ao carregar os dados:", erro));
             
-        // Ativar o botão home no início
         document.getElementById('btn-home').classList.add('ativo');
     </script>
 </body>
