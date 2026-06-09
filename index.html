@@ -437,10 +437,7 @@
                             <div class="form-grupo">
                                 <label>Comunidade de Origem</label>
                                 <select id="comunidade-lote">
-                                    <option>Tracajatuba I</option>
-                                    <option>Tracajatuba II</option>
-                                    <option>Ponta Grossa</option>
-                                    <option>Salamito</option>
+                                    <option value="">Carregando comunidades...</option>
                                 </select>
                             </div>
                             <div class="form-grupo">
@@ -448,8 +445,8 @@
                                 <input type="number" id="peso-lote" placeholder="Ex: 50">
                             </div>
                             <div class="form-grupo">
-                                <label>ID Agroindústria (Selo Diagro/SIE)</label>
-                                <input type="text" id="id-diagro" placeholder="Ex: SIE-AP-1234">
+                                <label>ID Agroindústria (Opcional)</label>
+                                <input type="text" id="id-diagro" placeholder="Selo Diagro/SIE ou deixe em branco">
                             </div>
                             <div class="form-grupo form-full">
                                 <button class="btn-gerar-lote" onclick="gerarQRCode()">Emitir Certificado e Gerar QR Code Dinâmico</button>
@@ -500,13 +497,13 @@
             <div class="passaporte-body">
                 <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
                 
-                <p><strong>Produtor Responsável:</strong> Sebastião Vilhena (Seu Sabá)</p>
-                <p><strong>Comunidade:</strong> <span id="modal-comunidade">Tracajatuba I</span></p>
-                <p><strong>Data de Produção:</strong> <span id="modal-data">09/06/2026</span></p>
-                <p><strong>Registro Sanitário (Diagro):</strong> <span id="modal-id">SIE-AP-1234</span></p>
+                <p><strong>Produtor Responsável:</strong> Produtor Habilitado</p>
+                <p><strong>Comunidade:</strong> <span id="modal-comunidade">-</span></p>
+                <p><strong>Data de Produção:</strong> <span id="modal-data">-</span></p>
+                <p><strong>Registro/ID:</strong> <span id="modal-id">-</span></p>
 
                 <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; text-align: center;">
-                    <a href="#" style="color: var(--cor-primaria); font-weight: bold; text-decoration: none;">📄 Visualizar Certificado Sanitário (PDF)</a>
+                    <a href="#" style="color: var(--cor-primaria); font-weight: bold; text-decoration: none;">📄 Visualizar Certificado/Dossiê (PDF)</a>
                 </div>
 
                 <button class="btn-fechar-modal" onclick="document.getElementById('modal-passaporte').style.display='none'">Fechar Passaporte</button>
@@ -530,12 +527,10 @@
                 alvo.style.display = 'block';
                 if(botaoAtivo) botaoAtivo.classList.add('ativo');
                 
-                // Exibe o rodapé APENAS se a aba atual for 'pacui'
                 if (rodape) {
                     rodape.style.display = (id === 'pacui') ? 'block' : 'none';
                 }
                 
-                // Força abrir a aba Visão Geral (para mostrar mapa e dados) se entrar no Pacuí
                 if(id === 'pacui') {
                     var btnVisaoGeral = document.querySelector('.btn-sub-nav');
                     if(btnVisaoGeral) btnVisaoGeral.click();
@@ -550,7 +545,6 @@
             document.getElementById(idAba).style.display = 'block';
             elementoBotao.classList.add('ativo');
 
-            // Quando o mapa volta a ficar visível, é obrigatório recalcular o tamanho
             if(idAba === 'pacui-visao') {
                 setTimeout(() => { mapa.invalidateSize(); }, 200);
             }
@@ -560,21 +554,21 @@
             var data = document.getElementById('data-lote').value;
             var comunidade = document.getElementById('comunidade-lote').value;
             var peso = document.getElementById('peso-lote').value;
-            var id = document.getElementById('id-diagro').value;
+            // Se o campo do ID estiver vazio, define como Artesanal (Isento)
+            var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
             var btnGera = document.querySelector('.btn-gerar-lote');
 
-            if(!data || !id || !peso) {
-                alert("Por favor, preencha todos os campos do lote.");
+            // Validação atualizada: Não exige mais o ID
+            if(!data || !peso || !comunidade) {
+                alert("Por favor, preencha a data de produção, a comunidade e o peso do lote.");
                 return;
             }
 
-            // Muda o botão para estado de carregamento
             var textoOriginal = btnGera.innerHTML;
             btnGera.innerHTML = "⏳ Registrando Lote...";
             btnGera.style.backgroundColor = "#64748b"; 
             btnGera.disabled = true;
 
-            // Prepara os dados para o Apps Script
             var pacoteDados = {
                 acao: "gerar_lote",
                 data: data,
@@ -595,7 +589,6 @@
             })
             .then(resposta => resposta.json())
             .then(retorno => {
-                // Voltar botão ao normal
                 btnGera.innerHTML = textoOriginal;
                 btnGera.style.backgroundColor = "var(--cor-destaque)";
                 btnGera.disabled = false;
@@ -618,7 +611,8 @@
                         <p style="font-size: 0.8em; color: #10b981; margin-top: 5px;">✔️ Salvo no banco de dados da Associação.</p>
                     `;
                     
-                    document.getElementById('peso-lote').value = ""; // Limpa o formulário
+                    document.getElementById('peso-lote').value = "";
+                    document.getElementById('id-diagro').value = ""; 
                 } else {
                     alert("Erro ao salvar: " + retorno.erro);
                 }
@@ -645,13 +639,23 @@
                 }
                 
                 var listaItens = document.getElementById('lista-itens');
+                var selectComunidade = document.getElementById('comunidade-lote'); // Referência para o Dropdown
+                selectComunidade.innerHTML = ''; // Limpa a mensagem "Carregando comunidades..."
+                
                 dados.comunidades.forEach(c => {
+                    // Preenche a lista do mapa
                     var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
                     div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
                     div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                     listaItens.appendChild(div);
+
+                    // Alimenta automaticamente o Dropdown da aba Rastreabilidade
+                    var option = document.createElement('option');
+                    option.value = c.nome;
+                    option.textContent = c.nome;
+                    selectComunidade.appendChild(option);
                 });
 
                 var listaNoticias = document.getElementById('lista-noticias');
