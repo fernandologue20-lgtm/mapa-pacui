@@ -258,11 +258,13 @@
            7. RODAPÉ INSTITUCIONAL (FOOTER)
            ========================================= */
         .rodape-site {
-            background-color: #e2e8f0; /* Cinza claro */
+            display: none; /* Inicia oculto. O JavaScript fará ele aparecer na aba correta. */
+            background-color: #e2e8f0; 
             border-top: 1px solid #cbd5e1;
             padding: 40px 20px;
             margin-top: 50px;
             color: var(--cor-texto);
+            animation: fadeIn 0.4s ease-in-out;
         }
 
         .rodape-container {
@@ -545,7 +547,7 @@
                 <p>Conteúdo normativo em desenvolvimento para a estruturação técnica do dossiê.</p>
             </div>
         </div>
-    </div> <footer class="rodape-site">
+    </div> <footer id="rodape-pesquisa" class="rodape-site">
         <div class="rodape-container">
             <div class="rodape-coluna">
                 <h3>Sobre o Pesquisador</h3>
@@ -569,15 +571,22 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
         function mostrar(id) {
+            // Oculta as seções e remove o 'ativo' dos botões
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('ativo'));
             
             var alvo = document.getElementById(id);
             var botaoAtivo = document.getElementById('btn-' + id);
+            var rodape = document.getElementById('rodape-pesquisa');
             
             if (alvo) {
                 alvo.style.display = 'block';
                 if(botaoAtivo) botaoAtivo.classList.add('ativo');
+                
+                // Exibe o rodapé APENAS se a aba atual for 'pacui'
+                if (rodape) {
+                    rodape.style.display = (id === 'pacui') ? 'block' : 'none';
+                }
                 
                 if(id === 'pacui') {
                     setTimeout(() => { mapa.invalidateSize(); }, 100);
@@ -625,6 +634,7 @@
             })
             .catch(erro => console.log("Erro ao carregar os dados:", erro));
             
+        // Ativa a aba "Início" ao carregar a página (o rodapé ficará invisível)
         document.getElementById('btn-home').classList.add('ativo');
     </script>
 </body>
