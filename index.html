@@ -8,63 +8,76 @@
     <style>
         /* CONFIGURAÇÕES GERAIS */
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f6f8; }
-        .menu-nav { background: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; }
+        .menu-nav { background: #2e7d32; padding: 1.5rem; display: flex; gap: 15px; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
         .menu-nav button { background: #fff; border: 2px solid #ff9800; color: #2e7d32; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 8px; transition: 0.3s; }
-        .menu-nav button:hover { background: #ff9800; color: #fff; }
+        .menu-nav button:hover { background: #ff9800; color: #fff; transform: translateY(-2px); }
         
-        /* Aumentado para 1300px para caber as duas colunas com folga */
         .secao { display: none; padding: 30px; max-width: 1300px; margin: auto; }
-        .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card { background: #fff; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid #2e7d32; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
-        /* LAYOUT DE DUAS COLUNAS (DASHBOARD) */
+        /* LAYOUT ESQUERDA (DADOS) / DIREITA (MAPA) */
         .layout-painel { display: flex; gap: 25px; align-items: flex-start; }
-        .coluna-principal { flex: 2; min-width: 0; } /* 66% da tela para o Mapa */
-        .coluna-lateral { 
-            flex: 1; /* 33% da tela para Notícias/Cartilha */
+        
+        .coluna-esquerda { 
+            flex: 1; 
             display: flex; 
             flex-direction: column; 
             gap: 20px; 
-            max-height: 650px; /* Mesma altura do mapa */
-            overflow-y: auto; /* Cria uma barra de rolagem só para a lateral */
-            padding-right: 10px;
+            max-width: 380px; 
         }
 
-        /* Estilização da barra de rolagem lateral */
-        .coluna-lateral::-webkit-scrollbar { width: 8px; }
-        .coluna-lateral::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .coluna-lateral::-webkit-scrollbar-thumb { background: #bbb; border-radius: 10px; }
-        .coluna-lateral::-webkit-scrollbar-thumb:hover { background: #2e7d32; }
+        .coluna-direita { 
+            flex: 2; 
+            min-width: 0; 
+        }
 
-        /* MAPA E COMUNIDADES */
-        #container-mapa { display: flex; height: 650px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; }
-        #mapa-container { flex: 3; }
-        #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
-        .item-comunidade:hover { background: #f0f7f0; }
-        .coords { font-size: 0.75em; color: #666; display: none; font-style: italic; }
+        /* LISTAS COM ROLAGEM INDEPENDENTE (COMUNIDADES E NOTÍCIAS) */
+        .painel-scroll { max-height: 310px; overflow-y: auto; padding-right: 10px; }
+        .titulo-painel { margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #eee; color: #2e7d32; position: sticky; top: 0; background: #fff; z-index: 10; }
+        
+        /* ESTILIZAÇÃO DE SCROLLBAR */
+        .painel-scroll::-webkit-scrollbar { width: 6px; }
+        .painel-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .painel-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        .painel-scroll::-webkit-scrollbar-thumb:hover { background: #2e7d32; }
+
+        /* ESTÉTICA MELHORADA DO MAPA */
+        #mapa-container { 
+            height: 640px; 
+            border-radius: 16px; 
+            border: 6px solid #fff; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            z-index: 1; 
+            background: #e5e3df; 
+        }
+
+        /* ITENS DA LISTA DE COMUNIDADES */
+        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: all 0.2s ease; border-radius: 6px; }
+        .item-comunidade:hover { background: #e8f5e9; transform: translateX(5px); border-left: 3px solid #2e7d32; }
+        .coords { font-size: 0.75em; color: #666; display: none; font-style: italic; margin-top: 4px; }
         .item-comunidade:hover .coords { display: block; }
         
         /* RÓTULOS DO MAPA */
-        .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: bold; color: #b71c1c; font-size: 14px; }
-        .rotulo-rota { background: rgba(255, 255, 255, 0.7) !important; border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px 5px; }
+        .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: bold; color: #b71c1c; font-size: 14px; text-shadow: 1px 1px 2px #fff; }
+        .rotulo-rota { background: rgba(255, 255, 255, 0.85) !important; border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 3px 6px; border-radius: 4px; font-weight: bold; }
         
-        /* ESTILOS DA CARTILHA DIGITAL */
-        .capa-cartilha { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: white; text-align: center; padding: 40px 20px; border-left: none; margin-bottom: 0; }
-        .titulo-cartilha { font-size: 1.8em; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
-        .subtitulo-cartilha { color: #ff9800; font-style: italic; margin-bottom: 15px; font-size: 1em; }
-        .descricao-cartilha { font-size: 0.9em; margin: 0 auto 20px auto; line-height: 1.5; }
+        /* ESTILOS DA CARTILHA DIGITAL (FULL WIDTH NO FINAL) */
+        .cartilha-container { margin-top: 40px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .capa-cartilha { background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%); color: white; text-align: center; padding: 50px 30px; border-radius: 12px 12px 0 0; border: none; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+        .titulo-cartilha { font-size: 2.2em; margin-bottom: 10px; font-weight: 800; line-height: 1.2; }
+        .subtitulo-cartilha { color: #ff9800; font-style: italic; margin-bottom: 15px; font-size: 1.2em; }
+        .descricao-cartilha { font-size: 1.05em; margin: 0 auto 25px auto; line-height: 1.6; max-width: 800px; }
         .tags-cartilha { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .tags-cartilha span { background: rgba(255, 255, 255, 0.2); padding: 5px 10px; border-radius: 15px; font-size: 0.75em; font-weight: bold; }
-        .pagina-cartilha { padding: 25px; line-height: 1.6; font-size: 0.95em; color: #333; margin-bottom: 0; }
-        .pagina-cartilha h2 { color: #2e7d32; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 15px; font-size: 1.3em; }
+        .tags-cartilha span { background: rgba(255, 255, 255, 0.2); padding: 6px 14px; border-radius: 20px; font-size: 0.8em; font-weight: bold; letter-spacing: 1px; }
+        .pagina-cartilha { background: #fff; padding: 50px; line-height: 1.8; font-size: 1.05em; color: #333; border-radius: 0 0 12px 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-top: 0; }
+        .pagina-cartilha h2 { color: #2e7d32; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px; margin-bottom: 20px; font-size: 1.5em; }
 
-        /* RESPONSIVIDADE (Celulares e Tablets menores) */
+        /* RESPONSIVIDADE */
         @media (max-width: 950px) {
-            .layout-painel { flex-direction: column; }
-            .coluna-lateral { max-height: none; overflow-y: visible; }
-            #container-mapa { flex-direction: column; height: auto; }
-            #mapa-container { height: 400px; }
-            #lista-comunidades { height: 250px; }
+            .layout-painel { flex-direction: column-reverse; }
+            .coluna-esquerda { max-width: 100%; }
+            .painel-scroll { max-height: none; overflow-y: visible; }
+            #mapa-container { height: 450px; }
         }
     </style>
 </head>
@@ -86,44 +99,56 @@
         
         <div class="layout-painel">
             
-            <div class="coluna-principal">
-                <div id="container-mapa">
-                    <div id="mapa-container"></div>
-                    <div id="lista-comunidades">
-                        <h4 style="padding:15px; margin:0; border-bottom:1px solid #eee; background: #fafafa; position: sticky; top: 0; z-index: 10;">📍 Comunidades</h4>
-                        <div id="lista-itens"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="coluna-lateral">
+            <div class="coluna-esquerda">
                 
-                <div class="card" style="margin-bottom: 0;">
-                    <h3 style="margin-top: 0;">📢 Mural de Notícias</h3>
+                <div class="card painel-scroll" style="margin-bottom: 0;">
+                    <h3 class="titulo-painel">📍 Comunidades</h3>
+                    <div id="lista-itens"></div>
+                </div>
+
+                <div class="card painel-scroll" style="margin-bottom: 0;">
+                    <h3 class="titulo-painel">📢 Mural de Notícias</h3>
                     <div id="lista-noticias"></div>
                 </div>
 
-                <div class="card capa-cartilha">
-                    <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                    <h3 class="subtitulo-cartilha">um guia para</h3>
-                    <p class="descricao-cartilha">
-                        Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos[cite: 3, 4].
-                    </p>
-                    <div class="tags-cartilha">
-                        <span>INDICAÇÃO GEOGRÁFICA</span>
-                        <span>PROPRIEDADE INTELECTUAL</span>
-                        <span>COMUNIDADES TRADICIONAIS</span>
-                    </div>
+            </div>
+
+            <div class="coluna-direita">
+                <div id="mapa-container"></div>
+            </div>
+
+        </div>
+
+        <div class="cartilha-container">
+            <div class="capa-cartilha">
+                <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                <h3 class="subtitulo-cartilha">um guia para</h3>
+                <p class="descricao-cartilha">
+                    Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para comunidades tradicionais, lideranças locais e agentes públicos sobre como garantir o reconhecimento legal, a valorização cultural e o desenvolvimento sustentável do nosso território produtivo.
+                </p>
+                <div class="tags-cartilha">
+                    <span>INDICAÇÃO GEOGRÁFICA</span>
+                    <span>PROPRIEDADE INTELECTUAL</span>
+                    <span>COMUNIDADES TRADICIONAIS</span>
                 </div>
+            </div>
 
-                <div class="card pagina-cartilha">
-                    <h2>Apresentação</h2>
-                    <p>Este material foi construído de forma colaborativa para e pelas comunidades produtoras, garantindo que o protagonismo da proteção da nossa identidade, do nosso modo de fazer tradicional e da governança territorial permaneça inteiramente nas mãos de quem vive, trabalha e mantém a cultura do Pacuí viva.</p>
-                    </div>
+            <div class="pagina-cartilha">
+                <h2>1. Apresentação</h2>
+                <p>Este material foi construído de forma colaborativa para e pelas comunidades produtoras, garantindo que o protagonismo da proteção da nossa identidade, do nosso modo de fazer tradicional e da governança territorial permaneça inteiramente nas mãos de quem vive, trabalha e mantém a cultura do Pacuí viva.</p>
+                
+                <h2>2. O Que é a Indicação Geográfica?</h2>
+                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
 
+                <h2>3. Governança e Propriedade Intelectual</h2>
+                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
+
+                <h2>4. Delimitação Territorial do Pacuí</h2>
+                <p><i>(Cole aqui o texto referente a este capítulo da sua cartilha original...)</i></p>
             </div>
         </div>
-        </div>
+
+    </div>
 
     <div id="inpi" class="secao">
         <div class="card"><h2>Legislação e Normas</h2><p>Conteúdo conforme Manual do INPI.</p></div>
@@ -138,14 +163,12 @@
             var alvo = document.getElementById(id);
             if (alvo) {
                 alvo.style.display = 'block';
-                // Quando muda de aba e a div do mapa estava escondida, o Leaflet precisa "recalcular" o tamanho
                 if(id === 'pacui') {
                     setTimeout(() => { mapa.invalidateSize(); }, 100);
                 }
             }
         }
 
-        // COLOQUE O LINK DO SEU GOOGLE APPS SCRIPT AQUI
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilha)
@@ -172,10 +195,10 @@
                 if (dados.noticias && dados.noticias.length > 0) {
                     dados.noticias.forEach(n => {
                         var div = document.createElement('div');
-                        div.style.borderBottom = "1px solid #ddd";
-                        div.style.paddingBottom = "10px";
-                        div.style.marginBottom = "10px";
-                        div.innerHTML = `<h4 style="margin:0 0 5px 0; color:#2e7d32;">${n.titulo}</h4><p style="margin:0 0 5px 0; font-size:0.9em;">${n.resumo} <a href="${n.link}" target="_blank">Ler mais</a></p><small style="color:#888;">${n.fonte} | ${n.data}</small>`;
+                        div.style.borderBottom = "1px solid #eee";
+                        div.style.paddingBottom = "12px";
+                        div.style.marginBottom = "12px";
+                        div.innerHTML = `<h4 style="margin:0 0 5px 0; color:#2e7d32; font-size: 1.05em;">${n.titulo}</h4><p style="margin:0 0 8px 0; font-size:0.9em; line-height: 1.4;">${n.resumo} <a href="${n.link}" target="_blank" style="color: #ff9800; text-decoration: none; font-weight: bold;">Ler mais »</a></p><small style="color:#888; font-style: italic;">Fonte: ${n.fonte} | ${n.data}</small>`;
                         listaNoticias.appendChild(div);
                     });
                 } else {
