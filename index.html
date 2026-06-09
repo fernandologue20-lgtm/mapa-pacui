@@ -552,29 +552,82 @@
             }
         }
 
+        // NOVO: Função REAL de envio de dados para o Apps Script
         function gerarQRCode() {
             var data = document.getElementById('data-lote').value;
             var comunidade = document.getElementById('comunidade-lote').value;
+            var peso = document.getElementById('peso-lote').value;
             var id = document.getElementById('id-diagro').value;
+            var btnGera = document.querySelector('.btn-gerar-lote');
 
-            if(!data || !id) {
-                alert("Por favor, preencha a data de produção e o ID da Agroindústria para gerar o QR Code.");
+            if(!data || !id || !peso) {
+                alert("Por favor, preencha todos os campos do lote.");
                 return;
             }
 
-            document.getElementById('modal-comunidade').innerText = comunidade;
-            document.getElementById('modal-data').innerText = data.split('-').reverse().join('/');
-            document.getElementById('modal-id').innerText = id;
+            // 1. Muda o botão para mostrar que está carregando
+            var textoOriginal = btnGera.innerHTML;
+            btnGera.innerHTML = "⏳ Conectando à Associação e Registrando Lote...";
+            btnGera.style.backgroundColor = "#64748b"; // Fica cinza
+            btnGera.disabled = true;
 
-            var urlExemplo = "Passaporte Gerado! Clique para simular a leitura do consumidor.";
-            var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlExemplo)}`;
+            // 2. Prepara o "pacote" de dados para enviar ao Apps Script
+            var pacoteDados = {
+                acao: "gerar_lote",
+                data: data,
+                comunidade: comunidade,
+                peso: peso,
+                id_diagro: id
+            };
 
-            var areaQr = document.getElementById('area-qr');
-            areaQr.innerHTML = `
-                <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Nº ${Math.floor(Math.random() * 10000)} Gerado!</h4>
-                <img src="${qrUrl}" alt="QR Code do Lote" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">
-                <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Clique no QR Code para simular a visão do consumidor.</p>
-            `;
+            // 3. Envia para o seu servidor (Substitua pela SUA URL DE IMPLANTAÇÃO)
+            var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+
+            fetch(urlPlanilha, {
+                method: 'POST',
+                body: JSON.stringify(pacoteDados),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                }
+            })
+            .then(resposta => resposta.json())
+            .then(retorno => {
+                // Voltar o botão ao normal
+                btnGera.innerHTML = textoOriginal;
+                btnGera.style.backgroundColor = "var(--cor-destaque)";
+                btnGera.disabled = false;
+
+                if (retorno.sucesso) {
+                    // O servidor salvou! Vamos mostrar o QR Code com o LOTE REAL
+                    var loteOficial = retorno.loteGerado;
+                    
+                    document.getElementById('modal-comunidade').innerText = comunidade;
+                    document.getElementById('modal-data').innerText = data.split('-').reverse().join('/');
+                    document.getElementById('modal-id').innerText = id;
+
+                    var urlPassaporte = "Plataforma Pacuí: Lote " + loteOficial + " Autenticado com sucesso!";
+                    var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlPassaporte)}`;
+
+                    var areaQr = document.getElementById('area-qr');
+                    areaQr.innerHTML = `
+                        <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${loteOficial}</h4>
+                        <img src="${qrUrl}" alt="QR Code do Lote" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">
+                        <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Simular leitura do Consumidor</p>
+                        <p style="font-size: 0.8em; color: #10b981; margin-top: 5px;">✔️ Salvo no banco de dados da Associação.</p>
+                    `;
+                    
+                    // Limpa o formulário
+                    document.getElementById('peso-lote').value = "";
+                } else {
+                    alert("Erro ao salvar no banco de dados: " + retorno.erro);
+                }
+            })
+            .catch(erro => {
+                alert("Falha de conexão. Verifique se o URL do script está correto e tem permissões.");
+                btnGera.innerHTML = textoOriginal;
+                btnGera.style.backgroundColor = "var(--cor-destaque)";
+                btnGera.disabled = false;
+            });
         }
 
         var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
