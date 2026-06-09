@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</title>
+    <title>Plataforma Digital de Gestão e Delimitação Territorial para IGs</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -24,6 +24,10 @@
         .item-comunidade:hover { background: #f0f7f0; }
         .coords { font-size: 0.75em; color: #666; display: none; margin-top: 5px; font-style: italic; }
         .item-comunidade:hover .coords { display: block; }
+
+        /* Estilo dos rótulos no mapa */
+        .rotulo-area { background: transparent; border: none; box-shadow: none; font-weight: bold; color: #b71c1c; font-size: 14px; }
+        .rotulo-rota { background: rgba(255, 255, 255, 0.7); border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px 5px; }
     </style>
 </head>
 <body>
@@ -38,7 +42,7 @@
     <div id="home" class="secao" style="display:block;">
         <div class="card">
             <h1>Plataforma Digital de Gestão e Delimitação Territorial para Indicações Geográficas</h1>
-            <p>Portal técnico para suporte à estruturação de Indicações Geográficas (IGs) no Estado do Amapá[cite: 3, 4].</p>
+            <p>Sistema técnico para suporte à estruturação e proteção de ativos coletivos no Amapá.</p>
         </div>
     </div>
 
@@ -58,12 +62,12 @@
     <div id="inpi" class="secao">
         <div class="card">
             <h2>Legislação e Normas (Manual INPI)</h2>
-            <p>A estruturação da Indicação Geográfica (IG) segue os preceitos da Lei nº 9.279/1996 [cite: 45] e as diretrizes do INPI[cite: 70, 451].</p>
+            <p>O registro de uma Indicação Geográfica segue a <strong>Lei nº 9.279/1996</strong> e a <strong>Portaria INPI/PR nº 04/2022</strong>. Os pilares técnicos exigidos são:</p>
             <ul>
-                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Instrumento normativo que define o padrão de produção[cite: 80].</li>
-                <li><strong>Dossiê de Notoriedade:</strong> Documentação técnica que comprova a reputação territorial[cite: 246].</li>
-                <li><strong>Delimitação Territorial:</strong> Memorial descritivo com coordenadas geográficas conforme o INPI[cite: 400, 428].</li>
-                <li><strong>Governança:</strong> Institucionalização da entidade representativa para gestão da IG[cite: 88, 96].</li>
+                <li><strong>Caderno de Especificações Técnicas (CET):</strong> Manual normativo do saber-fazer e qualidade do produto.</li>
+                <li><strong>Dossiê de Notoriedade:</strong> Provas da reputação do território como centro produtor.</li>
+                <li><strong>Delimitação Territorial:</strong> Memorial e mapa que asseguram a identidade da área geográfica.</li>
+                <li><strong>Governança:</strong> Atuação da entidade gestora (Associação) na fiscalização e proteção do nome.</li>
             </ul>
         </div>
     </div>
@@ -71,6 +75,7 @@
     <div id="biblioteca" class="secao">
         <div class="card">
             <h2>Biblioteca Acadêmica</h2>
+            <p>Repositório de estudos, teses e dissertações sobre Propriedade Intelectual e desenvolvimento regional.</p>
         </div>
     </div>
 
@@ -89,13 +94,15 @@
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // Desenhar Polígono
+                // Desenhar Polígono com rótulo
                 if (dados.poligono) {
-                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3, fillOpacity: 0.2}).addTo(mapa);
+                    var pol = L.polygon(dados.poligono, {color: "#b71c1c", weight: 3, fillOpacity: 0.2}).addTo(mapa);
+                    pol.bindTooltip("Região do Pacuí", {permanent: true, direction: "center", className: "rotulo-area"}).openTooltip();
                 }
-                // Desenhar Rota AP-70
+                // Desenhar Rota AP-70 com rótulo
                 if (dados.rota) {
-                    L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                    var rot = L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray: '10, 10'}).addTo(mapa);
+                    rot.bindTooltip("Rota de acesso a região do Pacuí (AP-70)", {permanent: true, direction: "auto", className: "rotulo-rota"}).openTooltip();
                 }
 
                 var listaDiv = document.getElementById('lista-itens');
