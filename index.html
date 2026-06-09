@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="utf-8">
-    <title>Plataforma de Gestão de IGs - Amapá</title>
+    <title>Gestão de IGs - Amapá</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -14,12 +14,10 @@
         #container-mapa { display: flex; height: 500px; border: 2px solid #ddd; border-radius: 12px; overflow: hidden; }
         #mapa-container { flex: 3; }
         #lista-comunidades { flex: 1; overflow-y: auto; background: #fff; border-left: 2px solid #ddd; }
-        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 0.9em; }
+        .item-comunidade { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; }
         .item-comunidade:hover { background: #f0f7f0; }
-        .coords { font-size: 0.75em; color: #666; display: none; font-style: italic; }
+        .coords { font-size: 0.75em; color: #666; display: none; }
         .item-comunidade:hover .coords { display: block; }
-        .rotulo-area { background: transparent; border: none; font-weight: bold; color: #b71c1c; font-size: 14px; }
-        .rotulo-rota { background: rgba(255, 255, 255, 0.7); border: 1px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 2px; }
     </style>
 </head>
 <body>
@@ -28,65 +26,41 @@
         <button onclick="mostrar('pacui')">Farinha do Pacuí</button>
         <button onclick="mostrar('inpi')">Legislação e INPI</button>
     </nav>
-
-    <div id="home" class="secao" style="display:block;">
-        <div class="card"><h1>Plataforma de Gestão de Indicações Geográficas</h1></div>
-    </div>
-
+    <div id="home" class="secao" style="display:block;"><div class="card"><h1>Plataforma de Gestão de IGs</h1></div></div>
     <div id="pacui" class="secao">
         <div class="card"><h2>Indicação de Procedência: Farinha do Pacuí</h2></div>
         <div id="container-mapa">
             <div id="mapa-container"></div>
-            <div id="lista-comunidades">
-                <h4 style="padding:10px; margin:0; border-bottom:1px solid #eee;">📍 Comunidades</h4>
-                <div id="lista-itens"></div>
-            </div>
+            <div id="lista-comunidades"><div id="lista-itens"></div></div>
         </div>
-        <div class="card">
-            <h3>📢 Mural de Notícias</h3>
-            <div id="lista-noticias"></div>
-        </div>
+        <div class="card"><h3>📢 Mural de Notícias</h3><div id="lista-noticias"></div></div>
     </div>
-
-    <div id="inpi" class="secao">
-        <div class="card"><h2>Legislação e Normas</h2><p>Conteúdo conforme Manual do INPI.</p></div>
-    </div>
-
     <script>
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
-
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
             document.getElementById(id).style.display = 'block';
-            if(id === 'pacui') { mapa.invalidateSize(); }
+            if(id === 'pacui') mapa.invalidateSize();
         }
-
-        var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        var urlPlanilha = "SUA_URL_AQUI"; 
         fetch(urlPlanilha)
             .then(res => res.json())
             .then(dados => {
-                // Desenhar área e rota
-                if(dados.poligono) L.polygon(dados.poligono, {color: "#b71c1c"}).bindTooltip("Região do Pacuí", {permanent:true, className:"rotulo-area"}).addTo(mapa);
-                if(dados.rota) L.polyline(dados.rota, {color: "#0d47a1", dashArray:'10,10'}).bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"}).addTo(mapa);
-
-                // Comunidades e Notícias
-                var listaItens = document.getElementById('lista-itens');
+                if(dados.poligono.length > 0) L.polygon(dados.poligono, {color: "#b71c1c"}).addTo(mapa);
+                if(dados.rota.length > 0) L.polyline(dados.rota, {color: "#0d47a1"}).addTo(mapa);
                 dados.comunidades.forEach(c => {
-                    var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
+                    var m = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(c.nome);
                     var div = document.createElement('div');
                     div.className = 'item-comunidade';
-                    div.innerHTML = `📍 ${c.nome}<br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                    listaItens.appendChild(div);
+                    div.innerHTML = `📍 ${c.nome}<br><span class="coords">${c.lat}, ${c.lng}</span>`;
+                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); m.openPopup(); };
+                    document.getElementById('lista-itens').appendChild(div);
                 });
-
-                var listaNoticias = document.getElementById('lista-noticias');
                 dados.noticias.forEach(n => {
                     var div = document.createElement('div');
-                    div.style.borderBottom = "1px solid #ddd";
-                    div.innerHTML = `<h4>${n.titulo}</h4><p>${n.resumo} <a href="${n.link}">Leia mais</a></p><small>${n.fonte} | ${n.data}</small>`;
-                    listaNoticias.appendChild(div);
+                    div.innerHTML = `<h4>${n.titulo}</h4><p>${n.resumo} <a href="${n.link}">Leia mais</a></p>`;
+                    document.getElementById('lista-noticias').appendChild(div);
                 });
             });
     </script>
