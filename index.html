@@ -539,87 +539,13 @@
             if(!n || !e || !s || !c) { alert("Preencha todos os campos."); return; }
             var btn = document.getElementById('btn-fazer-cadastro'); btn.innerHTML = "⏳ Validando..."; btn.disabled = true;
 
-            // =========================================================================
-        // INITIALIZATION JAVASCRIPT BLOCK - COM TRATAMENTO DE ERROS ISOLADO
-        // =========================================================================
-        fetch(urlPlanilhaGeral)
-            .then(res => {
-                if (!res.ok) throw new Error("Erro na rede: " + res.status);
-                return res.json();
-            })
-            .then(dados => {
-                
-                // 1. BLINDAGEM DO POLÍGONO (Não trava mais o resto do site se falhar)
-                try {
-                    if(dados.poligono && dados.poligono.length > 0) {
-                        L.polygon(dados.poligono, {color: "#b71c1c", weight: 3})
-                         .bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"})
-                         .addTo(mapa);
-                    }
-                } catch (errPoligono) {
-                    console.error("Erro ao desenhar o polígono. Verifique a aba 'poligono' no Sheets:", errPoligono);
-                }
-
-                // 2. BLINDAGEM DA ROTA
-                try {
-                    if(dados.rota && dados.rota.length > 0) {
-                        L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray:'10,10'})
-                         .bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"})
-                         .addTo(mapa);
-                    }
-                } catch (errRota) {
-                    console.error("Erro ao desenhar a rota AP-70:", errRota);
-                }
-                
-                // 3. CARREGAMENTO ISOLADO DAS COMUNIDADES
-                var listaItens = document.getElementById('lista-itens');
-                var formProd = document.getElementById('novo-prod-comunidade');
-                var dropLote = document.getElementById('comunidade-lote');
-                var formProdDoc = document.getElementById('doc-comunidade');
-                
-                if(formProd) formProd.innerHTML = "";
-                if(dropLote) dropLote.innerHTML = "";
-                if(formProdDoc) formProdDoc.innerHTML = "";
-                if(listaItens) listaItens.innerHTML = "";
-
-                if (dados.comunidades && dados.comunidades.length > 0) {
-                    dados.comunidades.forEach(c => {
-                        var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
-                        var div = document.createElement('div');
-                        div.className = 'item-comunidade';
-                        div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                        div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                        if(listaItens) listaItens.appendChild(div);
-                        
-                        if(formProd) { var op = document.createElement('option'); op.value = c.nome; op.textContent = c.nome; formProd.appendChild(op); }
-                        if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
-                        if(formProdDoc) { var op2 = document.createElement('option'); op2.value = c.nome; op2.textContent = c.nome; formProdDoc.appendChild(op2); }
-                    });
-                } else {
-                    if(listaItens) listaItens.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma comunidade localizada.</p>";
-                }
-
-                // 4. CARREGAMENTO ISOLADO DO MURAL DE NOTÍCIAS
-                var listaNoticias = document.getElementById('lista-noticias');
-                if(listaNoticias) listaNoticias.innerHTML = "";
-                
-                if (dados.noticias && dados.noticias.length > 0) {
-                    dados.noticias.forEach(n => {
-                        var div = document.createElement('div');
-                        div.className = 'noticia-item';
-                        div.innerHTML = `<h4 class="noticia-titulo">${n.titulo}</h4><p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p><span class="noticia-meta">${n.fonte} • ${n.data}</span>`;
-                        if(listaNoticias) listaNoticias.appendChild(div);
-                    });
-                } else {
-                    if(listaNoticias) listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>";
-                }
-                
-                listaDeProdutoresParaStatus = dados.produtores; 
-            })
-            .catch(erro => {
-                console.error("Erro geral na comunicação de leitura:", erro);
-                document.getElementById('lista-itens').innerHTML = "<p style='color: red; padding: 5px;'>Erro técnico na conexão de leitura do banco de dados.</p>";
-            });
+            fetch(urlPlanilhaGeral, {
+                method: 'POST', body: JSON.stringify({acao: "cadastrar_usuario", nome: n, email: e, senha: s, codigo_acesso: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            }).then(r => r.json()).then(retorno => {
+                btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false;
+                if(retorno.sucesso) { alert("Acesso concedido! Pode fazer login."); mudarAbaAuth('login'); } else { alert("Erro: " + retorno.erro); }
+            }).catch(e => { btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false; alert("Falha ao comunicar com o servidor."); });
+        }
 
         // ===================================================
         // 2. CONSELHO CADASTRA PRODUTOR
@@ -774,43 +700,87 @@
             });
         }
         
-        // ===================================================
-        // 7. INICIALIZAÇÃO DA PÁGINA (COM TRATAMENTO DE ERROS NA CONEXÃO)
-        // ===================================================
+        // =========================================================================
+        // INITIALIZATION JAVASCRIPT BLOCK - COM TRATAMENTO DE ERROS ISOLADO
+        // =========================================================================
         fetch(urlPlanilhaGeral)
             .then(res => {
                 if (!res.ok) throw new Error("Erro na rede: " + res.status);
                 return res.json();
             })
             .then(dados => {
-                if(dados.poligono && dados.poligono.length > 0) L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
-                var listaItens = document.getElementById('lista-itens'); var formProd = document.getElementById('novo-prod-comunidade'); var dropLote = document.getElementById('comunidade-lote'); var formProdDoc = document.getElementById('doc-comunidade');
-                if(formProd) formProd.innerHTML = ""; if(dropLote) dropLote.innerHTML = ""; if(formProdDoc) formProdDoc.innerHTML = "";
-                dados.comunidades.forEach(c => {
-                    var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
-                    var div = document.createElement('div'); div.className = 'item-comunidade'; div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); }; listaItens.appendChild(div);
-                    if(formProd) { var op = document.createElement('option'); op.value = c.nome; op.textContent = c.nome; formProd.appendChild(op); }
-                    if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
-                    if(formProdDoc) { var op2 = document.createElement('option'); op2.value = c.nome; op2.textContent = c.nome; formProdDoc.appendChild(op2); }
-                });
+                
+                // 1. BLINDAGEM DO POLÍGONO (Não trava mais o resto do site se falhar)
+                try {
+                    if(dados.poligono && dados.poligono.length > 0) {
+                        L.polygon(dados.poligono, {color: "#b71c1c", weight: 3})
+                         .bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"})
+                         .addTo(mapa);
+                    }
+                } catch (errPoligono) {
+                    console.error("Erro ao desenhar o polígono. Verifique a aba 'poligono' no Sheets:", errPoligono);
+                }
+
+                // 2. BLINDAGEM DA ROTA
+                try {
+                    if(dados.rota && dados.rota.length > 0) {
+                        L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray:'10,10'})
+                         .bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"})
+                         .addTo(mapa);
+                    }
+                } catch (errRota) {
+                    console.error("Erro ao desenhar a rota AP-70:", errRota);
+                }
+                
+                // 3. CARREGAMENTO ISOLADO DAS COMUNIDADES
+                var listaItens = document.getElementById('lista-itens');
+                var formProd = document.getElementById('novo-prod-comunidade');
+                var dropLote = document.getElementById('comunidade-lote');
+                var formProdDoc = document.getElementById('doc-comunidade');
+                
+                if(formProd) formProd.innerHTML = "";
+                if(dropLote) dropLote.innerHTML = "";
+                if(formProdDoc) formProdDoc.innerHTML = "";
+                if(listaItens) listaItens.innerHTML = "";
+
+                if (dados.comunidades && dados.comunidades.length > 0) {
+                    dados.comunidades.forEach(c => {
+                        var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
+                        var div = document.createElement('div');
+                        div.className = 'item-comunidade';
+                        div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                        div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                        if(listaItens) listaItens.appendChild(div);
+                        
+                        if(formProd) { var op = document.createElement('option'); op.value = c.nome; op.textContent = c.nome; formProd.appendChild(op); }
+                        if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
+                        if(formProdDoc) { var op2 = document.createElement('option'); op2.value = c.nome; op2.textContent = c.nome; formProdDoc.appendChild(op2); }
+                    });
+                } else {
+                    if(listaItens) listaItens.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma comunidade localizada.</p>";
+                }
+
+                // 4. CARREGAMENTO ISOLADO DO MURAL DE NOTÍCIAS
                 var listaNoticias = document.getElementById('lista-noticias');
+                if(listaNoticias) listaNoticias.innerHTML = "";
+                
                 if (dados.noticias && dados.noticias.length > 0) {
                     dados.noticias.forEach(n => {
-                        var div = document.createElement('div'); div.className = 'noticia-item';
+                        var div = document.createElement('div');
+                        div.className = 'noticia-item';
                         div.innerHTML = `<h4 class="noticia-titulo">${n.titulo}</h4><p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p><span class="noticia-meta">${n.fonte} • ${n.data}</span>`;
-                        listaNoticias.appendChild(div);
+                        if(listaNoticias) listaNoticias.appendChild(div);
                     });
-                } else { listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>"; }
+                } else {
+                    if(listaNoticias) listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>";
+                }
+                
                 listaDeProdutoresParaStatus = dados.produtores; 
             })
             .catch(erro => {
-                console.error("Erro ao carregar dados do Google Sheets:", erro);
-                document.getElementById('lista-itens').innerHTML = "<p style='color: red; padding: 10px; border: 1px solid red; background: #fff0f0;'>Erro de conexão com o banco de dados. Verifique a URL do Google Apps Script ou as permissões de implantação.</p>";
-                document.getElementById('lista-noticias').innerHTML = "<p>Erro de conexão.</p>";
+                console.error("Erro geral na comunicação de leitura:", erro);
+                document.getElementById('lista-itens').innerHTML = "<p style='color: red; padding: 5px;'>Erro técnico na conexão de leitura do banco de dados.</p>";
             });
-            
-        document.getElementById('btn-home').click();
     </script>
 </body>
 </html>
