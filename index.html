@@ -55,7 +55,6 @@
     <nav class="menu-nav">
         <button onclick="mostrar('home')" id="btn-home">Início</button>
         <button onclick="mostrar('pacui')" id="btn-pacui">Farinha do Pacuí</button>
-        <button onclick="mostrar('inpi')" id="btn-inpi">Legislação e INPI</button>
         <button class="btn-login-nav" onclick="abrirModalAuth()" id="btn-auth-nav">🔒 Área Restrita</button>
     </nav>
 
@@ -77,7 +76,33 @@
             <div id="pacui-visao" class="aba-pacui" style="display: block;">
                 <div class="layout-painel">
                     <div class="painel-scroll"><h3 class="titulo-painel">📰 Mural de Notícias</h3><div id="lista-noticias">Carregando...</div></div>
-                    <div class="painel-scroll"><h3 class="titulo-painel">📘 Guia Normativo</h3><p>Protegendo o Nosso Chão, o Nosso Saber e a Nossa História...</p></div>
+                    <div class="painel-scroll">
+                        <h3 class="titulo-painel">📘 Guia Normativo</h3>
+                        <div class="capa-cartilha">
+                            <h1 class="titulo-cartilha" style="font-size: 1.3em;">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                            <p class="descricao-cartilha" style="font-size: 0.85em;">Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.</p>
+                            <div class="tags-cartilha"><span style="font-size: 0.6em;">INDICAÇÃO GEOGRÁFICA</span></div>
+                        </div>
+                        <div class="texto-cartilha">
+                            <h2>Portal de Acessibilidade e Conectividade Digital</h2>
+                            <p>Esta cartilha adota as diretrizes do e-MAG. Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva.</p>
+                            <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
+                            <ol>
+                                <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção.</li>
+                                <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas".</li>
+                                <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade.</li>
+                            </ol>
+                            <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
+                            <ul>
+                                <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem.</li>
+                                <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores.</li>
+                                <li><strong>Garantia de Padrão Sensorial:</strong> Acompanhamento e validação da qualidade da farinha.</li>
+                            </ul>
+                            <h2>O Caminho da Nossa Indicação Geográfica</h2>
+                            <p>O processo de conquista e manutenção da Indicação Geográfica segue uma jornada coletiva que envolve toda a comunidade produtora.</p>
+                            <div class="destaque-box">"A salvaguarda de um nome geográfico coloca a ciência a serviço do desenvolvimento econômico territorial."</div>
+                        </div>
+                    </div>
                     <div id="mapa-container"></div>
                     <div class="painel-scroll"><h3 class="titulo-painel">📍 Comunidades</h3><div id="lista-itens">Carregando...</div></div>
                 </div>
@@ -104,7 +129,7 @@
                             <div style="grid-column: span 2; display: flex; flex-direction: column;">
                                 <label>Anexar Dossiê (Pasta .ZIP)</label>
                                 <input type="file" id="doc-arquivo" accept=".zip" style="padding: 10px; border: 1px dashed #ccc; border-radius: 6px; background: white;">
-                                <small style="color: #666; margin-top: 5px;">Junte RG/CNH, Comprovante de Residência e fotos da estrutura num arquivo .zip.</small>
+                                <small style="color: #666; margin-top: 5px;">Junte RG/CNH, Comprovante de Residência e fotos da estrutura num arquivo único .zip.</small>
                             </div>
                             <div style="grid-column: span 2;">
                                 <button id="btn-enviar-doc" class="btn-auth" style="width: auto; padding: 10px 30px;" onclick="enviarDocumentacaoReal()">Enviar Dossiê para Auditoria</button>
@@ -139,10 +164,41 @@
             </div>
             
             <div id="pacui-rastreio" class="aba-pacui">
-                <div class="card"><p><i>Módulo de Rastreabilidade ativo.</i></p></div>
+                <div class="layout-painel" style="grid-template-columns: 1fr 1fr; height: auto;">
+                    <div class="card" style="border-top: 5px solid var(--cor-destaque);">
+                        <h3 style="color: var(--cor-destaque-hover); font-size: 1.5rem; margin-top: 0;">Emitir Passaporte do Produto</h3>
+                        <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Geração de Lote e QR Code. Funcionalidade exclusiva para produtores com status <strong>Habilitado</strong>.</p>
+                        
+                        <div class="form-rastreio">
+                            <div class="form-grupo">
+                                <label>Data de Produção / Torra</label>
+                                <input type="date" id="data-lote">
+                            </div>
+                            <div class="form-grupo">
+                                <label>Comunidade de Origem</label>
+                                <select id="comunidade-lote"></select>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Peso do Lote (kg)</label>
+                                <input type="number" id="peso-lote" placeholder="Ex: 50">
+                            </div>
+                            <div class="form-grupo">
+                                <label>ID Agroindústria (Opcional)</label>
+                                <input type="text" id="id-diagro" placeholder="Selo Diagro/SIE ou em branco">
+                            </div>
+                            <div class="form-grupo form-full">
+                                <button class="btn-gerar-lote" onclick="gerarQRCode()">Emitir Certificado e Gerar QR Code Dinâmico</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; border: 2px dashed #ccc;">
+                        <div id="area-qr" style="text-align: center;">
+                            <p style="color: #888; margin-bottom: 20px;">Preencha os dados ao lado para gerar o lote e o selo de rastreabilidade da saca.</p>
+                        </div>
+                    </div>
+                </div>
             </div> 
         </div>
-        <div id="inpi" class="secao"><div class="header-aba"><h2>Legislação e Normas</h2></div></div>
     </div> 
 
     <div id="modal-auth">
@@ -153,6 +209,7 @@
                 <button id="tab-cadastro" onclick="mudarAbaAuth('cadastro')">Criar Conta (Conselho)</button>
             </div>
             <div class="auth-body">
+                
                 <div id="form-login" class="auth-form">
                     <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">Produtores devem receber o login presencialmente via Conselho Regulador.</p>
                     <div><label>E-mail</label><input type="email" id="email-login" placeholder="seu@email.com"></div>
@@ -176,6 +233,23 @@
         </div>
     </div>
 
+    <div id="modal-passaporte">
+        <div class="passaporte-card">
+            <div class="passaporte-header">
+                <h3>✅ Autenticidade Confirmada</h3>
+                <p style="font-size: 0.9em; margin-top: 5px; opacity: 0.9;">Indicação de Procedência: Farinha do Pacuí</p>
+            </div>
+            <div class="passaporte-body">
+                <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
+                <p><strong>Núcleo Produtivo:</strong> <span id="modal-produtor">Comunidade Habilitada</span></p>
+                <p><strong>Comunidade:</strong> <span id="modal-comunidade">-</span></p>
+                <p><strong>Data de Produção:</strong> <span id="modal-data">-</span></p>
+                <p><strong>Registro/ID:</strong> <span id="modal-id">-</span></p>
+                <button class="btn-fechar-modal" onclick="document.getElementById('modal-passaporte').style.display='none'">Fechar Passaporte</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ==========================================
         // COLE SUA URL DE IMPLANTAÇÃO AQUI EMBAIXO:
@@ -190,6 +264,7 @@
 
         function mostrar(id) { document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); var alvo = document.getElementById(id); if (alvo) alvo.style.display = 'block'; }
         function mostrarAbaPacui(idAba, elementoBotao) { document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none'); document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo')); document.getElementById(idAba).style.display = 'block'; elementoBotao.classList.add('ativo'); if(idAba === 'pacui-visao') setTimeout(() => { mapa.invalidateSize(); }, 200); }
+
         function abrirModalAuth() { document.getElementById('modal-auth').style.display = 'flex'; }
         function fecharModalAuth() { document.getElementById('modal-auth').style.display = 'none'; }
         function mudarAbaAuth(aba) {
@@ -198,63 +273,48 @@
             document.getElementById('tab-' + aba).classList.add('ativo'); document.getElementById('form-' + aba).style.display = 'flex';
         }
 
+        // CADASTRAR CONSELHO
         function fazerCadastroConselho() {
-            var n = document.getElementById('cad-nome').value;
-            var e = document.getElementById('cad-email').value;
-            var s = document.getElementById('cad-senha').value;
-            var c = document.getElementById('cad-codigo').value;
-            
+            var n = document.getElementById('cad-nome').value; var e = document.getElementById('cad-email').value;
+            var s = document.getElementById('cad-senha').value; var c = document.getElementById('cad-codigo').value;
             if(!n || !e || !s || !c) { alert("Preencha todos os campos."); return; }
-
-            var btn = document.getElementById('btn-fazer-cadastro');
-            btn.innerHTML = "⏳ Validando..."; btn.disabled = true;
+            var btn = document.getElementById('btn-fazer-cadastro'); btn.innerHTML = "⏳ Validando..."; btn.disabled = true;
 
             fetch(urlPlanilhaGeral, {
                 method: 'POST', body: JSON.stringify({acao: "cadastrar_usuario", nome: n, email: e, senha: s, codigo_acesso: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             }).then(r => r.json()).then(retorno => {
                 btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false;
-                if(retorno.sucesso) { alert("Acesso concedido! Pode fazer login."); mudarAbaAuth('login'); } 
-                else { alert("Erro: " + retorno.erro); }
+                if(retorno.sucesso) { alert("Acesso concedido! Pode fazer login."); mudarAbaAuth('login'); } else { alert("Erro: " + retorno.erro); }
             });
         }
 
+        // CONSELHO CADASTRA PRODUTOR
         function conselhoCadastraProdutor() {
-            var n = document.getElementById('novo-prod-nome').value;
-            var e = document.getElementById('novo-prod-email').value;
-            var c = document.getElementById('novo-prod-comunidade').value;
+            var n = document.getElementById('novo-prod-nome').value; var e = document.getElementById('novo-prod-email').value; var c = document.getElementById('novo-prod-comunidade').value;
             if(!n || !e || !c) { alert("Preencha nome, email e comunidade."); return; }
-            
             fetch(urlPlanilhaGeral, {
                 method: 'POST', body: JSON.stringify({acao: "conselho_cadastra_produtor", nome_produtor: n, email_produtor: e, comunidade: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             }).then(r => r.json()).then(retorno => {
                 if(retorno.sucesso) { 
-                    alert("Produtor inserido no sistema!\nEle já pode fazer login com o e-mail: " + e + " e senha padrão: pacui123"); 
-                    document.getElementById('novo-prod-nome').value = ""; document.getElementById('novo-prod-email').value = "";
-                    carregarListaConselho(); 
+                    alert("Produtor inserido!\nLogin: " + e + " / Senha: pacui123"); 
+                    document.getElementById('novo-prod-nome').value = ""; document.getElementById('novo-prod-email').value = ""; carregarListaConselho(); 
                 }
             });
         }
 
+        // LOGIN
         function fazerLoginReal() {
-            var e = document.getElementById('email-login').value;
-            var s = document.getElementById('senha-login').value;
+            var e = document.getElementById('email-login').value; var s = document.getElementById('senha-login').value;
             if(!e || !s) return;
-
-            var btn = document.getElementById('btn-fazer-login');
-            btn.innerHTML = "⏳ Autenticando..."; btn.disabled = true;
+            var btn = document.getElementById('btn-fazer-login'); btn.innerHTML = "⏳ Autenticando..."; btn.disabled = true;
 
             fetch(urlPlanilhaGeral, {
                 method: 'POST', body: JSON.stringify({acao: "login_usuario", email: e, senha: s}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             }).then(r => r.json()).then(retorno => {
                 btn.innerHTML = "Entrar no Sistema"; btn.disabled = false;
-                if(retorno.sucesso) { 
-                    usuarioLogado.nome = retorno.nome; usuarioLogado.perfil = retorno.perfil;
-                    iniciarSessao(retorno.perfil, retorno.nome); 
-                } else { alert("Erro: " + retorno.erro); }
-            }).catch(e => {
-                btn.innerHTML = "Entrar no Sistema"; btn.disabled = false;
-                alert("Falha de conexão com o banco de dados.");
-            });
+                if(retorno.sucesso) { usuarioLogado.nome = retorno.nome; usuarioLogado.perfil = retorno.perfil; iniciarSessao(retorno.perfil, retorno.nome); } 
+                else { alert("Erro: " + retorno.erro); }
+            }).catch(e => { btn.innerHTML = "Entrar no Sistema"; btn.disabled = false; alert("Falha de conexão."); });
         }
 
         function iniciarSessao(perfil, nome) {
@@ -263,8 +323,7 @@
 
             if(perfil === 'produtor') {
                 btnNav.innerHTML = "👨‍🌾 " + nome.split(" ")[0] + " (Sair)";
-                document.getElementById('aba-produtor-btn').style.display = 'block';
-                document.getElementById('doc-nome').value = nome; 
+                document.getElementById('aba-produtor-btn').style.display = 'block'; document.getElementById('doc-nome').value = nome; 
                 mostrar('pacui'); mostrarAbaPacui('pacui-produtor', document.getElementById('aba-produtor-btn'));
                 verificarStatusProdutor(nome); 
             } else if (perfil === 'conselho') {
@@ -276,59 +335,35 @@
             btnNav.onclick = function() { location.reload(); }; 
         }
 
+        // STATUS PRODUTOR
         function verificarStatusProdutor(nomeUsuario) {
             var meuDado = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeUsuario));
-            var painelMsg = document.getElementById('painel-mensagem-produtor');
-            var areaUpload = document.getElementById('area-upload-produtor');
+            var painelMsg = document.getElementById('painel-mensagem-produtor'); var areaUpload = document.getElementById('area-upload-produtor');
 
             if (!meuDado || meuDado.status === "Aguardando Documentação") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro foi criado pelo Conselho, mas você precisa enviar sua documentação para iniciar a auditoria.</div>`;
-                areaUpload.style.display = 'block';
-            } 
-            else if (meuDado.status === "Em Análise") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer.</div>`;
-                areaUpload.style.display = 'none'; 
-            }
-            else if (meuDado.status === "Com Pendência") {
-                painelMsg.innerHTML = `
-                    <div class="painel-aviso aviso-pendencia">
-                        <b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br>
-                        <i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>
-                        Por favor, anexe um novo ZIP corrigindo o apontamento acima.
-                    </div>`;
-                areaUpload.style.display = 'block'; 
-            }
-            else if (meuDado.status === "Habilitado") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`;
-                areaUpload.style.display = 'none';
-                document.getElementById('aba-rastreio-btn').style.display = 'block'; 
-            }
-            else if (meuDado.status === "Indeferido") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação para maiores detalhes.</div>`;
-                areaUpload.style.display = 'none';
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Você precisa enviar sua documentação (ZIP) para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
+            } else if (meuDado.status === "Em Análise") {
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos estão sendo analisados. Aguarde o parecer.</div>`; areaUpload.style.display = 'none'; 
+            } else if (meuDado.status === "Com Pendência") {
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Encontrada uma pendência documental.</b><br><br><i>Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, anexe um novo ZIP corrigindo o apontamento.</div>`; areaUpload.style.display = 'block'; 
+            } else if (meuDado.status === "Habilitado") {
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada. O Módulo de Rastreabilidade está liberado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
+            } else if (meuDado.status === "Indeferido") {
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação.</div>`; areaUpload.style.display = 'none';
             }
         }
 
         function lerArquivoBase64(arquivo) {
-            return new Promise((resolve, reject) => {
-                var reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = reject; reader.readAsDataURL(arquivo);
-            });
+            return new Promise((resolve, reject) => { var reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = reject; reader.readAsDataURL(arquivo); });
         }
 
         function enviarDocumentacaoReal() {
-            var nome = document.getElementById('doc-nome').value;
-            var comunidade = document.getElementById('doc-comunidade').value;
-            var arquivoInput = document.getElementById('doc-arquivo');
-            
+            var nome = document.getElementById('doc-nome').value; var comunidade = document.getElementById('doc-comunidade').value; var arquivoInput = document.getElementById('doc-arquivo');
             if(!comunidade || arquivoInput.files.length === 0) { alert("Preencha a comunidade e anexe a pasta .zip."); return; }
             if(!arquivoInput.files[0].name.toLowerCase().endsWith('.zip')) { alert("O dossiê deve ser formato .zip"); return; }
 
-            var arquivo = arquivoInput.files[0];
-            var btn = document.getElementById('btn-enviar-doc');
-            btn.innerHTML = "⏳ Enviando e Criptografando..."; btn.disabled = true;
-
-            var nomeFormatado = nome.replace(/\s+/g, '_');
-            var nomeDossieFinal = "Dossie_" + nomeFormatado + ".zip";
+            var arquivo = arquivoInput.files[0]; var btn = document.getElementById('btn-enviar-doc'); btn.innerHTML = "⏳ Enviando e Criptografando..."; btn.disabled = true;
+            var nomeFormatado = nome.replace(/\s+/g, '_'); var nomeDossieFinal = "Dossie_" + nomeFormatado + ".zip";
 
             lerArquivoBase64(arquivo).then(base64 => {
                 var pacote = { acao: "enviar_documentacao", nomeProdutor: nome, comunidade: comunidade, arquivoBase64: base64, mimeType: "application/zip", nomeArquivo: nomeDossieFinal };
@@ -336,44 +371,31 @@
                 .then(r => r.json()).then(retorno => {
                     btn.innerHTML = "Enviar Dossiê para Auditoria"; btn.disabled = false;
                     if(retorno.sucesso) { 
-                        alert("Enviado! O status mudará para Em Análise."); 
-                        arquivoInput.value = ""; 
-                        listaDeProdutoresParaStatus.push({nome: nome, status: "Em Análise"});
-                        verificarStatusProdutor(nome); 
-                    } else {
-                        alert("Erro: " + retorno.erro);
+                        alert("Enviado! O status mudará para Em Análise."); arquivoInput.value = ""; 
+                        listaDeProdutoresParaStatus.push({nome: nome, status: "Em Análise"}); verificarStatusProdutor(nome); 
                     }
                 });
             });
         }
 
+        // AUDITORIA (CONSELHO)
         function carregarListaConselho() {
-            var corpo = document.getElementById('corpo-tabela-conselho');
-            corpo.innerHTML = "<tr><td colspan='5'>Carregando processos do banco de dados...</td></tr>";
-            
+            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='5'>Carregando processos do banco de dados...</td></tr>";
             fetch(urlPlanilhaGeral).then(r => r.json()).then(dados => {
                 corpo.innerHTML = "";
                 dados.produtores.forEach(p => {
                     var tr = document.createElement('tr');
                     var classe = 'aguardando';
-                    if(p.status === 'Em Análise') classe = 'analise';
-                    else if(p.status === 'Habilitado') classe = 'habilitado';
-                    else if(p.status === 'Com Pendência') classe = 'pendencia';
-                    else if(p.status === 'Indeferido') classe = 'indeferido';
+                    if(p.status === 'Em Análise') classe = 'analise'; else if(p.status === 'Habilitado') classe = 'habilitado'; else if(p.status === 'Com Pendência') classe = 'pendencia'; else if(p.status === 'Indeferido') classe = 'indeferido';
 
-                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar Dossiê</a>` : `---`;
+                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar ZIP</a>` : `---`;
                     var btnAcoes = "";
-                    if(p.status === 'Aguardando Documentação') {
-                        btnAcoes = `<i>Aguardando envio</i>`;
-                    } else if(p.status === 'Em Análise' || p.status === 'Com Pendência') {
-                        btnAcoes = `
-                            <button class="btn-acao btn-validar" onclick="mudarStatusAuditoria('${p.nome}', 'Habilitado', '', this)">Aprovar</button>
-                            <button class="btn-acao btn-pendencia" onclick="apontarPendencia('${p.nome}', this)">Devolver (Pendência)</button>
-                            <button class="btn-acao btn-rejeitar" onclick="mudarStatusAuditoria('${p.nome}', 'Indeferido', '', this)">Indeferir</button>
-                        `;
-                    } else if(p.status === 'Habilitado') {
-                        btnAcoes = `<button class="btn-acao" style="background:#ccc; color:#333;" onclick="apontarPendencia('${p.nome}', this)">Suspender/Pendência</button>`;
-                    }
+                    if(p.status === 'Aguardando Documentação') { btnAcoes = `<i>Aguardando envio</i>`; } 
+                    else if(p.status === 'Em Análise' || p.status === 'Com Pendência') {
+                        btnAcoes = `<button class="btn-acao btn-validar" onclick="mudarStatusAuditoria('${p.nome}', 'Habilitado', '', this)">Aprovar</button>
+                                    <button class="btn-acao btn-pendencia" onclick="apontarPendencia('${p.nome}', this)">Devolver</button>
+                                    <button class="btn-acao btn-rejeitar" onclick="mudarStatusAuditoria('${p.nome}', 'Indeferido', '', this)">Indeferir</button>`;
+                    } else if(p.status === 'Habilitado') { btnAcoes = `<button class="btn-acao" style="background:#ccc; color:#333;" onclick="apontarPendencia('${p.nome}', this)">Suspender/Pendência</button>`; }
 
                     tr.innerHTML = `<td><strong>${p.nome}</strong></td> <td><span class="badge ${classe}">${p.status}</span></td> <td><small>${p.observacao}</small></td> <td>${linkDoc}</td> <td>${btnAcoes}</td>`;
                     corpo.appendChild(tr);
@@ -382,38 +404,45 @@
         }
 
         function apontarPendencia(nomeProdutor, btn) {
-            var motivo = prompt("Escreva o motivo da Devolutiva (O produtor verá esta mensagem):", "Faltou a foto do Tacho");
-            if(motivo != null && motivo.trim() !== "") {
-                mudarStatusAuditoria(nomeProdutor, 'Com Pendência', motivo, btn);
-            }
+            var motivo = prompt("Escreva o motivo da Devolutiva (O produtor verá esta mensagem):");
+            if(motivo != null && motivo.trim() !== "") mudarStatusAuditoria(nomeProdutor, 'Com Pendência', motivo, btn);
         }
 
         function mudarStatusAuditoria(nome, novoStatus, motivoTexto, btn) {
             btn.innerHTML = "⏳..."; btn.disabled = true;
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "alterar_status", nome_produtor: nome, novo_status: novoStatus, motivo: motivoTexto}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => { 
-                if(retorno.sucesso) carregarListaConselho(); 
-                else alert("Erro: " + retorno.erro);
+            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({acao: "alterar_status", nome_produtor: nome, novo_status: novoStatus, motivo: motivoTexto}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            }).then(r => r.json()).then(retorno => { if(retorno.sucesso) carregarListaConselho(); });
+        }
+
+        function gerarQRCode() {
+            var data = document.getElementById('data-lote').value; var comunidade = document.getElementById('comunidade-lote').value; var peso = document.getElementById('peso-lote').value; var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
+            if(!data || !peso || !comunidade) { alert("Preencha a data, comunidade e peso do lote."); return; }
+            var btn = document.querySelector('.btn-gerar-lote'); var txt = btn.innerHTML; btn.innerHTML = "⏳..."; btn.disabled = true;
+            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({ acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id }), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            }).then(r => r.json()).then(retorno => {
+                btn.innerHTML = txt; btn.disabled = false;
+                if (retorno.sucesso) {
+                    document.getElementById('modal-comunidade').innerText = comunidade; document.getElementById('modal-data').innerText = data.split('-').reverse().join('/'); document.getElementById('modal-id').innerText = id; document.getElementById('modal-produtor').innerText = "Comunidade " + comunidade;
+                    var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent("Plataforma Pacuí: Lote " + retorno.loteGerado + " Autenticado")}`;
+                    document.getElementById('area-qr').innerHTML = `<h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4><img src="${qrUrl}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';"><p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Simular leitura</p>`;
+                    document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
+                }
             });
         }
         
+        // Inicialização
         fetch(urlPlanilhaGeral).then(res => res.json()).then(dados => {
             if(dados.poligono && dados.poligono.length > 0) L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
-            var listaItens = document.getElementById('lista-itens');
-            var formProd = document.getElementById('novo-prod-comunidade');
-            var formProdDoc = document.getElementById('doc-comunidade');
-            if(formProd) formProd.innerHTML = ""; if(formProdDoc) formProdDoc.innerHTML = "";
-            
+            var listaItens = document.getElementById('lista-itens'); var formProd = document.getElementById('novo-prod-comunidade'); var dropLote = document.getElementById('comunidade-lote'); var formProdDoc = document.getElementById('doc-comunidade');
+            if(formProd) formProd.innerHTML = ""; if(dropLote) dropLote.innerHTML = ""; if(formProdDoc) formProdDoc.innerHTML = "";
             dados.comunidades.forEach(c => {
                 var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                 var div = document.createElement('div'); div.className = 'item-comunidade'; div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
                 div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); }; listaItens.appendChild(div);
-                
                 if(formProd) { var op = document.createElement('option'); op.value = c.nome; op.textContent = c.nome; formProd.appendChild(op); }
+                if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
                 if(formProdDoc) { var op2 = document.createElement('option'); op2.value = c.nome; op2.textContent = c.nome; formProdDoc.appendChild(op2); }
             });
-
             var listaNoticias = document.getElementById('lista-noticias');
             if (dados.noticias && dados.noticias.length > 0) {
                 dados.noticias.forEach(n => {
@@ -422,7 +451,6 @@
                     listaNoticias.appendChild(div);
                 });
             } else { listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>"; }
-            
             listaDeProdutoresParaStatus = dados.produtores; 
         });
             
