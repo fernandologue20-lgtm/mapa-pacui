@@ -691,8 +691,11 @@
         var urlPlanilhaLeitura = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
         
         fetch(urlPlanilhaLeitura)
-            .then(res => res.json())
-            .then(dados => {
+    .then(res => {
+        if (!res.ok) throw new Error("Erro na rede: " + res.status);
+        return res.json();
+    })
+    .then(dados => {
                 if(dados.poligono && dados.poligono.length > 0) {
                     L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
                 }
@@ -734,7 +737,10 @@
                     listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>";
                 }
             })
-            .catch(erro => console.log("Erro ao carregar os dados do Google Sheets:", erro));
+    .catch(erro => {
+        console.error("Erro ao carregar dados:", erro);
+        document.getElementById('lista-itens').innerHTML = "Erro ao conectar com a base de dados. Tente novamente mais tarde.";
+    });
             
         document.getElementById('btn-home').click();
     </script>
