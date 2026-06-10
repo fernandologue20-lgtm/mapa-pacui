@@ -29,12 +29,9 @@
         /* =========================================
            2. NAVEGAÇÃO PRINCIPAL E SUB-MENUS
            ========================================= */
-        .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); align-items: center; }
+        .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); }
         .menu-nav button { background: transparent; border: 2px solid var(--cor-primaria); color: var(--cor-primaria); padding: 10px 24px; cursor: pointer; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; font-size: 1rem; }
         .menu-nav button:hover, .menu-nav button.ativo { background: var(--cor-primaria); color: #fff; transform: translateY(-2px); box-shadow: var(--sombra-suave); }
-
-        .btn-login-nav { margin-left: auto; background: var(--cor-fundo) !important; color: var(--cor-texto) !important; border: 1px solid var(--cor-borda) !important; display: flex; align-items: center; gap: 8px; }
-        .btn-login-nav:hover { background: #e2e8f0 !important; color: var(--cor-primaria-hover) !important; }
 
         .sub-nav { display: flex; gap: 10px; margin-bottom: 25px; background: #e2e8f0; padding: 10px; border-radius: 8px; flex-wrap: wrap; }
         .sub-nav button { flex: 1; min-width: 200px; padding: 12px; border: none; background: #fff; color: var(--cor-texto); font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -68,21 +65,17 @@
         .tabela-sistema td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
         .tabela-sistema tr:hover { background: #f8fafc; }
         
-        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: #fff; display: inline-block; text-align: center;}
-        .badge.aguardando { background: #94a3b8; }
-        .badge.analise { background: #f59e0b; }
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: #fff; }
+        .badge.aguardando { background: #f59e0b; }
         .badge.habilitado { background: #10b981; }
-        .badge.pendencia { background: #ef4444; }
-        .badge.indeferido { background: #000; }
+        .badge.rejeitado { background: #ef4444; }
 
-        .btn-acao { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85em; transition: 0.2s; margin-right: 5px; color: white; margin-bottom: 5px;}
-        .btn-validar { background: #10b981; }
+        .btn-acao { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85em; transition: 0.2s; margin-right: 5px; }
+        .btn-validar { background: #10b981; color: white; }
         .btn-validar:hover { background: #059669; }
-        .btn-rejeitar { background: #ef4444; }
+        .btn-rejeitar { background: #ef4444; color: white; }
         .btn-rejeitar:hover { background: #dc2626; }
-        .btn-pendencia { background: #f59e0b; }
-        .btn-pendencia:hover { background: #d97706; }
-        .btn-doc { background: #3b82f6; text-decoration: none; display: inline-block;}
+        .btn-doc { background: #3b82f6; color: white; text-decoration: none; display: inline-block;}
         .btn-doc:hover { background: #2563eb; }
 
         .form-rastreio { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid var(--cor-borda); }
@@ -93,41 +86,16 @@
         .btn-gerar-lote { background: var(--cor-destaque); color: white; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 10px;}
         .btn-gerar-lote:hover { background: var(--cor-destaque-hover); transform: translateY(-2px); box-shadow: var(--sombra-suave); }
 
-        /* =========================================
-           5. MODAL DE LOGIN E CADASTRO
-           ========================================= */
-        #modal-auth { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .auth-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); animation: fadeIn 0.3s; }
-        .auth-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
-        .auth-header h3 { margin: 0; font-size: 1.4rem; }
-        .auth-abas { display: flex; background: #e2e8f0; }
-        .auth-abas button { flex: 1; padding: 12px; border: none; background: transparent; cursor: pointer; font-weight: bold; color: var(--cor-texto-claro); transition: 0.2s; }
-        .auth-abas button.ativo { background: #fff; color: var(--cor-primaria); border-bottom: 3px solid var(--cor-primaria); }
-        .auth-body { padding: 30px; }
-        
-        .auth-form { display: flex; flex-direction: column; gap: 15px; }
-        .auth-form label { font-size: 0.9em; font-weight: bold; color: var(--cor-texto); }
-        .auth-form input, .auth-form select { padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; width: 100%; }
-        .btn-auth { background: var(--cor-destaque); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; transition: 0.2s; }
-        .btn-auth:hover { background: var(--cor-destaque-hover); }
-        .btn-fechar-modal { background: transparent; color: #888; border: none; padding: 10px; width: 100%; cursor: pointer; margin-top: 10px; }
-        
-        .painel-aviso { padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid; }
-        .aviso-pendencia { background: #fef2f2; border-color: #e11d48; color: #9f1239; }
-        .aviso-sucesso { background: #f0fdf4; border-color: #16a34a; color: #166534; }
-
-        /* =========================================
-           6. MODAL DO PASSAPORTE
-           ========================================= */
         #modal-passaporte { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
         .passaporte-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
         .passaporte-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
         .passaporte-header h3 { margin: 0; display: flex; align-items: center; justify-content: center; gap: 10px;}
         .passaporte-body { padding: 25px; }
         .selo-autenticidade { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; }
+        .btn-fechar-modal { background: #e2e8f0; color: #333; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
         /* =========================================
-           7. MAPA E LISTAS (COMUNIDADES E NOTÍCIAS)
+           5. MAPA E LISTAS (COMUNIDADES E NOTÍCIAS)
            ========================================= */
         #mapa-container { height: 100%; width: 100%; border-radius: var(--raio-borda); border: 4px solid #fff; box-shadow: var(--sombra-media); z-index: 1; background: #e2e8f0; }
         .item-comunidade { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 10px; cursor: pointer; background: #f8fafc; transition: 0.2s;}
@@ -147,7 +115,7 @@
         .noticia-meta { color: var(--cor-texto-claro); font-size: 0.8rem; font-style: italic; display: block; border-top: 1px dashed var(--cor-borda); padding-top: 8px; }
 
         /* =========================================
-           8. CARTILHA DIGITAL (GUIA NORMATIVO)
+           6. CARTILHA DIGITAL (GUIA NORMATIVO)
            ========================================= */
         .capa-cartilha { background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); color: white; text-align: center; padding: 30px 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
         .titulo-cartilha { font-size: 1.6rem; margin-bottom: 8px; font-weight: 800; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
@@ -167,7 +135,7 @@
         .tabela-cartilha td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
 
         /* =========================================
-           9. RODAPÉ INSTITUCIONAL (FOOTER)
+           7. RODAPÉ INSTITUCIONAL (FOOTER)
            ========================================= */
         .rodape-site { display: none; background-color: #e2e8f0; border-top: 1px solid #cbd5e1; padding: 40px 20px; margin-top: 50px; color: var(--cor-texto); animation: fadeIn 0.4s ease-in-out; }
         .rodape-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -178,7 +146,7 @@
         .btn-download-rtc:hover { background-color: var(--cor-destaque-hover); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(230, 81, 0, 0.5); }
 
         /* =========================================
-           10. RESPONSIVIDADE
+           8. RESPONSIVIDADE
            ========================================= */
         @media (max-width: 1300px) { .layout-painel { grid-template-columns: 1fr 1.5fr 2fr; } }
         @media (max-width: 1024px) { 
@@ -203,10 +171,6 @@
         <button onclick="mostrar('home')" id="btn-home">Início</button>
         <button onclick="mostrar('pacui')" id="btn-pacui">Farinha do Pacuí</button>
         <button onclick="mostrar('inpi')" id="btn-inpi">Legislação e INPI</button>
-        
-        <button class="btn-login-nav" onclick="abrirModalAuth()" id="btn-auth-nav">
-            🔒 Área Restrita
-        </button>
     </nav>
 
     <div class="conteudo-principal">
@@ -273,50 +237,123 @@
 
             <div class="sub-nav">
                 <button onclick="mostrarAbaPacui('pacui-visao', this)" class="btn-sub-nav ativo">🗺️ Visão Geral e Mapa</button>
-                <button onclick="mostrarAbaPacui('pacui-produtor', this)" class="btn-sub-nav" id="aba-produtor-btn" style="display:none;">🌾 Meu Painel (Produtor)</button>
-                <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav" id="aba-gov-btn" style="display:none;">⚖️ Governança (Conselho)</button>
-                <button onclick="mostrarAbaPacui('pacui-rastreio', this)" class="btn-sub-nav" id="aba-rastreio-btn" style="display:none;">📦 Rastreabilidade</button>
+                <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav">⚖️ Governança (Conselho)</button>
+                <button onclick="mostrarAbaPacui('pacui-rastreio', this)" class="btn-sub-nav">📦 Rastreabilidade (Passaporte)</button>
             </div>
             
             <div id="pacui-visao" class="aba-pacui" style="display: block;">
                 <div class="layout-painel">
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📰 Mural de Notícias</h3>
-                        <div id="lista-noticias">Carregando...</div>
+                        <div id="lista-noticias"></div>
                     </div>
 
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📘 Guia Normativo</h3>
                         
                         <div class="capa-cartilha">
-                            <h1 class="titulo-cartilha" style="font-size: 1.3em;">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                            <p class="descricao-cartilha" style="font-size: 0.85em;">Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.</p>
+                            <h1 class="titulo-cartilha">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+                            <h3 class="subtitulo-cartilha">um guia para</h3>
+                            <p class="descricao-cartilha">
+                                Manual de Governança Territorial e Propriedade Intelectual da Farinha do Pacuí para lideranças locais e agentes públicos.
+                            </p>
                             <div class="tags-cartilha">
-                                <span style="font-size: 0.6em;">INDICAÇÃO GEOGRÁFICA</span>
+                                <span>INDICAÇÃO GEOGRÁFICA</span>
+                                <span>PROPRIEDADE INTELECTUAL</span>
                             </div>
                         </div>
 
                         <div class="texto-cartilha">
                             <h2>Portal de Acessibilidade e Conectividade Digital</h2>
-                            <p>Esta cartilha adota as diretrizes do e-MAG. Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva.</p>
-                            
+                            <p>Esta cartilha adota as diretrizes do e-MAG (Modelo de Acessibilidade em Governo Eletrônico). Os recursos abaixo garantem que o conhecimento sobre os direitos da nossa comunidade seja distribuído de forma inclusiva, clara e universal porque todo produtor merece acesso pleno à informação.</p>
+                            <ul>
+                                <li><strong>Audiodescrição Disponível:</strong> Ativação de comandos de voz para leitura integral dos textos e descrição detalhada de tabelas e gráficos, garantindo acesso para pessoas com deficiência visual.</li>
+                                <li><strong>Suporte à LIBRAS:</strong> Janela de tradução em Língua Brasileira de Sinais para todo o conteúdo digital, assegurando inclusão plena para a comunidade surda.</li>
+                                <li><strong>Alto Contraste e Responsividade:</strong> Layout adaptável para leitores de tela e amplificadores de texto digitais, compatível com diferentes dispositivos e necessidades visuais.</li>
+                            </ul>
+                            <div class="destaque-box">
+                                Acesse o repositório oficial: Escaneie o QR Code apontando para https://www2.unifap.br/nitt/ para acessar o repositório oficial de Indicações Geográficas no site do NITT/UNIFAP.
+                            </div>
+
                             <h2>Capítulo 1: Os Pilares Jurídicos da Nossa Proteção</h2>
+                            <p>Para que a Farinha do Pacuí seja reconhecida oficialmente e protegida legalmente, o Instituto Nacional da Propriedade Industrial (INPI) exige a consolidação de três ferramentas técnicas. Elas formam a base jurídica que garante que o nome do nosso lugar seja respeitado em todo o Brasil.</p>
                             <ol>
-                                <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção.</li>
-                                <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas".</li>
-                                <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade.</li>
+                                <li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel e escrito da nossa produção. Oficializa o saber tradicional que praticamos há gerações nas nossas casas de farinha, transformando o conhecimento oral em normas reconhecidas por lei.</li>
+                                <li><strong>Dossiê de Notoriedade:</strong> A nossa "coleção de provas". Reúne registros históricos, fotos antigas, pesquisas, reportagens e prêmios que comprovam ao Brasil que o nome "Farinha do Pacuí" é sinônimo de qualidade e fama.</li>
+                                <li><strong>Instrumento de Delimitação Geográfica:</strong> O mapa técnico da nossa identidade. Define com precisão as coordenadas geográficas onde começa e termina o território produtor, protegendo quem é da terra.</li>
                             </ol>
                             
                             <h2>Capítulo 2: Governança Institucional e Autorregulação</h2>
+                            <p>A Indicação Geográfica é um direito que pertence a toda a comunidade produtora. Por não ser propriedade de uma única pessoa ou empresa, a união e a organização coletiva são os motores que fazem a IG funcionar na prática.</p>
                             <ul>
-                                <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem.</li>
-                                <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores.</li>
-                                <li><strong>Garantia de Padrão Sensorial:</strong> Acompanhamento e validação da qualidade da farinha.</li>
+                                <li><strong>Governança Coletiva:</strong> Gestão compartilhada do selo de origem e da marca da nossa farinha, centralizada na Associação de Produtores.</li>
+                                <li><strong>Conselho Regulador:</strong> Comitê de confiança formado por representantes dos próprios produtores. Sua função é zelar pelo cumprimento do CET.</li>
+                                <li><strong>Garantia de Padrão Sensorial:</strong> Os próprios produtores acompanham e validam a qualidade da farinha.</li>
+                                <li><strong>Defesa Jurídica da Denominação:</strong> Atuação unida da Associação para impedir que o nome "Pacuí" seja usado de forma falsa.</li>
                             </ul>
-                            
+
+                            <h2>Capítulo 3: Alinhamento entre Tradição e Inovação Tecnológica</h2>
+                            <p>A introdução de inovações e normas em nosso ecossistema produtivo não serve para mudar o nosso jeito de trabalhar, mas sim para proteger o nosso saber tradicional, colocando-o em padrões seguros que o mercado atual exige.</p>
+                            <h3>Mantendo a Nossa Tradição (Identidade)</h3>
+                            <ul>
+                                <li><strong>Manejo e Seleção da Matéria-Prima:</strong> Cultivo das variedades de mandioca da nossa terra.</li>
+                                <li><strong>Processamento e Torra Artesanal:</strong> O controle manual do fogo e o uso dos tachos tradicionais.</li>
+                            </ul>
+                            <h3>Unindo com a Inovação (Boas Práticas e BPF)</h3>
+                            <ul>
+                                <li><strong>Segurança Sanitária:</strong> Cuidados simples de higiene com a água, limpeza e armazenamento.</li>
+                                <li><strong>Padronização da Qualidade:</strong> Adoção de critérios claros de classificação.</li>
+                            </ul>
+
+                            <h2>Capítulo 4: Impactos no Desenvolvimento Regional e Dinâmica Econômica</h2>
+                            <ul>
+                                <li><strong>Preço Justo e Diferenciação:</strong> O selo de origem afasta a concorrência comum e valoriza o trabalho do produtor.</li>
+                                <li><strong>Portas Abertas em Novos Mercados:</strong> A IG abre caminhos para o comércio qualificado: restaurantes de alta gastronomia e mercados institucionais.</li>
+                                <li><strong>O Efeito Multiplicador (Turismo):</strong> Regiões com produtos certificados atraem o chamado "Turismo de Experiência".</li>
+                            </ul>
+
+                            <h2>Capítulo 5: Impacto Social e Sucessão Familiar no Campo</h2>
+                            <ul>
+                                <li><strong>Orgulho da Terra e Redução do Êxodo Rural:</strong> Os nossos jovens passam a enxergar o sítio da família como um negócio viável.</li>
+                                <li><strong>Saber Ancestral com Status Técnico:</strong> O selo do INPI eleva a autoestima das novas gerações.</li>
+                                <li><strong>Um Novo Amanhã para a Juventude:</strong> O jovem une o conhecimento tradicional dos pais com ferramentas modernas de internet, gestão e vendas.</li>
+                            </ul>
+
+                            <h2>Capítulo 6: A Rede de Cooperação Intersetorial</h2>
+                            <p>A consolidação e o sucesso da IG do Pacuí dependem de uma grande corrente de cooperação:</p>
+                            <ul>
+                                <li><strong>Entidades Governamentais:</strong> Apoio com investimentos em infraestrutura logística, eletrificação rural e facilitação de licenças.</li>
+                                <li><strong>Universidades e NITT:</strong> Parceria contínua através de suporte científico, análises de laboratório e capacitações.</li>
+                                <li><strong>Setor Privado:</strong> Parcerias comerciais éticas baseadas no comércio justo.</li>
+                            </ul>
+
                             <h2>O Caminho da Nossa Indicação Geográfica</h2>
                             <p>O processo de conquista e manutenção da Indicação Geográfica segue uma jornada coletiva que envolve toda a comunidade produtora.</p>
-                            <div class="destaque-box">"A salvaguarda de um nome geográfico coloca a ciência a serviço do desenvolvimento econômico territorial."</div>
+                            <ol>
+                                <li><strong>Organização</strong></li>
+                                <li><strong>Documentação</strong></li>
+                                <li><strong>Registro</strong></li>
+                                <li><strong>Gestão</strong></li>
+                            </ol>
+
+                            <h2>Nossa História, Nosso Direito, Nosso Futuro</h2>
+                            <div class="destaque-box">
+                                "A salvaguarda de um nome geográfico coloca a ciência jurídica, a universidade e a propriedade intelectual a serviço da justiça social, do desenvolvimento econômico e da nossa história territorial."
+                            </div>
+                            <p>A Indicação Geográfica da Farinha do Pacuí é muito mais do que um selo ou um registro burocrático. É o reconhecimento oficial de que o nosso jeito de fazer, o nosso território e a nossa história têm valor e que esse valor pertence a todos nós.</p>
+                            
+                            <table class="tabela-cartilha">
+                                <tr>
+                                    <th>Nossa Força</th>
+                                    <th>Nossa Proteção</th>
+                                    <th>Nosso Legado</th>
+                                </tr>
+                                <tr>
+                                    <td>A união coletiva e a organização comunitária são a base de tudo.</td>
+                                    <td>O registro no INPI garante direitos legais para toda a comunidade.</td>
+                                    <td>As novas gerações são o futuro da nossa tradição e do nosso território.</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
@@ -324,62 +361,53 @@
 
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📍 Comunidades</h3>
-                        <div id="lista-itens">Carregando...</div>
+                        <div id="lista-itens"></div>
                     </div>
+
                 </div>
-            </div>
-
-            <div id="pacui-produtor" class="aba-pacui">
-                <div class="card" style="border-top: 5px solid var(--cor-destaque);">
-                    <h3 style="color: var(--cor-destaque-hover); margin-top: 0;">Meu Processo de Habilitação</h3>
-                    
-                    <div id="painel-mensagem-produtor"></div>
-
-                    <div id="area-upload-produtor" style="background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid var(--cor-borda);">
-                        <p style="margin-bottom: 15px; font-weight: bold; color: var(--cor-primaria);">Envie sua documentação pendente:</p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div style="display: flex; flex-direction: column;">
-                                <label>Nome do Produtor / Associação</label>
-                                <input type="text" id="doc-nome" readonly style="background:#eee; border:1px solid #ccc; padding:10px; border-radius:6px;">
-                            </div>
-                            <div style="display: flex; flex-direction: column;">
-                                <label>Comunidade Local</label>
-                                <select id="doc-comunidade" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;"></select>
-                            </div>
-                            <div style="grid-column: span 2; display: flex; flex-direction: column;">
-                                <label>Anexar Dossiê (Pasta .ZIP)</label>
-                                <input type="file" id="doc-arquivo" accept=".zip" style="padding: 10px; border: 1px dashed #ccc; border-radius: 6px; background: white;">
-                                <small style="color: #666; margin-top: 5px;">Junte RG/CNH, Comprovante de Residência e fotos da estrutura num arquivo único .zip.</small>
-                            </div>
-                            <div style="grid-column: span 2;">
-                                <button id="btn-enviar-doc" class="btn-auth" style="width: auto; padding: 10px 30px;" onclick="enviarDocumentacaoReal()">Enviar Dossiê para Auditoria</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            </div> 
+            
             <div id="pacui-gov" class="aba-pacui">
-                
-                <div class="card" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
-                    <h3 style="color: var(--cor-primaria); margin-top: 0; font-size: 1.2rem;">Adicionar Novo Produtor ao Sistema</h3>
-                    <div style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">Nome Completo</label><input type="text" id="novo-prod-nome" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></div>
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">E-mail de Acesso</label><input type="email" id="novo-prod-email" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></div>
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">Comunidade</label><select id="novo-prod-comunidade" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></select></div>
-                        <button class="btn-auth" style="margin: 0; padding: 10px 20px;" onclick="conselhoCadastraProdutor()">Cadastrar e Gerar Acesso</button>
-                    </div>
-                    <small style="color: #166534; display:block; margin-top:5px;">A senha padrão gerada será: <b>pacui123</b></small>
-                </div>
-
                 <div class="card" style="border-top: 5px solid var(--cor-primaria);">
-                    <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Auditoria de Produtores</h3>
-                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Avalie as documentações enviadas e solicite adequações caso o CET não seja cumprido.</p>
+                    <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Painel de Habilitação de Produtores</h3>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Acesso restrito ao Conselho Regulador.<br>Avalie as documentações para garantir a conformidade com o Caderno de Especificações Técnicas (CET).</p>
                     
                     <div style="overflow-x: auto;">
-                        <table class="tabela-sistema" id="tabela-conselho">
-                            <thead><tr><th>Produtor / Comunidade</th><th>Status Atual</th><th>Motivo / Observação</th><th>Dossiê</th><th>Ações da Auditoria</th></tr></thead>
-                            <tbody id="corpo-tabela-conselho"></tbody>
+                        <table class="tabela-sistema">
+                            <thead>
+                                <tr>
+                                    <th>Produtores / Comunidade</th>
+                                    <th>Status Atual</th>
+                                    <th>Ações do Conselho</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Comunidade de Tracajatuba I</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;" onclick="atualizarStatusConselho('Comunidade de Tracajatuba I', 'Aguardando', this)">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade de Tracajatuba II</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;" onclick="atualizarStatusConselho('Comunidade de Tracajatuba II', 'Aguardando', this)">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade do Salamito</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;" onclick="atualizarStatusConselho('Comunidade do Salamito', 'Aguardando', this)">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade de Ponta Grossa</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;" onclick="atualizarStatusConselho('Comunidade de Ponta Grossa', 'Aguardando', this)">Revogar Permissão</button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Comunidade do Corre Água</strong></td>
+                                    <td><span class="badge habilitado">Habilitado</span></td>
+                                    <td><button class="btn-acao" style="background: #ccc;" onclick="atualizarStatusConselho('Comunidade do Corre Água', 'Aguardando', this)">Revogar Permissão</button></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -387,6 +415,7 @@
                 <div class="card">
                     <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Repositório Oficial de Atas (Auditoria INPI)</h3>
                     <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Arquivo digital permanente das assembleias gerais, aprovação do CET e decisões do Conselho Regulador.</p>
+                    
                     <ul style="list-style: none; padding: 0;">
                         <li style="padding: 15px; border: 1px solid #ddd; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; background: #f8fafc;">
                             <span><strong>Ata 01/2026:</strong> Aprovação do Regulamento de Uso e Caderno de Especificações Técnicas.</span>
@@ -414,7 +443,7 @@
                             <div class="form-grupo">
                                 <label>Comunidade de Origem</label>
                                 <select id="comunidade-lote">
-                                    <option value="">Carregando...</option>
+                                    <option value="">Carregando comunidades...</option>
                                 </select>
                             </div>
                             <div class="form-grupo">
@@ -423,7 +452,7 @@
                             </div>
                             <div class="form-grupo">
                                 <label>ID Agroindústria (Opcional)</label>
-                                <input type="text" id="id-diagro" placeholder="Selo Diagro/SIE ou em branco">
+                                <input type="text" id="id-diagro" placeholder="Selo Diagro/SIE ou deixe em branco">
                             </div>
                             <div class="form-grupo form-full">
                                 <button class="btn-gerar-lote" onclick="gerarQRCode()">Emitir Certificado e Gerar QR Code Dinâmico</button>
@@ -434,6 +463,7 @@
                     <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; border: 2px dashed #ccc;">
                         <div id="area-qr" style="text-align: center;">
                             <p style="color: #888; margin-bottom: 20px;">Preencha os dados ao lado para gerar o lote e o selo de rastreabilidade da saca.</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Sign-check-icon.png" width="80" style="opacity: 0.2;" alt="Ícone QR Code">
                         </div>
                     </div>
                 </div>
@@ -467,38 +497,6 @@
         </div>
     </footer>
 
-    <div id="modal-auth">
-        <div class="auth-card">
-            <div class="auth-header"><h3 style="margin:0;">Plataforma IG Pacuí</h3></div>
-            <div class="auth-abas">
-                <button id="tab-login" class="ativo" onclick="mudarAbaAuth('login')">Fazer Login</button>
-                <button id="tab-cadastro" onclick="mudarAbaAuth('cadastro')">Criar Conta (Conselho)</button>
-            </div>
-            <div class="auth-body">
-                
-                <div id="form-login" class="auth-form">
-                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">Produtores devem receber o login presencialmente via Conselho Regulador.</p>
-                    <div><label>E-mail</label><input type="email" id="email-login" placeholder="seu@email.com"></div>
-                    <div><label>Senha</label><input type="password" id="senha-login" placeholder="••••••••"></div>
-                    <button id="btn-fazer-login" class="btn-auth" onclick="fazerLoginReal()">Entrar no Sistema</button>
-                </div>
-                
-                <div id="form-cadastro" class="auth-form" style="display: none;">
-                    <p style="font-size: 0.85em; color: #e11d48; margin-bottom: 10px;">A auto-criação de contas está restrita a membros oficiais da administração.</p>
-                    <div><label>Nome do Conselheiro</label><input type="text" id="cad-nome" placeholder="Seu nome..."></div>
-                    <div><label>E-mail Corporativo</label><input type="email" id="cad-email" placeholder="seu@email.com"></div>
-                    <div><label>Crie uma Senha</label><input type="password" id="cad-senha" placeholder="••••••••"></div>
-                    <div style="background: #fff1f2; padding: 10px; border-radius: 6px; border: 1px solid #fecdd3;">
-                        <label style="color:#e11d48;">Código de Acesso Institucional</label>
-                        <input type="password" id="cad-codigo" placeholder="Insira o código secreto">
-                    </div>
-                    <button id="btn-fazer-cadastro" class="btn-auth" onclick="fazerCadastroConselho()">Ativar Minha Conta</button>
-                </div>
-                <button class="btn-fechar-modal" onclick="fecharModalAuth()">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
     <div id="modal-passaporte">
         <div class="passaporte-card">
             <div class="passaporte-header">
@@ -507,232 +505,236 @@
             </div>
             <div class="passaporte-body">
                 <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
+                
                 <p><strong>Núcleo Produtivo:</strong> <span id="modal-produtor">Comunidade Habilitada</span></p>
                 <p><strong>Comunidade:</strong> <span id="modal-comunidade">-</span></p>
                 <p><strong>Data de Produção:</strong> <span id="modal-data">-</span></p>
                 <p><strong>Registro/ID:</strong> <span id="modal-id">-</span></p>
+
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; text-align: center;">
+                    <a href="#" style="color: var(--cor-primaria); font-weight: bold; text-decoration: none;">📄 Visualizar Certificado/Dossiê (PDF)</a>
+                </div>
+
                 <button class="btn-fechar-modal" onclick="document.getElementById('modal-passaporte').style.display='none'">Fechar Passaporte</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // COLE SUA URL DE IMPLANTAÇÃO AQUI EMBAIXO:
-        // ==========================================
-        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
-        
-        var usuarioLogado = { nome: "", perfil: "" };
-        var listaDeProdutoresParaStatus = []; 
-
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        function mostrar(id) { document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); var alvo = document.getElementById(id); if (alvo) alvo.style.display = 'block'; }
-        function mostrarAbaPacui(idAba, elementoBotao) { document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none'); document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo')); document.getElementById(idAba).style.display = 'block'; elementoBotao.classList.add('ativo'); if(idAba === 'pacui-visao') setTimeout(() => { mapa.invalidateSize(); }, 200); }
-        function abrirModalAuth() { document.getElementById('modal-auth').style.display = 'flex'; }
-        function fecharModalAuth() { document.getElementById('modal-auth').style.display = 'none'; }
-        function mudarAbaAuth(aba) {
-            document.getElementById('tab-login').classList.remove('ativo'); document.getElementById('tab-cadastro').classList.remove('ativo');
-            document.getElementById('form-login').style.display = 'none'; document.getElementById('form-cadastro').style.display = 'none';
-            document.getElementById('tab-' + aba).classList.add('ativo'); document.getElementById('form-' + aba).style.display = 'flex';
-        }
-
-        // ===================================================
-        // 1. CADASTRAR CONSELHEIRO
-        // ===================================================
-        function fazerCadastroConselho() {
-            var n = document.getElementById('cad-nome').value; var e = document.getElementById('cad-email').value;
-            var s = document.getElementById('cad-senha').value; var c = document.getElementById('cad-codigo').value;
-            if(!n || !e || !s || !c) { alert("Preencha todos os campos."); return; }
-            var btn = document.getElementById('btn-fazer-cadastro'); btn.innerHTML = "⏳ Validando..."; btn.disabled = true;
-
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "cadastrar_usuario", nome: n, email: e, senha: s, codigo_acesso: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false;
-                if(retorno.sucesso) { alert("Acesso concedido! Pode fazer login."); mudarAbaAuth('login'); } else { alert("Erro: " + retorno.erro); }
-            }).catch(e => { btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false; alert("Falha ao comunicar com o servidor."); });
-        }
-
-        // ===================================================
-        // 2. CONSELHO CADASTRA PRODUTOR
-        // ===================================================
-        function conselhoCadastraProdutor() {
-            var n = document.getElementById('novo-prod-nome').value; var e = document.getElementById('novo-prod-email').value; var c = document.getElementById('novo-prod-comunidade').value;
-            if(!n || !e || !c) { alert("Preencha nome, email e comunidade."); return; }
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "conselho_cadastra_produtor", nome_produtor: n, email_produtor: e, comunidade: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                if(retorno.sucesso) { 
-                    alert("Produtor inserido no sistema!\nEle já pode fazer login com o e-mail: " + e + " e senha padrão: pacui123"); 
-                    document.getElementById('novo-prod-nome').value = ""; document.getElementById('novo-prod-email').value = ""; carregarListaConselho(); 
+        function mostrar(id) {
+            document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('ativo'));
+            
+            var alvo = document.getElementById(id);
+            var botaoAtivo = document.getElementById('btn-' + id);
+            var rodape = document.getElementById('rodape-pesquisa');
+            
+            if (alvo) {
+                alvo.style.display = 'block';
+                if(botaoAtivo) botaoAtivo.classList.add('ativo');
+                
+                if (rodape) {
+                    rodape.style.display = (id === 'pacui') ? 'block' : 'none';
                 }
-            });
-        }
-
-        // ===================================================
-        // 3. FAZER LOGIN
-        // ===================================================
-        function fazerLoginReal() {
-            var e = document.getElementById('email-login').value; var s = document.getElementById('senha-login').value;
-            if(!e || !s) return;
-            var btn = document.getElementById('btn-fazer-login'); btn.innerHTML = "⏳ Autenticando..."; btn.disabled = true;
-
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "login_usuario", email: e, senha: s}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = "Entrar no Sistema"; btn.disabled = false;
-                if(retorno.sucesso) { usuarioLogado.nome = retorno.nome; usuarioLogado.perfil = retorno.perfil; iniciarSessao(retorno.perfil, retorno.nome); } 
-                else { alert("Erro: " + retorno.erro); }
-            }).catch(e => { btn.innerHTML = "Entrar no Sistema"; btn.disabled = false; alert("Falha de conexão com o banco de dados."); });
-        }
-
-        function iniciarSessao(perfil, nome) {
-            fecharModalAuth();
-            var btnNav = document.getElementById('btn-auth-nav');
-
-            if(perfil === 'produtor') {
-                btnNav.innerHTML = "👨‍🌾 " + nome.split(" ")[0] + " (Sair)";
-                document.getElementById('aba-produtor-btn').style.display = 'block'; document.getElementById('doc-nome').value = nome; 
-                mostrar('pacui'); mostrarAbaPacui('pacui-produtor', document.getElementById('aba-produtor-btn'));
-                verificarStatusProdutor(nome); 
-            } else if (perfil === 'conselho') {
-                btnNav.innerHTML = "⚖️ Conselho (Sair)";
-                document.getElementById('aba-gov-btn').style.display = 'block';
-                mostrar('pacui'); mostrarAbaPacui('pacui-gov', document.getElementById('aba-gov-btn'));
-                carregarListaConselho(); 
-            }
-            btnNav.onclick = function() { location.reload(); }; 
-        }
-
-        // ===================================================
-        // 4. LÓGICA DO PAINEL DO PRODUTOR E ENVIO DE ZIP
-        // ===================================================
-        function verificarStatusProdutor(nomeUsuario) {
-            var meuDado = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeUsuario));
-            var painelMsg = document.getElementById('painel-mensagem-produtor'); var areaUpload = document.getElementById('area-upload-produtor');
-
-            if (!meuDado || meuDado.status === "Aguardando Documentação") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro foi criado pelo Conselho, mas você precisa enviar sua documentação para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
-            } else if (meuDado.status === "Em Análise") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer.</div>`; areaUpload.style.display = 'none'; 
-            } else if (meuDado.status === "Com Pendência") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, anexe um novo ZIP corrigindo o apontamento acima.</div>`; areaUpload.style.display = 'block'; 
-            } else if (meuDado.status === "Habilitado") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
-            } else if (meuDado.status === "Indeferido") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação para maiores detalhes.</div>`; areaUpload.style.display = 'none';
+                
+                if(id === 'pacui') {
+                    var btnVisaoGeral = document.querySelector('.btn-sub-nav');
+                    if(btnVisaoGeral) btnVisaoGeral.click();
+                }
             }
         }
 
-        function lerArquivoBase64(arquivo) {
-            return new Promise((resolve, reject) => { var reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = reject; reader.readAsDataURL(arquivo); });
+        function mostrarAbaPacui(idAba, elementoBotao) {
+            document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none');
+            document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo'));
+            
+            document.getElementById(idAba).style.display = 'block';
+            elementoBotao.classList.add('ativo');
+
+            if(idAba === 'pacui-visao') {
+                setTimeout(() => { mapa.invalidateSize(); }, 200);
+            }
         }
 
-        function enviarDocumentacaoReal() {
-            var nome = document.getElementById('doc-nome').value; var comunidade = document.getElementById('doc-comunidade').value; var arquivoInput = document.getElementById('doc-arquivo');
-            if(!comunidade || arquivoInput.files.length === 0) { alert("Preencha a comunidade e anexe a pasta .zip."); return; }
-            if(!arquivoInput.files[0].name.toLowerCase().endsWith('.zip')) { alert("O dossiê deve ser formato .zip"); return; }
-
-            var arquivo = arquivoInput.files[0]; var btn = document.getElementById('btn-enviar-doc'); btn.innerHTML = "⏳ Enviando e Criptografando..."; btn.disabled = true;
-            var nomeFormatado = nome.replace(/\s+/g, '_'); var nomeDossieFinal = "Dossie_" + nomeFormatado + ".zip";
-
-            lerArquivoBase64(arquivo).then(base64 => {
-                var pacote = { acao: "enviar_documentacao", nomeProdutor: nome, comunidade: comunidade, arquivoBase64: base64, mimeType: "application/zip", nomeArquivo: nomeDossieFinal };
-                fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify(pacote), headers: { 'Content-Type': 'text/plain;charset=utf-8' } })
-                .then(r => r.json()).then(retorno => {
-                    btn.innerHTML = "Enviar Dossiê para Auditoria"; btn.disabled = false;
-                    if(retorno.sucesso) { 
-                        alert("Enviado! O status mudará para Em Análise."); arquivoInput.value = ""; 
-                        listaDeProdutoresParaStatus.push({nome: nome, status: "Em Análise"}); verificarStatusProdutor(nome); 
-                    }
-                });
-            });
-        }
-
-        // ===================================================
-        // 5. AUDITORIA E DEVOLUTIVA (CONSELHO)
-        // ===================================================
-        function carregarListaConselho() {
-            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='5'>Carregando processos do banco de dados...</td></tr>";
-            fetch(urlPlanilhaGeral).then(r => r.json()).then(dados => {
-                corpo.innerHTML = "";
-                dados.produtores.forEach(p => {
-                    var tr = document.createElement('tr');
-                    var classe = 'aguardando';
-                    if(p.status === 'Em Análise') classe = 'analise'; else if(p.status === 'Habilitado') classe = 'habilitado'; else if(p.status === 'Com Pendência') classe = 'pendencia'; else if(p.status === 'Indeferido') classe = 'indeferido';
-
-                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar ZIP</a>` : `---`;
-                    var btnAcoes = "";
-                    if(p.status === 'Aguardando Documentação') { btnAcoes = `<i>Aguardando envio</i>`; } 
-                    else if(p.status === 'Em Análise' || p.status === 'Com Pendência') {
-                        btnAcoes = `<button class="btn-acao btn-validar" onclick="mudarStatusAuditoria('${p.nome}', 'Habilitado', '', this)">Aprovar</button>
-                                    <button class="btn-acao btn-pendencia" onclick="apontarPendencia('${p.nome}', this)">Devolver (Pendência)</button>
-                                    <button class="btn-acao btn-rejeitar" onclick="mudarStatusAuditoria('${p.nome}', 'Indeferido', '', this)">Indeferir</button>`;
-                    } else if(p.status === 'Habilitado') { btnAcoes = `<button class="btn-acao" style="background:#ccc; color:#333;" onclick="apontarPendencia('${p.nome}', this)">Suspender/Pendência</button>`; }
-
-                    tr.innerHTML = `<td><strong>${p.nome}</strong></td> <td><span class="badge ${classe}">${p.status}</span></td> <td><small>${p.observacao}</small></td> <td>${linkDoc}</td> <td>${btnAcoes}</td>`;
-                    corpo.appendChild(tr);
-                });
-            });
-        }
-
-        function apontarPendencia(nomeProdutor, btn) {
-            var motivo = prompt("Escreva o motivo da Devolutiva (O produtor verá esta mensagem):", "Faltou a CNH e a foto do Tacho");
-            if(motivo != null && motivo.trim() !== "") mudarStatusAuditoria(nomeProdutor, 'Com Pendência', motivo, btn);
-        }
-
-        function mudarStatusAuditoria(nome, novoStatus, motivoTexto, btn) {
-            btn.innerHTML = "⏳..."; btn.disabled = true;
-            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({acao: "alterar_status", nome_produtor: nome, novo_status: novoStatus, motivo: motivoTexto}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => { if(retorno.sucesso) carregarListaConselho(); });
-        }
-
-        // ===================================================
-        // 6. RASTREABILIDADE
-        // ===================================================
         function gerarQRCode() {
-            var data = document.getElementById('data-lote').value; var comunidade = document.getElementById('comunidade-lote').value; var peso = document.getElementById('peso-lote').value; var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
-            if(!data || !peso || !comunidade) { alert("Preencha a data, comunidade e peso do lote."); return; }
-            var btn = document.querySelector('.btn-gerar-lote'); var txt = btn.innerHTML; btn.innerHTML = "⏳..."; btn.disabled = true;
-            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({ acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id }), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = txt; btn.disabled = false;
-                if (retorno.sucesso) {
-                    document.getElementById('modal-comunidade').innerText = comunidade; document.getElementById('modal-data').innerText = data.split('-').reverse().join('/'); document.getElementById('modal-id').innerText = id; document.getElementById('modal-produtor').innerText = "Comunidade " + comunidade;
-                    var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent("Plataforma Pacuí: Lote " + retorno.loteGerado + " Autenticado")}`;
-                    document.getElementById('area-qr').innerHTML = `<h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4><img src="${qrUrl}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';"><p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Simular leitura</p>`;
-                    document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
+            var data = document.getElementById('data-lote').value;
+            var comunidade = document.getElementById('comunidade-lote').value;
+            var peso = document.getElementById('peso-lote').value;
+            var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
+            var btnGera = document.querySelector('.btn-gerar-lote');
+
+            if(!data || !peso || !comunidade) {
+                alert("Por favor, preencha a data de produção, a comunidade e o peso do lote.");
+                return;
+            }
+
+            var textoOriginal = btnGera.innerHTML;
+            btnGera.innerHTML = "⏳ Registrando Lote...";
+            btnGera.style.backgroundColor = "#64748b"; 
+            btnGera.disabled = true;
+
+            var pacoteDados = {
+                acao: "gerar_lote",
+                data: data,
+                comunidade: comunidade,
+                peso: peso,
+                id_diagro: id
+            };
+
+            // Lembre-se de colar a sua URL de implantação atualizada aqui!
+            var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+
+            fetch(urlPlanilha, {
+                method: 'POST',
+                body: JSON.stringify(pacoteDados),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
                 }
+            })
+            .then(resposta => resposta.json())
+            .then(retorno => {
+                btnGera.innerHTML = textoOriginal;
+                btnGera.style.backgroundColor = "var(--cor-destaque)";
+                btnGera.disabled = false;
+
+                if (retorno.sucesso) {
+                    var loteOficial = retorno.loteGerado;
+                    
+                    document.getElementById('modal-comunidade').innerText = comunidade;
+                    document.getElementById('modal-data').innerText = data.split('-').reverse().join('/');
+                    document.getElementById('modal-id').innerText = id;
+                    document.getElementById('modal-produtor').innerText = "Comunidade " + comunidade;
+
+                    var urlPassaporte = "Plataforma Pacuí: Lote " + loteOficial + " Autenticado com sucesso!";
+                    var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlPassaporte)}`;
+
+                    var areaQr = document.getElementById('area-qr');
+                    areaQr.innerHTML = `
+                        <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${loteOficial}</h4>
+                        <img src="${qrUrl}" alt="QR Code do Lote" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">
+                        <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Simular leitura do Consumidor</p>
+                        <p style="font-size: 0.8em; color: #10b981; margin-top: 5px;">✔️ Salvo no banco de dados da Associação.</p>
+                    `;
+                    
+                    document.getElementById('peso-lote').value = "";
+                    document.getElementById('id-diagro').value = ""; 
+                } else {
+                    alert("Erro ao salvar: " + retorno.erro);
+                }
+            })
+            .catch(erro => {
+                alert("Falha de conexão. Verifique se o URL do script está correto.");
+                btnGera.innerHTML = textoOriginal;
+                btnGera.style.backgroundColor = "var(--cor-destaque)";
+                btnGera.disabled = false;
             });
         }
-        
-        // ===================================================
-        // 7. INICIALIZAÇÃO DA PÁGINA
-        // ===================================================
-        fetch(urlPlanilhaGeral).then(res => res.json()).then(dados => {
-            if(dados.poligono && dados.poligono.length > 0) L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
-            var listaItens = document.getElementById('lista-itens'); var formProd = document.getElementById('novo-prod-comunidade'); var dropLote = document.getElementById('comunidade-lote'); var formProdDoc = document.getElementById('doc-comunidade');
-            if(formProd) formProd.innerHTML = ""; if(dropLote) dropLote.innerHTML = ""; if(formProdDoc) formProdDoc.innerHTML = "";
-            dados.comunidades.forEach(c => {
-                var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
-                var div = document.createElement('div'); div.className = 'item-comunidade'; div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
-                div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); }; listaItens.appendChild(div);
-                if(formProd) { var op = document.createElement('option'); op.value = c.nome; op.textContent = c.nome; formProd.appendChild(op); }
-                if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
-                if(formProdDoc) { var op2 = document.createElement('option'); op2.value = c.nome; op2.textContent = c.nome; formProdDoc.appendChild(op2); }
+
+        // --- NOVA FUNÇÃO: ATUALIZA O STATUS DO PRODUTOR VIA APPS SCRIPT ---
+        function atualizarStatusConselho(nomeProdutor, novoStatus, elementoBotao) {
+            var textoOriginal = elementoBotao.innerHTML;
+            elementoBotao.innerHTML = "⏳ Processando...";
+            elementoBotao.disabled = true;
+
+            var pacoteDados = {
+                acao: "alterar_status",
+                nome_produtor: nomeProdutor,
+                novo_status: novoStatus
+            };
+
+            // Certifique-se de que esta URL é a correta do seu deploy atual
+            var urlPlanilha = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+
+            fetch(urlPlanilha, {
+                method: 'POST',
+                body: JSON.stringify(pacoteDados),
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+            })
+            .then(resposta => resposta.json())
+            .then(retorno => {
+                if (retorno.sucesso) {
+                    alert(nomeProdutor + " foi atualizado para: " + novoStatus);
+                    var linha = elementoBotao.closest('tr');
+                    var badge = linha.querySelector('.badge');
+                    badge.innerText = novoStatus;
+                    
+                    if (novoStatus === 'Habilitado') {
+                        badge.className = "badge habilitado";
+                        elementoBotao.innerText = "Revogar Permissão";
+                        elementoBotao.setAttribute('onclick', `atualizarStatusConselho('${nomeProdutor}', 'Aguardando', this)`);
+                        elementoBotao.style.background = "#ccc";
+                        elementoBotao.style.color = "#333";
+                    } else {
+                        badge.className = "badge aguardando";
+                        elementoBotao.innerText = "Habilitar Produtor";
+                        elementoBotao.setAttribute('onclick', `atualizarStatusConselho('${nomeProdutor}', 'Habilitado', this)`);
+                        elementoBotao.style.background = "#10b981";
+                        elementoBotao.style.color = "#fff";
+                    }
+                    elementoBotao.disabled = false;
+                } else {
+                    alert("Erro ao comunicar com a base de dados: " + retorno.erro);
+                    elementoBotao.innerHTML = textoOriginal;
+                    elementoBotao.disabled = false;
+                }
+            })
+            .catch(erro => {
+                alert("Falha de comunicação com o servidor.");
+                elementoBotao.innerHTML = textoOriginal;
+                elementoBotao.disabled = false;
             });
-            var listaNoticias = document.getElementById('lista-noticias');
-            if (dados.noticias && dados.noticias.length > 0) {
-                dados.noticias.forEach(n => {
-                    var div = document.createElement('div'); div.className = 'noticia-item';
-                    div.innerHTML = `<h4 class="noticia-titulo">${n.titulo}</h4><p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p><span class="noticia-meta">${n.fonte} • ${n.data}</span>`;
-                    listaNoticias.appendChild(div);
+        }
+
+        var urlPlanilhaLeitura = "https://script.google.com/macros/s/AKfycbygrHOhYywIbHq_-8wULBkykeTmP8U01KzfdFwij4zxNozs_gajxnwEnadhz_OuPBtNdg/exec"; 
+        
+        fetch(urlPlanilhaLeitura)
+            .then(res => res.json())
+            .then(dados => {
+                if(dados.poligono && dados.poligono.length > 0) {
+                    L.polygon(dados.poligono, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa);
+                }
+                if(dados.rota && dados.rota.length > 0) {
+                    L.polyline(dados.rota, {color: "#0d47a1", weight: 4, dashArray:'10,10'}).bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"}).addTo(mapa);
+                }
+                
+                var listaItens = document.getElementById('lista-itens');
+                var selectComunidade = document.getElementById('comunidade-lote'); 
+                selectComunidade.innerHTML = ''; 
+                
+                dados.comunidades.forEach(c => {
+                    var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
+                    var div = document.createElement('div');
+                    div.className = 'item-comunidade';
+                    div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                    div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                    listaItens.appendChild(div);
+
+                    var option = document.createElement('option');
+                    option.value = c.nome;
+                    option.textContent = c.nome;
+                    selectComunidade.appendChild(option);
                 });
-            } else { listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>"; }
-            listaDeProdutoresParaStatus = dados.produtores; 
-        });
+
+                var listaNoticias = document.getElementById('lista-noticias');
+                if (dados.noticias && dados.noticias.length > 0) {
+                    dados.noticias.forEach(n => {
+                        var div = document.createElement('div');
+                        div.className = 'noticia-item';
+                        div.innerHTML = `
+                            <h4 class="noticia-titulo">${n.titulo}</h4>
+                            <p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p>
+                            <span class="noticia-meta">${n.fonte} • ${n.data}</span>
+                        `;
+                        listaNoticias.appendChild(div);
+                    });
+                } else {
+                    listaNoticias.innerHTML = "<p style='color: var(--cor-texto-claro); font-style: italic;'>Nenhuma atualização recente no mural.</p>";
+                }
+            })
+            .catch(erro => console.log("Erro ao carregar os dados do Google Sheets:", erro));
             
         document.getElementById('btn-home').click();
     </script>
