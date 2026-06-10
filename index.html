@@ -29,9 +29,12 @@
         /* =========================================
            2. NAVEGAÇÃO PRINCIPAL E SUB-MENUS
            ========================================= */
-        .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); }
+        .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); align-items: center; }
         .menu-nav button { background: transparent; border: 2px solid var(--cor-primaria); color: var(--cor-primaria); padding: 10px 24px; cursor: pointer; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; font-size: 1rem; }
         .menu-nav button:hover, .menu-nav button.ativo { background: var(--cor-primaria); color: #fff; transform: translateY(-2px); box-shadow: var(--sombra-suave); }
+
+        .btn-login-nav { margin-left: auto; background: var(--cor-fundo) !important; color: var(--cor-texto) !important; border: 1px solid var(--cor-borda) !important; display: flex; align-items: center; gap: 8px; }
+        .btn-login-nav:hover { background: #e2e8f0 !important; color: var(--cor-primaria-hover) !important; }
 
         .sub-nav { display: flex; gap: 10px; margin-bottom: 25px; background: #e2e8f0; padding: 10px; border-radius: 8px; flex-wrap: wrap; }
         .sub-nav button { flex: 1; min-width: 200px; padding: 12px; border: none; background: #fff; color: var(--cor-texto); font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -58,7 +61,31 @@
         .painel-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         /* =========================================
-           4. GOVERNANÇA E RASTREABILIDADE
+           4. MODAL DE LOGIN E CADASTRO
+           ========================================= */
+        #modal-auth { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .auth-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); animation: fadeIn 0.3s; }
+        .auth-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
+        .auth-header h3 { margin: 0; font-size: 1.4rem; }
+        .auth-abas { display: flex; background: #e2e8f0; }
+        .auth-abas button { flex: 1; padding: 12px; border: none; background: transparent; cursor: pointer; font-weight: bold; color: var(--cor-texto-claro); transition: 0.2s; }
+        .auth-abas button.ativo { background: #fff; color: var(--cor-primaria); border-bottom: 3px solid var(--cor-primaria); }
+        .auth-body { padding: 30px; }
+        
+        .auth-form { display: flex; flex-direction: column; gap: 15px; }
+        .auth-form label { font-size: 0.9em; font-weight: bold; color: var(--cor-texto); }
+        .auth-form input, .auth-form select { padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; width: 100%; }
+        .btn-auth { background: var(--cor-destaque); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-auth:hover { background: var(--cor-destaque-hover); }
+        .btn-demo-login { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-demo-login button { flex: 1; padding: 10px; border: 1px solid var(--cor-primaria); background: transparent; color: var(--cor-primaria); border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.85em;}
+        .btn-demo-login button:hover { background: var(--cor-primaria); color: white; }
+        .btn-fechar-modal { background: transparent; color: #888; border: none; padding: 10px; width: 100%; cursor: pointer; margin-top: 10px; }
+        
+        .dica-login { font-size: 0.8em; color: #64748b; background: #f8fafc; padding: 10px; border-radius: 6px; border-left: 3px solid var(--cor-destaque); margin-bottom: 5px; }
+
+        /* =========================================
+           5. GOVERNANÇA E RASTREABILIDADE
            ========================================= */
         .tabela-sistema { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95em; }
         .tabela-sistema th { background: var(--cor-primaria); color: white; padding: 12px; text-align: left; }
@@ -95,7 +122,7 @@
         .btn-fechar-modal { background: #e2e8f0; color: #333; border: none; padding: 10px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
 
         /* =========================================
-           5. MAPA E LISTAS (COMUNIDADES E NOTÍCIAS)
+           6. MAPA E LISTAS (COMUNIDADES E NOTÍCIAS)
            ========================================= */
         #mapa-container { height: 100%; width: 100%; border-radius: var(--raio-borda); border: 4px solid #fff; box-shadow: var(--sombra-media); z-index: 1; background: #e2e8f0; }
         .item-comunidade { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 10px; cursor: pointer; background: #f8fafc; transition: 0.2s;}
@@ -115,7 +142,7 @@
         .noticia-meta { color: var(--cor-texto-claro); font-size: 0.8rem; font-style: italic; display: block; border-top: 1px dashed var(--cor-borda); padding-top: 8px; }
 
         /* =========================================
-           6. CARTILHA DIGITAL (GUIA NORMATIVO)
+           7. CARTILHA DIGITAL (GUIA NORMATIVO)
            ========================================= */
         .capa-cartilha { background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); color: white; text-align: center; padding: 30px 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
         .titulo-cartilha { font-size: 1.6rem; margin-bottom: 8px; font-weight: 800; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
@@ -135,7 +162,7 @@
         .tabela-cartilha td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
 
         /* =========================================
-           7. RODAPÉ INSTITUCIONAL (FOOTER)
+           8. RODAPÉ INSTITUCIONAL (FOOTER)
            ========================================= */
         .rodape-site { display: none; background-color: #e2e8f0; border-top: 1px solid #cbd5e1; padding: 40px 20px; margin-top: 50px; color: var(--cor-texto); animation: fadeIn 0.4s ease-in-out; }
         .rodape-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -146,7 +173,7 @@
         .btn-download-rtc:hover { background-color: var(--cor-destaque-hover); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(230, 81, 0, 0.5); }
 
         /* =========================================
-           8. RESPONSIVIDADE
+           9. RESPONSIVIDADE
            ========================================= */
         @media (max-width: 1300px) { .layout-painel { grid-template-columns: 1fr 1.5fr 2fr; } }
         @media (max-width: 1024px) { 
@@ -171,6 +198,10 @@
         <button onclick="mostrar('home')" id="btn-home">Início</button>
         <button onclick="mostrar('pacui')" id="btn-pacui">Farinha do Pacuí</button>
         <button onclick="mostrar('inpi')" id="btn-inpi">Legislação e INPI</button>
+        
+        <button class="btn-login-nav" onclick="abrirModalAuth()" id="btn-auth-nav">
+            🔒 Área Restrita
+        </button>
     </nav>
 
     <div class="conteudo-principal">
@@ -237,8 +268,10 @@
 
             <div class="sub-nav">
                 <button onclick="mostrarAbaPacui('pacui-visao', this)" class="btn-sub-nav ativo">🗺️ Visão Geral e Mapa</button>
-                <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav">⚖️ Governança (Conselho)</button>
-                <button onclick="mostrarAbaPacui('pacui-rastreio', this)" class="btn-sub-nav">📦 Rastreabilidade (Passaporte)</button>
+                
+                <button onclick="mostrarAbaPacui('pacui-produtor', this)" class="btn-sub-nav" id="aba-produtor-btn" style="display:none;">🌾 Meu Painel (Produtor)</button>
+                <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav" id="aba-gov-btn" style="display:none;">⚖️ Governança (Conselho)</button>
+                <button onclick="mostrarAbaPacui('pacui-rastreio', this)" class="btn-sub-nav" id="aba-rastreio-btn" style="display:none;">📦 Rastreabilidade</button>
             </div>
             
             <div id="pacui-visao" class="aba-pacui" style="display: block;">
@@ -366,6 +399,45 @@
 
                 </div>
             </div> 
+
+            <div id="pacui-produtor" class="aba-pacui">
+                <div class="card" style="border-top: 5px solid var(--cor-destaque);">
+                    <h3 style="color: var(--cor-destaque-hover); font-size: 1.5rem; margin-top: 0;">Solicitação de Uso do Selo da Indicação Geográfica</h3>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Bem-vindo ao portal do produtor. Envie os documentos da sua comunidade ou agroindústria para que o Conselho Regulador avalie a conformidade com o Caderno de Especificações Técnicas (CET).</p>
+                    
+                    <div style="background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid var(--cor-borda);">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="font-weight: bold; font-size: 0.9em; margin-bottom: 5px;">Nome do Produtor ou Associação</label>
+                                <input type="text" placeholder="Ex: Associação ASMOPAP" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="font-weight: bold; font-size: 0.9em; margin-bottom: 5px;">Comunidade Local</label>
+                                <input type="text" placeholder="Ex: Salamito" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+                            </div>
+                            <div style="grid-column: span 2; display: flex; flex-direction: column;">
+                                <label style="font-weight: bold; font-size: 0.9em; margin-bottom: 5px;">Anexar Documentos de Conformidade (PDF ou Fotos)</label>
+                                <input type="file" style="padding: 10px; background: #fff; border: 1px dashed #ccc; border-radius: 6px;">
+                                <small style="color: #666; margin-top: 5px;">Inclua fotos da casa de farinha e comprovantes exigidos pelo Regulamento de Uso.</small>
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <button class="btn-auth" style="width: auto; padding: 10px 30px;" onclick="alert('Documentação enviada com sucesso! O Conselho Regulador foi notificado.')">Enviar Solicitação</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: var(--cor-primaria);">Status das minhas solicitações:</h4>
+                        <table class="tabela-sistema">
+                            <tr>
+                                <td>Solicitação #001 - Envio de Dossiê Inicial</td>
+                                <td>Enviado em: 10/06/2026</td>
+                                <td><span class="badge aguardando">Aguardando Análise</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             
             <div id="pacui-gov" class="aba-pacui">
                 <div class="card" style="border-top: 5px solid var(--cor-primaria);">
@@ -497,6 +569,74 @@
         </div>
     </footer>
 
+    <div id="modal-auth">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h3>Plataforma IG Pacuí</h3>
+            </div>
+            
+            <div class="auth-abas">
+                <button id="tab-login" class="ativo" onclick="mudarAbaAuth('login')">Fazer Login</button>
+                <button id="tab-cadastro" onclick="mudarAbaAuth('cadastro')">Criar Conta</button>
+            </div>
+
+            <div class="auth-body">
+                <div id="form-login" class="auth-form">
+                    
+                    <div class="dica-login">
+                        <strong>Logins para teste:</strong><br>
+                        Produtor: <i>produtor@pacui.com</i><br>
+                        Conselho: <i>conselho@pacui.com</i><br>
+                        Senha: <i>pacui2026</i>
+                    </div>
+
+                    <div>
+                        <label>E-mail</label>
+                        <input type="email" id="email-login" placeholder="seu@email.com">
+                    </div>
+                    <div>
+                        <label>Senha</label>
+                        <input type="password" id="senha-login" placeholder="••••••••">
+                    </div>
+                    <button class="btn-auth" onclick="fazerLogin()">Entrar</button>
+                    
+                    <div style="text-align: center; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                        <span style="font-size: 0.85em; color: #666; display: block; margin-bottom: 5px;">Ou pule o preenchimento:</span>
+                        <div class="btn-demo-login">
+                            <button onclick="efetuarLoginSimulado('produtor', 'Raimundo Nonato')">👨‍🌾 Pular como Produtor</button>
+                            <button onclick="efetuarLoginSimulado('conselho', 'Helena Vilhena')">⚖️ Pular como Conselho</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-cadastro" class="auth-form" style="display: none;">
+                    <div>
+                        <label>Nome Completo / Razão Social</label>
+                        <input type="text" placeholder="Ex: Associação dos Produtores...">
+                    </div>
+                    <div>
+                        <label>E-mail</label>
+                        <input type="email" placeholder="seu@email.com">
+                    </div>
+                    <div>
+                        <label>Que tipo de acesso deseja?</label>
+                        <select id="tipo-perfil-cadastro">
+                            <option value="produtor">Produtor / Casa de Farinha</option>
+                            <option value="conselho">Membro do Conselho Regulador</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Crie uma Senha</label>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                    <button class="btn-auth" onclick="enviarCadastro()">Enviar Solicitação de Cadastro</button>
+                </div>
+
+                <button class="btn-fechar-modal" onclick="fecharModalAuth()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modal-passaporte">
         <div class="passaporte-card">
             <div class="passaporte-header">
@@ -526,7 +666,7 @@
 
         function mostrar(id) {
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none');
-            document.querySelectorAll('.menu-nav button').forEach(b => b.classList.remove('ativo'));
+            document.querySelectorAll('.menu-nav > button').forEach(b => b.classList.remove('ativo'));
             
             var alvo = document.getElementById(id);
             var botaoAtivo = document.getElementById('btn-' + id);
@@ -541,7 +681,7 @@
                 }
                 
                 if(id === 'pacui') {
-                    var btnVisaoGeral = document.querySelector('.btn-sub-nav');
+                    var btnVisaoGeral = document.querySelector('.btn-sub-nav.ativo');
                     if(btnVisaoGeral) btnVisaoGeral.click();
                 }
             }
@@ -559,6 +699,98 @@
             }
         }
 
+        // =========================================
+        // CONTROLE DE AUTENTICAÇÃO (LOGIN/CADASTRO)
+        // =========================================
+        function abrirModalAuth() {
+            document.getElementById('modal-auth').style.display = 'flex';
+        }
+
+        function fecharModalAuth() {
+            document.getElementById('modal-auth').style.display = 'none';
+        }
+
+        function mudarAbaAuth(aba) {
+            document.getElementById('tab-login').classList.remove('ativo');
+            document.getElementById('tab-cadastro').classList.remove('ativo');
+            document.getElementById('form-login').style.display = 'none';
+            document.getElementById('form-cadastro').style.display = 'none';
+
+            document.getElementById('tab-' + aba).classList.add('ativo');
+            document.getElementById('form-' + aba).style.display = 'flex';
+        }
+
+        function enviarCadastro() {
+            var tipo = document.getElementById('tipo-perfil-cadastro').value;
+            alert("Cadastro recebido com sucesso!\n\nSeu pedido como [" + tipo.toUpperCase() + "] foi enviado para a base de dados (Google Sheets) e está aguardando validação do administrador do sistema.");
+            fecharModalAuth();
+        }
+
+        function fazerLogin() {
+            var email = document.getElementById('email-login').value;
+            var senha = document.getElementById('senha-login').value;
+
+            if (email === 'produtor@pacui.com' && senha === 'pacui2026') {
+                alert('Login efetuado com sucesso!\n\nBem-vindo(a), Raimundo Nonato (Comunidade Ponta Grossa).');
+                efetuarLoginSimulado('produtor', 'Raimundo Nonato');
+            } else if (email === 'conselho@pacui.com' && senha === 'pacui2026') {
+                alert('Login efetuado com sucesso!\n\nBem-vinda, Helena Vilhena (Presidente do Conselho Regulador).');
+                efetuarLoginSimulado('conselho', 'Helena Vilhena');
+            } else {
+                alert('Credenciais inválidas.\nVerifique o e-mail e a senha informados.');
+            }
+        }
+
+        function efetuarLoginSimulado(perfil, nomeUsuario) {
+            fecharModalAuth();
+            
+            document.getElementById('aba-produtor-btn').style.display = 'none';
+            document.getElementById('aba-gov-btn').style.display = 'none';
+            document.getElementById('aba-rastreio-btn').style.display = 'none';
+
+            var btnNav = document.getElementById('btn-auth-nav');
+
+            if (perfil === 'produtor') {
+                btnNav.innerHTML = "👨‍🌾 Olá, " + nomeUsuario.split(" ")[0] + " (Sair)";
+                btnNav.style.background = "#e8f5e9";
+                
+                document.getElementById('aba-produtor-btn').style.display = 'block';
+                document.getElementById('aba-rastreio-btn').style.display = 'block';
+                
+                mostrar('pacui');
+                mostrarAbaPacui('pacui-produtor', document.getElementById('aba-produtor-btn'));
+
+            } else if (perfil === 'conselho') {
+                btnNav.innerHTML = "⚖️ Olá, " + nomeUsuario.split(" ")[0] + " (Sair)";
+                btnNav.style.background = "#e2e8f0";
+                
+                document.getElementById('aba-gov-btn').style.display = 'block';
+                document.getElementById('aba-rastreio-btn').style.display = 'block';
+                
+                mostrar('pacui');
+                mostrarAbaPacui('pacui-gov', document.getElementById('aba-gov-btn'));
+            }
+
+            btnNav.onclick = function() {
+                alert("Logout efetuado com sucesso.");
+                btnNav.innerHTML = "🔒 Área Restrita";
+                btnNav.style.background = "var(--cor-fundo)";
+                btnNav.onclick = abrirModalAuth;
+                
+                document.getElementById('aba-produtor-btn').style.display = 'none';
+                document.getElementById('aba-gov-btn').style.display = 'none';
+                document.getElementById('aba-rastreio-btn').style.display = 'none';
+                
+                document.getElementById('email-login').value = "";
+                document.getElementById('senha-login').value = "";
+
+                mostrarAbaPacui('pacui-visao', document.querySelector('.btn-sub-nav'));
+            };
+        }
+
+        // =========================================
+        // FUNÇÕES DO SISTEMA (QR CODE E PLANILHA)
+        // =========================================
         function gerarQRCode() {
             var data = document.getElementById('data-lote').value;
             var comunidade = document.getElementById('comunidade-lote').value;
@@ -633,7 +865,6 @@
             });
         }
 
-        // --- NOVA FUNÇÃO: ATUALIZA O STATUS DO PRODUTOR VIA APPS SCRIPT ---
         function atualizarStatusConselho(nomeProdutor, novoStatus, elementoBotao) {
             var textoOriginal = elementoBotao.innerHTML;
             elementoBotao.innerHTML = "⏳ Processando...";
