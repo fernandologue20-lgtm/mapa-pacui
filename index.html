@@ -21,32 +21,39 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--cor-fundo); color: var(--cor-texto); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        
         .menu-nav { background: #ffffff; padding: 1rem 2rem; display: flex; gap: 15px; justify-content: center; box-shadow: var(--sombra-suave); position: sticky; top: 0; z-index: 1000; border-bottom: 4px solid var(--cor-primaria); align-items: center; }
         .menu-nav button { background: transparent; border: 2px solid var(--cor-primaria); color: var(--cor-primaria); padding: 10px 24px; cursor: pointer; font-weight: 600; border-radius: 8px; transition: all 0.3s ease; font-size: 1rem; }
         .menu-nav button:hover, .menu-nav button.ativo { background: var(--cor-primaria); color: #fff; transform: translateY(-2px); box-shadow: var(--sombra-suave); }
         .btn-login-nav { margin-left: auto; background: var(--cor-fundo) !important; color: var(--cor-texto) !important; border: 1px solid var(--cor-borda) !important; display: flex; align-items: center; gap: 8px; }
         .btn-login-nav:hover { background: #e2e8f0 !important; color: var(--cor-primaria-hover) !important; }
+        
         .sub-nav { display: flex; gap: 10px; margin-bottom: 25px; background: #e2e8f0; padding: 10px; border-radius: 8px; flex-wrap: wrap; }
         .sub-nav button { flex: 1; min-width: 200px; padding: 12px; border: none; background: #fff; color: var(--cor-texto); font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .sub-nav button:hover { background: #f8fafc; color: var(--cor-primaria); }
         .sub-nav button.ativo { background: var(--cor-primaria); color: #fff; }
+        
         .conteudo-principal { flex: 1; }
         .secao { display: none; padding: 30px 20px; max-width: 98%; margin: auto; animation: fadeIn 0.4s ease-in-out; }
         .aba-pacui { display: none; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .header-aba { background: #fff; border-radius: var(--raio-borda); padding: 20px 30px; margin-bottom: 25px; border-left: 8px solid var(--cor-primaria); box-shadow: var(--sombra-suave); }
         .header-aba h2 { margin: 0; font-size: 1.8rem; color: var(--cor-primaria-hover); }
         .card { background: #fff; border-radius: var(--raio-borda); padding: 25px 30px; margin-bottom: 25px; box-shadow: var(--sombra-suave); }
+        
         .layout-painel { display: grid; grid-template-columns: 1.2fr 1.5fr 2.5fr 1fr; gap: 20px; height: 75vh; min-height: 650px; }
         .painel-scroll { background: #fff; border-radius: var(--raio-borda); padding: 25px 20px; box-shadow: var(--sombra-suave); overflow-y: auto; display: flex; flex-direction: column; position: relative; border-top: 5px solid var(--cor-primaria); }
         .titulo-painel { margin-top: 0; padding-bottom: 15px; margin-bottom: 15px; border-bottom: 2px solid var(--cor-borda); color: var(--cor-primaria); position: sticky; top: -25px; background: #fff; z-index: 10; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .painel-scroll::-webkit-scrollbar { width: 8px; }
         .painel-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px; margin-block: 10px;}
         .painel-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
         .tabela-sistema { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95em; }
         .tabela-sistema th { background: var(--cor-primaria); color: white; padding: 12px; text-align: left; }
         .tabela-sistema td { padding: 12px; border-bottom: 1px solid var(--cor-borda); }
         .tabela-sistema tr:hover { background: #f8fafc; }
+        
         .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; color: #fff; display: inline-block; text-align: center;}
         .badge.aguardando { background: #94a3b8; }
         .badge.analise { background: #f59e0b; }
@@ -62,6 +69,7 @@
         .btn-pendencia:hover { background: #d97706; }
         .btn-doc { background: #3b82f6; text-decoration: none; display: inline-block;}
         .btn-doc:hover { background: #2563eb; }
+        
         .form-rastreio { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid var(--cor-borda); }
         .form-grupo { display: flex; flex-direction: column; }
         .form-grupo label { font-weight: bold; margin-bottom: 5px; color: var(--cor-primaria-hover); font-size: 0.9em; }
@@ -69,6 +77,7 @@
         .form-full { grid-column: span 2; }
         .btn-gerar-lote { background: var(--cor-destaque); color: white; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 10px;}
         .btn-gerar-lote:hover { background: var(--cor-destaque-hover); transform: translateY(-2px); box-shadow: var(--sombra-suave); }
+        
         #modal-auth { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
         .auth-card { background: #fff; width: 600px; max-width: 95%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); animation: fadeIn 0.3s; }
         .auth-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
@@ -86,12 +95,7 @@
         .painel-aviso { padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid; }
         .aviso-pendencia { background: #fef2f2; border-color: #e11d48; color: #9f1239; }
         .aviso-sucesso { background: #f0fdf4; border-color: #16a34a; color: #166534; }
-        #modal-passaporte { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; }
-        .passaporte-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); animation: fadeIn 0.3s; }
-        .passaporte-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
-        .passaporte-header h3 { margin: 0; display: flex; align-items: center; justify-content: center; gap: 10px;}
-        .passaporte-body { padding: 25px; }
-        .selo-autenticidade { background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; margin-bottom: 20px; }
+        
         #mapa-container { height: 100%; width: 100%; border-radius: var(--raio-borda); border: 4px solid #fff; box-shadow: var(--sombra-media); z-index: 1; background: #e2e8f0; }
         .item-comunidade { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 10px; cursor: pointer; background: #f8fafc; transition: 0.2s;}
         .item-comunidade:hover { background: #fff; transform: translateX(5px); border-color: var(--cor-primaria); box-shadow: var(--sombra-suave); }
@@ -100,6 +104,7 @@
         .item-comunidade:hover .coords { display: block; }
         .rotulo-area { background: transparent !important; border: none !important; box-shadow: none !important; font-weight: 800; color: #b71c1c; font-size: 16px; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); }
         .rotulo-rota { background: rgba(255, 255, 255, 0.9) !important; border: 2px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); }
+        
         .noticia-item { padding: 15px; border: 1px solid var(--cor-borda); border-radius: 8px; margin-bottom: 15px; background: #fff; transition: 0.2s; }
         .noticia-item:hover { border-color: var(--cor-primaria); box-shadow: var(--sombra-suave); }
         .noticia-titulo { margin: 0 0 8px 0; color: var(--cor-primaria); font-size: 1.1rem; line-height: 1.3; }
@@ -107,6 +112,7 @@
         .noticia-link { color: var(--cor-destaque); text-decoration: none; font-weight: bold; }
         .noticia-link:hover { color: var(--cor-destaque-hover); text-decoration: underline; }
         .noticia-meta { color: var(--cor-texto-claro); font-size: 0.8rem; font-style: italic; display: block; border-top: 1px dashed var(--cor-borda); padding-top: 8px; }
+        
         .capa-cartilha { background: linear-gradient(135deg, var(--cor-primaria) 0%, #0f3e15 100%); color: white; text-align: center; padding: 30px 20px; border-radius: 10px; margin-bottom: 25px; box-shadow: inset 0 0 20px rgba(0,0,0,0.2); }
         .titulo-cartilha { font-size: 1.6rem; margin-bottom: 8px; font-weight: 800; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
         .subtitulo-cartilha { color: var(--cor-destaque); font-style: italic; margin-bottom: 15px; font-size: 1rem; }
@@ -115,10 +121,44 @@
         .texto-cartilha h2 { color: var(--cor-primaria-hover); border-bottom: 2px solid var(--cor-borda); padding-bottom: 8px; margin: 30px 0 15px 0; font-size: 1.3rem; }
         .texto-cartilha h2:first-child { margin-top: 0; }
         .destaque-box { background: #f0fdf4; border-left: 5px solid #4ade80; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #166534; }
+        
         .rodape-site { display: none; background-color: #e2e8f0; border-top: 1px solid #cbd5e1; padding: 40px 20px; margin-top: 50px; color: var(--cor-texto); animation: fadeIn 0.4s ease-in-out; }
         .rodape-container { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .rodape-coluna h3 { color: var(--cor-primaria-hover); font-size: 1.2rem; margin-top: 0; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--cor-borda); }
         .rodape-coluna p { font-size: 0.95rem; line-height: 1.6; text-align: justify; margin: 0; }
+
+        /* =========================================
+           NOVOS ESTILOS: PORTAL DO CONSUMIDOR (QR CODE)
+           ========================================= */
+        #modal-consumidor { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 3000; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+        .consumidor-card { background: #f8fafc; width: 450px; max-width: 95%; height: 85vh; border-radius: 16px; overflow-y: auto; position: relative; animation: fadeIn 0.4s; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .consumidor-capa { background: linear-gradient(to bottom, rgba(46, 125, 50, 0.8), rgba(15, 62, 21, 0.9)), url('https://images.unsplash.com/photo-1598440785133-72535d4e1355?q=80&w=800&auto=format&fit=crop'); background-size: cover; background-position: center; color: white; padding: 40px 20px 20px 20px; text-align: center; border-radius: 16px 16px 0 0; }
+        .consumidor-capa h2 { font-size: 1.8em; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+        .consumidor-capa p { margin: 5px 0 0 0; font-size: 1.1em; color: var(--cor-destaque); font-weight: bold; }
+        .selo-garantia { background: #10b981; color: white; display: inline-block; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9em; margin-top: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 2px solid #059669; }
+        
+        .consumidor-body { padding: 20px; }
+        .sessao-consumidor { background: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: var(--sombra-suave); border: 1px solid var(--cor-borda); }
+        .sessao-consumidor h3 { color: var(--cor-primaria); margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 1.2em; display: flex; align-items: center; gap: 8px; }
+        
+        .galeria-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .galeria-fotos img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .fluxograma-linha { border-left: 3px solid var(--cor-destaque); padding-left: 15px; margin-left: 10px; display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+        .etapa-fluxo { position: relative; font-size: 0.9em; color: var(--cor-texto); }
+        .etapa-fluxo::before { content: ''; position: absolute; left: -24px; top: 2px; width: 12px; height: 12px; background: var(--cor-destaque); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--cor-destaque); }
+        .etapa-fluxo strong { color: var(--cor-primaria-hover); display: block; font-size: 1.05em; }
+
+        .dash-mercado { display: flex; justify-content: space-between; gap: 10px; text-align: center; margin-top: 15px; }
+        .dash-card { background: #f0fdf4; padding: 15px 5px; border-radius: 8px; flex: 1; border: 1px solid #bbf7d0; }
+        .dash-card strong { display: block; font-size: 1.5em; color: #166534; }
+        .dash-card span { font-size: 0.75em; color: #15803d; font-weight: bold; text-transform: uppercase; }
+
+        .consumidor-footer { text-align: center; margin-top: 20px; }
+        .consumidor-card::-webkit-scrollbar { width: 6px; }
+        .consumidor-card::-webkit-scrollbar-track { background: transparent; }
+        .consumidor-card::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
         @media (max-width: 1024px) { 
             .layout-painel { grid-template-columns: 1fr 1fr; height: auto; }
             #mapa-container { height: 500px; grid-column: span 2; order: -1; }
@@ -179,7 +219,6 @@
                         <h3 class="titulo-painel">📰 Mural de Notícias</h3>
                         <div id="lista-noticias">Carregando...</div>
                     </div>
-
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📘 Guia Normativo</h3>
                         <div class="capa-cartilha">
@@ -191,9 +230,7 @@
                             <ul><li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel da nossa produção.</li></ul>
                         </div>
                     </div>
-
                     <div id="mapa-container"></div>
-
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📍 Comunidades</h3>
                         <div id="lista-itens">Carregando...</div>
@@ -280,9 +317,7 @@
                         Para garantir a segurança dos seus dados e arquivos, a solicitação de ingresso deve ser feita no portal oficial do Google.
                     </p>
                     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; width: 100%; text-align: center; margin-bottom: 20px;">
-                        <p style="font-size: 0.85em; color: #166534; margin: 0;">
-                            <strong>Atenção:</strong> Tenha as <b>fotos ou PDFs</b> dos seus documentos e da sua estrutura de produção salvos no telemóvel ou computador antes de continuar.
-                        </p>
+                        <p style="font-size: 0.85em; color: #166534; margin: 0;"><strong>Atenção:</strong> Tenha as <b>fotos ou PDFs</b> dos seus documentos e da sua estrutura de produção salvos no telemóvel ou computador antes de continuar.</p>
                     </div>
                     <a href="https://forms.gle/wGpmqa44KAjyLyPp8" target="_blank" class="btn-auth" style="width: 100%; text-align: center; text-decoration: none; padding: 15px 0;">🔗 Abrir Formulário Oficial Seguro</a>
                 </div>
@@ -291,25 +326,68 @@
         </div>
     </div>
 
-    <div id="modal-passaporte">
-        <div class="passaporte-card">
-            <div class="passaporte-header">
-                <h3>✅ Autenticidade Confirmada</h3>
-                <p style="font-size: 0.9em; margin-top: 5px; opacity: 0.9;">Indicação de Procedência: Farinha do Pacuí</p>
+    <div id="modal-consumidor">
+        <div class="consumidor-card">
+            <div class="consumidor-capa">
+                <h2>Farinha do Pacuí</h2>
+                <p>Indicação de Procedência - Amapá</p>
+                <div class="selo-garantia">✅ Lote Autenticado: <span id="cons-lote">PACUI-0000</span></div>
             </div>
-            <div class="passaporte-body">
-                <div class="selo-autenticidade">Este lote foi auditado e está em conformidade com o Caderno de Especificações Técnicas (CET).</div>
-                <p><strong>Núcleo Produtivo:</strong> <span id="modal-produtor">Comunidade Habilitada</span></p>
-                <p><strong>Comunidade:</strong> <span id="modal-comunidade">-</span></p>
-                <p><strong>Data de Produção:</strong> <span id="modal-data">-</span></p>
-                <p><strong>Registro/ID:</strong> <span id="modal-id">-</span></p>
-                <button class="btn-fechar-modal" onclick="document.getElementById('modal-passaporte').style.display='none'">Fechar Passaporte</button>
+            
+            <div class="consumidor-body">
+                <div class="sessao-consumidor" style="text-align: center;">
+                    <h3 style="justify-content: center;">👨‍🌾 Origem do Produto</h3>
+                    <p style="margin-bottom: 5px;">Produzido artesanalmente no Núcleo Produtivo:</p>
+                    <strong style="font-size: 1.3em; color: var(--cor-texto);" id="cons-comunidade">Comunidade X</strong>
+                    <p style="color: var(--cor-texto-claro); font-size: 0.9em; margin-top: 5px;">Data de Torra: <span id="cons-data">00/00/0000</span></p>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>📖 A Nossa História</h3>
+                    <p style="font-size: 0.95em; text-align: justify;">A Farinha do Pacuí carrega gerações de saber-fazer amazônico. Cultivada nas terras férteis do Amapá, o nosso processo de feitura respeita o tempo da natureza, desde o arranquio da mandioca brava até à torra cuidadosa nos nossos tachos de cobre. Ao levar este produto, você valoriza a sociobiodiversidade e a agricultura familiar do nosso estado.</p>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>📷 Transparência e Produção</h3>
+                    <p style="font-size: 0.85em; color: #666;">Imagens reais da rotina das nossas agroindústrias artesanais associadas ao selo da IG:</p>
+                    <div class="galeria-fotos">
+                        <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=400&auto=format&fit=crop" alt="Matéria prima">
+                        <img src="https://images.unsplash.com/photo-1598440785133-72535d4e1355?q=80&w=400&auto=format&fit=crop" alt="Agricultores">
+                        <img src="https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=400&auto=format&fit=crop" alt="Tacho">
+                        <img src="https://images.unsplash.com/photo-1628183141154-1b11ce13010b?q=80&w=400&auto=format&fit=crop" alt="Produto final">
+                    </div>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>⚙️ Processo Produtivo (CET)</h3>
+                    <div class="fluxograma-linha">
+                        <div class="etapa-fluxo"><strong>1. Colheita e Descasque</strong>Seleção rigorosa da mandioca brava na roça.</div>
+                        <div class="etapa-fluxo"><strong>2. Ralação e Prensagem</strong>A massa é ralada e prensada no tipiti para retirada da manipueira.</div>
+                        <div class="etapa-fluxo"><strong>3. Peneiramento</strong>Garante a granulação padronizada da farinha.</div>
+                        <div class="etapa-fluxo"><strong>4. Torra Artesanal</strong>Feita em fornos tradicionais, garantindo a crocância e o sabor inconfundível.</div>
+                    </div>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>📊 Impacto de Mercado</h3>
+                    <p style="font-size: 0.85em; color: #666; text-align: center;">Dados do Território da Indicação Geográfica:</p>
+                    <div class="dash-mercado">
+                        <div class="dash-card"><strong>28+</strong><span>Comunidades<br>Habilitadas</span></div>
+                        <div class="dash-card"><strong>100%</strong><span>Processo<br>Artesanal</span></div>
+                        <div class="dash-card"><strong>Selo</strong><span>Garantia de<br>Origem</span></div>
+                    </div>
+                </div>
+
+                <div class="consumidor-footer">
+                    <button class="btn-fechar-modal" style="background: #e2e8f0; color: #333; padding: 15px; border-radius: 8px; font-weight: bold;" onclick="fecharPortalConsumidor()">Fechar Portal</button>
+                    <p style="font-size: 0.75em; color: #888; margin-top: 15px;">Desenvolvido pelo PROFNIT - UNIFAP</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbz1H7Fh5cYoG2xhOn6k70Ay0wvaLsr5Vi1R8ouHVAEFzRrcY7DvxZX5ez_NUYrnPvGntA/exec"; 
+        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbyk_A_0Yo6ZL78HR5e8KgRLvVIJdYy3DHqHKVBdsqjDnnc4uRi1g9HestEQlCd-XQ1kaw/exec"; 
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
@@ -392,22 +470,43 @@
             fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({acao: "alterar_status", nome_produtor: nome, novo_status: novoStatus, motivo: motivoTexto}), headers: { 'Content-Type': 'text/plain;charset=utf-8' } }).then(r => r.json()).then(retorno => { if(retorno.sucesso) carregarListaConselho(); });
         }
 
+        // ==========================================
+        // NOVA FUNÇÃO: ABRIR O PORTAL DO CONSUMIDOR
+        // ==========================================
+        function abrirPortalConsumidor(lote, comunidade, data) {
+            document.getElementById('cons-lote').innerText = lote;
+            document.getElementById('cons-comunidade').innerText = "Comunidade " + comunidade;
+            document.getElementById('cons-data').innerText = data;
+            document.getElementById('modal-consumidor').style.display = 'flex';
+        }
+        function fecharPortalConsumidor() {
+            document.getElementById('modal-consumidor').style.display = 'none';
+        }
+
         function gerarQRCode() {
             var data = document.getElementById('data-lote').value; var comunidade = document.getElementById('comunidade-lote').value; var peso = document.getElementById('peso-lote').value; var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
             if(!data || !peso || !comunidade) { alert("Preencha a data, comunidade e peso do lote."); return; }
             var btn = document.querySelector('.btn-gerar-lote'); var txt = btn.innerHTML; btn.innerHTML = "⏳..."; btn.disabled = true;
+            
             fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({ acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id }), headers: { 'Content-Type': 'text/plain;charset=utf-8' } }).then(r => r.json()).then(retorno => {
                 btn.innerHTML = txt; btn.disabled = false;
                 if (retorno.sucesso) {
-                    document.getElementById('modal-comunidade').innerText = comunidade; document.getElementById('modal-data').innerText = data.split('-').reverse().join('/'); document.getElementById('modal-id').innerText = id; document.getElementById('modal-produtor').innerText = "Comunidade " + comunidade;
+                    var dataFormatada = data.split('-').reverse().join('/');
+                    
+                    // O QR Code gerado agora chama a nova função do Portal do Consumidor
                     var qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent("Plataforma Pacuí: Lote " + retorno.loteGerado + " Autenticado")}`;
-                    document.getElementById('area-qr').innerHTML = `<h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4><img src="${qrUrl}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';"><p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="document.getElementById('modal-passaporte').style.display = 'flex';">📷 Simular leitura</p>`;
+                    
+                    document.getElementById('area-qr').innerHTML = `
+                        <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
+                        <img src="${qrUrl}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}')">
+                        <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}')">📷 Clique aqui para simular a visão do consumidor</p>
+                    `;
                     document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
                 }
             });
         }
         
-        var dadosPoligonoPacui = [[0.7741841,-50.8875106],[0.7742603,-50.8873946],[0.7558767,-50.8499791],[0.7553734,-50.8488836],[0.7545191,-50.847958],[0.7541988,-50.8477444],[0.7548751,-50.8466765],[0.7546259,-50.8458934],[0.75427,-50.8455018],[0.7543412,-50.845217],[0.7551598,-50.8450034],[0.7553734,-50.8438643],[0.7551242,-50.8437219],[0.7549023,-50.8437317],[0.7543047,-50.844244],[0.7539632,-50.8439537],[0.7537583,-50.8431683],[0.7537071,-50.8430146],[0.7541169,-50.8428438],[0.7545608,-50.8429292],[0.7548681,-50.8427243],[0.7547315,-50.8421779],[0.7542193,-50.8417681],[0.7533144,-50.8419388],[0.7528705,-50.8418193],[0.7528193,-50.841529],[0.7533486,-50.8413924],[0.7538096,-50.8406241],[0.7535535,-50.8402996],[0.7531095,-50.8407094],[0.7526144,-50.8411192],[0.7522388,-50.8406924],[0.751829,-50.8403509],[0.7522559,-50.8396678],[0.7523754,-50.8388312],[0.7518461,-50.8386433],[0.7516412,-50.8379603],[0.7516754,-50.8376017],[0.7518973,-50.8373115],[0.7523242,-50.8373627],[0.7525461,-50.83697],[0.7523071,-50.8363723],[0.7524949,-50.8360821],[0.7528876,-50.8361162],[0.7531266,-50.8357576],[0.7529388,-50.8352966],[0.7528705,-50.8345453],[0.7526315,-50.8344087],[0.7521534,-50.8343233],[0.7521022,-50.834016],[0.7524607,-50.8338794],[0.7526998,-50.8335379],[0.7524949,-50.8331281],[0.7519315,-50.8327183],[0.7513168,-50.8321206],[0.7510266,-50.8314547],[0.7510607,-50.8309766],[0.7516071,-50.8303277],[0.7516241,-50.8295935],[0.7517266,-50.8286031],[0.7518632,-50.828125],[0.7517266,-50.8274591],[0.7515388,-50.8271859],[0.7510778,-50.8271517],[0.7507875,-50.8274762],[0.7503607,-50.8275786],[0.7501387,-50.8278177],[0.7500192,-50.8280226],[0.7502412,-50.8283129],[0.7506168,-50.8285007],[0.7508387,-50.828791],[0.7506168,-50.8290642],[0.7501387,-50.8289788],[0.7495753,-50.8285178],[0.7493875,-50.8280055],[0.7493363,-50.8272542],[0.7486208,-50.8267108],[0.7470757,-50.8267703],[0.7477294,-50.8255816],[0.7463625,-50.8241552],[0.7451145,-50.8250467],[0.7438071,-50.8235014],[0.7423213,-50.8242741],[0.7411328,-50.8229665],[0.7385773,-50.8232637],[0.7380425,-50.8204108],[0.738399,-50.8183901],[0.7370322,-50.8173203],[0.7347739,-50.8162505],[0.7333476,-50.8139325],[0.7299601,-50.8138137],[0.7265132,-50.8125656],[0.7240766,-50.8111986],[0.7222938,-50.8093562],[0.7209863,-50.808643],[0.7209863,-50.8068599],[0.7189063,-50.805909],[0.7183714,-50.8039477],[0.7157565,-50.802759],[0.7142708,-50.7998467],[0.7139737,-50.7990741],[0.714984,-50.7968156],[0.7129634,-50.7958052],[0.7104079,-50.7943194],[0.7086844,-50.7922392],[0.7095165,-50.7888516],[0.7085657,-50.7883167],[0.7062479,-50.788911],[0.7039302,-50.7862365],[0.7029793,-50.7852261],[0.6995324,-50.7865337],[0.6982844,-50.7848101],[0.6974523,-50.780412],[0.6951346,-50.7774403],[0.6906179,-50.7789261],[0.6888945,-50.7770837],[0.6881219,-50.7762516],[0.6851504,-50.7772025],[0.6832487,-50.7743498],[0.6830704,-50.7723885],[0.6832487,-50.771497],[0.6822978,-50.7700111],[0.6808121,-50.7703677],[0.677068,-50.7706649],[0.6767114,-50.7679904],[0.6757606,-50.76698],[0.6742748,-50.7669206],[0.6734428,-50.7688225],[0.6735022,-50.7715564],[0.6724325,-50.7723885],[0.6707685,-50.7724479],[0.669461,-50.7698328],[0.6676781,-50.7679309],[0.6670244,-50.7637111],[0.6660735,-50.763414],[0.6641717,-50.7664451],[0.6630426,-50.7666234],[0.6622105,-50.7654347],[0.6625671,-50.7622253],[0.6599522,-50.7608583],[0.659239,-50.7602045],[0.6609625,-50.7577677],[0.6594768,-50.7538451],[0.6583476,-50.7521809],[0.6562081,-50.7536074],[0.654247,-50.7542613],[0.6532367,-50.7528943],[0.6534744,-50.7496254],[0.6525235,-50.7478424],[0.6502057,-50.7487339],[0.6465805,-50.7480207],[0.6433712,-50.7470698],[0.6422421,-50.7444547],[0.6422421,-50.7392245],[0.6431335,-50.7355396],[0.6423609,-50.7335783],[0.6387357,-50.7330434],[0.6372499,-50.7311415],[0.6374282,-50.7269811],[0.638914,-50.726149],[0.6423015,-50.7265056],[0.6446787,-50.7250792],[0.6452136,-50.7225235],[0.6419449,-50.7205028],[0.640578,-50.7190169],[0.6427769,-50.7155103],[0.6423609,-50.7128358],[0.6379631,-50.7118849],[0.6352294,-50.7114095],[0.6329116,-50.7099831],[0.6311881,-50.7100425],[0.6293458,-50.7116472],[0.6258988,-50.7112312],[0.624413,-50.7100425],[0.6248291,-50.7071302],[0.6239376,-50.704634],[0.6225113,-50.7034453],[0.6195397,-50.7039208],[0.6172814,-50.7039802],[0.6140721,-50.7019595],[0.6124675,-50.7008897],[0.6097931,-50.7020783],[0.6075348,-50.7005331],[0.6071782,-50.6991066],[0.6078914,-50.6974425],[0.6100903,-50.6968482],[0.6131807,-50.6963133],[0.614191,-50.6947085],[0.6136561,-50.6926283],[0.6127647,-50.6892406],[0.6130618,-50.6862095],[0.6153202,-50.6844859],[0.6168059,-50.6824651],[0.6179351,-50.6801472],[0.6199558,-50.6797906],[0.621917,-50.6815142],[0.6247102,-50.6825246],[0.6279194,-50.6813953],[0.6298212,-50.6788397],[0.6295241,-50.6756302],[0.6297618,-50.6734312],[0.628276,-50.6718265],[0.6267308,-50.6706378],[0.6233433,-50.669984],[0.6198963,-50.6699246],[0.6152013,-50.6698057],[0.6121704,-50.6686765],[0.6121704,-50.6686765],[0.6100903,-50.666834],[0.6089611,-50.664635],[0.6093177,-50.6620199],[0.6087234,-50.6599991],[0.6069405,-50.6582161],[0.6044444,-50.657384],[0.6023049,-50.6583944],[0.5992145,-50.6592859],[0.5967778,-50.6586321],[0.5942223,-50.6567897],[0.5929148,-50.6545312],[0.594044,-50.6520944],[0.596659,-50.649717],[0.5970155,-50.6478746],[0.5992145,-50.644784],[0.6020672,-50.6440114],[0.6033152,-50.6464482],[0.6050981,-50.6486472],[0.6075348,-50.6494793],[0.6094366,-50.6491227],[0.6099714,-50.6478151],[0.6106846,-50.6459133],[0.6137156,-50.6435359],[0.6177931,-50.6416446],[0.6230361,-50.6420908],[0.6243748,-50.6386324],[0.6245979,-50.6337237],[0.6261597,-50.6304885],[0.6292832,-50.6293729],[0.6324067,-50.6259145],[0.6374266,-50.6255798],[0.6409964,-50.626807],[0.6451239,-50.6269185],[0.6472434,-50.6255798],[0.6513709,-50.6264723],[0.6556099,-50.6263607],[0.6597374,-50.625022],[0.6639764,-50.6263607],[0.6678808,-50.6244642],[0.6707812,-50.6231254],[0.6730122,-50.6229023],[0.6775859,-50.6270301],[0.6851715,-50.6263607],[0.6901914,-50.6251335],[0.69153,-50.6233485],[0.689299,-50.6187745],[0.6916416,-50.6165433],[0.6993387,-50.615093],[0.7014582,-50.6159855],[0.7046933,-50.6215636],[0.7077052,-50.6222329],[0.7112748,-50.620448],[0.7143983,-50.620448],[0.7176333,-50.621452],[0.7199759,-50.621452],[0.7232109,-50.6202248],[0.7258881,-50.6198901],[0.7296809,-50.6207826],[0.7342545,-50.6210057],[0.7377126,-50.6191092],[0.7420631,-50.6174358],[0.7463021,-50.6181052],[0.7485331,-50.6163202],[0.7526605,-50.6130849],[0.7523259,-50.60416],[0.7514335,-50.6005901],[0.7471945,-50.5960161],[0.7466367,-50.591219],[0.7452981,-50.5873143],[0.7439595,-50.5847484],[0.7426209,-50.5806207],[0.7378242,-50.5803974],[0.7336968,-50.5818477],[0.7358163,-50.576939],[0.7388282,-50.572365],[0.743848,-50.5675679],[0.7514335,-50.5679026],[0.7521028,-50.5685719],[0.7499833,-50.5718072],[0.760023,-50.5722534],[0.7645965,-50.5674564],[0.7656005,-50.568572],[0.7660467,-50.5712495],[0.7700625,-50.5697992],[0.7698394,-50.5648905],[0.7669391,-50.5626593],[0.7644849,-50.5550731],[0.7672737,-50.5479332],[0.7639272,-50.5414627],[0.7583496,-50.536554],[0.7618077,-50.5342112],[0.7638156,-50.5313106],[0.7586843,-50.5300835],[0.7550031,-50.5316453],[0.7563417,-50.5275176],[0.7604691,-50.5280754],[0.7613615,-50.5258441],[0.7575688,-50.522832],[0.757011,-50.5197083],[0.7623655,-50.5203776],[0.7621424,-50.5165846],[0.7555608,-50.5161383],[0.7583496,-50.5076597],[0.7543338,-50.5028626],[0.7557839,-50.498177],[0.749628,-50.498897],[0.7455771,-50.5055696],[0.7436707,-50.5017567],[0.7448622,-50.4957989],[0.7393815,-50.4924626],[0.7384284,-50.4848367],[0.734854,-50.4867432],[0.7305648,-50.4824536],[0.731518,-50.4722063],[0.7305648,-50.4638655],[0.7308031,-50.4571928],[0.7131696,-50.4548097],[0.7055443,-50.4498053],[0.7005402,-50.4431326],[0.6972041,-50.4421794],[0.6917234,-50.4369366],[0.6764727,-50.4390813],[0.6705154,-50.4443241],[0.666941,-50.4471839],[0.6233332,-50.4097693],[0.6986639,-50.3287797],[0.7362101,-50.3090396],[0.7589521,-50.3051774],[0.7834104,-50.300457],[0.826105,-50.2886559],[0.8368322,-50.2740654],[0.8432685,-50.2704177],[0.8615046,-50.2759965],[0.8825296,-50.2830771],[0.8904676,-50.2935909],[0.9029109,-50.2998133],[0.9243648,-50.2959512],[0.9361644,-50.2989551],[0.9441023,-50.3056066],[0.9460331,-50.3169786],[0.9434587,-50.3302817],[0.9355208,-50.3343585],[0.9271538,-50.3403664],[0.9260812,-50.3433703],[0.9331609,-50.3560297],[0.9421715,-50.3646123],[0.9378807,-50.3710493],[0.9331609,-50.3691182],[0.928012,-50.3723367],[0.9237212,-50.3843524],[0.9247939,-50.3882146],[0.9312301,-50.3860689],[0.9353063,-50.3897166],[0.9325173,-50.3970118],[0.9415279,-50.4040925],[0.9520402,-50.4092421],[0.9584763,-50.4148208],[0.9608362,-50.4214723],[0.9518256,-50.4311278],[0.9496799,-50.4367067],[0.944531,-50.437565],[0.9380949,-50.4371358],[0.9297279,-50.4412126],[0.927368,-50.4435728],[0.9312297,-50.4472205],[0.9310152,-50.4508681],[0.9288698,-50.4543011],[0.9200737,-50.4570905],[0.9166411,-50.466746],[0.9226482,-50.4712519],[0.9269389,-50.4817656],[0.9262953,-50.4914211],[0.9290843,-50.4978581],[0.9226482,-50.5064407],[0.9170702,-50.5025785],[0.910634,-50.5051533],[0.904627,-50.5083716],[0.899049,-50.5128775],[0.8958309,-50.5190999],[0.891111,-50.519529],[0.8848893,-50.5216747],[0.8793113,-50.527468],[0.8799549,-50.5330467],[0.8739478,-50.533905],[0.8733041,-50.5409856],[0.8763077,-50.5454915],[0.8756641,-50.550212],[0.8722314,-50.5570781],[0.8707296,-50.5585801],[0.8745914,-50.5645879],[0.8782386,-50.5693084],[0.8829585,-50.5723123],[0.8857475,-50.571454],[0.8874638,-50.5776764],[0.8851039,-50.5798221],[0.8853184,-50.5761745],[0.8812422,-50.576389],[0.8713733,-50.5781056],[0.8636498,-50.58583],[0.8623625,-50.5916232],[0.8647225,-50.5967728],[0.8662243,-50.5993476],[0.8709442,-50.5957],[0.8728751,-50.5948417],[0.8786677,-50.597202],[0.8870347,-50.6002059],[0.8917546,-50.6044972],[0.8923983,-50.6094322],[0.8923983,-50.613509],[0.888322,-50.6147964],[0.8874638,-50.6113633],[0.8853184,-50.6117925],[0.8788822,-50.6113633],[0.8718023,-50.6126507],[0.8696569,-50.6143672],[0.8662243,-50.6126507],[0.8619334,-50.6154401],[0.8619334,-50.6201605],[0.8687988,-50.6212334],[0.8718023,-50.6280995],[0.8696569,-50.6341073],[0.8664388,-50.6375404],[0.872446,-50.6360384],[0.8730896,-50.6409734],[0.8793113,-50.6394715],[0.8812422,-50.6424754],[0.8797404,-50.6448356],[0.8758786,-50.6424754],[0.8739478,-50.646123],[0.8788822,-50.6482687],[0.8771659,-50.6512726],[0.8743768,-50.6534183],[0.8730896,-50.6607135],[0.8657952,-50.6611427],[0.8578571,-50.6671505],[0.8531372,-50.6650048],[0.8505627,-50.6667214],[0.8488464,-50.6699399],[0.8462719,-50.6705836],[0.8473446,-50.6742312],[0.8417665,-50.6759477],[0.8385483,-50.6819556],[0.8327556,-50.6828138],[0.836832,-50.6864615],[0.8366174,-50.6926839],[0.8333993,-50.6956878],[0.8263193,-50.6999791],[0.8218139,-50.7040559],[0.8183812,-50.7169298],[0.8188103,-50.7231523],[0.8188103,-50.7377428],[0.8203121,-50.7443943],[0.8250321,-50.7495439],[0.8213844,-50.7615597],[0.8231007,-50.7725026],[0.8254607,-50.7789395],[0.8372606,-50.7864494],[0.8432678,-50.7954611],[0.841766,-50.8036147],[0.8364024,-50.8076914],[0.8310389,-50.8160595],[0.8250316,-50.8261441],[0.8215989,-50.8398763],[0.8095844,-50.8617621],[0.8010027,-50.8765671],[0.7975699,-50.8857935],[0.7741844,-50.88751]];
+        var dadosPoligonoPacui = [[0.7741841,-50.8875106],[0.7742603,-50.8873946],[0.7558767,-50.8499791],[0.7553734,-50.8488836],[0.7545191,-50.847958],[0.7541988,-50.8477444],[0.7548751,-50.8466765],[0.7546259,-50.8458934],[0.75427,-50.8455018],[0.7543412,-50.845217],[0.7551598,-50.8450034],[0.7553734,-50.8438643],[0.7551242,-50.8437219],[0.7549023,-50.8437317],[0.7543047,-50.844244],[0.7539632,-50.8439537],[0.7537583,-50.8431683],[0.7537071,-50.8430146],[0.7541169,-50.8428438],[0.7545608,-50.8429292],[0.7548681,-50.8427243],[0.7547315,-50.8421779],[0.7542193,-50.8417681],[0.7533144,-50.8419388],[0.7528705,-50.8418193],[0.7528193,-50.841529],[0.7533486,-50.8413924],[0.7538096,-50.8406241],[0.7535535,-50.8402996],[0.7531095,-50.8407094],[0.7526144,-50.8411192],[0.7522388,-50.8406924],[0.751829,-50.8403509],[0.7522559,-50.8396678],[0.7523754,-50.8388312],[0.7518461,-50.8386433],[0.7516412,-50.8379603],[0.7516754,-50.8376017],[0.7518973,-50.8373115],[0.7523242,-50.8373627],[0.7525461,-50.83697],[0.7523071,-50.8363723],[0.7524949,-50.8360821],[0.7528876,-50.8361162],[0.7531266,-50.8357576],[0.7529388,-50.8352966],[0.7528705,-50.8345453],[0.7526315,-50.8344087],[0.7521534,-50.8343233],[0.7521022,-50.834016],[0.7524607,-50.8338794],[0.7526998,-50.8335379],[0.7524949,-50.8331281],[0.7519315,-50.8327183],[0.7513168,-50.8321206],[0.7131696,-50.4548097],[0.7055443,-50.4498053],[0.7005402,-50.4431326],[0.6972041,-50.4421794],[0.6917234,-50.4369366],[0.6764727,-50.4390813],[0.6705154,-50.4443241],[0.666941,-50.4471839],[0.6233332,-50.4097693],[0.6986639,-50.3287797],[0.7362101,-50.3090396],[0.7589521,-50.3051774],[0.7834104,-50.300457],[0.826105,-50.2886559],[0.8368322,-50.2740654],[0.8432685,-50.2704177],[0.8615046,-50.2759965],[0.8825296,-50.2830771],[0.8904676,-50.2935909],[0.9029109,-50.2998133],[0.9243648,-50.2959512],[0.9361644,-50.2989551],[0.9441023,-50.3056066],[0.9460331,-50.3169786],[0.9434587,-50.3302817],[0.9355208,-50.3343585],[0.9271538,-50.3403664],[0.9260812,-50.3433703],[0.9331609,-50.3560297],[0.9421715,-50.3646123],[0.9378807,-50.3710493],[0.9331609,-50.3691182],[0.928012,-50.3723367],[0.9237212,-50.3843524],[0.9247939,-50.3882146],[0.9312301,-50.3860689],[0.9353063,-50.3897166],[0.9325173,-50.3970118],[0.9415279,-50.4040925],[0.9520402,-50.4092421],[0.9584763,-50.4148208],[0.9608362,-50.4214723],[0.9518256,-50.4311278],[0.9496799,-50.4367067],[0.944531,-50.437565],[0.9380949,-50.4371358],[0.9297279,-50.4412126],[0.927368,-50.4435728],[0.9312297,-50.4472205],[0.9310152,-50.4508681],[0.9288698,-50.4543011],[0.9200737,-50.4570905],[0.9166411,-50.466746],[0.9226482,-50.4712519],[0.9269389,-50.4817656],[0.9262953,-50.4914211],[0.9290843,-50.4978581],[0.9226482,-50.5064407],[0.9170702,-50.5025785],[0.910634,-50.5051533],[0.904627,-50.5083716],[0.899049,-50.5128775],[0.8958309,-50.5190999],[0.891111,-50.519529],[0.8848893,-50.5216747],[0.8793113,-50.527468],[0.8799549,-50.5330467],[0.8739478,-50.533905],[0.8733041,-50.5409856],[0.8763077,-50.5454915],[0.8756641,-50.550212],[0.8722314,-50.5570781],[0.8707296,-50.5585801],[0.8745914,-50.5645879],[0.8782386,-50.5693084],[0.8829585,-50.5723123],[0.8857475,-50.571454],[0.8874638,-50.5776764],[0.8851039,-50.5798221],[0.8853184,-50.5761745],[0.8812422,-50.576389],[0.8713733,-50.5781056],[0.8636498,-50.58583],[0.8623625,-50.5916232],[0.8647225,-50.5967728],[0.8662243,-50.5993476],[0.8709442,-50.5957],[0.8728751,-50.5948417],[0.8786677,-50.597202],[0.8870347,-50.6002059],[0.8917546,-50.6044972],[0.8923983,-50.6094322],[0.8923983,-50.613509],[0.888322,-50.6147964],[0.8874638,-50.6113633],[0.8853184,-50.6117925],[0.8788822,-50.6113633],[0.8718023,-50.6126507],[0.8696569,-50.6143672],[0.8662243,-50.6126507],[0.8619334,-50.6154401],[0.8619334,-50.6201605],[0.8687988,-50.6212334],[0.8718023,-50.6280995],[0.8696569,-50.6341073],[0.8664388,-50.6375404],[0.872446,-50.6360384],[0.8730896,-50.6409734],[0.8793113,-50.6394715],[0.8812422,-50.6424754],[0.8797404,-50.6448356],[0.8758786,-50.6424754],[0.8739478,-50.646123],[0.8788822,-50.6482687],[0.8771659,-50.6512726],[0.8743768,-50.6534183],[0.8730896,-50.6607135],[0.8657952,-50.6611427],[0.8578571,-50.6671505],[0.8531372,-50.6650048],[0.8505627,-50.6667214],[0.8488464,-50.6699399],[0.8462719,-50.6705836],[0.8473446,-50.6742312],[0.8417665,-50.6759477],[0.8385483,-50.6819556],[0.8327556,-50.6828138],[0.836832,-50.6864615],[0.8366174,-50.6926839],[0.8333993,-50.6956878],[0.8263193,-50.6999791],[0.8218139,-50.7040559],[0.8183812,-50.7169298],[0.8188103,-50.7231523],[0.8188103,-50.7377428],[0.8203121,-50.7443943],[0.8250321,-50.7495439],[0.8213844,-50.7615597],[0.8231007,-50.7725026],[0.8254607,-50.7789395],[0.8372606,-50.7864494],[0.8432678,-50.7954611],[0.841766,-50.8036147],[0.8364024,-50.8076914],[0.8310389,-50.8160595],[0.8250316,-50.8261441],[0.8215989,-50.8398763],[0.8095844,-50.8617621],[0.8010027,-50.8765671],[0.7975699,-50.8857935],[0.7741844,-50.88751]];
         var dadosRotaAP70 = [[0.1019977,-51.0549692],[0.115438,-51.0542918],[0.1281077,-51.057635],[0.1293704,-51.0576207],[0.1306761,-51.0572333],[0.1319961,-51.0563867],[0.1330866,-51.0551384],[0.1367024,-51.0470171],[0.1373768,-51.0463428],[0.1455124,-51.0418373],[0.1485973,-51.0401586],[0.1493291,-51.039599],[0.1496304,-51.0391111],[0.1497596,-51.038408],[0.149817,-51.036184],[0.1499317,-51.035481],[0.1504196,-51.0346631],[0.1547815,-51.0309755],[0.1584978,-51.0294689],[0.1589856,-51.0290241],[0.1594447,-51.0279336],[0.161224,-51.0220508],[0.1612383,-51.0214051],[0.1606357,-51.0178753],[0.1606357,-51.0170001],[0.1609657,-51.0163257],[0.170163,-51.0066979],[0.17078,-51.0062961],[0.1760602,-51.0045886],[0.1773659,-51.0044595],[0.182187,-51.0054352],[0.1951435,-51.0080322],[0.1959327,-51.008477],[0.1985441,-51.0140298],[0.1991323,-51.0151633],[0.1996202,-51.0156655],[0.2121893,-51.0219358],[0.213165,-51.0219215],[0.2139112,-51.0215771],[0.2182716,-51.0168918],[0.2194715,-51.0154919],[0.2210714,-51.0126121],[0.226471,-51.0056925],[0.2345904,-50.998933],[0.2350704,-50.997893],[0.2344704,-50.9906134],[0.2344304,-50.9889735],[0.2355104,-50.9864937],[0.2423098,-50.9766144],[0.2467095,-50.9733346],[0.2475495,-50.9725746],[0.2478694,-50.9714147],[0.2474295,-50.9698548],[0.2426698,-50.9602954],[0.2413499,-50.9559357],[0.2417099,-50.9544958],[0.2468696,-50.9464562],[0.2589487,-50.9307772],[0.268148,-50.9154983],[0.2692279,-50.9132984],[0.2701879,-50.9123785],[0.2830669,-50.9023391],[0.2892664,-50.8942596],[0.2893864,-50.8931397],[0.2890264,-50.8904599],[0.2888264,-50.88942],[0.2882264,-50.88942],[0.2892264,-50.88842],[0.2901863,-50.8877801],[0.2911063,-50.8867401],[0.2912662,-50.8857802],[0.2909863,-50.8837403],[0.2907063,-50.8823004],[0.2908263,-50.8813805],[0.2913062,-50.8803806],[0.2927461,-50.8791806],[0.3122646,-50.8682614],[0.3137044,-50.8675814],[0.3147444,-50.8676214],[0.3261834,-50.873861],[0.3298631,-50.8765008],[0.331143,-50.8769008],[0.3344227,-50.8769408],[0.3364625,-50.8753809],[0.3375425,-50.873501],[0.3382624,-50.8711011],[0.3393023,-50.8699012],[0.398459,-50.8405014],[0.4022824,-50.8378158],[0.406652,-50.8342199],[0.4082451,-50.8338102],[0.4708758,-50.8320806],[0.473197,-50.8320351],[0.5479343,-50.8494684],[0.5490267,-50.8499236],[0.5740603,-50.8646258],[0.5780201,-50.8656727],[0.5783455,-50.8664213],[0.5787551,-50.8666033],[0.5794834,-50.8661026],[0.5809854,-50.8663757],[0.6148944,-50.8740683],[0.6206293,-50.8797124],[0.6279572,-50.8871774],[0.6383347,-50.8918657],[0.6531271,-50.8931857],[0.6542649,-50.8927305],[0.6565407,-50.891274],[0.6570869,-50.8904091],[0.6584523,-50.883809],[0.6662354,-50.8691068],[0.6728805,-50.8644184],[0.6860798,-50.8375174],[0.6868081,-50.8367891],[0.6909499,-50.8356056],[0.706971,-50.8429795],[0.7102936,-50.8436623],[0.7107942,-50.8440264],[0.7119776,-50.8459382],[0.7138437,-50.8488513],[0.7146629,-50.8494431],[0.7168021,-50.8498982],[0.7425631,-50.8410223],[0.7446112,-50.8384277],[0.745476,-50.8345132],[0.7452484,-50.8323739],[0.7451119,-50.8312814],[0.7467049,-50.8293242],[0.7496633,-50.8268662],[0.750437,-50.826229]];
 
         try { L.polygon(dadosPoligonoPacui, {color: "#b71c1c", weight: 3}).bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"}).addTo(mapa); } catch (e) {}
