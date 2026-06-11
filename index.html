@@ -206,7 +206,7 @@
                 <p><strong>O Distrito de São Joaquim do Pacuí</strong> consolidou-se como um dos pilares da agricultura familiar amapaense, sustentando um saber-fazer tradicional transmitido entre gerações.</p>
                 <div class="destaque-box" style="margin-bottom: 0;">
                     <strong style="display: block; font-size: 1.1em; margin-bottom: 5px;">Governança e Proteção de Ativos Coletivos</strong>
-                    A articulação técnica para a formalização desta Indicação Geográfica transforma a pujança econômica tradicional em proteção jurídica, garantindo que o valor gerado pela reputação do produto reverta diretamente aos produtores locais.
+                    A articulação técnica para a formalização desta Indicação Geográfica transforma a pujança económica tradicional em proteção jurídica, garantindo que o valor gerado pela reputação do produto reverta diretamente aos produtores locais.
                 </div>
             </div>
 
@@ -300,7 +300,7 @@
         <div class="rodape-container">
             <div class="rodape-coluna">
                 <h3>Sobre a Iniciativa</h3>
-                <p>Esta plataforma tecnológica busca a convergência entre o conhecimento técnico e a realidade das comunidades rurais da Amazônia. O trabalho foca na estruturação de instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados no mercado.</p>
+                <p>Esta plataforma tecnológica busca a convergência entre o conhecimento técnico e a realidade das comunidades rurais da Amazónia. O trabalho foca na estruturação de instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados no mercado.</p>
             </div>
             <div class="rodape-coluna">
                 <h3>Sobre a Pesquisa</h3>
@@ -325,20 +325,23 @@
                     <button id="btn-fazer-login" class="btn-auth" onclick="fazerLoginReal()">Entrar no Sistema</button>
                 </div>
                 
-                <div id="form-cadastro" class="auth-form" style="display: none; align-items: center;">
-                    <p style="font-size: 0.85em; color: #2e7d32; margin-bottom: 5px; text-align: center; width: 100%;">
-                        Preencha a solicitação abaixo e anexe os documentos exigidos pelo CET. O parecer será enviado ao seu e-mail.
+                <div id="form-cadastro" class="auth-form" style="display: none; align-items: center; flex-direction: column;">
+                    <p style="font-size: 0.95em; color: #2e7d32; margin-bottom: 20px; text-align: center; width: 100%;">
+                        Para garantir a segurança dos seus dados e arquivos, a solicitação de ingresso deve ser feita no portal oficial do Google.
                     </p>
                     
-                    <iframe src="https://forms.gle/nrMB6Rhtk97dfXTb7" 
-                            width="100%" 
-                            height="500" 
-                            frameborder="0" 
-                            marginheight="0" 
-                            marginwidth="0"
-                            style="border: 1px solid #cbd5e1; border-radius: 8px;">
-                        Carregando…
-                    </iframe>
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; width: 100%; text-align: center; margin-bottom: 20px;">
+                        <p style="font-size: 0.85em; color: #166534; margin: 0;">
+                            <strong>Atenção:</strong> Tenha as <b>fotos ou PDFs</b> dos seus documentos e da sua estrutura de produção salvos no telemóvel ou computador antes de continuar.
+                        </p>
+                    </div>
+
+                    <a href="https://forms.gle/wGpmqa44KAjyLyPp8" 
+                       target="_blank" 
+                       class="btn-auth" 
+                       style="width: 100%; text-align: center; text-decoration: none; padding: 15px 0;">
+                        🔗 Abrir Formulário Oficial Seguro
+                    </a>
                     </div>
                 <button class="btn-fechar-modal" onclick="fecharModalAuth()">Fechar Janela</button>
             </div>
@@ -421,7 +424,7 @@
         }
 
         // ===================================================
-        // 4. LÓGICA DO PAINEL DO PRODUTOR
+        // 4. LÓGICA DO PAINEL DO PRODUTOR (ATUALIZADA)
         // ===================================================
         function verificarStatusProdutor(nomeUsuario) {
             var meuDado = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeUsuario));
@@ -430,18 +433,18 @@
 
             areaUpload.innerHTML = `
                 <p style="margin-bottom: 10px; font-weight: bold; color: var(--cor-primaria);">Envio de Documentação Pendente:</p>
-                <p style="font-size: 0.9em; margin-bottom: 15px;">Para garantir a segurança dos seus dados, os arquivos do Dossiê devem ser enviados pelo formulário oficial.</p>
+                <p style="font-size: 0.9em; margin-bottom: 15px;">Para garantir a segurança dos seus dados, as fotos e PDFs do Dossiê devem ser enviados pelo formulário oficial.</p>
                 <button class="btn-auth" style="width: auto; padding: 10px 30px;" onclick="abrirModalAuth(); mudarAbaAuth('cadastro')">📝 Abrir Formulário Seguro</button>
             `;
 
             if (!meuDado || meuDado.status === "Aguardando Documentação") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro básico foi criado, mas você precisa enviar sua documentação (ZIP) para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> O seu registo básico foi criado, mas precisa de enviar a sua documentação (fotos e PDFs) para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
             } else if (meuDado.status === "Em Análise") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos estão sendo analisados pelo Conselho Regulador. Aguarde o parecer no seu e-mail.</div>`; areaUpload.style.display = 'none'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Os seus documentos estão a ser analisados pelo Conselho Regulador. Aguarde o parecer no seu e-mail.</div>`; areaUpload.style.display = 'none'; 
             } else if (meuDado.status === "Com Pendência") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Pendência encontrada.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Clique no botão abaixo para preencher o formulário novamente com a correção.</div>`; areaUpload.style.display = 'block'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Pendência encontrada.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Clique no botão abaixo para preencher o formulário novamente com as fotos/documentos em falta.</div>`; areaUpload.style.display = 'block'; 
             } else if (meuDado.status === "Habilitado") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> A sua unidade está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está libertado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
             } else if (meuDado.status === "Indeferido") {
                 painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação para detalhes.</div>`; areaUpload.style.display = 'none';
             }
@@ -451,7 +454,7 @@
         // 5. AUDITORIA E DEVOLUTIVA (CONSELHO)
         // ===================================================
         function carregarListaConselho() {
-            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='6'>Carregando processos do banco de dados...</td></tr>";
+            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='6'>A carregar processos da base de dados...</td></tr>";
             fetch(urlPlanilhaGeral).then(r => r.json()).then(dados => {
                 corpo.innerHTML = "";
                 dados.produtores.forEach(p => {
@@ -459,7 +462,7 @@
                     var classe = 'aguardando';
                     if(p.status === 'Em Análise') classe = 'analise'; else if(p.status === 'Habilitado') classe = 'habilitado'; else if(p.status === 'Com Pendência') classe = 'pendencia'; else if(p.status === 'Indeferido') classe = 'indeferido';
 
-                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar Arquivo</a>` : `---`;
+                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Ver Arquivos</a>` : `---`;
                     var btnAcoes = "";
                     if(p.status === 'Aguardando Documentação') { btnAcoes = `<i>Aguardando envio</i>`; } 
                     else if(p.status === 'Em Análise' || p.status === 'Com Pendência') {
