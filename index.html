@@ -97,13 +97,13 @@
            5. MODAL DE LOGIN E CADASTRO
            ========================================= */
         #modal-auth { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .auth-card { background: #fff; width: 450px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); animation: fadeIn 0.3s; }
+        .auth-card { background: #fff; width: 550px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); animation: fadeIn 0.3s; }
         .auth-header { background: var(--cor-primaria); color: white; padding: 20px; text-align: center; }
         .auth-header h3 { margin: 0; font-size: 1.4rem; }
         .auth-abas { display: flex; background: #e2e8f0; }
         .auth-abas button { flex: 1; padding: 12px; border: none; background: transparent; cursor: pointer; font-weight: bold; color: var(--cor-texto-claro); transition: 0.2s; }
         .auth-abas button.ativo { background: #fff; color: var(--cor-primaria); border-bottom: 3px solid var(--cor-primaria); }
-        .auth-body { padding: 30px; }
+        .auth-body { padding: 15px 30px 30px 30px; }
         
         .auth-form { display: flex; flex-direction: column; gap: 15px; }
         .auth-form label { font-size: 0.9em; font-weight: bold; color: var(--cor-texto); }
@@ -356,23 +356,12 @@
             </div>
 
             <div id="pacui-gov" class="aba-pacui">
-                <div class="card" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
-                    <h3 style="color: var(--cor-primaria); margin-top: 0; font-size: 1.2rem;">Adicionar Novo Produtor ao Sistema</h3>
-                    <div style="display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">Nome Completo</label><input type="text" id="novo-prod-nome" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></div>
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">E-mail de Acesso</label><input type="email" id="novo-prod-email" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></div>
-                        <div style="flex: 1; min-width: 200px;"><label style="font-weight:bold; font-size:0.85em;">Comunidade</label><select id="novo-prod-comunidade" style="width:100%; padding:10px; border-radius:6px; border:1px solid #ccc;"></select></div>
-                        <button class="btn-auth" style="margin: 0; padding: 10px 20px;" onclick="conselhoCadastraProdutor()">Cadastrar e Gerar Acesso</button>
-                    </div>
-                    <small style="color: #166534; display:block; margin-top:5px;">A senha padrão gerada será: <b>pacui123</b></small>
-                </div>
-
                 <div class="card" style="border-top: 5px solid var(--cor-primaria);">
                     <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0;">Auditoria de Produtores</h3>
-                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Avalie as documentações enviadas e solicite adequações caso o CET não seja cumprido.</p>
+                    <p style="color: var(--cor-texto-claro); margin-bottom: 20px;">Avalie as documentações enviadas via Google Forms e solicite adequações caso o CET não seja cumprido. As atualizações enviarão e-mails automáticos ao produtor.</p>
                     <div style="overflow-x: auto;">
                         <table class="tabela-sistema" id="tabela-conselho">
-                            <thead><tr><th>Produtor / Comunidade</th><th>Status Atual</th><th>Motivo / Observação</th><th>Dossiê</th><th>Ações da Auditoria</th></tr></thead>
+                            <thead><tr><th>Produtor / Comunidade</th><th>Status Atual</th><th>Motivo / Observação</th><th>E-mail</th><th>Dossiê</th><th>Ações da Auditoria</th></tr></thead>
                             <tbody id="corpo-tabela-conselho"></tbody>
                         </table>
                     </div>
@@ -444,7 +433,7 @@
         <div class="rodape-container">
             <div class="rodape-coluna">
                 <h3>Sobre o Pesquisador</h3>
-                <p>Luiz Fernando Brito Rocha é mestre em Propriedade Intelectual e Transferência de Tecnologia para Inovação pelo programa PROFNIT da Universidade Federal do Amapá (UNIFAP). Sua atuação foca na convergência entre o conhecimento técnico e a realidade das comunidades rurais, com foco especial na proteção de ativos coletivos da sociobiodiversidade amazônica. O trabalho desenvolvido é fruto de uma pesquisa dedicada a estruturar instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados.</p>
+                <p>Luiz Fernando Brito Rocha é pesquisador focado na convergência entre o conhecimento técnico e a realidade das comunidades rurais, com foco especial na proteção de ativos coletivos da sociobiodiversidade amazônica. O trabalho desenvolvido é fruto de uma pesquisa dedicada a estruturar instrumentos de governança territorial e propriedade intelectual, buscando transformar saberes tradicionais em ativos protegidos e valorizados.</p>
             </div>
             <div class="rodape-coluna">
                 <h3>Sobre a Pesquisa</h3>
@@ -460,33 +449,39 @@
     </footer>
 
     <div id="modal-auth">
-        <div class="auth-card">
+        <div class="auth-card" style="width: 550px;">
             <div class="auth-header"><h3 style="margin:0;">Plataforma IG Pacuí</h3></div>
             <div class="auth-abas">
                 <button id="tab-login" class="ativo" onclick="mudarAbaAuth('login')">Fazer Login</button>
-                <button id="tab-cadastro" onclick="mudarAbaAuth('cadastro')">Criar Conta (Conselho)</button>
+                <button id="tab-cadastro" onclick="mudarAbaAuth('cadastro')">Solicitar Ingressar na IG</button>
             </div>
-            <div class="auth-body">
+            <div class="auth-body" style="padding: 15px;">
                 
                 <div id="form-login" class="auth-form">
-                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">Produtores devem receber o login presencialmente via Conselho Regulador.</p>
+                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">Produtores habilitados devem usar o login e a senha provisória enviados pelo Conselho Regulador em seu e-mail.</p>
                     <div><label>E-mail</label><input type="email" id="email-login" placeholder="seu@email.com"></div>
                     <div><label>Senha</label><input type="password" id="senha-login" placeholder="••••••••"></div>
                     <button id="btn-fazer-login" class="btn-auth" onclick="fazerLoginReal()">Entrar no Sistema</button>
                 </div>
                 
-                <div id="form-cadastro" class="auth-form" style="display: none;">
-                    <p style="font-size: 0.85em; color: #e11d48; margin-bottom: 10px;">A auto-criação de contas está restrita a membros oficiais da administração.</p>
-                    <div><label>Nome do Conselheiro</label><input type="text" id="cad-nome" placeholder="Seu nome..."></div>
-                    <div><label>E-mail Corporativo</label><input type="email" id="cad-email" placeholder="seu@email.com"></div>
-                    <div><label>Crie uma Senha</label><input type="password" id="cad-senha" placeholder="••••••••"></div>
-                    <div style="background: #fff1f2; padding: 10px; border-radius: 6px; border: 1px solid #fecdd3;">
-                        <label style="color:#e11d48;">Código de Acesso Institucional</label>
-                        <input type="password" id="cad-codigo" placeholder="Insira o código secreto">
-                    </div>
-                    <button id="btn-fazer-cadastro" class="btn-auth" onclick="fazerCadastroConselho()">Ativar Minha Conta</button>
+                <div id="form-cadastro" class="auth-form" style="display: none; align-items: center;">
+                    <p style="font-size: 0.85em; color: #2e7d32; margin-bottom: 15px; text-align: center;">
+                        Preencha a solicitação abaixo e anexe os documentos exigidos pelo CET. <br>
+                        A resposta de aprovação ou pendência será enviada no e-mail informado.
+                    </p>
+                    
+                    <iframe src="https://docs.google.com/forms/d/e/COLE_O_ID_DO_SEU_FORMS_AQUI/viewform?embedded=true" 
+                            width="100%" 
+                            height="500" 
+                            frameborder="0" 
+                            marginheight="0" 
+                            marginwidth="0"
+                            style="border: 1px solid #cbd5e1; border-radius: 8px;">
+                        Carregando…
+                    </iframe>
+                    
                 </div>
-                <button class="btn-fechar-modal" onclick="fecharModalAuth()">Cancelar</button>
+                <button class="btn-fechar-modal" onclick="fecharModalAuth()">Fechar Janela</button>
             </div>
         </div>
     </div>
@@ -512,7 +507,7 @@
         // ==========================================
         // COLE SUA URL DE IMPLANTAÇÃO AQUI EMBAIXO:
         // ==========================================
-        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbxuHJjh6b4h_ep_CTbjO6IMLrKjYwZqojm1XI5LxidEpeZeMc8ggVhH_jaYjyIPXQqB2w/exec"; 
+        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbwYznJJYhAZh8mckRQNSz3UDYb6RmKMWV5Y0KuBy0nKBdkx-RsJZ8-Y_ty8WK-48pgBfw/exec"; 
         
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
@@ -528,39 +523,6 @@
             document.getElementById('tab-login').classList.remove('ativo'); document.getElementById('tab-cadastro').classList.remove('ativo');
             document.getElementById('form-login').style.display = 'none'; document.getElementById('form-cadastro').style.display = 'none';
             document.getElementById('tab-' + aba).classList.add('ativo'); document.getElementById('form-' + aba).style.display = 'flex';
-        }
-
-        // ===================================================
-        // 1. CADASTRAR CONSELHEIRO
-        // ===================================================
-        function fazerCadastroConselho() {
-            var n = document.getElementById('cad-nome').value; var e = document.getElementById('cad-email').value;
-            var s = document.getElementById('cad-senha').value; var c = document.getElementById('cad-codigo').value;
-            if(!n || !e || !s || !c) { alert("Preencha todos os campos."); return; }
-            var btn = document.getElementById('btn-fazer-cadastro'); btn.innerHTML = "⏳ Validando..."; btn.disabled = true;
-
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "cadastrar_usuario", nome: n, email: e, senha: s, codigo_acesso: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false;
-                if(retorno.sucesso) { alert("Acesso concedido! Pode fazer login."); mudarAbaAuth('login'); } else { alert("Erro: " + retorno.erro); }
-            }).catch(e => { btn.innerHTML = "Ativar Minha Conta"; btn.disabled = false; alert("Falha ao comunicar com o servidor."); });
-        }
-
-        // ===================================================
-        // 2. CONSELHO CADASTRA PRODUTOR
-        // ===================================================
-        function conselhoCadastraProdutor() {
-            var n = document.getElementById('novo-prod-nome').value; var e = document.getElementById('novo-prod-email').value; var c = document.getElementById('novo-prod-comunidade').value;
-            if(!n || !e || !c) { alert("Preencha nome, email e comunidade."); return; }
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "conselho_cadastra_produtor", nome_produtor: n, email_produtor: e, comunidade: c}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                if(retorno.sucesso) { 
-                    alert("Produtor inserido no sistema!\nEle já pode fazer login com o e-mail: " + e + " e senha padrão: pacui123"); 
-                    document.getElementById('novo-prod-nome').value = ""; document.getElementById('novo-prod-email').value = ""; carregarListaConselho(); 
-                }
-            });
         }
 
         // ===================================================
@@ -599,7 +561,7 @@
         }
 
         // ===================================================
-        // 4. LÓGICA DO PAINEL DO PRODUTOR E ENVIO DE ZIP
+        // 4. LÓGICA DO PAINEL DO PRODUTOR
         // ===================================================
         function verificarStatusProdutor(nomeUsuario) {
             var meuDado = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeUsuario));
@@ -608,9 +570,9 @@
             if (!meuDado || meuDado.status === "Aguardando Documentação") {
                 painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro foi criado pelo Conselho, mas você precisa enviar sua documentação para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
             } else if (meuDado.status === "Em Análise") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer.</div>`; areaUpload.style.display = 'none'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos via formulário e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer no seu e-mail.</div>`; areaUpload.style.display = 'none'; 
             } else if (meuDado.status === "Com Pendência") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, anexe um novo ZIP corrigindo o apontamento acima.</div>`; areaUpload.style.display = 'block'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, acesse o formulário para reenviar a documentação corrigida.</div>`; areaUpload.style.display = 'block'; 
             } else if (meuDado.status === "Habilitado") {
                 painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
             } else if (meuDado.status === "Indeferido") {
@@ -647,7 +609,7 @@
         // 5. AUDITORIA E DEVOLUTIVA (CONSELHO)
         // ===================================================
         function carregarListaConselho() {
-            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='5'>Carregando processos do banco de dados...</td></tr>";
+            var corpo = document.getElementById('corpo-tabela-conselho'); corpo.innerHTML = "<tr><td colspan='6'>Carregando processos do banco de dados...</td></tr>";
             fetch(urlPlanilhaGeral).then(r => r.json()).then(dados => {
                 corpo.innerHTML = "";
                 dados.produtores.forEach(p => {
@@ -655,7 +617,7 @@
                     var classe = 'aguardando';
                     if(p.status === 'Em Análise') classe = 'analise'; else if(p.status === 'Habilitado') classe = 'habilitado'; else if(p.status === 'Com Pendência') classe = 'pendencia'; else if(p.status === 'Indeferido') classe = 'indeferido';
 
-                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar ZIP</a>` : `---`;
+                    var linkDoc = p.link_dossie ? `<a href="${p.link_dossie}" target="_blank" class="btn-acao btn-doc">Baixar Arquivo</a>` : `---`;
                     var btnAcoes = "";
                     if(p.status === 'Aguardando Documentação') { btnAcoes = `<i>Aguardando envio</i>`; } 
                     else if(p.status === 'Em Análise' || p.status === 'Com Pendência') {
@@ -664,14 +626,14 @@
                                     <button class="btn-acao btn-rejeitar" onclick="mudarStatusAuditoria('${p.nome}', 'Indeferido', '', this)">Indeferir</button>`;
                     } else if(p.status === 'Habilitado') { btnAcoes = `<button class="btn-acao" style="background:#ccc; color:#333;" onclick="apontarPendencia('${p.nome}', this)">Suspender/Pendência</button>`; }
 
-                    tr.innerHTML = `<td><strong>${p.nome}</strong></td> <td><span class="badge ${classe}">${p.status}</span></td> <td><small>${p.observacao}</small></td> <td>${linkDoc}</td> <td>${btnAcoes}</td>`;
+                    tr.innerHTML = `<td><strong>${p.nome}</strong></td> <td><span class="badge ${classe}">${p.status}</span></td> <td><small>${p.observacao}</small></td> <td><small>${p.email || 'N/A'}</small></td> <td>${linkDoc}</td> <td>${btnAcoes}</td>`;
                     corpo.appendChild(tr);
                 });
             });
         }
 
         function apontarPendencia(nomeProdutor, btn) {
-            var motivo = prompt("Escreva o motivo da Devolutiva (O produtor verá esta mensagem):", "Faltou a CNH e a foto do Tacho");
+            var motivo = prompt("Escreva o motivo da Devolutiva (O produtor receberá esta mensagem por e-mail):", "Faltou a CNH e a foto do Tacho");
             if(motivo != null && motivo.trim() !== "") mudarStatusAuditoria(nomeProdutor, 'Com Pendência', motivo, btn);
         }
 
@@ -710,13 +672,21 @@
         var dadosRotaAP70 = [[0.1019977,-51.0549692],[0.115438,-51.0542918],[0.1281077,-51.057635],[0.1293704,-51.0576207],[0.1306761,-51.0572333],[0.1319961,-51.0563867],[0.1330866,-51.0551384],[0.1367024,-51.0470171],[0.1373768,-51.0463428],[0.1455124,-51.0418373],[0.1485973,-51.0401586],[0.1493291,-51.039599],[0.1496304,-51.0391111],[0.1497596,-51.038408],[0.149817,-51.036184],[0.1499317,-51.035481],[0.1504196,-51.0346631],[0.1547815,-51.0309755],[0.1584978,-51.0294689],[0.1589856,-51.0290241],[0.1594447,-51.0279336],[0.161224,-51.0220508],[0.1612383,-51.0214051],[0.1606357,-51.0178753],[0.1606357,-51.0170001],[0.1609657,-51.0163257],[0.170163,-51.0066979],[0.17078,-51.0062961],[0.1760602,-51.0045886],[0.1773659,-51.0044595],[0.182187,-51.0054352],[0.1951435,-51.0080322],[0.1959327,-51.008477],[0.1985441,-51.0140298],[0.1991323,-51.0151633],[0.1996202,-51.0156655],[0.2121893,-51.0219358],[0.213165,-51.0219215],[0.2139112,-51.0215771],[0.2182716,-51.0168918],[0.2194715,-51.0154919],[0.2210714,-51.0126121],[0.226471,-51.0056925],[0.2345904,-50.998933],[0.2350704,-50.997893],[0.2344704,-50.9906134],[0.2344304,-50.9889735],[0.2355104,-50.9864937],[0.2423098,-50.9766144],[0.2467095,-50.9733346],[0.2475495,-50.9725746],[0.2478694,-50.9714147],[0.2474295,-50.9698548],[0.2426698,-50.9602954],[0.2413499,-50.9559357],[0.2417099,-50.9544958],[0.2468696,-50.9464562],[0.2589487,-50.9307772],[0.268148,-50.9154983],[0.2692279,-50.9132984],[0.2701879,-50.9123785],[0.2830669,-50.9023391],[0.2892664,-50.8942596],[0.2893864,-50.8931397],[0.2890264,-50.8904599],[0.2888264,-50.88942],[0.2882264,-50.88942],[0.2892264,-50.88842],[0.2901863,-50.8877801],[0.2911063,-50.8867401],[0.2912662,-50.8857802],[0.2909863,-50.8837403],[0.2907063,-50.8823004],[0.2908263,-50.8813805],[0.2913062,-50.8803806],[0.2927461,-50.8791806],[0.3122646,-50.8682614],[0.3137044,-50.8675814],[0.3147444,-50.8676214],[0.3261834,-50.873861],[0.3298631,-50.8765008],[0.331143,-50.8769008],[0.3344227,-50.8769408],[0.3364625,-50.8753809],[0.3375425,-50.873501],[0.3382624,-50.8711011],[0.3393023,-50.8699012],[0.398459,-50.8405014],[0.4022824,-50.8378158],[0.406652,-50.8342199],[0.4082451,-50.8338102],[0.4708758,-50.8320806],[0.473197,-50.8320351],[0.5479343,-50.8494684],[0.5490267,-50.8499236],[0.5740603,-50.8646258],[0.5780201,-50.8656727],[0.5783455,-50.8664213],[0.5787551,-50.8666033],[0.5794834,-50.8661026],[0.5809854,-50.8663757],[0.6148944,-50.8740683],[0.6206293,-50.8797124],[0.6279572,-50.8871774],[0.6383347,-50.8918657],[0.6531271,-50.8931857],[0.6542649,-50.8927305],[0.6565407,-50.891274],[0.6570869,-50.8904091],[0.6584523,-50.883809],[0.6662354,-50.8691068],[0.6728805,-50.8644184],[0.6860798,-50.8375174],[0.6868081,-50.8367891],[0.6909499,-50.8356056],[0.706971,-50.8429795],[0.7102936,-50.8436623],[0.7107942,-50.8440264],[0.7119776,-50.8459382],[0.7138437,-50.8488513],[0.7146629,-50.8494431],[0.7168021,-50.8498982],[0.7425631,-50.8410223],[0.7446112,-50.8384277],[0.745476,-50.8345132],[0.7452484,-50.8323739],[0.7451119,-50.8312814],[0.7467049,-50.8293242],[0.7496633,-50.8268662],[0.750437,-50.826229]];
 
         // Desenha a Geometria na tela na mesma hora, sem precisar esperar o servidor
-        L.polygon(dadosPoligonoPacui, {color: "#b71c1c", weight: 3})
-         .bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"})
-         .addTo(mapa);
+        try {
+            L.polygon(dadosPoligonoPacui, {color: "#b71c1c", weight: 3})
+             .bindTooltip("Região do Pacuí", {permanent:true, direction:"center", className:"rotulo-area"})
+             .addTo(mapa);
+        } catch (errPoligono) {
+            console.error("Erro ao desenhar o polígono:", errPoligono);
+        }
 
-        L.polyline(dadosRotaAP70, {color: "#0d47a1", weight: 4, dashArray:'10,10'})
-         .bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"})
-         .addTo(mapa);
+        try {
+            L.polyline(dadosRotaAP70, {color: "#0d47a1", weight: 4, dashArray:'10,10'})
+             .bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota"})
+             .addTo(mapa);
+        } catch (errRota) {
+            console.error("Erro ao desenhar a rota AP-70:", errRota);
+        }
 
         // O fetch agora só busca os dados dinâmicos da planilha (Notícias, Comunidades e Habilitações)
         fetch(urlPlanilhaGeral)
