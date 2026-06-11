@@ -515,94 +515,38 @@
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
-        function mostrar(id) { document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); var alvo = document.getElementById(id); if (alvo) alvo.style.display = 'block'; }
-        function mostrarAbaPacui(idAba, elementoBotao) { document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none'); document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo')); document.getElementById(idAba).style.display = 'block'; elementoBotao.classList.add('ativo'); if(idAba === 'pacui-visao') setTimeout(() => { mapa.invalidateSize(); }, 200); }
-        function abrirModalAuth() { document.getElementById('modal-auth').style.display = 'flex'; }
-        function fecharModalAuth() { document.getElementById('modal-auth').style.display = 'none'; }
-        function mudarAbaAuth(aba) {
-            document.getElementById('tab-login').classList.remove('ativo'); document.getElementById('tab-cadastro').classList.remove('ativo');
-            document.getElementById('form-login').style.display = 'none'; document.getElementById('form-cadastro').style.display = 'none';
-            document.getElementById('tab-' + aba).classList.add('ativo'); document.getElementById('form-' + aba).style.display = 'flex';
-        }
-
-        // ===================================================
-        // 3. FAZER LOGIN
-        // ===================================================
-        function fazerLoginReal() {
-            var e = document.getElementById('email-login').value; var s = document.getElementById('senha-login').value;
-            if(!e || !s) return;
-            var btn = document.getElementById('btn-fazer-login'); btn.innerHTML = "⏳ Autenticando..."; btn.disabled = true;
-
-            fetch(urlPlanilhaGeral, {
-                method: 'POST', body: JSON.stringify({acao: "login_usuario", email: e, senha: s}), headers: { 'Content-Type': 'text/plain;charset=utf-8' }
-            }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = "Entrar no Sistema"; btn.disabled = false;
-                if(retorno.sucesso) { usuarioLogado.nome = retorno.nome; usuarioLogado.perfil = retorno.perfil; iniciarSessao(retorno.perfil, retorno.nome); } 
-                else { alert("Erro: " + retorno.erro); }
-            }).catch(e => { btn.innerHTML = "Entrar no Sistema"; btn.disabled = false; alert("Falha de conexão com o banco de dados."); });
-        }
-
-        function iniciarSessao(perfil, nome) {
-            fecharModalAuth();
-            var btnNav = document.getElementById('btn-auth-nav');
-
-            if(perfil === 'produtor') {
-                btnNav.innerHTML = "👨‍🌾 " + nome.split(" ")[0] + " (Sair)";
-                document.getElementById('aba-produtor-btn').style.display = 'block'; document.getElementById('doc-nome').value = nome; 
-                mostrar('pacui'); mostrarAbaPacui('pacui-produtor', document.getElementById('aba-produtor-btn'));
-                verificarStatusProdutor(nome); 
-            } else if (perfil === 'conselho') {
-                btnNav.innerHTML = "⚖️ Conselho (Sair)";
-                document.getElementById('aba-gov-btn').style.display = 'block';
-                mostrar('pacui'); mostrarAbaPacui('pacui-gov', document.getElementById('aba-gov-btn'));
-                carregarListaConselho(); 
-            }
-            btnNav.onclick = function() { location.reload(); }; 
-        }
-
-        // ===================================================
-        // 4. LÓGICA DO PAINEL DO PRODUTOR
-        // ===================================================
+       // =========================================================================
+        // 4. LÓGICA DO PAINEL DO PRODUTOR (ATUALIZADA PARA O GOOGLE FORMS)
+        // =========================================================================
         function verificarStatusProdutor(nomeUsuario) {
             var meuDado = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeUsuario));
-            var painelMsg = document.getElementById('painel-mensagem-produtor'); var areaUpload = document.getElementById('area-upload-produtor');
+            var painelMsg = document.getElementById('painel-mensagem-produtor'); 
+            var areaUpload = document.getElementById('area-upload-produtor');
+
+            // Substitui a área de upload antiga por um botão que chama o Forms seguro
+            areaUpload.innerHTML = `
+                <p style="margin-bottom: 10px; font-weight: bold; color: var(--cor-primaria);">Envio de Documentação Pesada:</p>
+                <p style="font-size: 0.9em; margin-bottom: 15px;">Para garantir a segurança dos seus dados, os arquivos do Dossiê devem ser enviados pelo formulário oficial.</p>
+                <button class="btn-auth" style="width: auto; padding: 10px 30px;" onclick="abrirModalAuth(); mudarAbaAuth('cadastro')">📝 Abrir Formulário Seguro</button>
+            `;
 
             if (!meuDado || meuDado.status === "Aguardando Documentação") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro foi criado pelo Conselho, mas você precisa enviar sua documentação para iniciar a auditoria.</div>`; areaUpload.style.display = 'block';
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>Ação Necessária:</b> Seu cadastro básico foi criado, mas você precisa enviar sua documentação (ZIP) para iniciar a auditoria.</div>`; 
+                areaUpload.style.display = 'block';
             } else if (meuDado.status === "Em Análise") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos via formulário e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer no seu e-mail.</div>`; areaUpload.style.display = 'none'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso" style="border-color: #f59e0b; color: #b45309; background:#fffbeb;"><b>Em Auditoria:</b> Seus documentos foram recebidos via formulário e estão sendo analisados pelo Conselho Regulador. Aguarde o parecer no seu e-mail.</div>`; 
+                areaUpload.style.display = 'none'; 
             } else if (meuDado.status === "Com Pendência") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, acesse o formulário para reenviar a documentação corrigida.</div>`; areaUpload.style.display = 'block'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia"><b>⚠️ Processo Devolvido: Foi encontrada uma pendência documental.</b><br><br><i>Mensagem do Conselho:</i> "${meuDado.observacao}"<br><br>Por favor, clique no botão abaixo para preencher o formulário novamente com a documentação corrigida.</div>`; 
+                areaUpload.style.display = 'block'; 
             } else if (meuDado.status === "Habilitado") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`; areaUpload.style.display = 'none'; document.getElementById('aba-rastreio-btn').style.display = 'block'; 
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-sucesso"><b>Parabéns!</b> Sua unidade produtiva está habilitada e em conformidade com o CET. O Módulo de Rastreabilidade está liberado.</div>`; 
+                areaUpload.style.display = 'none'; 
+                document.getElementById('aba-rastreio-btn').style.display = 'block'; 
             } else if (meuDado.status === "Indeferido") {
-                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação para maiores detalhes.</div>`; areaUpload.style.display = 'none';
+                painelMsg.innerHTML = `<div class="painel-aviso aviso-pendencia" style="background:#000; color:#fff; border-color:#fff;"><b>Solicitação Indeferida.</b> Procure a Associação para maiores detalhes.</div>`; 
+                areaUpload.style.display = 'none';
             }
-        }
-
-        function lerArquivoBase64(arquivo) {
-            return new Promise((resolve, reject) => { var reader = new FileReader(); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = reject; reader.readAsDataURL(arquivo); });
-        }
-
-        function enviarDocumentacaoReal() {
-            var nome = document.getElementById('doc-nome').value; var comunidade = document.getElementById('doc-comunidade').value; var arquivoInput = document.getElementById('doc-arquivo');
-            if(!comunidade || arquivoInput.files.length === 0) { alert("Preencha a comunidade e anexe a pasta .zip."); return; }
-            if(!arquivoInput.files[0].name.toLowerCase().endsWith('.zip')) { alert("O dossiê deve ser formato .zip"); return; }
-
-            var arquivo = arquivoInput.files[0]; var btn = document.getElementById('btn-enviar-doc'); btn.innerHTML = "⏳ Enviando e Criptografando..."; btn.disabled = true;
-            var nomeFormatado = nome.replace(/\s+/g, '_'); var nomeDossieFinal = "Dossie_" + nomeFormatado + ".zip";
-
-            lerArquivoBase64(arquivo).then(base64 => {
-                var pacote = { acao: "enviar_documentacao", nomeProdutor: nome, comunidade: comunidade, arquivoBase64: base64, mimeType: "application/zip", nomeArquivo: nomeDossieFinal };
-                fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify(pacote), headers: { 'Content-Type': 'text/plain;charset=utf-8' } })
-                .then(r => r.json()).then(retorno => {
-                    btn.innerHTML = "Enviar Dossiê para Auditoria"; btn.disabled = false;
-                    if(retorno.sucesso) { 
-                        alert("Enviado! O status mudará para Em Análise."); arquivoInput.value = ""; 
-                        listaDeProdutoresParaStatus.push({nome: nome, status: "Em Análise"}); verificarStatusProdutor(nome); 
-                    }
-                });
-            });
         }
 
         // ===================================================
