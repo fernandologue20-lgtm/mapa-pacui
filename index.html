@@ -431,48 +431,73 @@
         // =========================================================================
         // PORTAL DO CONSUMIDOR COM DADOS INDIVIDUAIS DO PRODUTOR LOGADO
         // =========================================================================
-        function abrirPortalConsumidor(lote, comunidade, data, nomeProdutor) {
-            document.getElementById('cons-lote').innerText = lote;
-            document.getElementById('cons-comunidade').innerText = "Comunidade " + comunidade;
-            document.getElementById('cons-data').innerText = data;
+        <div id="modal-consumidor">
+        <div class="consumidor-card">
+            <div class="consumidor-capa">
+                <h2>Farinha do Pacuí</h2>
+                <p>Indicação de Procedência - Amapá</p>
+                <div class="selo-garantia">✅ Lote Autenticado: <span id="cons-lote">PACUI-0000</span></div>
+            </div>
             
-            // O sistema coloca o nome de quem gerou o QR Code em destaque para o consumidor!
-            document.getElementById('cons-nome-produtor').innerText = nomeProdutor;
-            document.getElementById('cons-historia-nome').innerText = nomeProdutor;
-            
-            document.getElementById('modal-consumidor').style.display = 'flex';
-        }
+            <div class="consumidor-body">
+                <div class="sessao-consumidor" style="text-align: center; border-left: 5px solid var(--cor-destaque);">
+                    <h3 style="justify-content: center; color: var(--cor-destaque-hover);">👨‍🌾 O Seu Produtor</h3>
+                    <p style="margin-bottom: 5px;">Produzido com orgulho pela unidade de:</p>
+                    <strong style="font-size: 1.4em; color: var(--cor-texto);" id="cons-nome-produtor">Nome do Produtor</strong>
+                    <p style="color: var(--cor-primaria); font-weight: bold; margin-top: 5px;" id="cons-comunidade">Comunidade X</p>
+                    <p style="color: var(--cor-texto-claro); font-size: 0.85em; margin-top: 5px;">Data de Produção/Torra: <span id="cons-data">00/00/0000</span></p>
+                </div>
 
-        function fecharPortalConsumidor() {
-            document.getElementById('modal-consumidor').style.display = 'none';
-        }
+                <div class="sessao-consumidor">
+                    <h3>📖 Identidade e Território</h3>
+                    <p style="font-size: 0.95em; text-align: justify;">A unidade de <strong id="cons-historia-nome"></strong> está localizada no <strong>Distrito de São Joaquim do Pacuí</strong>, em Macapá/AP. Este território possui reconhecimento e notoriedade histórica como centro tradicional de produção de farinha de mandioca. Ao levar este produto, você valoriza a continuidade da nossa identidade sociocultural e da agricultura familiar amapaense.</p>
+                </div>
 
-        function gerarQRCode() {
-            var data = document.getElementById('data-lote').value; 
-            var comunidade = document.getElementById('comunidade-lote').value; 
-            var peso = document.getElementById('peso-lote').value; 
-            var id = document.getElementById('id-diagro').value || "Produção Artesanal (Isento)";
-            
-            // Aqui nós capturamos o nome do Produtor que está logado no momento!
-            var nomeDoProdutor = usuarioLogado.nome; 
-            
-            if(!data || !peso || !comunidade) { alert("Preencha a data, comunidade e peso do lote."); return; }
-            var btn = document.querySelector('.btn-gerar-lote'); var txt = btn.innerHTML; btn.innerHTML = "⏳..."; btn.disabled = true;
-            
-            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({ acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id, produtor: nomeDoProdutor }), headers: { 'Content-Type': 'text/plain;charset=utf-8' } }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = txt; btn.disabled = false;
-                if (retorno.sucesso) {
-                    var dataFormatada = data.split('-').reverse().join('/');
-                    
-                    // O link real agora contém os dados pessoais para quem ler o QR Code
-                    var linkDeRastreioReal = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent("Plataforma Pacuí | Lote: " + retorno.loteGerado + " | Produtor: " + nomeDoProdutor)}`;
-                    
-                    document.getElementById('area-qr').innerHTML = `
-                        <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
-                        <img src="${linkDeRastreioReal}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">
-                        <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">📷 Clique no QR Code para simular a visão do consumidor</p>
-                    `;
-                    document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
+                <div class="sessao-consumidor">
+                    <h3>🌟 Qualidade Sensorial (CET)</h3>
+                    <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;">Auditada pelo Conselho Regulador, esta farinha (seja Lavada, Seca ou Comum) atende aos rigorosos padrões da Indicação de Procedência:</p>
+                    <ul style="font-size: 0.9em; color: var(--cor-texto); padding-left: 20px; line-height: 1.6;">
+                        <li><strong>Textura e Aspecto:</strong> Predominantemente crocante, de aspecto seco e solto.</li>
+                        <li><strong>Coloração:</strong> Variando do branco ao amarelo ouro.</li>
+                        <li><strong>Aroma:</strong> Característico de torração tradicional.</li>
+                        <li><strong>Granulometria:</strong> Média a grossa, conforme o padrão da região.</li>
+                    </ul>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>⚙️ O Saber-Fazer Tradicional</h3>
+                    <p style="font-size: 0.85em; color: #666;">Processo produtivo artesanal certificado:</p>
+                    <div class="fluxograma-linha">
+                        <div class="etapa-fluxo"><strong>1. Descascamento e Lavagem</strong>Seleção e preparo das raízes cultivadas na área delimitada.</div>
+                        <div class="etapa-fluxo"><strong>2. Trituração e Prensagem</strong>A massa é processada para a retirada da manipueira.</div>
+                        <div class="etapa-fluxo"><strong>3. Peneiração</strong>Garante a padronização tradicional da granulometria.</div>
+                        <div class="etapa-fluxo"><strong>4. Torração</strong>Etapa essencial que confere a crocância, cor e aroma inconfundíveis da Farinha do Pacuí.</div>
+                    </div>
+                </div>
+
+                <div class="sessao-consumidor">
+                    <h3>📷 Transparência Visual</h3>
+                    <p style="font-size: 0.85em; color: #666;">Registros da nossa rotina produtiva artesanal:</p>
+                    <div class="galeria-fotos">
+                        <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=400&auto=format&fit=crop" alt="Matéria prima">
+                        <img src="https://images.unsplash.com/photo-1598440785133-72535d4e1355?q=80&w=400&auto=format&fit=crop" alt="Agricultores">
+                        <img src="https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=400&auto=format&fit=crop" alt="Tacho">
+                        <img src="https://images.unsplash.com/photo-1628183141154-1b11ce13010b?q=80&w=400&auto=format&fit=crop" alt="Produto final">
+                    </div>
+                </div>
+
+                <div class="sessao-consumidor" style="background: #f0fdf4; border-color: #bbf7d0;">
+                    <h3 style="color: #166534; border-bottom-color: #bbf7d0;">🛡️ Governança e Controle</h3>
+                    <p style="font-size: 0.85em; color: #15803d; text-align: justify; margin: 0;">A gestão e o sistema de rastreabilidade desta Indicação Geográfica são conduzidos pela <strong>ASMOPAP/CSP</strong> (Associação de Moradores Produtores Agropecuários da Comunidade de Salamito do Pacuí) e pelo Conselho Regulador, assegurando a origem e a conformidade da produção.</p>
+                </div>
+
+                <div class="consumidor-footer">
+                    <button class="btn-fechar-modal" style="background: #e2e8f0; color: #333; padding: 15px; border-radius: 8px; font-weight: bold;" onclick="fecharPortalConsumidor()">Fechar Portal</button>
+                    <p style="font-size: 0.75em; color: #888; margin-top: 15px;">Desenvolvido pelo PROFNIT - UNIFAP</p>
+                </div>
+            </div>
+        </div>
+    </div> 
                 }
             });
         }
