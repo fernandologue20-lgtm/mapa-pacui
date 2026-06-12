@@ -522,6 +522,8 @@
                     document.getElementById('area-qr').innerHTML = `
                         <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
                         <img src="${linkDeRastreioReal}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">
+                        <br>
+                        <a href="${linkDeRastreioReal}" target="_blank" style="display: inline-block; margin-top: 15px; background: var(--cor-primaria); color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave);">💾 Salvar QR Code (Etiqueta)</a>
                         <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">📷 Clique no QR Code para simular a visão do consumidor</p>
                     `;
                     document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
