@@ -501,6 +501,34 @@
             document.getElementById('modal-consumidor').style.display = 'none';
         }
 
+        // =========================================================
+        // NOVA FUNÇÃO: FORÇAR O DOWNLOAD DA IMAGEM DO QR CODE
+        // =========================================================
+        function baixarQRCode(urlImagem, lote) {
+            var btn = document.getElementById('btn-baixar-qr');
+            var textoOriginal = btn.innerHTML;
+            btn.innerHTML = "⏳ A processar etiqueta...";
+            
+            fetch(urlImagem)
+                .then(res => res.blob())
+                .then(blob => {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'Etiqueta_IG_Pacui_' + lote + '.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    btn.innerHTML = textoOriginal;
+                })
+                .catch(() => {
+                    // Fallback de segurança se o download forçado falhar
+                    window.open(urlImagem, '_blank');
+                    btn.innerHTML = textoOriginal;
+                });
+        }
+
         function gerarQRCode() {
             var data = document.getElementById('data-lote').value; 
             var comunidade = document.getElementById('comunidade-lote').value; 
@@ -517,14 +545,16 @@
                 if (retorno.sucesso) {
                     var dataFormatada = data.split('-').reverse().join('/');
                     
-                    var linkDeRastreioReal = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent("Plataforma Pacuí | Lote: " + retorno.loteGerado + " | Produtor: " + nomeDoProdutor)}`;
+                    // URL usando a API profissional qrserver.com
+                    var conteudoQR = encodeURIComponent("Plataforma Pacuí | Lote: " + retorno.loteGerado + " | Produtor: " + nomeDoProdutor);
+                    var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${conteudoQR}`;
                     
                     document.getElementById('area-qr').innerHTML = `
                         <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
                         <img src="${linkDeRastreioReal}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">
                         <br>
-                        <a href="${linkDeRastreioReal}" target="_blank" style="display: inline-block; margin-top: 15px; background: var(--cor-primaria); color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave);">💾 Salvar QR Code (Etiqueta)</a>
-                        <p style="margin-top: 15px; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">📷 Clique no QR Code para simular a visão do consumidor</p>
+                        <button id="btn-baixar-qr" onclick="baixarQRCode('${linkDeRastreioReal}', '${retorno.loteGerado}')" style="display: inline-block; margin-top: 15px; background: var(--cor-primaria); color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); cursor: pointer; font-size: 1rem; transition: 0.2s;">💾 Baixar Etiqueta (PNG)</button>
+                        <p style="margin-top: 15px; font-size: 0.9em; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">📷 Clique no QR Code para simular a visão do consumidor</p>
                     `;
                     document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
                 }
