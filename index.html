@@ -520,7 +520,7 @@
                     btn.innerHTML = textoOriginal;
                 })
                 .catch(() => {
-                    // Fallback de segurança se o download forçado falhar
+                    
                     window.open(urlImagem, '_blank');
                     btn.innerHTML = textoOriginal;
                 });
@@ -542,7 +542,7 @@
                 if (retorno.sucesso) {
                     var dataFormatada = data.split('-').reverse().join('/');
                     
-                    // URL usando a API profissional qrserver.com
+                    
                     var conteudoQR = encodeURIComponent("Plataforma Pacuí | Lote: " + retorno.loteGerado + " | Produtor: " + nomeDoProdutor);
                     var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${conteudoQR}`;
                     
