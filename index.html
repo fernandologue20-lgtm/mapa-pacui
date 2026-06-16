@@ -405,6 +405,60 @@
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
 
+        L.Control.TelaCheia = L.Control.extend({
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                var button = L.DomUtil.create('a', '', container);
+                button.innerHTML = '⛶'; 
+                button.href = '#';
+                button.title = 'Expandir Mapa para Tela Cheia';
+                button.style.fontSize = '22px';
+                button.style.lineHeight = '30px';
+                button.style.textAlign = 'center';
+                button.style.textDecoration = 'none';
+                button.style.color = '#333';
+                button.style.backgroundColor = '#fff';
+                button.style.display = 'block';
+                button.style.width = '34px';
+                button.style.height = '34px';
+
+                L.DomEvent.on(button, 'click', function(e) {
+                    L.DomEvent.stop(e);
+                    var elem = document.getElementById('mapa-container');
+                    
+                    
+                    if (!document.fullscreenElement) {
+                        // Tenta abrir em tela cheia (suporte a vários navegadores)
+                        if (elem.requestFullscreen) elem.requestFullscreen();
+                        else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen(); // Safari
+                        else if (elem.msRequestFullscreen) elem.msRequestFullscreen(); // IE/Edge
+                    } else {
+                      
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                        else if (document.msExitFullscreen) document.msExitFullscreen();
+                    }
+                });
+
+                
+                document.addEventListener('fullscreenchange', function() {
+                    if (document.fullscreenElement) {
+                        button.innerHTML = '✖'; // Ícone de fechar
+                        button.title = 'Sair da Tela Cheia';
+                    } else {
+                        button.innerHTML = '⛶'; // Ícone de expandir
+                        button.title = 'Expandir Mapa para Tela Cheia';
+                    }
+                    
+                    setTimeout(function() { map.invalidateSize(); }, 200);
+                });
+
+                return container;
+            }
+        });
+        
+        
+        new L.Control.TelaCheia({ position: 'topleft' }).addTo(mapa);
         function mostrar(id) { document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); var alvo = document.getElementById(id); if (alvo) alvo.style.display = 'block'; }
         function mostrarAbaPacui(idAba, elementoBotao) { document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none'); document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo')); document.getElementById(idAba).style.display = 'block'; if(elementoBotao) elementoBotao.classList.add('ativo'); if(idAba === 'pacui-visao') setTimeout(() => { mapa.invalidateSize(); }, 200); }
         function abrirModalAuth() { document.getElementById('modal-auth').style.display = 'flex'; }
