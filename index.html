@@ -156,9 +156,9 @@
         @media (max-width: 1024px) { .layout-painel { grid-template-columns: 1fr 1fr; height: auto; } #mapa-container { height: 500px; grid-column: span 2; order: -1; } .painel-scroll { max-height: 500px; } .form-rastreio { grid-template-columns: 1fr; } .form-full { grid-column: span 1; } }
         @media (max-width: 768px) { .layout-painel { grid-template-columns: 1fr; } #mapa-container { grid-column: span 1; height: 400px; } .menu-nav { flex-wrap: wrap; padding: 10px; } .menu-nav button { flex: 1 1 auto; text-align: center; } .rodape-container { grid-template-columns: 1fr; gap: 30px; } }
    
-    /* ========================================================
+    
            REGRAS DE IMPRESSÃO DO MAPA
-           ======================================================== */
+       
         @media print {
             /* Esconde tudo na página, exceto o mapa */
             body * { 
@@ -464,7 +464,14 @@
         var listaDeProdutoresParaStatus = []; 
         var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
         
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+        
+        // CAMADAS DE MAPA (PADRÃO E SATÉLITE)
+        
+        var camadaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        var camadaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+        
+        camadaPadrao.addTo(mapa); 
+        var modoSatelite = false;
 
         
         // BOTÃO DE TELA CHEIA (FULLSCREEN) E CONTROLE DE ETIQUETAS
@@ -520,9 +527,9 @@
         });
         
         new L.Control.TelaCheia({ position: 'topleft' }).addTo(mapa);
-// ========================================================
+
         // BOTÃO DE IMPRIMIR O MAPA
-        // ========================================================
+        
         L.Control.ImprimirMapa = L.Control.extend({
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
@@ -545,7 +552,7 @@
                     // Ajusta o zoom temporariamente para garantir que o polígono caiba no papel
                     mapa.fitBounds(poligonoPacui.getBounds(), {padding: [10, 10]});
                     
-                    // Aguarda meio segundo para os azulejos do mapa carregarem e abre a tela de impressão
+                    // Aguarda meio segundo para carregarem e abre a tela de impressão
                     setTimeout(function() {
                         window.print();
                     }, 500);
@@ -555,8 +562,53 @@
             }
         });
         
-        // Adiciona o botão de impressão ao mapa (ficará abaixo do botão de tela cheia)
+        // Adiciona o botão de impressão ao mapa 
         new L.Control.ImprimirMapa({ position: 'topleft' }).addTo(mapa);
+        
+        // BOTÃO PARA ALTERNAR SATÉLITE / MAPA
+        
+        L.Control.BotaoSatelite = L.Control.extend({
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                var button = L.DomUtil.create('a', '', container);
+                button.innerHTML = '🛰️'; 
+                button.href = '#';
+                button.title = 'Mudar para Visão de Satélite';
+                button.style.fontSize = '18px';
+                button.style.lineHeight = '30px';
+                button.style.textAlign = 'center';
+                button.style.textDecoration = 'none';
+                button.style.backgroundColor = '#fff';
+                button.style.display = 'block';
+                button.style.width = '34px';
+                button.style.height = '34px';
+
+                L.DomEvent.on(button, 'click', function(e) {
+                    L.DomEvent.stop(e); // Evita o duplo clique no mapa
+                    
+                    if (!modoSatelite) {
+                        // Ativa o Satélite
+                        map.removeLayer(camadaPadrao);
+                        map.addLayer(camadaSatelite);
+                        button.innerHTML = '🗺️';
+                        button.title = 'Mudar para Mapa Padrão';
+                        modoSatelite = true;
+                    } else {
+                        // Volta para o Mapa Padrão
+                        map.removeLayer(camadaSatelite);
+                        map.addLayer(camadaPadrao);
+                        button.innerHTML = '🛰️';
+                        button.title = 'Mudar para Visão de Satélite';
+                        modoSatelite = false;
+                    }
+                });
+
+                return container;
+            }
+        });
+        
+        // Adiciona o botão ao mapa
+        new L.Control.BotaoSatelite({ position: 'topleft' }).addTo(mapa);
         
         // POLÍGONO E ROTA COM ZOOM AUTOMÁTICO
         
