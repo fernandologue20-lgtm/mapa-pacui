@@ -462,16 +462,47 @@
         var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbyk_A_0Yo6ZL78HR5e8KgRLvVIJdYy3DHqHKVBdsqjDnnc4uRi1g9HestEQlCd-XQ1kaw/exec"; 
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
-        var mapa = L.map('mapa-container').setView([0.75, -50.7], 10);
+        // ========================================================
+        // 1. DEFINIÇÃO DAS CAMADAS DE MAPA (GPS, SATÉLITE, OSM)
+        // ========================================================
+        // Mapa estilo GPS Clássico (Google Maps)
+        var mapaGoogleGPS = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { 
+            maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] 
+        });
         
-        
-        // CAMADAS DE MAPA (PADRÃO E SATÉLITE)
-        
-        var camadaPadrao = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-        var camadaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
-        
-        camadaPadrao.addTo(mapa); 
-        var modoSatelite = false;
+        // Mapa Satélite Híbrido (Imagens + Nomes das Ruas e Ramais do Google)
+        var mapaGoogleHibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { 
+            maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] 
+        });
+
+        // Mapa Satélite Puro de Alta Resolução (Esri)
+        var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+
+        // Mapa Padrão OpenStreetMap
+        var mapaOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+        // ========================================================
+        // 2. INICIALIZAÇÃO DO MAPA
+        // ========================================================
+        // O mapa agora arranca automaticamente com a visão de GPS do Google
+        var mapa = L.map('mapa-container', {
+            center: [0.75, -50.7],
+            zoom: 10,
+            layers: [mapaGoogleGPS] // <--- Camada inicial ativada aqui
+        });
+
+        // ========================================================
+        // 3. MENU DE CONTROLO DE CAMADAS
+        // ========================================================
+        var mapasBase = {
+            "🗺️ Navegação GPS (Google)": mapaGoogleGPS,
+            "🛰️ Satélite com Ramais (Google)": mapaGoogleHibrido,
+            "🌲 Satélite Puro (Esri)": mapaSatelitePuro,
+            "📍 Mapa Simples (OSM)": mapaOSM
+        };
+
+        // Adiciona a caixinha de seleção no canto superior direito
+        L.control.layers(mapasBase, null, { position: 'topright' }).addTo(mapa);
 
         
         // BOTÃO DE TELA CHEIA (FULLSCREEN) E CONTROLE DE ETIQUETAS
