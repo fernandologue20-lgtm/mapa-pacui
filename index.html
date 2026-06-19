@@ -533,6 +533,9 @@
         
         new L.Control.TelaCheia({ position: 'topleft' }).addTo(mapa);
 
+        
+        // BOTÃO DE IMPRIMIR O MAPA (VISÃO MACRO REGIONAL)
+        
         L.Control.ImprimirMapa = L.Control.extend({
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
@@ -545,16 +548,16 @@
                 L.DomEvent.on(button, 'click', function(e) {
                     L.DomEvent.stop(e); 
                     
-                    // Afasta o zoom para mostrar o Estado do Amapá inteiro
-                    mapa.setView([1.5, -51.5], 6);
+                    // Ajustamos a câmera mais para perto: Latitude, Longitude e Zoom no nível 8
+                    mapa.setView([0.75, -50.8], 8);
                     
-                    // Aguarda 1 segundo para dar tempo das imagens carregarem
+                    // Aguarda 1 segundo para dar tempo das imagens de satélite/ruas carregarem
                     setTimeout(function() { 
                         window.print(); 
                         
                         // Logo após a impressão, devolve o zoom para a região do Pacuí
                         setTimeout(function() {
-                            mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 40]});
+                            mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]});
                         }, 500);
                     }, 1000);
                 });
