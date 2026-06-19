@@ -168,7 +168,7 @@
         @media (max-width: 768px) { .layout-painel { grid-template-columns: 1fr; } #mapa-container { grid-column: span 1; height: 400px; } .menu-nav { flex-wrap: wrap; padding: 10px; } .menu-nav button { flex: 1 1 auto; text-align: center; } .rodape-container { grid-template-columns: 1fr; gap: 30px; } }
    
         
-           IMPRESSÃO DO MAPA (ESTADO DO AMAPÁ)
+           IMPRESSÃO DO MAPA 
            
         @media print {
             body * { visibility: hidden; }
@@ -183,19 +183,13 @@
                 z-index: 9999 !important;
             }
 
-            .tooltip-comunidade { 
-                display: none !important; 
-            }
-            
-            .rotulo-area {
-                display: none !important;
-            }
-
-            .rotulo-rota {
-                display: none !important;
-            }
-
+            /* Esconde as etiquetas com os nomes das comunidades e rotas */
+            .tooltip-comunidade { display: none !important; }
+            .rotulo-rota { display: none !important; }
             .leaflet-control-container { display: none !important; }
+            
+            /* Garante que a marca d'água da Região APARCE na impressão */
+            .rotulo-area { display: block !important; color: rgba(183, 28, 28, 0.6) !important; }
         }
     </style>
 </head>
