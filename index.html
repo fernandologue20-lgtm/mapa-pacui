@@ -454,31 +454,34 @@
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
         
-        var mapaGoogleGPS = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { 
-            maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] 
-        });
-        
-        var mapaGoogleHibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { 
-            maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] 
-        });
-
+        // ========================================================
+        // 1. DEFINIÇÃO DAS CAMADAS DE MAPA (GPS, SATÉLITE, IBGE)
+        // ========================================================
+        var mapaGoogleGPS = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
+        var mapaGoogleHibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
         var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+        
+        // NOVA CAMADA: Estilo Topográfico/Cartográfico (Semelhante ao IBGE)
+        var mapaEstiloIBGE = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20 });
 
-        var mapaOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-
+        // ========================================================
+        // 2. INICIALIZAÇÃO DO MAPA
+        // ========================================================
         var mapa = L.map('mapa-container', {
             center: [0.75, -50.7],
             zoom: 10,
-            layers: [mapaGoogleGPS] 
+            layers: [mapaEstiloIBGE] // <--- Inicia agora com o visual oficial IBGE
         });
 
+        // ========================================================
+        // 3. MENU DE CONTROLO DE CAMADAS
+        // ========================================================
         var mapasBase = {
-            "🗺️ Navegação GPS (Google)": mapaGoogleGPS,
+            "🗺️ Cartografia (Estilo IBGE)": mapaEstiloIBGE,
+            "📍 Navegação GPS (Google)": mapaGoogleGPS,
             "🛰️ Satélite com Ramais (Google)": mapaGoogleHibrido,
-            "🌲 Satélite Puro (Esri)": mapaSatelitePuro,
-            "📍 Mapa Simples (OSM)": mapaOSM
+            "🌲 Satélite Puro (Esri)": mapaSatelitePuro
         };
-
         L.control.layers(mapasBase, null, { position: 'topright' }).addTo(mapa);
 
         L.Control.TelaCheia = L.Control.extend({
