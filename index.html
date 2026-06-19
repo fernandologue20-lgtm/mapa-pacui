@@ -76,7 +76,7 @@
         .aviso-sucesso { background: #f0fdf4; border-color: #16a34a; color: #166534; }
         
         #mapa-container { height: 100%; width: 100%; border-radius: var(--raio-borda); border: 4px solid #fff; box-shadow: var(--sombra-media); z-index: 1; background: #e2e8f0; }
-        /* Quando o mapa está em fullscreen, esconde a borda branca */
+        
         #mapa-container:fullscreen { border: none; border-radius: 0; }
         #mapa-container:-webkit-full-screen { border: none; border-radius: 0; }
 
@@ -90,7 +90,7 @@
         .rotulo-rota { background: rgba(255, 255, 255, 0.9) !important; border: 2px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); }
         
                 .tooltip-comunidade { 
-            display: none; /* Escondido por padrão */
+            display: none; 
             background: rgba(255, 255, 255, 0.95); 
             border: 2px solid var(--cor-primaria); 
             border-radius: 6px;
@@ -159,7 +159,7 @@
            REGRAS DE IMPRESSÃO DO MAPA
        
         @media print {
-            /* Esconde tudo na página, exceto o mapa */
+            
             body * { 
                 visibility: hidden; 
             }
