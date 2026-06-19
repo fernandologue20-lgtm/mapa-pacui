@@ -583,6 +583,15 @@
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); 
             var alvo = document.getElementById(id); 
             if (alvo) alvo.style.display = 'block'; 
+
+            // NOVIDADE: Quando clicar no botão principal "Farinha do Pacuí", 
+            // o sistema acorda o mapa e faz o zoom automático no polígono instantaneamente!
+            if (id === 'pacui') {
+                setTimeout(() => { 
+                    mapa.invalidateSize(); 
+                    mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]}); 
+                }, 300); 
+            }
         }
 
         function mostrarAbaPacui(idAba, elementoBotao) { 
@@ -591,10 +600,11 @@
             document.getElementById(idAba).style.display = 'block'; 
             if(elementoBotao) elementoBotao.classList.add('ativo'); 
             
+            // Mantém a mesma inteligência se clicar no sub-menu "Visão Geral e Mapa"
             if(idAba === 'pacui-visao') {
                 setTimeout(() => { 
                     mapa.invalidateSize(); 
-                    mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]}); // Zoom automático no Polígono!
+                    mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]}); 
                 }, 300); 
             }
         }
