@@ -156,10 +156,11 @@
         @media (max-width: 768px) { .layout-painel { grid-template-columns: 1fr; } #mapa-container { grid-column: span 1; height: 400px; } .menu-nav { flex-wrap: wrap; padding: 10px; } .menu-nav button { flex: 1 1 auto; text-align: center; } .rodape-container { grid-template-columns: 1fr; gap: 30px; } }
    
     
+           /* ========================================================
            REGRAS DE IMPRESSÃO DO MAPA
-       
+           ======================================================== */
         @media print {
-            
+            /* Esconde tudo na página, exceto o mapa */
             body * { 
                 visibility: hidden; 
             }
@@ -167,7 +168,7 @@
                 visibility: visible; 
             }
             
-            
+            /* Posiciona o mapa para ocupar a folha inteira e remove bordas */
             #mapa-container { 
                 position: absolute !important; 
                 left: 0 !important; 
@@ -181,14 +182,14 @@
                 z-index: 9999 !important;
             }
 
-            
+            /* OBRIGA os nomes das comunidades a aparecerem na impressão */
             .tooltip-comunidade { 
                 display: block !important; 
-                border-color: #333 !important; 
+                border-color: #333 !important; /* Deixa a borda mais escura para o papel */
                 color: #000 !important;
             }
 
-            
+            /* Esconde os botões de zoom e menu do mapa para uma impressão limpa */
             .leaflet-control-container { 
                 display: none !important; 
             }
