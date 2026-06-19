@@ -86,18 +86,26 @@
         .coords { font-size: 0.8rem; color: var(--cor-texto-claro); display: none; font-style: italic; margin-top: 5px; }
         .item-comunidade:hover .coords { display: block; }
         
-      Estilo da Marca D'água no centro do Polígono
-        .rotulo-area { 
+      
+           MARCA D'ÁGUA - REGIÃO DO PACUÍ
+          
+        .rotulo-area, .leaflet-tooltip.rotulo-area { 
             background: transparent !important; 
             border: none !important; 
             box-shadow: none !important; 
-            font-weight: 900; 
-            color: rgba(183, 28, 28, 0.4); /* Vermelho com transparência */
-            font-size: 28px; 
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8); 
-            text-align: center;
+            font-weight: 900 !important; 
+            color: rgba(183, 28, 28, 0.5) !important; /* Cor com transparência */
+            font-size: 32px !important; /* Letra maior para marca d'água */
+            text-transform: uppercase !important;
+            letter-spacing: 4px !important;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.9) !important; 
+            text-align: center !important;
+        }
+        
+        /* Esconde a "setinha" do balão padrão do mapa */
+        .leaflet-tooltip.rotulo-area::before, 
+        .leaflet-tooltip.rotulo-area::after {
+            display: none !important;
         }
         .rotulo-rota { background: rgba(255, 255, 255, 0.9) !important; border: 2px solid #0d47a1; color: #0d47a1; font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); }
         
@@ -581,8 +589,12 @@
 
         var poligonoPacui = L.polygon(dadosPoligonoPacui, {color: "#b71c1c", weight: 3, fillOpacity: 0.1}).addTo(mapa);
         
-        // Colado no centro (direction: "center") e sem o 'sticky' para não seguir o mouse
-        poligonoPacui.bindTooltip("Região do Pacuí", {permanent: true, direction: "center", className: "rotulo-area"});
+        // NOVIDADE: direction: "center" cola o texto no meio, e retiramos o 'sticky' para não seguir o mouse.
+        poligonoPacui.bindTooltip("Região do Pacuí", {
+            permanent: true, 
+            direction: "center", 
+            className: "rotulo-area"
+        });
 
         var rotaAP70 = L.polyline(dadosRotaAP70, {color: "#0d47a1", weight: 4, dashArray:'10,10'}).addTo(mapa);
         rotaAP70.bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota", sticky: true});
