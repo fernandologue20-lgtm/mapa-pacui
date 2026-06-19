@@ -86,9 +86,7 @@
         .coords { font-size: 0.8rem; color: var(--cor-texto-claro); display: none; font-style: italic; margin-top: 5px; }
         .item-comunidade:hover .coords { display: block; }
         
-        /* ========================================================
-           MARCA D'ÁGUA - REGIÃO DO PACUÍ
-           ======================================================== */
+        
         .rotulo-area, .leaflet-tooltip.rotulo-area { 
             background: transparent !important; 
             border: none !important; 
@@ -102,7 +100,7 @@
             text-align: center !important;
         }
         
-        /* Esconde a "setinha" do balão padrão do mapa */
+        
         .leaflet-tooltip.rotulo-area::before, 
         .leaflet-tooltip.rotulo-area::after {
             display: none !important;
@@ -176,9 +174,7 @@
         @media (max-width: 1024px) { .layout-painel { grid-template-columns: 1fr 1fr; height: auto; } #mapa-container { height: 500px; grid-column: span 2; order: -1; } .painel-scroll { max-height: 500px; } .form-rastreio { grid-template-columns: 1fr; } .form-full { grid-column: span 1; } }
         @media (max-width: 768px) { .layout-painel { grid-template-columns: 1fr; } #mapa-container { grid-column: span 1; height: 400px; } .menu-nav { flex-wrap: wrap; padding: 10px; } .menu-nav button { flex: 1 1 auto; text-align: center; } .rodape-container { grid-template-columns: 1fr; gap: 30px; } }
    
-        /* ========================================================
-           IMPRESSÃO DO MAPA 
-           ======================================================== */
+        
         @media print {
             body * { visibility: hidden; }
             #mapa-container, #mapa-container * { visibility: visible; }
@@ -469,28 +465,22 @@
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
         
-        // ========================================================
-        // 1. DEFINIÇÃO DAS CAMADAS DE MAPA (GPS, SATÉLITE, IBGE)
-        // ========================================================
+        
         var mapaGoogleGPS = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
         var mapaGoogleHibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
         var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
         
-        // NOVA CAMADA: Estilo Topográfico/Cartográfico (Semelhante ao IBGE)
+        
         var mapaEstiloIBGE = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20 });
 
-        // ========================================================
-        // 2. INICIALIZAÇÃO DO MAPA
-        // ========================================================
+        
         var mapa = L.map('mapa-container', {
             center: [0.75, -50.7],
             zoom: 10,
             layers: [mapaEstiloIBGE] // <--- Inicia agora com o visual oficial IBGE
         });
 
-        // ========================================================
-        // 3. MENU DE CONTROLO DE CAMADAS
-        // ========================================================
+        
         var mapasBase = {
             "🗺️ Cartografia (Estilo IBGE)": mapaEstiloIBGE,
             "📍 Navegação GPS (Google)": mapaGoogleGPS,
@@ -550,7 +540,7 @@
         });
         new L.Control.TelaCheia({ position: 'topleft' }).addTo(mapa);
 
-        // BOTÃO DE IMPRIMIR O MAPA (VISÃO MACRO REGIONAL)
+        
         L.Control.ImprimirMapa = L.Control.extend({
             onAdd: function(map) {
                 var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
@@ -563,14 +553,14 @@
                 L.DomEvent.on(button, 'click', function(e) {
                     L.DomEvent.stop(e); 
                     
-                    // Ajustamos a câmera mais para perto: Latitude, Longitude e Zoom no nível 9
+                    
                     mapa.setView([0.75, -50.8], 9);
                     
-                    // Aguarda 1 segundo para dar tempo das imagens de satélite/ruas carregarem
+                    
                     setTimeout(function() { 
                         window.print(); 
                         
-                        // Logo após a impressão, devolve o zoom para a região do Pacuí
+                        
                         setTimeout(function() {
                             mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]});
                         }, 500);
@@ -587,7 +577,7 @@
 
         var poligonoPacui = L.polygon(dadosPoligonoPacui, {color: "#b71c1c", weight: 3, fillOpacity: 0.1}).addTo(mapa);
         
-        // NOVIDADE: direction: "center" cola o texto no meio, e retiramos o 'sticky' para não seguir o mouse.
+        
         poligonoPacui.bindTooltip("Região do Pacuí", {
             permanent: true, 
             direction: "center", 
