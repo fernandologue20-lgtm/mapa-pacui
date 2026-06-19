@@ -156,43 +156,33 @@
         @media (max-width: 768px) { .layout-painel { grid-template-columns: 1fr; } #mapa-container { grid-column: span 1; height: 400px; } .menu-nav { flex-wrap: wrap; padding: 10px; } .menu-nav button { flex: 1 1 auto; text-align: center; } .rodape-container { grid-template-columns: 1fr; gap: 30px; } }
    
     
-           /* ========================================================
-           REGRAS DE IMPRESSÃO DO MAPA
-           ======================================================== */
+          
+           
+           IMPRESSÃO DO MAPA (ESTADO DO AMAPÁ)
+          
         @media print {
-            /* Esconde tudo na página, exceto o mapa */
-            body * { 
-                visibility: hidden; 
-            }
-            #mapa-container, #mapa-container * { 
-                visibility: visible; 
-            }
+            body * { visibility: hidden; }
+            #mapa-container, #mapa-container * { visibility: visible; }
             
-            /* Posiciona o mapa para ocupar a folha inteira e remove bordas */
             #mapa-container { 
                 position: absolute !important; 
-                left: 0 !important; 
-                top: 0 !important; 
-                width: 100vw !important; 
-                height: 100vh !important; 
-                border: none !important; 
-                box-shadow: none !important; 
-                margin: 0 !important; 
-                padding: 0 !important;
+                left: 0 !important; top: 0 !important; 
+                width: 100vw !important; height: 100vh !important; 
+                border: none !important; box-shadow: none !important; 
+                margin: 0 !important; padding: 0 !important;
                 z-index: 9999 !important;
             }
 
-            /* OBRIGA os nomes das comunidades a aparecerem na impressão */
+            
             .tooltip-comunidade { 
-                display: block !important; 
-                border-color: #333 !important; /* Deixa a borda mais escura para o papel */
-                color: #000 !important;
-            }
-
-            /* Esconde os botões de zoom e menu do mapa para uma impressão limpa */
-            .leaflet-control-container { 
                 display: none !important; 
             }
+            
+            .rotulo-area {
+                display: none !important;
+            }
+
+            .leaflet-control-container { display: none !important; }
         }
     </style>
 </head>
@@ -472,17 +462,17 @@
             maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] 
         });
 
-        // Mapa Satélite Puro de Alta Resolução (Esri)
+       
         var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
 
-        // Mapa Padrão OpenStreetMap
+        
         var mapaOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
         
         var mapa = L.map('mapa-container', {
             center: [0.75, -50.7],
             zoom: 10,
-            layers: [mapaGoogleGPS] // <--- Camada inicial ativada aqui
+            layers: [mapaGoogleGPS] 
         });
 
         
@@ -583,7 +573,38 @@
             }
         });
         
-        // Adiciona o botão de impressão ao mapa 
+        
+         BOTÃO DE IMPRIMIR O MAPA (VISÃO MACRO - AMAPÁ)
+        
+        L.Control.ImprimirMapa = L.Control.extend({
+            onAdd: function(map) {
+                var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                var button = L.DomUtil.create('a', '', container);
+                button.innerHTML = '🖨️'; button.href = '#'; button.title = 'Imprimir Mapa (A4)';
+                button.style.fontSize = '18px'; button.style.lineHeight = '30px'; button.style.textAlign = 'center';
+                button.style.textDecoration = 'none'; button.style.backgroundColor = '#fff';
+                button.style.display = 'block'; button.style.width = '34px'; button.style.height = '34px';
+
+                L.DomEvent.on(button, 'click', function(e) {
+                    L.DomEvent.stop(e); 
+                    
+                    // Afasta o zoom para mostrar o Estado do Amapá inteiro [Latitude, Longitude, Zoom]
+                    mapa.setView([1.5, -51.5], 6);
+                    
+                    // Aguarda 1 segundo para dar tempo das imagens de satélite/ruas carregarem
+                    setTimeout(function() { 
+                        window.print(); 
+                        
+                        // Logo após a impressão, devolve o zoom para a região do Pacuí
+                        setTimeout(function() {
+                            mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]});
+                        }, 500);
+                    }, 1000);
+                });
+
+                return container;
+            }
+        });
         new L.Control.ImprimirMapa({ position: 'topleft' }).addTo(mapa);
         
                
@@ -607,14 +628,14 @@
                     L.DomEvent.stop(e); // Evita o duplo clique no mapa
                     
                     if (!modoSatelite) {
-                        // Ativa o Satélite
+                        
                         map.removeLayer(camadaPadrao);
                         map.addLayer(camadaSatelite);
                         button.innerHTML = '🗺️';
                         button.title = 'Mudar para Mapa Padrão';
                         modoSatelite = true;
                     } else {
-                        // Volta para o Mapa Padrão
+                        
                         map.removeLayer(camadaSatelite);
                         map.addLayer(camadaPadrao);
                         button.innerHTML = '🛰️';
@@ -627,7 +648,7 @@
             }
         });
         
-        // Adiciona o botão ao mapa
+        
         new L.Control.BotaoSatelite({ position: 'topleft' }).addTo(mapa);
         
                 
