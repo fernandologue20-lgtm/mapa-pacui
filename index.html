@@ -739,16 +739,50 @@
             var nomeDoProdutor = usuarioLogado.nome; 
             
             if(!data || !peso || !comunidade) { alert("Preencha a data, comunidade e peso do lote."); return; }
-            var btn = document.querySelector('.btn-gerar-lote'); var txt = btn.innerHTML; btn.innerHTML = "⏳..."; btn.disabled = true;
             
-            fetch(urlPlanilhaGeral, { method: 'POST', body: JSON.stringify({ acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id, produtor: nomeDoProdutor }), headers: { 'Content-Type': 'text/plain;charset=utf-8' } }).then(r => r.json()).then(retorno => {
-                btn.innerHTML = txt; btn.disabled = false;
+            var btn = document.querySelector('.btn-gerar-lote'); 
+            var txt = btn.innerHTML; 
+            
+            // 1. Muda o texto do botão para indicar a auditoria/salvamento
+            btn.innerHTML = "⏳ Registrando Dossiê no Drive e Gerando QR..."; 
+            btn.disabled = true;
+            
+            fetch(urlPlanilhaGeral, { 
+                method: 'POST', 
+                body: JSON.stringify({ 
+                    acao: "gerar_lote", 
+                    data: data, 
+                    comunidade: comunidade, 
+                    peso: peso, 
+                    id_diagro: id, 
+                    produtor: nomeDoProdutor 
+                }), 
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+            })
+            .then(r => r.json())
+            .then(retorno => {
+                btn.innerHTML = txt; 
+                btn.disabled = false;
+                
                 if (retorno.sucesso) {
                     var dataFormatada = data.split('-').reverse().join('/');
                     
-                    var conteudoQR = encodeURIComponent("Plataforma Pacuí | Lote: " + retorno.loteGerado + " | Produtor: " + nomeDoProdutor);
-                    var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${conteudoQR}`;
+                    // =======================================================
+                    // ATUALIZAÇÃO DA RASTREABILIDADE (O "Pulo do Gato")
+                    // =======================================================
                     
+                    // 2. Aqui você aponta o QR Code para a página do consumidor (Seu Waldir)
+                    // IMPORTANTE: Troque "SEU-REPOSITORIO" pelo nome real da sua pasta no GitHub
+                    var urlConsumidor = "https://fernandologue20-lgtm.github.io/SEU-REPOSITORIO/teste-qr.html?lote=" + retorno.loteGerado;
+                    
+                    // 3. Monta a imagem do QR Code embutindo a URL do consumidor
+                    var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(urlConsumidor)}`;
+                    
+                    // Se o seu Apps Script já estiver configurado para devolver a imagem e você preferir usar a dele:
+                    // var linkDeRastreioReal = retorno.imagemQrCode || linkDeRastreioReal;
+                    
+                    // =======================================================
+
                     document.getElementById('area-qr').innerHTML = `
                         <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
                         <img src="${linkDeRastreioReal}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">
@@ -756,8 +790,16 @@
                         <button id="btn-baixar-qr" onclick="baixarQRCode('${linkDeRastreioReal}', '${retorno.loteGerado}')" style="display: inline-block; margin-top: 15px; background: var(--cor-primaria); color: white; padding: 12px 20px; border: none; border-radius: 6px; font-weight: bold; box-shadow: var(--sombra-suave); cursor: pointer; font-size: 1rem; transition: 0.2s;">💾 Baixar Etiqueta (PNG)</button>
                         <p style="margin-top: 15px; font-size: 0.9em; font-weight: bold; color: var(--cor-destaque); cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">📷 Clique no QR Code para simular a visão do consumidor</p>
                     `;
-                    document.getElementById('peso-lote').value = ""; document.getElementById('id-diagro').value = ""; 
+                    document.getElementById('peso-lote').value = ""; 
+                    document.getElementById('id-diagro').value = ""; 
+                } else {
+                    alert("Erro ao registrar o lote: " + (retorno.erro || "Problema no servidor"));
                 }
+            })
+            .catch(erro => {
+                btn.innerHTML = txt; 
+                btn.disabled = false;
+                alert("Erro de comunicação com o servidor. Tente novamente.");
             });
         }
 
