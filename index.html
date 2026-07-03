@@ -592,8 +592,7 @@
             var alvo = document.getElementById(id); 
             if (alvo) alvo.style.display = 'block'; 
 
-            // NOVIDADE: Quando clicar no botão principal "Farinha do Pacuí", 
-            // o sistema acorda o mapa e faz o zoom automático no polígono instantaneamente!
+            
             if (id === 'pacui') {
                 setTimeout(() => { 
                     mapa.invalidateSize(); 
@@ -767,22 +766,15 @@
                 if (retorno.sucesso) {
                     var dataFormatada = data.split('-').reverse().join('/');
                     
-                    // =======================================================
-                    // ATUALIZAÇÃO DA RASTREABILIDADE (O "Pulo do Gato")
-                    // =======================================================
                     
-                    // 2. Aqui você aponta o QR Code para a página do consumidor (Seu Waldir)
-                    // IMPORTANTE: Troque "SEU-REPOSITORIO" pelo nome real da sua pasta no GitHub
+                    
+                    
                     var urlConsumidor = "https://fernandologue20-lgtm.github.io/SEU-REPOSITORIO/teste-qr.html?lote=" + retorno.loteGerado;
                     
-                    // 3. Monta a imagem do QR Code embutindo a URL do consumidor
+                    
                     var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(urlConsumidor)}`;
                     
-                    // Se o seu Apps Script já estiver configurado para devolver a imagem e você preferir usar a dele:
-                    // var linkDeRastreioReal = retorno.imagemQrCode || linkDeRastreioReal;
                     
-                    // =======================================================
-
                     document.getElementById('area-qr').innerHTML = `
                         <h4 style="color: var(--cor-primaria); margin-bottom: 10px;">Lote Oficial: ${retorno.loteGerado}</h4>
                         <img src="${linkDeRastreioReal}" style="border: 4px solid #fff; box-shadow: var(--sombra-suave); border-radius: 8px; cursor: pointer;" onclick="abrirPortalConsumidor('${retorno.loteGerado}', '${comunidade}', '${dataFormatada}', '${nomeDoProdutor}')">
