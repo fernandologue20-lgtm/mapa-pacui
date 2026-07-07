@@ -722,6 +722,21 @@ map.fitBounds(fronteiraBounds);
             }
         }
 
+        function mostrarAbaPacui(idAba, elementoBotao) { 
+            document.querySelectorAll('.aba-pacui').forEach(aba => aba.style.display = 'none'); 
+            document.querySelectorAll('.btn-sub-nav').forEach(btn => btn.classList.remove('ativo')); 
+            document.getElementById(idAba).style.display = 'block'; 
+            if(elementoBotao) elementoBotao.classList.add('ativo'); 
+            
+            // Mantém a mesma inteligência se clicar no sub-menu "Visão Geral e Mapa"
+            if(idAba === 'pacui-visao') {
+                setTimeout(() => { 
+                    mapa.invalidateSize(); 
+                    mapa.fitBounds(poligonoPacui.getBounds(), {padding: [20, 20]}); 
+                }, 300); 
+            }
+        }
+
         function abrirModalAuth() { document.getElementById('modal-auth').style.display = 'flex'; }
         function fecharModalAuth() { document.getElementById('modal-auth').style.display = 'none'; }
         function mudarAbaAuth(aba) { document.getElementById('tab-login').classList.remove('ativo'); document.getElementById('tab-cadastro').classList.remove('ativo'); document.getElementById('form-login').style.display = 'none'; document.getElementById('form-cadastro').style.display = 'none'; document.getElementById('tab-' + aba).classList.add('ativo'); document.getElementById('form-' + aba).style.display = 'flex'; }
