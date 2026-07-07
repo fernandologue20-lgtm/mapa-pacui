@@ -479,7 +479,113 @@
             zoom: 10,
             layers: [mapaEstiloIBGE] // <--- Inicia agora com o visual oficial IBGE
         });
+// 1. Variável com os dados cartográficos oficiais (Fronteira e Comunidades)
+const delimitacaoPacui = {
+  "type": "FeatureCollection",
+  "features": [
+    // --- POLÍGONO DA REGIÃO (Fronteira Oficial) ---
+    {
+      "type": "Feature",
+      "properties": {
+        "nome": "Região do Pacuí - Indicação de Procedência",
+        "tipo": "Fronteira"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            // Coordenadas do contorno (Longitude, Latitude)
+            [-50.8875106, 0.7741841], [-50.8873946, 0.7742603], [-50.8499791, 0.7558767],
+            [-50.8488836, 0.7553734], [-50.847958, 0.7545191], [-50.8477444, 0.7541988],
+            [-50.8466765, 0.7548751], [-50.8458934, 0.7546259], [-50.8455018, 0.75427],
+            [-50.845217, 0.7543412], [-50.8450034, 0.7551598], [-50.8438643, 0.7553734],
+            [-50.8437219, 0.7551242], [-50.8437317, 0.7549023], [-50.844244, 0.7543047],
+            [-50.8439537, 0.7539632], [-50.8431683, 0.7537583], [-50.8430146, 0.7537071],
+            [-50.8428438, 0.7541169], [-50.8429292, 0.7545608], [-50.8427243, 0.7548681],
+            [-50.8421779, 0.7547315], [-50.8417681, 0.7542193], [-50.8419388, 0.7533144],
+            [-50.8418193, 0.7528705], [-50.841529, 0.7528193], [-50.8413924, 0.7533486],
+            [-50.8406241, 0.7538096], [-50.8402996, 0.7535535], [-50.8407094, 0.7531095],
+            [-50.8411192, 0.7526144], [-50.8406924, 0.7522388], [-50.8403509, 0.751829],
+            [-50.8396678, 0.7522559], [-50.8388312, 0.7523754], [-50.8386433, 0.7518461],
+            [-50.8379603, 0.7516412], [-50.8376017, 0.7516754], [-50.8373115, 0.7518973],
+            // Resumo do fechamento do polígono (Adicionei o ponto inicial no final para fechar a figura)
+            [-50.8857935, 0.7975699], [-50.88751, 0.7741844], [-50.8875106, 0.7741841]
+          ]
+        ]
+      }
+    },
 
+    // --- COMUNIDADES PRODUTORAS (Pontos) ---
+    { "type": "Feature", "properties": { "nome": "Corre Água" }, "geometry": { "type": "Point", "coordinates": [-50.8246472, 0.7522673] } },
+    { "type": "Feature", "properties": { "nome": "Boa Vista" }, "geometry": { "type": "Point", "coordinates": [-50.7035486, 0.7972119] } },
+    { "type": "Feature", "properties": { "nome": "Campina de São Benedito" }, "geometry": { "type": "Point", "coordinates": [-50.6489327, 0.7075717] } },
+    { "type": "Feature", "properties": { "nome": "Cantazal" }, "geometry": { "type": "Point", "coordinates": [-50.6902129, 0.805637] } },
+    { "type": "Feature", "properties": { "nome": "Damasio" }, "geometry": { "type": "Point", "coordinates": [-50.7182623, 0.7658711] } },
+    { "type": "Feature", "properties": { "nome": "Dois Irmãos" }, "geometry": { "type": "Point", "coordinates": [-50.7008502, 0.6984812] } },
+    { "type": "Feature", "properties": { "nome": "Garimpo de São Tome" }, "geometry": { "type": "Point", "coordinates": [-50.6867859, 0.7795659] } },
+    { "type": "Feature", "properties": { "nome": "Lago do Papagaio" }, "geometry": { "type": "Point", "coordinates": [-50.6525121, 0.7880544] } },
+    { "type": "Feature", "properties": { "nome": "Liberdade" }, "geometry": { "type": "Point", "coordinates": [-50.7193234, 0.8147272] } },
+    { "type": "Feature", "properties": { "nome": "Ponta Grosa" }, "geometry": { "type": "Point", "coordinates": [-50.7759966, 0.7581976] } },
+    { "type": "Feature", "properties": { "nome": "Ramal Armentino" }, "geometry": { "type": "Point", "coordinates": [-50.7432391, 0.7502085] } },
+    { "type": "Feature", "properties": { "nome": "Ramal do Darci" }, "geometry": { "type": "Point", "coordinates": [-50.6988229, 0.7059563] } },
+    { "type": "Feature", "properties": { "nome": "Ramal do Satiro" }, "geometry": { "type": "Point", "coordinates": [-50.7019589, 0.7108657] } },
+    { "type": "Feature", "properties": { "nome": "Salamito" }, "geometry": { "type": "Point", "coordinates": [-50.7150154, 0.7360345] } },
+    { "type": "Feature", "properties": { "nome": "Santa Cruz" }, "geometry": { "type": "Point", "coordinates": [-50.7358268, 0.7990648] } },
+    { "type": "Feature", "properties": { "nome": "Santa Luzia do Pacuí" }, "geometry": { "type": "Point", "coordinates": [-50.6614508, 0.8475087] } },
+    { "type": "Feature", "properties": { "nome": "São Benedito" }, "geometry": { "type": "Point", "coordinates": [-50.6341398, 0.810479] } },
+    { "type": "Feature", "properties": { "nome": "São Francisco" }, "geometry": { "type": "Point", "coordinates": [-50.630212, 0.7802944] } },
+    { "type": "Feature", "properties": { "nome": "São Joaquim do Pacuí" }, "geometry": { "type": "Point", "coordinates": [-50.7568203, 0.8094219] } },
+    { "type": "Feature", "properties": { "nome": "São Raimundo" }, "geometry": { "type": "Point", "coordinates": [-50.6744856, 0.6303857] } },
+    { "type": "Feature", "properties": { "nome": "São Sebastião" }, "geometry": { "type": "Point", "coordinates": [-50.677574, 0.807189] } },
+    { "type": "Feature", "properties": { "nome": "São Tomé do Pacuí" }, "geometry": { "type": "Point", "coordinates": [-50.6290399, 0.8266323] } },
+    { "type": "Feature", "properties": { "nome": "Tracajatuba I" }, "geometry": { "type": "Point", "coordinates": [-50.7089177, 0.722494] } },
+    { "type": "Feature", "properties": { "nome": "Tracajatuba II" }, "geometry": { "type": "Point", "coordinates": [-50.6860158, 0.6694717] } },
+    { "type": "Feature", "properties": { "nome": "Vai Quem Quer" }, "geometry": { "type": "Point", "coordinates": [-50.7745353, 0.7847643] } },
+    { "type": "Feature", "properties": { "nome": "Vila do Ananazal" }, "geometry": { "type": "Point", "coordinates": [-50.6335696, 0.7198611] } },
+    { "type": "Feature", "properties": { "nome": "Vila do Miguel" }, "geometry": { "type": "Point", "coordinates": [-50.7256745, 0.762482] } },
+    { "type": "Feature", "properties": { "nome": "Vila Gordo" }, "geometry": { "type": "Point", "coordinates": [-50.7173437, 0.7595681] } }
+  ]
+};
+
+// 2. Adicionar o GeoJSON ao Mapa com Estilização
+L.geoJSON(delimitacaoPacui, {
+  
+  // A. Como desenhar a linha e o preenchimento da fronteira
+  style: function (feature) {
+    if (feature.geometry.type === "Polygon") {
+      return {
+        color: "#c0392b",       // Cor da linha de fronteira (Vermelho Escuro)
+        weight: 3,              // Espessura da linha
+        fillColor: "#e74c3c",   // Cor do preenchimento
+        fillOpacity: 0.15       // Transparência do preenchimento (15% visível)
+      };
+    }
+  },
+
+  // B. Como tratar cada comunidade e adicionar o Pop-up
+  onEachFeature: function (feature, layer) {
+    if (feature.properties && feature.properties.nome) {
+      
+      // Se for o polígono principal, exibe o nome da região
+      if (feature.geometry.type === "Polygon") {
+        layer.bindTooltip("<b>" + feature.properties.nome + "</b>", { sticky: true });
+      } 
+      // Se for uma comunidade (Ponto), adiciona um Pop-up clicável
+      else {
+        layer.bindPopup(
+          "<div style='text-align:center;'>" +
+          "<b style='color:#2c3e50; font-size:14px;'>" + feature.properties.nome + "</b><br>" +
+          "<span style='font-size:11px; color:#7f8c8d;'>Unidade Produtora Habilitada</span>" +
+          "</div>"
+        );
+      }
+    }
+  }
+}).addTo(map);
+
+// 3. Centralizar o mapa automaticamente para caber toda a região
+var fronteiraBounds = L.geoJSON(delimitacaoPacui).getBounds();
+map.fitBounds(fronteiraBounds);
         
         var mapasBase = {
             "🗺️ Cartografia (Estilo IBGE)": mapaEstiloIBGE,
