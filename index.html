@@ -465,11 +465,13 @@
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
         
-        var mapaGoogleGPS = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
-        var mapaGoogleHibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
-        var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+        // Configuração de Alta Definição (Retina) e HTTPS forçado
+        var mapaGoogleGPS = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], detectRetina: true });
+        var mapaGoogleHibrido = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'], detectRetina: true });
         
-        var mapaEstiloIBGE = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20 });
+        var mapaSatelitePuro = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, detectRetina: true });
+        
+        var mapaEstiloIBGE = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 20, detectRetina: true });
 
         // INICIALIZAÇÃO DO MAPA
         var mapa = L.map('mapa-container', {
