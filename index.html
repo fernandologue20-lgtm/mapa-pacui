@@ -439,12 +439,8 @@
                 <div class="sessao-consumidor">
                     <h3>📷 Transparência Visual</h3>
                     <p style="font-size: 0.85em; color: #666;">Registros da nossa rotina produtiva artesanal:</p>
-                    <div class="galeria-fotos">
-                        <img src="https://6a3089099f930e97121c9dd6.imgix.net/Mandioca-01.jpg" alt="Matéria prima">
-                        <img src="https://images.unsplash.com/photo-1598440785133-72535d4e1355?q=80&w=400&auto=format&fit=crop" alt="Agricultores">
-                        <img src="https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=400&auto=format&fit=crop" alt="Tacho">
-                        <img src="https://images.unsplash.com/photo-1628183141154-1b11ce13010b?q=80&w=400&auto=format&fit=crop" alt="Produto final">
-                    </div>
+                    <div id="cons-galeria-dinamica" style="text-align: center; margin-top: 15px;">
+    </div>
                 </div>
 
                 <div class="sessao-consumidor" style="background: #f0fdf4; border-color: #bbf7d0;">
@@ -620,6 +616,18 @@
         var rotaAP70 = L.polyline(dadosRotaAP70, {color: "#0d47a1", weight: 4, dashArray:'10,10'}).addTo(mapa);
         rotaAP70.bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota", sticky: true});
 
+function converterLinkDriveParaImagem(link) {
+    if (!link || link === "Não informada" || link === "") {
+        
+        return "https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=600&auto=format&fit=crop"; 
+    }
+    
+    var idMatch = link.match(/[-\w]{25,}/);
+    if (idMatch && idMatch[0]) {
+        return "https://drive.google.com/uc?export=view&id=" + idMatch[0];
+    }
+    return link; 
+}
         
         function mostrar(id) { 
             document.querySelectorAll('.secao').forEach(s => s.style.display = 'none'); 
@@ -724,13 +732,31 @@
         }
 
         function abrirPortalConsumidor(lote, comunidade, data, nomeProdutor) {
-            document.getElementById('cons-lote').innerText = lote;
-            document.getElementById('cons-comunidade').innerText = "Comunidade " + comunidade;
-            document.getElementById('cons-data').innerText = data;
-            document.getElementById('cons-nome-produtor').innerText = nomeProdutor;
-            document.getElementById('cons-historia-nome').innerText = nomeProdutor;
-            document.getElementById('modal-consumidor').style.display = 'flex';
+    document.getElementById('cons-lote').innerText = lote;
+    document.getElementById('cons-comunidade').innerText = "Comunidade " + comunidade;
+    document.getElementById('cons-data').innerText = data;
+    document.getElementById('cons-nome-produtor').innerText = nomeProdutor;
+    document.getElementById('cons-historia-nome').innerText = nomeProdutor;
+
+    
+    var fotoUrl = "https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=600&auto=format&fit=crop"; 
+    
+    if (listaDeProdutoresParaStatus && listaDeProdutoresParaStatus.length > 0) {
+        var produtorData = listaDeProdutoresParaStatus.find(p => p.nome === nomeProdutor);
+        if (produtorData && produtorData.link_dossie) {
+            // O formulário separa as fotos por vírgula. Vamos pegar a primeira foto que ele enviou.
+            var primeiroLink = produtorData.link_dossie.split(',')[0];
+            fotoUrl = converterLinkDriveParaImagem(primeiroLink);
         }
+    }
+
+    
+    document.getElementById('cons-galeria-dinamica').innerHTML = `
+        <img src="${fotoUrl}" alt="Dossiê do Produtor" style="width: 100%; height: auto; max-height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid var(--cor-borda); box-shadow: var(--sombra-suave);">
+    `;
+
+    document.getElementById('modal-consumidor').style.display = 'flex';
+}
 
         function fecharPortalConsumidor() {
             document.getElementById('modal-consumidor').style.display = 'none';
@@ -853,19 +879,52 @@
             
         document.getElementById('btn-home').click();
         
-        window.addEventListener('DOMContentLoaded', function() {
-            var parametros = new URLSearchParams(window.location.search);
-            if (parametros.has('lote')) {
-                // Se o site abrir e tiver um lote na URL, ele puxa os dados embutidos e abre o pop-up na hora!
-                var loteUrl = parametros.get('lote');
-                var comUrl = parametros.get('com');
-                var dtUrl = parametros.get('dt');
-                var prodUrl = parametros.get('prod');
+        fetch(urlPlanilhaGeral)
+            .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+            .then(dados => {
+                var listaItens = document.getElementById('lista-itens');
+                var dropLote = document.getElementById('comunidade-lote');
+                if(dropLote) dropLote.innerHTML = ""; if(listaItens) listaItens.innerHTML = "";
                 
-                // Abre o portal do consumidor automaticamente
-                abrirPortalConsumidor(loteUrl, comUrl, dtUrl, prodUrl);
-            }
-        });
+                if (dados.comunidades && dados.comunidades.length > 0) {
+                    dados.comunidades.forEach(c => {
+                        var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
+                        marker.bindTooltip(c.nome, {permanent: true, direction: "top", className: "tooltip-comunidade", offset: [0, -10]});
+
+                        var div = document.createElement('div'); div.className = 'item-comunidade'; div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                        div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
+                        if(listaItens) listaItens.appendChild(div);
+                        
+                        if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
+                    });
+                }
+
+                var listaNoticias = document.getElementById('lista-noticias');
+                if(listaNoticias) listaNoticias.innerHTML = "";
+                if (dados.noticias && dados.noticias.length > 0) {
+                    dados.noticias.forEach(n => {
+                        var div = document.createElement('div'); div.className = 'noticia-item';
+                        div.innerHTML = `<h4 class="noticia-titulo">${n.titulo}</h4><p class="noticia-resumo">${n.resumo} <br><a href="${n.link}" class="noticia-link" target="_blank">Ler matéria completa »</a></p><span class="noticia-meta">${n.fonte} • ${n.data}</span>`;
+                        if(listaNoticias) listaNoticias.appendChild(div);
+                    });
+                }
+                
+                
+                listaDeProdutoresParaStatus = dados.produtores; 
+                
+                
+                var parametros = new URLSearchParams(window.location.search);
+                if (parametros.has('lote')) {
+                    var loteUrl = parametros.get('lote');
+                    var comUrl = parametros.get('com');
+                    var dtUrl = parametros.get('dt');
+                    var prodUrl = parametros.get('prod');
+                    abrirPortalConsumidor(loteUrl, comUrl, dtUrl, prodUrl);
+                }
+            })
+            .catch(erro => { console.error("Erro comunicação:", erro); });
+            
+        document.getElementById('btn-home').click();
     </script>
 </body>
 </html>
