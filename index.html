@@ -412,6 +412,7 @@
                 <div class="sessao-consumidor">
                     <h3>📖 Identidade e Território</h3>
                     <p style="font-size: 0.95em; text-align: justify;">A unidade de <strong id="cons-historia-nome"></strong> está localizada no <strong>Distrito de São Joaquim do Pacuí</strong>, em Macapá/AP. Este território possui reconhecimento e notoriedade histórica como centro tradicional de produção de farinha de mandioca. Ao levar este produto, você valoriza a continuidade da nossa identidade sociocultural e da agricultura familiar amapaense.</p>
+                    <span id="cons-historia-dinamica"></span>
                 </div>
 
                 <div class="sessao-consumidor">
@@ -433,6 +434,7 @@
                         <div class="etapa-fluxo"><strong>2. Trituração e Prensagem</strong>A massa é processada para a retirada da manipueira.</div>
                         <div class="etapa-fluxo"><strong>3. Peneiração</strong>Garante a padronização tradicional da granulometria.</div>
                         <div class="etapa-fluxo"><strong>4. Torração</strong>Etapa essencial que confere a crocância, cor e aroma inconfundíveis da Farinha do Pacuí.</div>
+                        <div id="cons-processo-dinamico"></div>
                     </div>
                 </div>
 
@@ -737,6 +739,52 @@ function converterLinkDriveParaImagem(link) {
     document.getElementById('cons-data').innerText = data;
     document.getElementById('cons-nome-produtor').innerText = nomeProdutor;
     document.getElementById('cons-historia-nome').innerText = nomeProdutor;
+
+    
+    var fotoUrl = "https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=600&auto=format&fit=crop"; 
+    var textoHistoria = "";
+    var textoProcesso = "";
+    
+    if (listaDeProdutoresParaStatus && listaDeProdutoresParaStatus.length > 0) {
+        var produtorData = listaDeProdutoresParaStatus.find(p => p.nome === nomeProdutor);
+        if (produtorData) {
+            // Puxa a primeira foto
+            if (produtorData.link_dossie) {
+                var primeiroLink = produtorData.link_dossie.split(',')[0];
+                fotoUrl = converterLinkDriveParaImagem(primeiroLink);
+            }
+            
+            
+            if (produtorData.historia && produtorData.historia.trim() !== "") {
+                textoHistoria = `
+                    <div style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--cor-destaque); margin-top: 15px; border-radius: 4px;">
+                        <strong style="color: var(--cor-destaque-hover); font-size: 0.9em;">A Nossa História:</strong><br>
+                        <i style="font-size: 0.95em; color: #475569;">"${produtorData.historia}"</i>
+                    </div>`;
+            }
+
+            
+            if (produtorData.processo && produtorData.processo.trim() !== "") {
+                textoProcesso = `
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #cbd5e1;">
+                        <strong style="color: var(--cor-primaria-hover); font-size: 0.9em;">Detalhe Tradicional desta Unidade:</strong><br>
+                        <p style="font-size: 0.9em; color: var(--cor-texto); margin-top: 5px;">${produtorData.processo}</p>
+                    </div>`;
+            }
+        }
+    }
+
+    // Injeta a Foto
+    document.getElementById('cons-galeria-dinamica').innerHTML = `
+        <img src="${fotoUrl}" alt="Dossiê do Produtor" style="width: 100%; height: auto; max-height: 250px; object-fit: cover; border-radius: 8px; border: 2px solid var(--cor-borda); box-shadow: var(--sombra-suave);">
+    `;
+
+    // Injeta os Textos Dinâmicos na tela
+    document.getElementById('cons-historia-dinamica').innerHTML = textoHistoria;
+    document.getElementById('cons-processo-dinamico').innerHTML = textoProcesso;
+
+    document.getElementById('modal-consumidor').style.display = 'flex';
+}
 
     
     var fotoUrl = "https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=600&auto=format&fit=crop"; 
