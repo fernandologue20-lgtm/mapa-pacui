@@ -616,15 +616,15 @@
         var rotaAP70 = L.polyline(dadosRotaAP70, {color: "#0d47a1", weight: 4, dashArray:'10,10'}).addTo(mapa);
         rotaAP70.bindTooltip("Rota AP-70", {permanent:true, className:"rotulo-rota", sticky: true});
 
+
 function converterLinkDriveParaImagem(link) {
-    if (!link || link === "Não informada" || link === "") {
-        
+    if (!link || link === "Não informada" || link.trim() === "") {
         return "https://images.unsplash.com/photo-1589114515560-49666b3f7ddb?q=80&w=600&auto=format&fit=crop"; 
     }
-    
     var idMatch = link.match(/[-\w]{25,}/);
     if (idMatch && idMatch[0]) {
-        return "https://drive.google.com/uc?export=view&id=" + idMatch[0];
+        
+        return "https://drive.google.com/thumbnail?id=" + idMatch[0] + "&sz=w800";
     }
     return link; 
 }
@@ -744,7 +744,7 @@ function converterLinkDriveParaImagem(link) {
     if (listaDeProdutoresParaStatus && listaDeProdutoresParaStatus.length > 0) {
         var produtorData = listaDeProdutoresParaStatus.find(p => p.nome === nomeProdutor);
         if (produtorData && produtorData.link_dossie) {
-            // O formulário separa as fotos por vírgula. Vamos pegar a primeira foto que ele enviou.
+            
             var primeiroLink = produtorData.link_dossie.split(',')[0];
             fotoUrl = converterLinkDriveParaImagem(primeiroLink);
         }
@@ -819,7 +819,9 @@ function converterLinkDriveParaImagem(link) {
             var dataFormatada = data.split('-').reverse().join('/');
             
             
-            var urlConsumidor = `https://fernandologue20-lgtm.github.io/index.html?lote=${retorno.loteGerado}&com=${encodeURIComponent(comunidade)}&dt=${encodeURIComponent(dataFormatada)}&prod=${encodeURIComponent(nomeDoProdutor)}`;
+            
+var urlBase = window.location.href.split('?')[0];
+var urlConsumidor = `${urlBase}?lote=${retorno.loteGerado}&com=${encodeURIComponent(comunidade)}&dt=${encodeURIComponent(dataFormatada)}&prod=${encodeURIComponent(nomeDoProdutor)}`;
             
             var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(urlConsumidor)}`;
             
