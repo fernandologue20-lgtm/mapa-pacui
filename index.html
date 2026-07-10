@@ -111,7 +111,7 @@
             display: none; 
             background: rgba(255, 255, 255, 0.85); 
             border: 1px solid var(--cor-primaria); 
-            border-radius: 0,1px; 
+            border-radius: 4px; 
             font-weight: bold; 
             color: var(--cor-primaria-hover); 
             padding: 1px 4px; 
@@ -780,12 +780,7 @@
     fetch(urlPlanilhaGeral, { 
         method: 'POST', 
         body: JSON.stringify({ 
-            acao: "gerar_lote", 
-            data: data, 
-            comunidade: comunidade, 
-            peso: peso, 
-            id_diagro: id, 
-            produtor: nomeDoProdutor 
+            acao: "gerar_lote", data: data, comunidade: comunidade, peso: peso, id_diagro: id, produtor: nomeDoProdutor 
         }), 
         headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
     })
@@ -798,7 +793,7 @@
             var dataFormatada = data.split('-').reverse().join('/');
             
             
-            var urlConsumidor = "https://fernandologue20-lgtm.github.io/index.html?lote=" + retorno.loteGerado;
+            var urlConsumidor = `https://fernandologue20-lgtm.github.io/index.html?lote=${retorno.loteGerado}&com=${encodeURIComponent(comunidade)}&dt=${encodeURIComponent(dataFormatada)}&prod=${encodeURIComponent(nomeDoProdutor)}`;
             
             var linkDeRastreioReal = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=${encodeURIComponent(urlConsumidor)}`;
             
@@ -857,6 +852,20 @@
             .catch(erro => { console.error("Erro comunicação:", erro); });
             
         document.getElementById('btn-home').click();
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            var parametros = new URLSearchParams(window.location.search);
+            if (parametros.has('lote')) {
+                // Se o site abrir e tiver um lote na URL, ele puxa os dados embutidos e abre o pop-up na hora!
+                var loteUrl = parametros.get('lote');
+                var comUrl = parametros.get('com');
+                var dtUrl = parametros.get('dt');
+                var prodUrl = parametros.get('prod');
+                
+                // Abre o portal do consumidor automaticamente
+                abrirPortalConsumidor(loteUrl, comUrl, dtUrl, prodUrl);
+            }
+        });
     </script>
 </body>
 </html>
