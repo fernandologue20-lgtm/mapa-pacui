@@ -458,7 +458,7 @@
     </div>
 
     <script>
-        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbytykm66I-8IEUBh3rfrFwOt_seNAAhuCXYzEQhimBVJrxrYTLfO7Gc_-brm8gFtD84dg/exec"; 
+        var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbytmi6cuEcCgjP15RCfk6yRpaOyVDEtokxll7cdzefXZuur5sBltfmN-Ix075daLeJ6ag/exec"; 
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
         
@@ -730,12 +730,15 @@
             var textoProcesso = "";
             
             if (listaDeProdutoresParaStatus && listaDeProdutoresParaStatus.length > 0) {
-                var produtorData = listaDeProdutoresParaStatus.find(p => p.nome === nomeProdutor);
+                
+                var produtorData = listaDeProdutoresParaStatus.find(p => p.nome.includes(nomeProdutor) || nomeProdutor.includes(p.nome));
+                
                 if (produtorData) {
                     if (produtorData.link_dossie) {
                         var primeiroLink = produtorData.link_dossie.split(',')[0];
                         fotoUrl = converterLinkDriveParaImagem(primeiroLink);
                     }
+                    
                     
                     if (produtorData.historia && produtorData.historia.trim() !== "") {
                         textoHistoria = `
@@ -745,6 +748,7 @@
                             </div>`;
                     }
 
+                    // Só cria o bloco de Processo se tiver texto na planilha
                     if (produtorData.processo && produtorData.processo.trim() !== "") {
                         textoProcesso = `
                             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #cbd5e1;">
