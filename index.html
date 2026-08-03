@@ -226,7 +226,6 @@
 
             <div class="sub-nav">
                 <button onclick="mostrarAbaPacui('pacui-visao', this)" class="btn-sub-nav ativo">🗺️ Visão Geral e Mapa</button>
-                <button onclick="mostrarAbaPacui('pacui-cet', this)" class="btn-sub-nav">📜 Normas e CET</button>
                 <button onclick="abrirModalAuth(); mudarAbaAuth('cadastro')" class="btn-sub-nav" style="background: var(--cor-destaque); color: white; border: 1px solid var(--cor-destaque-hover);">📝 Solicitar Ingresso na IG</button>
                 <button onclick="mostrarAbaPacui('pacui-produtor', this)" class="btn-sub-nav" id="aba-produtor-btn" style="display:none;">🌾 Meu Painel (Produtor)</button>
                 <button onclick="mostrarAbaPacui('pacui-gov', this)" class="btn-sub-nav" id="aba-gov-btn" style="display:none;">⚖️ Governança (Conselho)</button>
@@ -240,15 +239,24 @@
                         <div id="lista-noticias">Carregando...</div>
                     </div>
                    <div class="painel-scroll">
-    <h3 class="titulo-painel">📘 Guia Normativo</h3>
-    <div class="capa-cartilha">
-        <h1 class="titulo-cartilha" style="font-size: 1.3em;">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-        <p class="descricao-cartilha" style="font-size: 0.85em;">Manual de Governança Territorial da Farinha do Pacuí.</p>
-    </div>
+
+    <h3 class="titulo-painel" style="display: flex; justify-content: space-between; align-items: center;">
+        <span>📘 Caderno de Especificações (CET)</span>
+        
+        
+        <a href="https://drive.google.com/file/d/13MLSmfJoRSX1s1zm-m8wr-z3T-Sx7pWO/view" target="_blank" style="font-size: 0.75em; background: var(--cor-primaria); color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.2s; box-shadow: var(--sombra-suave);">
+            📄 Abrir em Nova Aba
+        </a>
+    </h3>
     
-    <!-- O JAVASCRIPT VAI JOGAR O PDF AQUI DENTRO -->
-    <div class="texto-cartilha" id="conteudo-cet" style="width: 100%;">
-        <p style="text-align: center; color: #888;"><i>Carregando o Caderno de Especificações Técnicas...</i></p>
+    
+    <div id="conteudo-cet" style="width: 100%; margin-top: 10px;">
+        <iframe 
+            src="https://drive.google.com/file/d/13MLSmfJoRSX1s1zm-m8wr-z3T-Sx7pWO/preview" 
+            width="100%" 
+            height="700px" 
+            style="border: none; border-radius: 8px; box-shadow: var(--sombra-suave);">
+        </iframe>
     </div>
 </div>
                     <div id="mapa-container"></div>
@@ -259,57 +267,7 @@
                 </div>
             </div>
 
-            <div id="pacui-cet" class="aba-pacui">
-                <div class="card">
-                    <h3 style="color: var(--cor-primaria); font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid var(--cor-borda); padding-bottom: 10px;">Caderno de Especificações Técnicas (CET) - Resumo Normativo</h3>
-                    <p style="margin-bottom: 20px;">O CET é o documento que rege as regras da Indicação de Procedência (IP), assegurando que a <strong>Farinha do Pacuí</strong> mantenha a sua identidade, qualidade e reputação histórica.</p>
-
-                    <div class="destaque-box" style="margin-bottom: 25px;">
-                        <strong style="display: block; font-size: 1.1em; margin-bottom: 5px;">Entidade Gestora e Proteção do Nome</strong>
-                        A governança da Indicação de Procedência é de responsabilidade da Associação de Moradores Produtores Agropecuários da Comunidade de Salamito do Pacuí (ASMOPAP/CSP). O nome geográfico protegido deve ser utilizado obrigatoriamente na forma composta <strong>"Farinha do Pacuí"</strong>, sendo vedado o seu uso isolado ou associado a expressões genéricas como "tipo" ou "à moda".
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid var(--cor-borda);">
-                            <h4 style="color: var(--cor-destaque-hover); margin-top: 0; margin-bottom: 15px;">🔍 Características Físico-Sensoriais</h4>
-                            <ul style="padding-left: 20px; color: var(--cor-texto); font-size: 0.95em; line-height: 1.8;">
-                                <li><strong>Aspecto:</strong> Seco e solto.</li>
-                                <li><strong>Textura:</strong> Predominantemente crocante.</li>
-                                <li><strong>Coloração:</strong> Do branco ao amarelo ouro (conforme cultivar e torração).</li>
-                                <li><strong>Aroma:</strong> Característico de torração tradicional.</li>
-                                <li><strong>Umidade Máxima:</strong> 13%.</li>
-                            </ul>
-                        </div>
-
-                        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid var(--cor-borda);">
-                            <h4 style="color: var(--cor-destaque-hover); margin-top: 0; margin-bottom: 15px;">⚙️ Etapas do Saber-Fazer Tradicional</h4>
-                            <ol style="padding-left: 20px; color: var(--cor-texto); font-size: 0.95em; line-height: 1.8;">
-                                <li>Descascamento das raízes.</li>
-                                <li>Lavagem.</li>
-                                <li>Trituração (obtenção da massa).</li>
-                                <li>Prensagem (retirada da manipueira).</li>
-                                <li>Peneiração (padronização da granulometria).</li>
-                                <li><strong>Torração</strong> (etapa fundamental para a crocância).</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <h4 style="color: var(--cor-primaria-hover); margin-top: 25px; margin-bottom: 10px;">Tipificação Local e Rastreabilidade</h4>
-                    <p style="font-size: 0.95em;">A IG reconhece três tipificações tradicionais: <strong>Farinha Lavada</strong>, <strong>Farinha Seca</strong> e <strong>Farinha Comum</strong>. A cadeia produtiva baseia-se num sistema rigoroso de rastreabilidade gerido pelo Conselho Regulador, que monitoriza desde a origem da matéria-prima (mandioca) até a data de torra e identificação do lote da unidade produtiva.</p>
-                </div>
-
-                <div class="card" style="border-top: 5px solid #0d47a1;">
-                    <h3 style="color: #0d47a1; font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid var(--cor-borda); padding-bottom: 10px;">Instrumento Oficial de Delimitação da Área Geográfica</h3>
-                    <p style="margin-bottom: 15px;">A área delimitada compreende o território do <strong>Distrito 24 – São Joaquim do Pacuí</strong>, no município de Macapá–AP, com base na Lei Municipal nº 153/1981 e na malha territorial oficial do IBGE.</p>
-                    
-                    <ul style="padding-left: 20px; color: var(--cor-texto); font-size: 0.95em; line-height: 1.8;">
-                        <li><strong>Fundamentação:</strong> A delimitação reflete a concentração histórica e atual das units produtivas (casas de farinha), bem como a manutenção de práticas tradicionais contínuas no processamento da mandioca.</li>
-                        <li><strong>Área de Abrangência:</strong> Inclui comunidades com forte tradição produtiva, como Salamito, Tracajatuba e localidades adjacentes, englobando a área socialmente reconhecida como "Pacuí".</li>
-                        <li><strong>Evidências Produtivas:</strong> O recorte territorial é validado empiricamente pela distribuição espacial das agroindústrias artesanais e sustentado por diagnósticos institucionais (SEBRAE, RURAP, Embrapa) que comprovam a notoriedade do produto na região.</li>
-                    </ul>
-                </div>
-            </div>
-
+           
             <div id="pacui-produtor" class="aba-pacui">
                 <div class="card" style="border-top: 5px solid var(--cor-destaque);">
                     <h3 style="color: var(--cor-destaque-hover); margin-top: 0;">Meu Processo de Habilitação</h3>
