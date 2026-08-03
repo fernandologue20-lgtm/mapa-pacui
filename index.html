@@ -84,55 +84,26 @@
         .item-comunidade:hover { background: #fff; transform: translateX(5px); border-color: var(--cor-primaria); box-shadow: var(--sombra-suave); }
         .item-comunidade strong { color: var(--cor-primaria-hover); font-size: 1.05rem; }
         .coords { font-size: 0.8rem; color: var(--cor-texto-claro); display: none; font-style: italic; margin-top: 5px; }
-        .item-destaque {
-            border-left: 5px solid var(--cor-destaque) !important;
-            background: #fffaf0 !important; 
-            position: relative;
-        }
-        .badge-destaque {
-            background: var(--cor-destaque);
-            color: #fff;
-            font-size: 0.65em;
-            padding: 2px 6px;
-            border-radius: 10px;
-            text-transform: uppercase;
-            margin-left: 5px;
-            vertical-align: text-bottom;
-        }
-        .btn-historia {
-            display: inline-block;
-            background: #e2e8f0;
-            color: var(--cor-primaria-hover);
-            font-size: 0.75em;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-top: 8px;
-            font-weight: bold;
-            pointer-events: none; 
-            transition: 0.3s;
-        }
-        .item-destaque:hover .btn-historia {
-            background: var(--cor-destaque);
-            color: #fff;
-        }
-        .historia-conteudo {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease-in-out;
-            opacity: 0;
-            font-size: 0.85em;
-            color: #334155;
-            text-align: justify;
-        }
         
-        .item-destaque:hover .historia-conteudo {
-            max-height: 300px;
+        .item-destaque.aberto .historia-conteudo {
+            max-height: 400px; 
             opacity: 1;
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px dashed var(--cor-destaque);
         }
-        .item-comunidade:hover .coords { display: block; }
+        .item-destaque.aberto .btn-historia {
+            background: var(--cor-destaque);
+            color: #fff;
+        }
+        
+        .historia-conteudo iframe {
+            width: 100%;
+            height: 250px; 
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
         
         .rotulo-area, .leaflet-tooltip.rotulo-area { 
             background: transparent !important; 
@@ -962,26 +933,23 @@
                 if(dropLote) dropLote.innerHTML = ""; if(listaItens) listaItens.innerHTML = "";
                 
                 if (dados.comunidades && dados.comunidades.length > 0) {
-                    
                     var htmlDestaques = [];
                     var htmlComuns = [];
                     
-                    // Banco de dados interno com as histórias das 4 comunidades
+                   
                     var historicoDestaques = {
-                        "Tracajatuba I": "Foi a primeira a ter uma casa de farinha com Selo de Inspeção Estadual e foi premiada no evento de melhor farinha do estado do Amapá.",
-                        "Tracajatuba II": "Foi a segunda a ter uma casa de farinha com Selo de Inspeção Estadual e também foi premiada no evento de melhor farinha do estado do Amapá.",
-                        "Salamito": "É a comunidade que comercializa a Farinha lavada, tendo sido premiada no evento de melhor farinha do estado do Amapá.",
-                        "Vila Gordo": "Possui um agricultor que produz fornos e equipamentos para casas de farinha. Ele aprendeu o ofício apenas observando equipamentos elétricos e mecanizados em fábricas."
+                        "Tracajatuba I": "LINK_DO_DRIVE",
+                        "Tracajatuba II": "LINK_DO_DRIVE",
+                        "Salamito": "LINK_DO_DRIVE",
+                        "Vila Gordo": "LINK_DO_DRIVE"
                     };
 
                     dados.comunidades.forEach(c => {
-                        
                         var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                         marker.bindTooltip(c.nome, {permanent: true, direction: "top", className: "tooltip-comunidade", offset: [0, -10]});
 
                         var textoDMS = formatarCoordenadasDMS(c.lat, c.lng);
                         var div = document.createElement('div'); 
-                        
                         
                         var historiaEncontrada = null;
                         for (var chave in historicoDestaques) {
@@ -993,27 +961,53 @@
 
                         if (historiaEncontrada) {
                             
+                            var conteudoVisual = "";
+                            var idMatch = historiaEncontrada.match(/[-\w]{25,}/);
+                            
+                            if (historiaEncontrada.includes("drive.google.com") && idMatch) {
+                                var idDrive = idMatch[0];
+                                conteudoVisual = `
+                                    <div style="text-align: right; margin-bottom: 5px;">
+                                        <a href="${historiaEncontrada}" target="_blank" style="font-size: 0.8em; color: var(--cor-primaria); text-decoration: none; font-weight: bold;">📄 Abrir em aba maior</a>
+                                    </div>
+                                    <iframe src="https://drive.google.com/file/d/${idDrive}/preview"></iframe>
+                                `;
+                            } else {
+                                
+                                conteudoVisual = historiaEncontrada;
+                            }
+
                             div.className = 'item-comunidade item-destaque'; 
                             div.innerHTML = `
                                 <strong>${c.nome}</strong> <span class="badge-destaque">🌟 Destaque</span>
                                 <p style="font-size: 0.85em; color: #555; margin-top: 4px; margin-bottom: 0; font-style: normal;">Coordenadas - ${textoDMS}</p>
-                                <div class="btn-historia">📖 Conhecer História</div>
-                                <div class="historia-conteudo">${historiaEncontrada}</div>
+                                <div class="btn-historia">📖 Clique para ver a História</div>
+                                <div class="historia-conteudo">${conteudoVisual}</div>
                             `;
-                            div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                            htmlDestaques.push(div); 
-                        } else {
                             
+                            
+                            div.onclick = () => { 
+                                mapa.setView([c.lat, c.lng], 14); 
+                                marker.openPopup(); 
+                                
+                                
+                                document.querySelectorAll('.item-destaque').forEach(el => {
+                                    if(el !== div) el.classList.remove('aberto');
+                                });
+                                
+                                div.classList.toggle('aberto');
+                            };
+                            htmlDestaques.push(div);
+                        } else {
                             div.className = 'item-comunidade'; 
                             div.innerHTML = `<strong>${c.nome}</strong><p style="font-size: 0.85em; color: #555; margin-top: 4px; margin-bottom: 0; font-style: normal;">Coordenadas - ${textoDMS}</p>`;
                             div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
-                            htmlComuns.push(div); 
+                            htmlComuns.push(div);
                         }
                         
                         if(dropLote) { var ol = document.createElement('option'); ol.value = c.nome; ol.textContent = c.nome; dropLote.appendChild(ol); }
                     });
 
-                    
                     if (listaItens) {
                         htmlDestaques.forEach(d => listaItens.appendChild(d));
                         htmlComuns.forEach(d => listaItens.appendChild(d));
