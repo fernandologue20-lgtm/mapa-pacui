@@ -302,7 +302,7 @@
                     <p style="margin-bottom: 15px;">A área delimitada compreende o território do <strong>Distrito 24 – São Joaquim do Pacuí</strong>, no município de Macapá–AP, com base na Lei Municipal nº 153/1981 e na malha territorial oficial do IBGE.</p>
                     
                     <ul style="padding-left: 20px; color: var(--cor-texto); font-size: 0.95em; line-height: 1.8;">
-                        <li><strong>Fundamentação:</strong> A delimitação reflete a concentração histórica e atual das unidades produtivas (casas de farinha), bem como a manutenção de práticas tradicionais contínuas no processamento da mandioca.</li>
+                        <li><strong>Fundamentação:</strong> A delimitação reflete a concentração histórica e atual das units produtivas (casas de farinha), bem como a manutenção de práticas tradicionais contínuas no processamento da mandioca.</li>
                         <li><strong>Área de Abrangência:</strong> Inclui comunidades com forte tradição produtiva, como Salamito, Tracajatuba e localidades adjacentes, englobando a área socialmente reconhecida como "Pacuí".</li>
                         <li><strong>Evidências Produtivas:</strong> O recorte territorial é validado empiricamente pela distribuição espacial das agroindústrias artesanais e sustentado por diagnósticos institucionais (SEBRAE, RURAP, Embrapa) que comprovam a notoriedade do produto na região.</li>
                     </ul>
@@ -458,6 +458,34 @@
     </div>
 
     <script>
+        
+        function formatarCoordenadasDMS(lat, lng) {
+            function converter(coordenada, isLat) {
+                const absoluto = Math.abs(coordenada);
+                const graus = Math.floor(absoluto);
+                const minutosDecimal = (absoluto - graus) * 60;
+                const minutos = Math.floor(minutosDecimal);
+                const segundos = Math.round((minutosDecimal - minutos) * 60);
+
+                let direcao = "";
+                if (isLat) {
+                    direcao = coordenada >= 0 ? "N" : "S";
+                } else {
+                    direcao = coordenada >= 0 ? "E" : "W";
+                }
+                return `${graus}°${minutos}'${segundos}" ${direcao}`;
+            }
+
+            const latNum = parseFloat(lat.toString().replace(',', '.'));
+            const lngNum = parseFloat(lng.toString().replace(',', '.'));
+
+            const latDMS = converter(latNum, true);
+            const lngDMS = converter(lngNum, false);
+
+            return `${lngDMS} / ${latDMS}`;
+        }
+        // --- FIM DA FUNÇÃO ---
+
         var urlPlanilhaGeral = "https://script.google.com/macros/s/AKfycbytmi6cuEcCgjP15RCfk6yRpaOyVDEtokxll7cdzefXZuur5sBltfmN-Ix075daLeJ6ag/exec"; 
         var usuarioLogado = { nome: "", perfil: "" };
         var listaDeProdutoresParaStatus = []; 
@@ -503,10 +531,10 @@
         var camadaPacui = L.geoJSON(delimitacaoPacui, {
           style: function (feature) {
             return {
-              color: "#c0392b",       
+              color: "#c0392b",        
               weight: 3,
               fillColor: "#e74c3c",   
-              fillOpacity: 0.15       
+              fillOpacity: 0.15        
             };
           },
           onEachFeature: function (feature, layer) {
@@ -871,7 +899,13 @@
                         var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                         marker.bindTooltip(c.nome, {permanent: true, direction: "top", className: "tooltip-comunidade", offset: [0, -10]});
 
-                        var div = document.createElement('div'); div.className = 'item-comunidade'; div.innerHTML = `<strong>${c.nome}</strong><br><span class="coords">Lat: ${c.lat}, Lng: ${c.lng}</span>`;
+                        
+                        var textoDMS = formatarCoordenadasDMS(c.lat, c.lng);
+                        var div = document.createElement('div'); 
+                        div.className = 'item-comunidade'; 
+                        div.innerHTML = `<strong>${c.nome}</strong><p style="font-size: 0.85em; color: #555; margin-top: 4px; margin-bottom: 0; font-style: normal;">Coordenadas - ${textoDMS}</p>`;
+                        
+
                         div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                         if(listaItens) listaItens.appendChild(div);
                         
