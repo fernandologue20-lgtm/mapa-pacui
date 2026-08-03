@@ -239,17 +239,18 @@
                         <h3 class="titulo-painel">📰 Mural de Notícias</h3>
                         <div id="lista-noticias">Carregando...</div>
                     </div>
-                    <div class="painel-scroll">
-                        <h3 class="titulo-painel">📘 Guia Normativo</h3>
-                        <div class="capa-cartilha">
-                            <h1 class="titulo-cartilha" style="font-size: 1.3em;">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
-                            <p class="descricao-cartilha" style="font-size: 0.85em;">Manual de Governança Territorial da Farinha do Pacuí.</p>
-                        </div>
-                        <div class="texto-cartilha">
-                            <h2>Capítulo 1: Pilares Jurídicos</h2>
-                            <ul><li><strong>Caderno de Especificações Técnicas (CET):</strong> O retrato fiel da nossa produção.</li></ul>
-                        </div>
-                    </div>
+                   <div class="painel-scroll">
+    <h3 class="titulo-painel">📘 Guia Normativo</h3>
+    <div class="capa-cartilha">
+        <h1 class="titulo-cartilha" style="font-size: 1.3em;">Protegendo o Nosso Chão, o Nosso Saber e a Nossa História</h1>
+        <p class="descricao-cartilha" style="font-size: 0.85em;">Manual de Governança Territorial da Farinha do Pacuí.</p>
+    </div>
+    
+    <!-- O JAVASCRIPT VAI JOGAR O PDF AQUI DENTRO -->
+    <div class="texto-cartilha" id="conteudo-cet" style="width: 100%;">
+        <p style="text-align: center; color: #888;"><i>Carregando o Caderno de Especificações Técnicas...</i></p>
+    </div>
+</div>
                     <div id="mapa-container"></div>
                     <div class="painel-scroll">
                         <h3 class="titulo-painel">📍 Comunidades</h3>
@@ -899,13 +900,11 @@
                         var marker = L.marker([c.lat, c.lng]).addTo(mapa).bindPopup(`<strong>${c.nome}</strong>`);
                         marker.bindTooltip(c.nome, {permanent: true, direction: "top", className: "tooltip-comunidade", offset: [0, -10]});
 
-                        
                         var textoDMS = formatarCoordenadasDMS(c.lat, c.lng);
                         var div = document.createElement('div'); 
                         div.className = 'item-comunidade'; 
                         div.innerHTML = `<strong>${c.nome}</strong><p style="font-size: 0.85em; color: #555; margin-top: 4px; margin-bottom: 0; font-style: normal;">Coordenadas - ${textoDMS}</p>`;
                         
-
                         div.onclick = () => { mapa.setView([c.lat, c.lng], 14); marker.openPopup(); };
                         if(listaItens) listaItens.appendChild(div);
                         
@@ -923,9 +922,41 @@
                     });
                 }
                 
+                
+                var divCET = document.getElementById('conteudo-cet');
+                if (divCET) {
+                    if (dados.cet && dados.cet.length > 0) {
+                        divCET.innerHTML = ""; 
+                        
+                        dados.cet.forEach(capitulo => {
+                            var conteudo = capitulo.texto;
+                            var htmlCapitulo = "";
+                            var idMatch = conteudo.match(/[-\w]{25,}/); 
+                            
+                            if (conteudo.includes("drive.google.com") && idMatch) {
+                                var idDrive = idMatch[0];
+                                htmlCapitulo = `
+                                    <h2 style="color: var(--cor-primaria-hover); margin: 30px 0 15px 0;">${capitulo.titulo}</h2>
+                                    <iframe src="https://drive.google.com/file/d/${idDrive}/preview" width="100%" height="700px" style="border: none; border-radius: 8px; box-shadow: var(--sombra-suave);"></iframe>
+                                `;
+                            } else {
+                                htmlCapitulo = `
+                                    <h2 style="color: var(--cor-primaria-hover); border-bottom: 2px solid var(--cor-borda); padding-bottom: 8px; margin: 30px 0 15px 0;">${capitulo.titulo}</h2>
+                                    <p style="margin-bottom: 20px; text-align: justify; line-height: 1.8;">
+                                        ${conteudo.replace(/\n/g, '<br>')}
+                                    </p>
+                                `;
+                            }
+                            divCET.innerHTML += htmlCapitulo;
+                        });
+                    } else {
+                        divCET.innerHTML = "<p>O Caderno de Especificações Técnicas está sendo atualizado pelo Conselho Regulador.</p>";
+                    }
+                }
+                
+
                 listaDeProdutoresParaStatus = dados.produtores; 
 
-                
                 var parametros = new URLSearchParams(window.location.search);
                 if (parametros.has('lote')) {
                     var loteUrl = parametros.get('lote');
