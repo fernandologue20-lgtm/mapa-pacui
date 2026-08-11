@@ -1049,7 +1049,8 @@
                         
                         
                         if (n.imagem && n.imagem !== "") {
-                            divNoticia.style.backgroundImage = `url('${n.imagem}')`;
+                            var imagemCorrigida = converterLinkDriveParaImagem(n.imagem);
+                            divNoticia.style.backgroundImage = `url('${imagemCorrigida}')`;
                         } else {
                             divNoticia.style.backgroundColor = 'var(--cor-primaria)';
                         }
