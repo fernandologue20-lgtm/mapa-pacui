@@ -877,7 +877,6 @@
                         fotoUrl = converterLinkDriveParaImagem(primeiroLink);
                     }
                     
-                    
                     if (produtorData.historia && produtorData.historia.trim() !== "") {
                         textoHistoria = `
                             <div style="background: #f8fafc; padding: 15px; border-left: 4px solid var(--cor-destaque); margin-top: 15px; border-radius: 4px;">
@@ -886,13 +885,37 @@
                             </div>`;
                     }
 
-                    // Só cria o bloco de Processo se tiver texto na planilha
-                    if (produtorData.processo && produtorData.processo.trim() !== "") {
-                        textoProcesso = `
-                            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #cbd5e1;">
-                                <strong style="color: var(--cor-primaria-hover); font-size: 0.9em;">Detalhe Tradicional desta Unidade:</strong><br>
-                                <p style="font-size: 0.9em; color: var(--cor-texto); margin-top: 5px;">${produtorData.processo}</p>
-                            </div>`;
+                    
+                    if (produtorData.processo && produtorData.processo.trim() !== "" && produtorData.processo !== "Nenhum processo detalhado na planilha.") {
+                        var conteudoProcesso = produtorData.processo;
+                        var idMatchPdf = conteudoProcesso.match(/[-\w]{25,}/);
+
+                        
+                        if (conteudoProcesso.includes("drive.google.com") && idMatchPdf) {
+                            var idDrivePdf = idMatchPdf[0];
+                            textoProcesso = `
+                                <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #cbd5e1;">
+                                    <strong style="color: var(--cor-primaria-hover); font-size: 1.2em; display: block; margin-bottom: 10px;">🌾 Conheça a Nossa Farinha:</strong>
+                                    <p style="font-size: 0.85em; color: #64748b; margin-bottom: 15px;">Deslize para baixo para ler o documento oficial do processo produtivo ou abra em tela cheia.</p>
+                                    
+                                    <!-- A caixinha com barra de rolagem -->
+                                    <div style="width: 100%; height: 350px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); background: #f8fafc;">
+                                        <iframe src="https://drive.google.com/file/d/${idDrivePdf}/preview" width="100%" height="100%" style="border: none;"></iframe>
+                                    </div>
+                                    
+                                    <!-- Botão de segurança para celulares -->
+                                    <a href="${conteudoProcesso}" target="_blank" style="display: block; text-align: center; margin-top: 12px; background: var(--cor-destaque); color: white; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: var(--sombra-suave); transition: 0.2s;">
+                                        📄 Abrir PDF em Tela Cheia
+                                    </a>
+                                </div>`;
+                        } else {
+                            
+                            textoProcesso = `
+                                <div style="margin-top: 25px; padding-top: 20px; border-top: 2px dashed #cbd5e1;">
+                                    <strong style="color: var(--cor-primaria-hover); font-size: 1.2em;">🌾 Conheça a Nossa Farinha:</strong><br>
+                                    <p style="font-size: 0.95em; color: var(--cor-texto); margin-top: 8px; line-height: 1.6;">${conteudoProcesso}</p>
+                                </div>`;
+                        }
                     }
                 }
             }
